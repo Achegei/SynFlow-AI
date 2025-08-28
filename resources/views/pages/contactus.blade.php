@@ -101,7 +101,7 @@
                         <label for="service2" class="ml-2 block text-sm text-gray-900">Educating your team on AI</label>
                     </div>
                     <div class="flex items-center">
-                        <input type="checkbox" id="service3" name="services[]" value="Developing custom AI solutions" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <input type="checkbox" id="service3" name="services[]" value="Developing custom AI solutions" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500">
                         <label for="service3" class="ml-2 block text-sm text-gray-900">Developing custom AI solutions</label>
                     </div>
                 </div>
