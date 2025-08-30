@@ -32,19 +32,16 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('SynFlow AI')
             ->brandLogo(asset('images/synflowlogo.png'))
 
-            // 👇 Use hooks instead of Topbar class
-            ->renderHook(PanelsRenderHook::TOPBAR_START, fn () => view('components.topbar-user'))
-
             ->login()
             ->colors([
                 Color::Indigo,
                 Color::Sky,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
+            //->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            //->pages([
+               // Pages\Dashboard::class,
+            //])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 // Removed AccountWidget since we're moving it to the topbar

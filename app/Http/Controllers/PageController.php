@@ -38,4 +38,8 @@ class PageController extends Controller
     {
         return view('pages.careers');
     }
+    public function pricing(): View
+    {
+        return view('pages.pricing');
+    }
 }

@@ -34,6 +34,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/contactus', 'contact')->name('contactus'); // Alias for the contact page
     Route::get('/terms', 'terms')->name('terms');
     Route::get('/privacy-policy', 'policy')->name('policy');
+    Route::get('/pricing', 'pricing')->name('pricing');
 });
 
 Route::controller(CareerController::class)->group(function () {
@@ -48,6 +49,9 @@ Route::controller(CareerController::class)->group(function () {
 Route::get('/map', function () {
     return view('map');
 })->name('map');
+Route::get('/book-engagement', function () {
+    return view('booking');
+})->name('book-engagement');
 
 
 //================================================

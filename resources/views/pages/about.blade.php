@@ -3,25 +3,126 @@
 @section('title', 'About Us - SynFlow AI')
 
 @section('content')
+
+<div class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <!-- About SynFlow AI Section -->
+        <div class="text-center max-w-3xl mx-auto">
+            <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">About SynFlow AI</h2>
+            <p class="mt-4 text-xl text-gray-600">
+                At SynFlow AI, we design, deploy, and maintain custom AI solutions to drive your business growth, seamlessly integrating with over 850 systems.
+            </p>
+            <div class="mt-8">
+                <a href="#" class="inline-block px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700">
+                    We're hiring!
+                </a>
+            </div>
+        </div>
+
+        <!-- Meet Our Team Section -->
+        <div class="mt-20">
+            <h3 class="text-3xl font-bold text-center text-gray-900">Meet Our Team</h3>
+            
+            <!-- Founders -->
+            <div class="mt-8">
+                <h4 class="text-xl font-semibold text-gray-700 text-center">Founders</h4>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Milan Tahliani -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Milan Tahliani</h5>
+                        <p class="mt-1 text-sm text-gray-500">Co-Founder & CEO</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Nate Herkelman -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Nate Herkelman</h5>
+                        <p class="mt-1 text-sm text-gray-500">Co-Founder & CGO</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Tyler Baughcome -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Tyler Baughcome</h5>
+                        <p class="mt-1 text-sm text-gray-500">Co-Founder & CTO</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team -->
+            <div class="mt-12">
+                <h4 class="text-xl font-semibold text-gray-700 text-center">Team</h4>
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Martin Oosthuizen -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Martin Oosthuizen</h5>
+                        <p class="mt-1 text-sm text-gray-500">Vice President of Engineering</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Sandeep Parthakar -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Sandeep Parthakar</h5>
+                        <p class="mt-1 text-sm text-gray-500">Technical Account Executive</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Vishal Hada -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Vishal Hada</h5>
+                        <p class="mt-1 text-sm text-gray-500">AI Project Manager</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Deepankar Bhadrasen -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Deepankar Bhadrasen</h5>
+                        <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                    <!-- Ishan Bhargava -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                        <h5 class="text-lg font-bold text-gray-900">Ishan Bhargava</h5>
+                        <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
+                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Service Descriptions Section -->
+        <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Custom AI Agent Engineering -->
+            <div class="bg-indigo-700 rounded-lg shadow-md p-8">
+                <h4 class="text-xl font-bold text-white">Custom AI Agent Engineering</h4>
+                <p class="mt-4 text-white">
+                    We architect, deploy, and maintain AI systems tailored to your specific business operations—designed to drive measurable outcomes and long-term scalability.
+                </p>
+            </div>
+            <!-- Fully Managed -->
+            <div class="bg-indigo-700 rounded-lg shadow-md p-8">
+                <h4 class="text-xl font-bold text-white">Fully Managed</h4>
+                <p class="mt-4 text-white">
+                    Our team builds and manages end-to-end automation systems that integrate seamlessly into your workflows, unlocking efficiency and reducing manual overhead.
+                </p>
+            </div>
+
+            <div class="bg-indigo-700 rounded-lg shadow-md p-8">
+                <h4 class="text-xl font-bold text-white">AI Partner</h4>
+                <p class="mt-4 text-white">
+                    We partner with your team to assess opportunities for AI implementation, align solutions with business goals, and ensure successful adoption across departments.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
     <div class="container mx-auto px-4 py-16 text-center">
         <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            <span class="block">SynFlow AI</span>
-            <span class="block text-indigo-600">Your Partner in AI Transformation</span>
+            <span class="block text-indigo-600">Our Three Pillars</span>
         </h1>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500 md:mt-5 md:text-xl">
-            We are not just another AI company—we are your trusted partner in becoming an AI-first organization. By placing artificial intelligence at the core of everything we do, we provide a holistic approach to help your business thrive in the digital age.
-        </p>
+        <P>At SynFlow AI, we're more than just AI developers; we're dedicated partners. Our mission is to help your business achieve measurable growth with custom, scalable, and efficient AI solutions that are perfectly aligned with your strategic goals.
+
+We serve as your strategic partner on your transformation journey, whether you're aiming to optimize operations, automate tasks, or find new ways to connect with customers. By combining our deep technical expertise with a business-first approach, we focus on delivering real, impactful results.</P>
     </div>
 
-    <!-- Our Holistic Approach Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                A Comprehensive Approach to AI
-            </h2>
-            <p class="mt-4 max-w-3xl mx-auto text-gray-500">
-                At SynFlow AI, we believe that true AI transformation requires more than just a single solution. It requires a complete strategy that integrates technology, education, and development. That's why we've built our services around a proven, three-step journey.
-            </p>
 
             <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
                 <!-- Step 1: Identify -->

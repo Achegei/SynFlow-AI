@@ -9,6 +9,7 @@
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/20L+u9K26L/Kz3Pq9m04J5k2QzGq5Jj9Q8L9PzP+PzW9L0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -26,14 +27,21 @@
                         <div class="hidden md:flex space-x-8">
                             <a href="{{ route('home') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Home</a>
                             <a href="{{ route('about') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">About</a>
+                            <a href="{{ route('pricing') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Pricing</a>
                             <a href="{{ route('services') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Services</a>
                             <a href="{{ route('contact') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Contact</a>
                         </div>
 
-                        <div class="hidden md:flex items-center space-x-4">
+                        <!--<div class="hidden md:flex items-center space-x-4">
                             <a href="{{ route('login') }}" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">Log in</a>
                             <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                                 Register
+                            </a>
+                        </div> -->
+                        <div class="hidden md:flex items-center space-x-4">
+                            <a href="#" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">0737955021</a>
+                            <a href="{{ route('contactus') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                                Get Started
                             </a>
                         </div>
                         
