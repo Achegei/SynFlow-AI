@@ -35,6 +35,16 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/terms', 'terms')->name('terms');
     Route::get('/privacy-policy', 'policy')->name('policy');
     Route::get('/pricing', 'pricing')->name('pricing');
+    Route::get('/documentation', 'documentation')->name('documentation');
+    Route::get('/introduction', 'introduction')->name('introduction');
+    Route::get('/technology-stack', 'technology')->name('technology');
+    Route::get('/processes', 'processes')->name('processes');
+    Route::get('/agents', 'agents')->name('agents');
+    Route::get('/assistant', 'assistant')->name('assistant');
+    Route::get('/deep-research', 'research')->name('research');
+    Route::get('/newsletter-creation', 'newsletter')->name('newsletter');
+    Route::get('/rag-pipeline', 'rag')->name('rag');
+    Route::get('/faceless-shorts', 'shorts')->name('shorts');
 });
 
 Route::controller(CareerController::class)->group(function () {

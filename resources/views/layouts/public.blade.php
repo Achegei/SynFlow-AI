@@ -19,16 +19,18 @@
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                     <nav class="flex justify-between items-center h-16">
                         <div class="flex items-center">
-                            <a href="{{ route('home') }}" class="text-xl font-bold text-gray-800">
-                                SynFlow AI
+                            <a href="{{ route('home') }}" class="flex items-center">
+                                <img src="{{ asset('images/synflowlogo.jpeg') }}" alt="SailRizon AI Logo" class="h-16 w-40 object-contain">
                             </a>
                         </div>
+
 
                         <div class="hidden md:flex space-x-8">
                             <a href="{{ route('home') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Home</a>
                             <a href="{{ route('about') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">About</a>
                             <a href="{{ route('pricing') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Pricing</a>
                             <a href="{{ route('services') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Services</a>
+                             <a href="{{ route('documentation') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Documentation</a>
                             <a href="{{ route('contact') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Contact</a>
                         </div>
 

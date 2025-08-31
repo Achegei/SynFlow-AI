@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('community.dashboard') }}">
                         <!-- Use a standard HTML image tag to display your logo -->
-                        <img src="{{ asset('images/synflowlogo.png') }}" alt="Community Logo" class="block h-9 w-auto">
+                        <img src="{{ asset('images/synflowlogo.jpeg') }}" alt="Community Logo" class="block h-9 w-auto">
                     </a>
                 </div>
 

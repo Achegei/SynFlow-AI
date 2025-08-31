@@ -4,8 +4,6 @@
     'app.filament.resources.post-resource.pages.create-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\CreatePost',
     'app.filament.resources.post-resource.pages.edit-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\EditPost',
     'app.filament.resources.post-resource.pages.list-posts' => 'App\\Filament\\Resources\\PostResource\\Pages\\ListPosts',
-    'app.filament.pages.dashboard' => 'App\\Filament\\Pages\\Dashboard',
-    'filament.pages.dashboard' => 'Filament\\Pages\\Dashboard',
     'app.filament.widgets.account-widget' => 'App\\Filament\\Widgets\\AccountWidget',
     'app.filament.widgets.stats-overview' => 'App\\Filament\\Widgets\\StatsOverview',
     'filament.livewire.database-notifications' => 'Filament\\Livewire\\DatabaseNotifications',
@@ -28,16 +26,12 @@
   ),
   'pages' => 
   array (
-    '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Pages/Dashboard.php' => 'App\\Filament\\Pages\\Dashboard',
-    0 => 'Filament\\Pages\\Dashboard',
   ),
   'pageDirectories' => 
   array (
-    0 => '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Pages',
   ),
   'pageNamespaces' => 
   array (
-    0 => 'App\\Filament\\Pages',
   ),
   'resources' => 
   array (
