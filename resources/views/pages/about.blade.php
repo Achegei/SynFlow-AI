@@ -24,68 +24,92 @@
             <h3 class="text-3xl font-bold text-center text-gray-900">Meet Our Team</h3>
             
             <!-- Founders -->
-            <div class="mt-8">
-                <h4 class="text-xl font-semibold text-gray-700 text-center">Founders</h4>
-                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Milan Tahliani -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Milan Tahliani</h5>
+<!-- Founders -->
+            <div class="mt-12 text-center">
+                <h4 class="text-2xl font-semibold text-gray-700">Founders</h4>
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center">
+                    <!-- Laban Ekitela -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                            <img src="{{ asset('images/laban.jpeg') }}" alt="Laban Ekitela" class="w-full h-full object-cover">
+                        </div>
+                        <h5 class="text-lg font-bold text-gray-900">Laban Ekitela</h5>
                         <p class="mt-1 text-sm text-gray-500">Co-Founder & CEO</p>
                         <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
                     </div>
-                    <!-- Nate Herkelman -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Nate Herkelman</h5>
+                    <!-- Ali Mohammed -->
+                    <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                        <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                            <img src="{{ asset('images/Ali.jpeg') }}" alt="Ali Mohammed" class="w-full h-full object-cover">
+                        </div>
+                        <h5 class="text-lg font-bold text-gray-900">Ali Mohammed</h5>
                         <p class="mt-1 text-sm text-gray-500">Co-Founder & CGO</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
-                    <!-- Tyler Baughcome -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Tyler Baughcome</h5>
-                        <p class="mt-1 text-sm text-gray-500">Co-Founder & CTO</p>
                         <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
                     </div>
                 </div>
             </div>
 
             <!-- Team -->
-            <div class="mt-12">
-                <h4 class="text-xl font-semibold text-gray-700 text-center">Team</h4>
-                <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Martin Oosthuizen -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Martin Oosthuizen</h5>
-                        <p class="mt-1 text-sm text-gray-500">Vice President of Engineering</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
-                    <!-- Sandeep Parthakar -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Sandeep Parthakar</h5>
-                        <p class="mt-1 text-sm text-gray-500">Technical Account Executive</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
-                    <!-- Vishal Hada -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Vishal Hada</h5>
-                        <p class="mt-1 text-sm text-gray-500">AI Project Manager</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
-                    <!-- Deepankar Bhadrasen -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Deepankar Bhadrasen</h5>
-                        <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
-                    <!-- Ishan Bhargava -->
-                    <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                        <h5 class="text-lg font-bold text-gray-900">Ishan Bhargava</h5>
-                        <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
-                        <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
-                    </div>
+    <div class="mt-12 text-center">
+        <h4 class="text-2xl font-semibold text-gray-700">Team</h4>
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            <!-- John Doe -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="John Doe" class="w-full h-full object-cover">
                 </div>
+                <h5 class="text-lg font-bold text-gray-900">John Doe</h5>
+                <p class="mt-1 text-sm text-gray-500">Vice President of Engineering</p>
+                <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+            </div>
+            <!-- Jane Smith -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="Jane Smith" class="w-full h-full object-cover">
+                </div>
+                <h5 class="text-lg font-bold text-gray-900">Jane Smith</h5>
+                <p class="mt-1 text-sm text-gray-500">Technical Account Executive</p>
+                <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+            </div>
+            <!-- Foo Baz -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="Foo Baz" class="w-full h-full object-cover">
+                </div>
+                <h5 class="text-lg font-bold text-gray-900">Foo Baz</h5>
+                <p class="mt-1 text-sm text-gray-500">AI Project Manager</p>
+                <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+            </div>
+            <!-- Placeholder 1 -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="Placeholder 1" class="w-full h-full object-cover">
+                </div>
+                <h5 class="text-lg font-bold text-gray-900">Alice Johnson</h5>
+                <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
+                <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
+            </div>
+            <!-- Placeholder 2 -->
+            <div class="bg-white rounded-lg shadow-md p-6 text-center w-64">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-4">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="Placeholder 2" class="w-full h-full object-cover">
+                </div>
+                <h5 class="text-lg font-bold text-gray-900">Bob Williams</h5>
+                <p class="mt-1 text-sm text-gray-500">AI Engineer</p>
+                <a href="#" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium inline-block">LinkedIn</a>
             </div>
         </div>
+    </div>
 
+        <!-- Section Heading -->
+        <div class="text-center mt-16">
+            <h2 class="text-3xl font-extrabold text-gray-900">
+                What Our Team Does
+            </h2>
+            <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
+                Our team specializes in designing, implementing, and managing AI solutions that transform business operations, improve efficiency, and drive measurable results.
+            </p>
+        </div>
         <!-- Service Descriptions Section -->
         <div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Custom AI Agent Engineering -->

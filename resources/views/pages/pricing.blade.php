@@ -3,17 +3,39 @@
 @section('title', 'AI Development Partner Package - TrueHorizon')
 
 @section('content')
-    <div class="container mx-auto px-4 py-16 text-center">
-        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-            <span class="block">AI Development Partner Package</span>
-        </h1>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500 md:mt-5 md:text-xl">
-            At SynFlow AI, we act as your dedicated AI partner—focused on identifying and executing the highest ROI opportunities for automation within your business.
-        </p>
-        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-500 md:mt-5 md:text-xl">
-            Our mission is to help you and your team reclaim valuable hours each week by designing intelligent systems that eliminate repetitive tasks, streamline workflows, and scale with your operations. Over time, these time savings compound into massive gains in efficiency, productivity, and growth.
-        </p>
+   <div class="container mx-auto px-4 py-12 text-center">
+            <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-5xl">
+                <span class="block text-indigo-600">AI Development Partner Package</span>
+            </h1>
+
+            <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700 md:text-xl">
+                SynFlow AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, focused on high-ROI automation opportunities.
+            </p>
+
+            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+                <div class="flex items-start space-x-3">
+                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p><span class="font-semibold text-gray-900">Reclaim hours:</span> Automate repetitive tasks and streamline workflows.</p>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p><span class="font-semibold text-gray-900">Scale easily:</span> Build intelligent systems that grow with your business.</p>
+                </div>
+
+                <div class="flex items-start space-x-3">
+                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <p><span class="font-semibold text-gray-900">Maximize efficiency:</span> Convert saved time into higher productivity and growth.</p>
+                </div>
+            </div>
     </div>
+
 
     <div class="bg-gray-50 py-16">
         <div class="container mx-auto px-4 text-center">
@@ -75,138 +97,186 @@
             <div class="mt-8 md:mt-0 md:w-1/2 flex justify-center"> {{-- Image on the right --}}
                 <img src="{{ asset('images/post_deployment_management.png') }}" alt="Post-Deployment Solution Management" class="max-w-full h-auto rounded-lg shadow-lg">
             </div>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                What Sets Our Development Partnership Apart
-            </h2>
-            <p class="mt-4 max-w-3xl mx-auto text-gray-500">
-                Every SynFlow development partnership includes access to:
-            </p>
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/ai_ml.png" alt="AI/ML Engineers" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">AI/ML Engineers</h3>
-    </div>
-    
-    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/business_consultant.png" alt="Business Process Consultants" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Business Process Consultants</h3>
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    What Sets Our Development Partnership Apart
+                </h2>
+                <p class="mt-4 max-w-3xl mx-auto text-gray-500">
+                    Every SynFlow development partnership includes access to:
+                </p>
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/ai_ml.png') }}" alt="AI/ML Engineers" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">AI/ML Engineers</h3>
+                    </div>
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/business_consultant.png') }}" alt="Business Process Consultants" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Business Process Consultants</h3>
+                    </div>
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/data_scientist.png') }}" alt="Data Scientists" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Data Scientists</h3>
+                    </div>
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/solution_architect.png') }}" alt="Solution Architects" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Solution Architects</h3>
+                    </div>
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/project_manager.png') }}" alt="Project Managers" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Project Managers</h3>
+                    </div>
+                    
+                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
+                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
+                            <img src="{{ asset('images/ui_ux_specialist.png') }}" alt="UX/UI Specialists" class="w-30 h-30 object-contain">
+                        </div>
+                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">UX/UI Specialists</h3>
+                    </div>
+                </div>
+            </div>
     </div>
 
-    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/data_scientist.png" alt="Data Scientists" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Data Scientists</h3>
-    </div>
 
-    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/solution_architect.png" alt="Solution Architects" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Solution Architects</h3>
-    </div>
-    
-    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/project_manager.png" alt="Project Managers" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Project Managers</h3>
-    </div>
-    
-    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 md:w-16 md:h-16 bg-indigo-600 rounded-lg mb-3 md:mb-4 flex items-center justify-center">
-            <img src="public/assets/ui_ux_specialist.png" alt="UX/UI Specialists" class="w-8 h-8 md:w-10 md:h-10 object-contain">
-        </div>
-        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">UX/UI Specialists</h3>
-    </div>
-</div>
-        </div>
-    </div>
-
-    <div class="py-16">
-    <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-            <div>
+    <div class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4 text-center">
                 <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                     Flexible Resource Allocation
                 </h2>
-                <p class="mt-4 text-gray-500">
-                    Allocate your monthly hours across:
+                <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
+                    Allocate your monthly hours across multiple AI and business initiatives:
                 </p>
-            </div>
-            <div>
-                <ul class="space-y-4 text-lg text-gray-700">
-                    <li class="flex items-start">
-                        <svg class="h-6 w-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Custom AI system development</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="h-6 w-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Integration with existing systems and data sources</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="h-6 w-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Data pipeline engineering and optimization</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="h-6 w-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Business process optimization and automation</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="h-6 w-6 text-indigo-600 mr-3 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Team training and knowledge transfer</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
 
-    <div class="bg-light-600 py-16 text-indigo-600">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Transparent Process
-        </h2>
-        
-        <div class="mt-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
-            <ul class="inline-flex space-x-6 lg:space-x-12 px-2">
-                <li class="inline-block p-4 bg-indigo-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-lg font-medium">Clear documentation of all work completed</p>
-                </li>
-                <li class="inline-block p-4 bg-indigo-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-lg font-medium">Regular progress updates and demonstrations</p>
-                </li>
-                <li class="inline-block p-4 bg-indigo-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-lg font-medium">Collaborative planning sessions</p>
-                </li>
-                <li class="inline-block p-4 bg-indigo-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                    <p class="text-lg font-medium">Detailed time tracking and reporting</p>
-                </li>
-            </ul>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-700 font-medium">Custom AI system development</p>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-700 font-medium">Integration with existing systems and data sources</p>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-700 font-medium">Data pipeline engineering and optimization</p>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-700 font-medium">Business process optimization and automation</p>
+                    </div>
+
+                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex-shrink-0">
+                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <p class="text-gray-700 font-medium">Team training and knowledge transfer</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-    </div>
-</div>
+
+
+    <div class="bg-indigo-50 py-16 text-indigo-600">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                    Transparent Process
+                </h2>
+                <p class="mt-4 text-gray-700 max-w-2xl mx-auto">
+                    Our process is designed to keep you informed, involved, and confident every step of the way.
+                </p>
+
+                <!-- Workflow -->
+                <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6">
+                    
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
+                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">1</div>
+                        <p class="text-lg font-medium">Clear documentation of all work completed</p>
+                    </div>
+                    
+                    <!-- Arrow -->
+                    <div class="hidden md:flex items-center">
+                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
+                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">2</div>
+                        <p class="text-lg font-medium">Regular progress updates and demonstrations</p>
+                    </div>
+                    
+                    <!-- Arrow -->
+                    <div class="hidden md:flex items-center">
+                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
+                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">3</div>
+                        <p class="text-lg font-medium">Collaborative planning sessions</p>
+                    </div>
+                    
+                    <!-- Arrow -->
+                    <div class="hidden md:flex items-center">
+                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
+                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">4</div>
+                        <p class="text-lg font-medium">Detailed time tracking and reporting</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     <div class="py-16 text-center">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
