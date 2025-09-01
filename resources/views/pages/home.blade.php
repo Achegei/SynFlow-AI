@@ -4,157 +4,190 @@
 <style>
 /* CSS for the sliding animation */
 @keyframes slide {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 .animate-slide {
     animation: slide 30s linear infinite;
 }
+
+/* Accordion transition */
 .accordion-content {
-            transition: max-height 0.3s ease-in-out;
-        }
+    transition: max-height 0.3s ease-in-out;
+}
 </style>
 
 @section('content')
-    <div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-        <span class="block">We build intelligent AI Solutions</span>
-        <span class="block text-indigo-600">designed for business growth.</span>
-    </h1>
-    <p class="mt-4 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-        Unlock untapped potential with safe, responsible, and powerful AI solutions.
-    </p>
-    <div class="mt-8 flex justify-center">
-        <img src="{{asset('images/Business-Growth-Graph.png')}}" alt="A line graph showing significant business growth over time." class="w-full max-w-2xl rounded-lg shadow-xl">
-    </div>
-    <div class="mt-8 flex justify-center space-x-4">
-        <a href="{{ route('services') }}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-            Explore Services
-        </a>
-        <a href="{{route('contactus')}}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
-            Get Started
-        </a>
-    </div>
-</div>
+    <section class="relative min-h-screen bg-gray-900 flex items-center justify-center text-center px-4 sm:px-6 lg:px-8">
+        <div class="absolute inset-0">
+            <img src="{{ asset('images/ai-hero-bg.jpg') }}" alt="AI background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/25"></div>
+        </div>
+
+        <div class="relative max-w-3xl">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
+                <span class="block">We build intelligent AI Solutions</span>
+                <span class="block text-indigo-500 mt-2">for measurable business growth.</span>
+            </h1>
+            <p class="mt-6 text-lg sm:text-xl text-gray-300">
+                Transform repetitive workflows into automated, intelligent processes.
+            </p>
+            <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                <a href="{{ route('services') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
+                    Explore Services
+                </a>
+                <a href="{{ route('contactus') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </section>
+
 
     <!-- New Section: Impact & Results -->
     
-                <div class="container mx-auto px-4 text-center">
-                    <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                        Collaborating with Leading Brands
-                    </h2>
-                    <div class="mt-8 relative overflow-hidden h-24">
-                        <div class="absolute inset-0 flex items-center justify-start brand-slide-container">
-                            <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
-                                <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
-                                <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
-                                <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
-                                <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
-                                <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
-                                <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
-                            </div>
-                            <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
-                                <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
-                                <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
-                                <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
-                                <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
-                                <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
-                                <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
-                            </div>
-                        </div>
+                <!-- Collaborating Brands Slider -->
+        <div class="container mx-auto px-4 text-center py-12">
+            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl mb-6">
+                Collaborating with Leading Brands
+            </h2>
+            <div class="relative overflow-hidden h-20">
+                <div class="absolute inset-0 flex items-center justify-start space-x-12">
+                    <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
+                        <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
+                        <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
+                        <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
+                        <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
+                        <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
+                        <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
+                    </div>
+                    <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
+                        <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
+                        <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
+                        <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
+                        <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
+                        <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
+                        <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="py-16">
-                    <div class="container mx-auto px-4">
-                        <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
-                            <div class="md:text-left">
-                                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                                    Everything You Need In One Place
-                                </h2>
-                                <p class="mt-4 text-xl text-gray-500">
-                                    Powerful features designed to make your business seamless.
-                                </p>
-                                <div class="mt-8 space-y-8">
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="text-lg font-bold text-gray-900">Custom AI agent engineering</h3>
-                                            <p class="mt-1 text-gray-600">
-                                                We design, deploy, and maintain custom AI agents specifically tailored to your business growth goals.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="text-lg font-bold text-gray-900">Fully Managed automation pipelines</h3>
-                                            <p class="mt-1 text-gray-600">
-                                                Robust data infrastructure and ingestion processes are a critical component in how we build out our systems.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v.01M16 12v.01M16 16v.01M12 8v.01M12 12v.01M12 16v.01M8 8v.01M8 12v.01M8 16v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="text-lg font-bold text-gray-900">Performance analytic dashboard</h3>
-                                            <p class="mt-1 text-gray-600">
-                                                Easily track ROI and efficiency gains with custom metrics on your AI agent's performance.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="text-lg font-bold text-gray-900">Intelligent access control</h3>
-                                            <p class="mt-1 text-gray-600">
-                                                Manage agent permissions with your teams to ensure secure operations across your organization.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <div class="flex-shrink-0">
-                                            <svg class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h3 class="text-lg font-bold text-gray-900">Secure and compliant protocols</h3>
-                                            <p class="mt-1 text-gray-600">
-                                                Technology architecture that is fully hosted in the cloud, ensuring compliance with SOC-2, ISO, and other industry standards.
-                                            </p>
-                                        </div>
+
+    <div class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
+                    <!-- Left Text & Features -->
+                    <div class="md:text-left">
+                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                            Everything You Need In One Place
+                        </h2>
+                        <p class="mt-4 text-xl text-gray-500">
+                            Powerful features designed to make your business seamless.
+                        </p>
+
+                        <div class="mt-8 space-y-6">
+                            <!-- Feature Item -->
+                            <div class="flex items-start gap-4 group">
+                                <div class="flex-shrink-0">
+                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
+                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" />
+                                        </svg>
                                     </div>
                                 </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
+                                        Custom AI agent engineering
+                                    </h3>
+                                    <p class="mt-1 text-gray-600">
+                                        We design, deploy, and maintain custom AI agents specifically tailored to your business growth goals.
+                                    </p>
+                                </div>
                             </div>
-                            <div class="mt-12 md:mt-0">
-                                <img class="rounded-lg shadow-xl" src="{{asset('images/AI-Solutions.png')}}" alt="A visual representation of an all-in-one platform with various icons.">
+
+                            <div class="flex items-start gap-4 group">
+                                <div class="flex-shrink-0">
+                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
+                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
+                                        Fully Managed automation pipelines
+                                    </h3>
+                                    <p class="mt-1 text-gray-600">
+                                        Robust data infrastructure and ingestion processes are a critical component in how we build out our systems.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 group">
+                                <div class="flex-shrink-0">
+                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
+                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v.01M16 12v.01M16 16v.01M12 8v.01M12 12v.01M12 16v.01M8 8v.01M8 12v.01M8 16v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
+                                        Performance analytic dashboard
+                                    </h3>
+                                    <p class="mt-1 text-gray-600">
+                                        Easily track ROI and efficiency gains with custom metrics on your AI agent's performance.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 group">
+                                <div class="flex-shrink-0">
+                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
+                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
+                                        Intelligent access control
+                                    </h3>
+                                    <p class="mt-1 text-gray-600">
+                                        Manage agent permissions with your teams to ensure secure operations across your organization.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 group">
+                                <div class="flex-shrink-0">
+                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
+                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
+                                        Secure and compliant protocols
+                                    </h3>
+                                    <p class="mt-1 text-gray-600">
+                                        Technology architecture that is fully hosted in the cloud, ensuring compliance with SOC-2, ISO, and other industry standards.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Right Image -->
+                    <div class="mt-12 md:mt-0">
+                        <img class="rounded-lg shadow-xl hover:scale-105 transition-transform duration-500" src="{{asset('images/AI-Solutions.png')}}" alt="A visual representation of an all-in-one platform with various icons.">
+                    </div>
                 </div>
+            </div>
+    </div>
 
 
                 <div class="py-16">
