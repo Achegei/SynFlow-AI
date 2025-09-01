@@ -7,17 +7,33 @@
     @include('pages.sidebar')
 <div class="max-w-4xl mx-auto">
     <header class="text-center">
-        <p class="text-sm font-semibold text-gray-500">
-            <span class="inline-block">Ali, Co-Founder</span> | May 18th, 2025
+        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2">
+                    <img src="{{ asset('images/laban.jpeg') }}" alt="Laban Ekitela" class="w-8 h-8 rounded-full object-cover shadow-sm">
+                    <span class="flex items-center space-x-2">
+                        <span>Laban Ekitela</span>
+                        <span class="text-gray-400 font-normal">|</span>
+                        <span>Co-Founder</span>
+                        <span class="text-gray-400 font-normal">|</span>
+                        <span>May 19th, 2025</span>
+                    </span>
         </p>
-        <h1 class="mt-4 text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl">Deep Research PDF Report</h1>
+        <h1 class="mt-4 text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl text-center">
+            Deep Research PDF Report
+        </h1>
+
         <div class="mt-6 flex justify-center space-x-4">
-            <a href="#back" class="text-indigo-600 hover:underline">← Back to Agents</a>
-            <a href="/path/to/your/resource_file.pdf" download class="text-indigo-600 hover:underline">Download Resource File</a>
+            <a href="#back"
+            class="px-6 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition">
+                ← Back to Agents
+            </a>
+            <a href="/path/to/your/resource_file.pdf" download
+            class="px-6 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
+                ⬇ Download Resource File
+            </a>
         </div>
     </header>
 
-    <div class="mt-12">
+    <div class="mt-12 text-center max-w-3xl mx-auto">
         <h2 class="text-3xl font-bold text-gray-900">Overview</h2>
         <p class="mt-4 text-lg text-gray-600">
             This specialized AI agent is designed to conduct in-depth research and compile its findings into comprehensive, well-structured PDF reports. It is ideal for tasks requiring detailed analysis and clear, professional output.
@@ -26,7 +42,7 @@
 
     <hr class="my-12 border-gray-300">
 
-    <section>
+    <section class="mt-12 max-w-3xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900">Core Functionality</h2>
         <p class="mt-4 text-lg text-gray-600">
             The agent's key features include:
@@ -40,7 +56,7 @@
 
     <hr class="my-12 border-gray-300">
 
-    <section>
+    <section class="mt-12 max-w-3xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-gray-900">How to Use</h2>
         <p class="mt-4 text-lg text-gray-600">
             To get started, you can use our pre-built Google Sheets template. Simply populate the sheet with your research parameters, and the agent will handle the rest.

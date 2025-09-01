@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-    <aside class="w-64 bg-gray-100 dark:bg-gray-800 p-6 h-screen overflow-y-auto sticky top-0">
+    <aside class="w-48 bg-gray-100 dark:bg-gray-800 p-6 h-screen overflow-y-auto sticky top-0">
         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Documentation</h3>
         
         <div class="mb-6">
