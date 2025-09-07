@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class CommunityDashboardController extends Controller
 {
-    public function index(): View
+    public function community(): View
     {
         // Fetch posts with their authors, categories, comments, and likes, and paginate them
         $posts = Post::with(['author', 'category', 'comments', 'likes'])

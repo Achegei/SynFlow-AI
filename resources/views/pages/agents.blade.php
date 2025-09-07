@@ -7,7 +7,7 @@
     @include('pages.sidebar')
 <div class="max-w-4xl mx-auto">
     <header class="text-center">
-        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2">
+        <p class="text-sm font-semibold text-gray-500 flex items-center justify-center gap-2">
                     <img src="{{ asset('images/laban.jpeg') }}" alt="Laban Ekitela" class="w-8 h-8 rounded-full object-cover shadow-sm">
                     <span class="flex items-center space-x-2">
                         <span>Laban Ekitela</span>
@@ -24,7 +24,7 @@
             <p class="text-lg text-gray-600 leading-relaxed">
                 Our AI agents are designed for practical use and easy integration. Each agent shares a common core of features, ensuring consistency across our product line while allowing for specialized functionality to meet your unique business needs.
             </p>
-            <div class="mt-8 rounded-xl overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+            <div class="mt-8 rounded-xl overflow-hidden shadow-lg bg-white">
                 <!-- Example: place an image or video here -->
                 <img src="{{ asset('images/ai-agents.jpg') }}" alt="AI Agents" class="w-full h-auto object-cover">
             </div>

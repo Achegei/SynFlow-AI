@@ -2,42 +2,37 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Services\GeocodingService;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'username',
+        'is_admin', 
+        'location',
+        'bio',
+        'latitude',  
+        'longitude',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
+
     protected function casts(): array
     {
         return [
@@ -45,18 +40,34 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relationships
     public function posts()
-{
-    return $this->hasMany(Post::class);
-}
+    {
+        return $this->hasMany(Post::class);
+    }
 
-public function comments()
-{
-    return $this->hasMany(Comment::class);
-}
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
-public function likes()
-{
-    return $this->hasMany(Like::class);
-}
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    // Hook into model events
+    protected static function booted()
+    {
+        static::saving(function ($user) {
+            if ($user->isDirty('location') && $user->location) {
+                $coords = GeocodingService::geocode($user->location);
+                if ($coords) {
+                    $user->latitude = $coords['lat'];
+                    $user->longitude = $coords['lng'];
+                }
+            }
+        });
+    }
 }

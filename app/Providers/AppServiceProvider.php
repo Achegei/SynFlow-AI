@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use App\Models\User; // Don't forget to import the User model
+use App\Observers\UserObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
             // Share the variables with the view
             $view->with(compact('membersCount', 'adminsCount', 'onlineMembers'));
         });
+        // Register User observer
+            User::observe(UserObserver::class);
     }
 }

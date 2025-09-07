@@ -27,10 +27,10 @@
              width: 8px; 
          } 
          .custom-scrollbar::-webkit-scrollbar-track { 
-             background: #1f2937; /* dark:bg-gray-800 */ 
+             background: #1f2937; /* */ 
          } 
          .custom-scrollbar::-webkit-scrollbar-thumb { 
-             background-color: #4b5563; /* dark:bg-gray-600 */ 
+             background-color: #4b5563; /* */ 
              border-radius: 4px; 
              border: 2px solid #1f2937; 
          } 
@@ -54,25 +54,25 @@
          <!-- Header --> 
          <header class="text-center"> 
              <h1 class="text-3xl font-bold mb-2">Community Leaderboard</h1> 
-             <p class="text-gray-500 dark:text-gray-400 text-sm"> 
+             <p class="text-gray-500 text-sm"> 
                  Last updated: <span id="last-updated">{{ $lastUpdated ?? 'Not available' }}</span> | Total Members: <span id="member-count">{{ $nonAdminMembers ?? '...' }}</span> 
              </p>
          </header> 
  
          <!-- User's Benchmark Section (Conditionally Rendered) --> 
          @if(isset($currentUser)) 
-             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8"> 
+             <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-8"> 
                  <!-- User Avatar and Points Section --> 
                  <div class="flex-shrink-0 flex flex-col items-center space-y-4"> 
                      <img src="{{ $currentUser->profile_photo_url ?? 'https://placehold.co/100x100/A5B4FC/4338CA?text=LE' }}" alt="{{ $currentUser->name ?? 'User' }}" class="w-24 h-24 rounded-full border-2 border-indigo-500 shadow-md"> 
                      <div class="flex items-center space-x-4"> 
-                         <div class="bg-indigo-50 dark:bg-indigo-900 p-3 rounded-xl text-center"> 
-                             <p class="text-xl font-bold text-indigo-600 dark:text-indigo-400">{{ $currentUser->points_to_level_up ?? '5' }}</p> 
-                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">points to level up</p> 
+                         <div class="bg-indigo-50 p-3 rounded-xl text-center"> 
+                             <p class="text-xl font-bold text-indigo-600">{{ $currentUser->points_to_level_up ?? '5' }}</p> 
+                             <p class="text-xs text-gray-500 mt-1">points to level up</p> 
                          </div> 
-                         <div class="bg-indigo-50 dark:bg-indigo-900 p-3 rounded-xl text-center"> 
-                             <p class="text-xl font-bold text-indigo-600 dark:text-indigo-400">{{ $currentUser->member_percentage ?? '87' }}%</p> 
-                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">of members</p> 
+                         <div class="bg-indigo-50 p-3 rounded-xl text-center"> 
+                             <p class="text-xl font-bold text-indigo-600">{{ $currentUser->member_percentage ?? '87' }}%</p> 
+                             <p class="text-xs text-gray-500 mt-1">of members</p> 
                          </div> 
                      </div> 
                  </div> 
@@ -87,9 +87,9 @@
                              <ul class="space-y-2"> 
                                  @foreach(collect($levels ?? [])->slice(0, 5) as $level) 
                                      <li class="flex items-center space-x-2 text-sm"> 
-                                         <span class="font-bold text-gray-400 dark:text-gray-500">Level {{ $level['level'] }}</span> 
-                                         <span class="flex-1 border-b border-gray-200 dark:border-gray-700 border-dotted"></span> 
-                                         <span class="text-gray-500 dark:text-gray-400">{{ $level['percentage'] }}% of members</span> 
+                                         <span class="font-bold text-gray-400">Level {{ $level['level'] }}</span> 
+                                         <span class="flex-1 border-b border-gray-200 border-dotted"></span> 
+                                         <span class="text-gray-500">{{ $level['percentage'] }}% of members</span> 
                                      </li> 
                                  @endforeach 
                              </ul> 
@@ -100,9 +100,9 @@
                              <ul class="space-y-2"> 
                                  @foreach(collect($levels ?? [])->slice(5, 9) as $level) 
                                      <li class="flex items-center space-x-2 text-sm"> 
-                                         <span class="font-bold text-gray-400 dark:text-gray-500">Level {{ $level['level'] }}</span> 
-                                         <span class="flex-1 border-b border-gray-200 dark:border-gray-700 border-dotted"></span> 
-                                         <span class="text-gray-500 dark:text-gray-400">{{ $level['percentage'] }}% of members</span> 
+                                         <span class="font-bold text-gray-400">Level {{ $level['level'] }}</span> 
+                                         <span class="flex-1 border-b border-gray-200 border-dotted"></span> 
+                                         <span class="text-gray-500">{{ $level['percentage'] }}% of members</span> 
                                      </li> 
                                  @endforeach 
                              </ul> 
@@ -111,7 +111,7 @@
                  </div> 
              </div> 
          @else 
-             <div class="text-center text-gray-500 dark:text-gray-400 p-8"> 
+             <div class="text-center text-gray-500 p-8"> 
                  <p>Please log in to see your personal benchmark.</p> 
              </div> 
          @endif 
@@ -119,7 +119,7 @@
          <!-- Leaderboard Sections in 3 Cards --> 
          <div class="card-container"> 
              <!-- 7-Day Leaderboard Card --> 
-             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
+             <div class="bg-white rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
                  <h2 class="text-xl font-bold mb-4 text-center">Leaderboard (7-day)</h2> 
                  <ul class="space-y-2 leaderboard-list"> 
                      @forelse($leaderboard7Day ?? [] as $key => $user) 
@@ -132,7 +132,7 @@
                                      <span class="text-yellow-400 text-lg ml-1">🔥</span> 
                                  @endif 
                              </div> 
-                             <span class="font-semibold text-gray-600 dark:text-gray-400">+{{ number_format($user['score'] ?? 0) }}</span> 
+                             <span class="font-semibold text-gray-600">+{{ number_format($user['score'] ?? 0) }}</span> 
                          </li> 
                      @empty 
                          <li class="text-center text-gray-400">No data available.</li> 
@@ -141,7 +141,7 @@
              </div> 
  
              <!-- 30-Day Leaderboard Card --> 
-             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
+             <div class="bg-white rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
                  <h2 class="text-xl font-bold mb-4 text-center">Leaderboard (30-day)</h2> 
                  <ul class="space-y-2 leaderboard-list"> 
                      @forelse($leaderboard30Day ?? [] as $key => $user) 
@@ -154,7 +154,7 @@
                                      <span class="text-yellow-400 text-lg ml-1">🔥</span> 
                                  @endif 
                              </div> 
-                             <span class="font-semibold text-gray-600 dark:text-gray-400">+{{ number_format($user['score'] ?? 0) }}</span> 
+                             <span class="font-semibold text-gray-600">+{{ number_format($user['score'] ?? 0) }}</span> 
                          </li> 
                      @empty 
                          <li class="text-center text-gray-400">No data available.</li> 
@@ -163,7 +163,7 @@
              </div> 
  
              <!-- All-Time Leaderboard Card --> 
-             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
+             <div class="bg-white rounded-2xl shadow-lg p-4 custom-scrollbar overflow-y-auto max-h-[400px]"> 
                  <h2 class="text-xl font-bold mb-4 text-center">Leaderboard (all-time)</h2> 
                  <ul class="space-y-2 leaderboard-list"> 
                      @forelse($leaderboardAllTime ?? [] as $key => $user) 
@@ -176,7 +176,7 @@
                                      <span class="text-yellow-400 text-lg ml-1">🔥</span> 
                                  @endif 
                              </div> 
-                             <span class="font-semibold text-gray-600 dark:text-gray-400">{{ number_format($user['score'] ?? 0) }}</span> 
+                             <span class="font-semibold text-gray-600">{{ number_format($user['score'] ?? 0) }}</span> 
                          </li> 
                      @empty 
                          <li class="text-center text-gray-400">No data available.</li> 

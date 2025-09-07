@@ -1,6 +1,10 @@
 <?php return array (
   'livewireComponents' => 
   array (
+    'app.filament.resources.event-resource.pages.create-event' => 'App\\Filament\\Resources\\EventResource\\Pages\\CreateEvent',
+    'app.filament.resources.event-resource.pages.edit-event' => 'App\\Filament\\Resources\\EventResource\\Pages\\EditEvent',
+    'app.filament.resources.event-resource.pages.list-events' => 'App\\Filament\\Resources\\EventResource\\Pages\\ListEvents',
+    'app.filament.resources.event-resource.pages.view-event' => 'App\\Filament\\Resources\\EventResource\\Pages\\ViewEvent',
     'app.filament.resources.post-resource.pages.create-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\CreatePost',
     'app.filament.resources.post-resource.pages.edit-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\EditPost',
     'app.filament.resources.post-resource.pages.list-posts' => 'App\\Filament\\Resources\\PostResource\\Pages\\ListPosts',
@@ -35,6 +39,7 @@
   ),
   'resources' => 
   array (
+    '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/EventResource.php' => 'App\\Filament\\Resources\\EventResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/PostResource.php' => 'App\\Filament\\Resources\\PostResource',
   ),
   'resourceDirectories' => 

@@ -7,7 +7,7 @@
     @include('pages.sidebar')
 <div class="max-w-4xl mx-auto">
     <header class="text-center">
-        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2">
+        <p class="text-sm font-semibold text-gray-500 flex items-center justify-center gap-2">
                     <img src="{{ asset('images/laban.jpeg') }}" alt="Laban Ekitela" class="w-8 h-8 rounded-full object-cover shadow-sm">
                     <span class="flex items-center space-x-2">
                         <span>Laban Ekitela</span>

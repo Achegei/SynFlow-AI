@@ -1,27 +1,23 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CommunityDashboardController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseAdminController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\MapController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| This file organizes all web routes into logical, commented groups.
-|   1. Public Routes: Accessible to all visitors.
-|   2. Authentication Routes: Handled by Laravel Breeze.
-|   3. Authenticated Routes: Require a logged-in user.
-|   4. Admin Routes: Require both authentication and admin privileges.
-|
-*/
+Route::get('/', function () {
+    return view('welcome');
+});
 
 //================================================
 // 1. Public-Facing Site Routes
@@ -45,6 +41,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/newsletter-creation', 'newsletter')->name('newsletter');
     Route::get('/rag-pipeline', 'rag')->name('rag');
     Route::get('/faceless-shorts', 'shorts')->name('shorts');
+    Route::get('/faqs', 'faqs')->name('faqs');
 });
 
 Route::controller(CareerController::class)->group(function () {
@@ -55,51 +52,47 @@ Route::controller(CareerController::class)->group(function () {
     Route::get('/careers/{position}', 'show')->name('careers.description');
 });
 
-// A standalone public route for the map
-Route::get('/map', function () {
-    return view('map');
-})->name('map');
-Route::get('/book-engagement', function () {
-    return view('booking');
-})->name('book-engagement');
 
-
+Route::get('/dashboard', [CommunityDashboardController::class, 'community'])
+    ->middleware(['auth'])
+    ->name('dashboard');
 //================================================
 // 2. Authentication Routes (Provided by Breeze)
 //================================================
-require __DIR__.'/auth.php';
 
+require __DIR__.'/auth.php';
 
 //================================================
 // 3. Authenticated User Routes (Clients & Members)
 //================================================
 Route::middleware('auth')->group(function () {
-    // The main dashboard page
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware('verified')->name('dashboard');
+    // Static pages for authenticated users
 
-    // User profile management
-    Route::controller(ProfileController::class)->group(function () {
-        Route::get('/profile', 'edit')->name('profile.edit');
-        Route::patch('/profile', 'update')->name('profile.update');
-        Route::delete('/profile', 'destroy')->name('profile.destroy');
-    });
+    Route::get('/community', [CommunityDashboardController::class, 'community'])->name('community');
+    Route::get('/leaderboards', [CommunityDashboardController::class, 'showLeaderboard'])->name('leaderboards');
+    Route::get('/members', [CommunityDashboardController::class, 'members'])->name('members');
+    Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom');
+    Route::get('/classroom/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
+    
+    // Calendar (browse by month/year, defaults to current if not provided)
+    Route::get('/calendar', [CalendarController::class, 'index'])
+    ->name('calendar');
 
-    // Community and leaderboard pages
-    Route::controller(CommunityDashboardController::class)->group(function () {
-        Route::get('/community', 'index')->name('community.dashboard');
-        Route::get('/community/leaderboard', 'showLeaderboard')->name('community.leaderboard');
-        Route::get('/members', 'members')->name('community.members');
-    });
 
-    // Classroom routes
-    Route::prefix('classroom')->name('classroom.')->group(function () {
-        Route::get('/', [ClassroomController::class, 'index'])->name('index');
-        Route::get('/{course}', [ClassroomController::class, 'show'])->name('course-details');
-    });
+    // Events (bookings)
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
+    Route::get('/map', [MapController::class, 'map'])->name('map');
+    Route::view('/about', 'about')->name('about');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+// User profile management
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+});
 
 //================================================
 // 4. Admin-Only Routes
@@ -118,3 +111,4 @@ Route::middleware(['auth', 'can:access-admin-panel'])->prefix('admin')->name('ad
 
 // This route is fine as it's outside the admin group and points to a public-facing controller.
 Route::get('/videos', [VideoController::class, 'indexPublic'])->name('videos.index');
+
