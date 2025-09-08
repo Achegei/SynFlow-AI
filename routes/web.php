@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'can:access-admin-panel'])->prefix('admin')->name('admin.')->group(function () {
     // Admin routes for course management
     Route::prefix('courses')->name('courses.')->group(function () {
-        Route::get('/create', [CourseAdminController::class, 'create'])->name('create');
+        //Route::get('/create', [CourseAdminController::class, 'create'])->name('create');
         Route::post('/', [CourseAdminController::class, 'store'])->name('store');
     });
 
