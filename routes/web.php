@@ -14,6 +14,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\EpisodeProgressController;
+
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -77,6 +82,11 @@ Route::middleware('auth')->group(function () {
     // Calendar (browse by month/year, defaults to current if not provided)
     Route::get('/calendar', [CalendarController::class, 'index'])
     ->name('calendar');
+
+    Route::post('/episodes/{episode}/watched', [EpisodeProgressController::class, 'markWatched'])
+    ->name('episodes.markWatched');
+    Route::post('/episodes/{episode}/toggle', [EpisodeProgressController::class, 'toggle'])
+    ->name('episodes.toggle');
 
 
     // Events (bookings)

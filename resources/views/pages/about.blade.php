@@ -13,7 +13,7 @@
                 At SynFlow AI, we design, deploy, and maintain custom AI solutions to drive your business growth, seamlessly integrating with over 850 systems.
             </p>
             <div class="mt-8">
-                <a href="#" class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
+                <a href="{{route('careers')}}" class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">
                     We’re Hiring!
                 </a>
             </div>
@@ -71,7 +71,7 @@
 <!-- What Our Team Does -->
 <section class="py-20 bg-white">
     <div class="container mx-auto px-6 text-center">
-        <h2 class="text-3xl font-extrabold text-gray-900">What Our Team Does</h2>
+        <h2 class="text-3xl font-extrabold text-indigo-700">What Our Team Does</h2>
         <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
             Our team specializes in designing, implementing, and managing AI solutions that transform business operations, improve efficiency, and drive measurable results.
         </p>

@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'AI Development Partner Package - TrueHorizon')
+@section('title', 'AI Development Partner Package - SynFlow')
 
 @section('content')
    <div class="container mx-auto px-4 py-12 text-center">

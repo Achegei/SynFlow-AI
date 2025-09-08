@@ -42,6 +42,13 @@ class User extends Authenticatable
     }
 
     // Relationships
+    public function episodes()
+    {
+        return $this->belongsToMany(Episode::class)
+                    ->withPivot('watched')
+                    ->withTimestamps();
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

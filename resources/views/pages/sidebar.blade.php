@@ -66,11 +66,24 @@
         } else {
             agentsIcon.classList.add('rotate-180');
         }
+    });
 
-        // Dark Mode Toggle
+    // 🌙 Dark Mode Toggle
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
 
+    // Apply initial theme
+    if (
+        localStorage.getItem('theme') === 'dark' ||
+        (!('theme' in localStorage) &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+        body.classList.add('dark');
+    } else {
+        body.classList.remove('dark');
+    }
+
+    // Toggle on button click
     darkModeToggle.addEventListener('click', () => {
         body.classList.toggle('dark');
         if (body.classList.contains('dark')) {
@@ -79,13 +92,4 @@
             localStorage.setItem('theme', 'light');
         }
     });
-
-    // Set initial theme based on localStorage
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        body.classList.add('dark');
-    } else {
-        body.classList.remove('dark');
-    }
-    });
-    
 </script>
