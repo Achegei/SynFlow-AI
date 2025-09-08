@@ -34,7 +34,7 @@
                 <x-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
                     {{ __('Leaderboards') }}
                 </x-nav-link>
-                <x-nav-link :href="route('about')" :active="request()->routeIs('about')">
+                <x-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')">
                     {{ __('About') }}
                 </x-nav-link>
             </div>
@@ -118,7 +118,7 @@
             <x-responsive-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
                 {{ __('Leaderboards') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')">
+            <x-responsive-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')">
                 {{ __('About') }}
             </x-responsive-nav-link>
         </div>

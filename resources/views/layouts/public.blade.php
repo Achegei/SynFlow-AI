@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
    <head>
        <meta charset="utf-8">
        <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,12 +30,12 @@
 
 
                        <div class="hidden md:flex space-x-8">
-                           <a href="{{ route('home') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Home</a>
-                           <a href="{{ route('about') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">About</a>
-                           <a href="{{ route('pricing') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Pricing</a>
-                           <a href="{{ route('services') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Services</a>
-                            <a href="{{ route('documentation') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Documentation</a>
-                           <a href="{{ route('contact') }}" class="text-gray-600 hover:text-indigo-600 transition-colors">Contact</a>
+                           <a href="{{ route('home') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Home</a>
+                           <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">About</a>
+                           <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
+                           <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
+                            <a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>
+                           <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
                        </div>
 
 
@@ -46,7 +46,7 @@
                            </a>
                        </div> -->
                        <div class="hidden md:flex items-center space-x-4">
-                           <a href="#" class="text-sm font-medium text-gray-600 hover:text-indigo-600 transition-colors">0737955021</a>
+                           <a href="{{route('register')}}" class="text-sm font-medium text-indigo-700 hover:text-gray-700 transition-colors">Join our School Community</a>
                            <a href="{{ route('contactus') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                                Get Started
                            </a>
@@ -54,6 +54,12 @@
                       
                        <div class="md:hidden">
                            </div>
+                           <!-- Dark Mode Toggle -->
+        <div class="hidden md:flex items-center space-x-4">
+            <button id="dark-mode-toggle" class="w-full text-left py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-200">
+                Dark Mode
+            </button>
+        </div>
                    </nav>
                </div>
            </header>

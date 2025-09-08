@@ -85,10 +85,7 @@
                             </div>
                             <div class="flex flex-wrap items-center justify-center md:justify-end gap-3">
                                 <button class="inline-flex items-center px-4 py-2 bg-indigo-200 hover:bg-indigo-300 text-sm font-medium rounded-full transition-colors">
-                                    Watch 60 sec intro video
-                                </button>
-                                <button id="dismiss-banner-btn" class="inline-flex items-center px-4 py-2 bg-transparent border border-indigo-500 text-sm font-medium rounded-full transition-colors hover:bg-indigo-100">
-                                    Dismiss
+                                    <a href="{{route('auth-about')}}">Watch 60 sec intro video</a>
                                 </button>
                             </div>
                         </div>
@@ -97,10 +94,13 @@
                             <div class="flex items-center space-x-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                                 {{-- Use dynamic variable with a fallback --}}
-                                <span id="qna-banner-text" class="font-semibold">{{ $qnaEventText ?? 'Q&A is happening soon' }}</span>
+                                <span id="qna-banner-text" class="font-semibold">
+                                    {{ $qnaEventText ?? 'Q&A is happening soon' }}
+                                </span>
+
                             </div>
                             <button class="bg-white text-indigo-600 px-4 py-2 rounded-full font-semibold text-sm hover:bg-gray-100 transition-colors">
-                                Join Now
+                                <a href="{{route('calendar')}}">Join Now</a>
                             </button>
                         </div>
 
@@ -165,7 +165,7 @@
 
                         <div class="text-center mt-8">
                             <button id="load-more-btn" class="px-6 py-3 rounded-full bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-colors">
-                                Load 3 new posts
+                                {{$posts->links()}}
                             </button>
                         </div>
                     </div>

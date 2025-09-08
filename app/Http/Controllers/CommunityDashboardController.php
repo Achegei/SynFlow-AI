@@ -5,44 +5,57 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Event;
 use Illuminate\View\View;
 
 class CommunityDashboardController extends Controller
 {
+    /**
+     * Show the community dashboard.
+     */
     public function community(): View
     {
-        // Fetch posts with their authors, categories, comments, and likes, and paginate them
+        // Fetch posts with relationships
         $posts = Post::with(['author', 'category', 'comments', 'likes'])
                      ->latest()
-                     ->paginate(5);
+                     ->paginate(3);
 
-        // Fetch other data for the dashboard
-        $recentPosts = Post::with(['author', 'category'])->latest()->take(3)->get();
+        $recentPosts   = Post::with(['author', 'category'])->latest()->take(3)->get();
         $allCategories = Category::pluck('name')->all();
 
-        // Assuming you have columns for score, is_admin, and a way to determine who's online
-        $leaderboard = User::orderByDesc('score')->take(5)->get();
-        $membersCount = User::count();
-        $postsCount = Post::count();
-        $adminsCount = User::where('is_admin', true)->count();
+        $leaderboard   = User::orderByDesc('score')->take(3)->get();
+        $membersCount  = User::count();
+        $postsCount    = Post::count();
+        $adminsCount   = User::where('is_admin', true)->count();
         $onlineMembers = User::where('is_online', true)->pluck('name');
+
+        // ✅ Fetch the next upcoming event
+        $nextEvent = Event::where('start_time', '>=', now())
+            ->orderBy('start_time', 'asc')
+            ->first();
+
+        $qnaEventText = $nextEvent
+            ? $nextEvent->title . ' starts ' . $nextEvent->start_time->diffForHumans()
+            : 'Q&A is happening soon';
 
         return view('community.dashboard', compact(
             'posts', 'recentPosts', 'allCategories', 'leaderboard',
-            'membersCount', 'postsCount', 'adminsCount', 'onlineMembers'
+            'membersCount', 'postsCount', 'adminsCount', 'onlineMembers',
+            'qnaEventText'
         ));
     }
+
+    /**
+     * Show the leaderboard.
+     */
     public function showLeaderboard(): View
     {
-        // Fetch the current authenticated user. Assuming you are using Laravel's built-in auth.
         $currentUser = auth()->user();
 
-        // Fetch the leaderboards directly from the database, assuming a 'score' column exists
-        $leaderboard7Day = User::orderByDesc('score')->take(10)->get();
-        $leaderboard30Day = User::orderByDesc('score')->take(10)->get();
+        $leaderboard7Day   = User::orderByDesc('score')->take(10)->get();
+        $leaderboard30Day  = User::orderByDesc('score')->take(10)->get();
         $leaderboardAllTime = User::orderByDesc('score')->take(10)->get();
 
-        // The 'levels' data is typically not in the database but defined in your app logic.
         $levels = [
             ['level' => 1, 'percentage' => 87],
             ['level' => 2, 'percentage' => 5],
@@ -54,25 +67,36 @@ class CommunityDashboardController extends Controller
             ['level' => 8, 'percentage' => 1],
             ['level' => 9, 'percentage' => 1],
         ];
-        
-        // Fetch the count of non-admin members
+
         $nonAdminMembers = User::where('is_admin', false)->count();
+        $lastUpdated     = now()->format('M jS Y H:ia');
 
-        $lastUpdated = now()->format('M jS Y H:ia');
-
-        return view('community.leaderboard', compact('currentUser', 'leaderboard7Day', 'leaderboard30Day', 'leaderboardAllTime', 'levels', 'lastUpdated', 'nonAdminMembers'));
+        return view('community.leaderboard', compact(
+            'currentUser',
+            'leaderboard7Day',
+            'leaderboard30Day',
+            'leaderboardAllTime',
+            'levels',
+            'lastUpdated',
+            'nonAdminMembers'
+        ));
     }
-    
+
+    /**
+     * Show the members page.
+     */
     public function members(): View
     {
-        // Fetch all members who are not admins from the users table
-        $members = User::where('is_admin', false)->latest()->get();
-
-        // Get the total counts from the database
+        $members       = User::where('is_admin', false)->latest()->get();
         $onlineMembers = User::where('is_online', true)->get();
-        $adminsCount = User::where('is_admin', true)->count();
-        $membersCount = User::count();
+        $adminsCount   = User::where('is_admin', true)->count();
+        $membersCount  = User::count();
 
-        return view('community.members', compact('members', 'onlineMembers', 'adminsCount', 'membersCount'));
+        return view('community.members', compact(
+            'members',
+            'onlineMembers',
+            'adminsCount',
+            'membersCount'
+        ));
     }
 }

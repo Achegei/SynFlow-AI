@@ -342,7 +342,7 @@
                 <!-- Metric 1 -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <!-- The data-target attribute holds the final number to count to. -->
-                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="17000000">0</p>
+                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="17000">0</p>
                     <p class="mt-2 text-lg font-medium text-gray-500">
                         Professionals upskilled in AI via our platforms
                     </p>
@@ -358,7 +358,7 @@
 
                 <!-- Metric 3 -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="55">0</p>
+                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="15">0</p>
                     <p class="mt-2 text-lg font-medium text-gray-500">
                         Bespoke AI solutions developed
                     </p>
@@ -391,8 +391,8 @@
                             
                             // Format the number based on its size and add the appropriate suffix.
                             let formattedValue;
-                            if (target >= 1000000) {
-                                formattedValue = (currentValue / 1000000).toFixed(1) + 'M+';
+                            if (target >= 1000) {
+                                formattedValue = (currentValue / 1000).toFixed(1) + 'K+';
                             } else {
                                 formattedValue = currentValue + '+';
                             }

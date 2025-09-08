@@ -1,6 +1,6 @@
 <!-- Sidebar -->
     <aside class="w-48 bg-gray-100 p-6 h-screen overflow-y-auto sticky top-0">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">Documentation</h3>
+        <h3 class="text-2xl font-bold text-indigo-700 mb-6">Documentation</h3>
         
         <div class="mb-6">
             <label for="search" class="sr-only">Search documentation</label>
@@ -66,9 +66,8 @@
         } else {
             agentsIcon.classList.add('rotate-180');
         }
-    });
-    
-    // Dark Mode Toggle
+
+        // Dark Mode Toggle
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const body = document.body;
 
@@ -87,4 +86,6 @@
     } else {
         body.classList.remove('dark');
     }
+    });
+    
 </script>
