@@ -16,7 +16,11 @@ class Event extends Model
             'link',
             'is_live',
         ];
-
+        
+        protected $casts = [
+        'start_time' => 'datetime',
+        'end_time' => 'datetime', // if you have an end_time
+    ];
 
     public function user()
     {

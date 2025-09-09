@@ -21,7 +21,11 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+        Activity::log(auth()->id(), 'comment_create', $comment->id, 3, [
+        'target_type' => 'Comment',
+        'post_id' => $post->id,
+]);
+
     }
 
     /**

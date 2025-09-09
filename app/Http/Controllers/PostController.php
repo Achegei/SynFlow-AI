@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\Activity;
 
 class PostController extends Controller
 {
@@ -29,7 +30,11 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $points = 10; // your weight
+        Activity::log(auth()->id(), 'post_create', $post->id, $points, [
+        'target_type' => 'Post',
+        'title' => $post->title,
+]);
     }
 
     /**
