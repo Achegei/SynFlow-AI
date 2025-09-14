@@ -97,7 +97,9 @@
 
                                         {{-- Like & Comment Buttons --}}
                                         <div class="flex items-center space-x-4 mt-4 text-gray-500">
-                                            <div class="flex items-center space-x-1 cursor-pointer like-btn" data-post-id="{{ $post->id }}">
+                                            <div class="flex items-center space-x-1 cursor-pointer like-btn"
+                                                data-post-id="{{ $post->id }}"
+                                                data-like-url="{{ route('posts.like', $post->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4">
                                                     <path d="M7 10v12c0 .6.4 1 1 1h3v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3V3a6 6 0 0 0-6-6v3"/>
                                                 </svg>
@@ -259,20 +261,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Likes
     document.querySelectorAll('.like-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const postId = btn.getAttribute('data-post-id');
-            fetch(`/posts/${postId}/like`, {
+            const url = btn.dataset.likeUrl;
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Accept': 'application/json',
-                }
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
             })
             .then(res => res.json())
             .then(data => {
                 if(data.success){
                     btn.querySelector('.like-count').textContent = data.likes_count;
+                    btn.classList.toggle('text-indigo-600');
+                } else if(data.error) {
+                    alert(data.error);
                 }
-            });
+            })
+            .catch(err => console.error('Error liking post:', err));
         });
     });
 
@@ -286,14 +294,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             commentForm.classList.toggle('hidden');
 
-            // Prevent multiple submissions
             if (!commentForm.dataset.listenerAttached) {
                 commentForm.dataset.listenerAttached = true;
 
                 commentForm.addEventListener('submit', e => {
                     e.preventDefault();
-                    const content = commentForm.querySelector('input[name="content"]').value;
-                    if(!content.trim()) return;
+                    const contentInput = commentForm.querySelector('input[name="content"]');
+                    const content = contentInput.value.trim();
+                    if(!content) return;
 
                     fetch(`/posts/${postId}/comment`, {
                         method: 'POST',
@@ -307,10 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(res => res.json())
                     .then(data => {
                         if(data.success){
-                            commentForm.querySelector('input[name="content"]').value = '';
+                            contentInput.value = '';
                             btn.querySelector('.comment-count').textContent = data.comments_count;
 
-                            // Append new comment to DOM
                             const newComment = document.createElement('div');
                             newComment.classList.add('flex', 'items-center', 'space-x-2', 'text-sm');
                             newComment.innerHTML = `
@@ -321,8 +328,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                             `;
                             commentsList.appendChild(newComment);
+                        } else if(data.error) {
+                            alert(data.error);
                         }
-                    });
+                    })
+                    .catch(err => console.error('Error posting comment:', err));
                 });
             }
         });

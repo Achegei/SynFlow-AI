@@ -32,6 +32,8 @@ public function comments()
 
 public function likes()
 {
-    return $this->hasMany(Like::class);
+    return $this->belongsToMany(User::class, 'likes')->withTimestamps();
 }
+
+
 }

@@ -80,21 +80,19 @@ class PostController extends Controller
     {
         //
     }
-    public function like(Post $post)
-{
-    // Assuming a many-to-many 'likes' table: post_id, user_id
-    if ($post->likes()->where('user_id', auth()->id())->exists()) {
-        // If already liked, remove like
-        $post->likes()->detach(auth()->id());
-    } else {
-        $post->likes()->attach(auth()->id());
-    }
+   public function like(Post $post)
+        {
+            $user = auth()->user();
 
-    return response()->json([
-        'success' => true,
-        'likes_count' => $post->likes()->count()
-    ]);
-}
+            // Toggle like
+            $liked = $post->likes()->toggle($user->id);
+
+            return response()->json([
+                'success' => true,
+                'likes_count' => $post->likes()->count()
+            ]);
+        }
+
 
 public function comment(Request $request, Post $post)
 {
