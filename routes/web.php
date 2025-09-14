@@ -15,6 +15,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\EpisodeProgressController;
+use App\Http\Controllers\PostController;
 
 
 
@@ -78,11 +79,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/members', [CommunityDashboardController::class, 'members'])->name('members');
     Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom');
     Route::get('/classroom/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
+
+    Route::post('/posts/{post}/like', [PostController::class, 'like'])->name('posts.like');
+    Route::post('/posts/{post}/comment', [PostController::class, 'comment'])->name('posts.comment');
+
     
     // Calendar (browse by month/year, defaults to current if not provided)
     Route::get('/calendar', [CalendarController::class, 'index'])
     ->name('calendar');
 
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::post('/episodes/{episode}/watched', [EpisodeProgressController::class, 'markWatched'])
     ->name('episodes.markWatched');
     Route::post('/episodes/{episode}/toggle', [EpisodeProgressController::class, 'toggle'])

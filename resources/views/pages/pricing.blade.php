@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'AI Development Partner Package - SynFlow')
+@section('title', 'AI Development Partner Package - MooseLoon')
 
 @section('content')
    <div class="container mx-auto px-4 py-12 text-center">
@@ -9,7 +9,7 @@
             </h1>
 
             <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700 md:text-xl">
-                SynFlow AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, focused on high-ROI automation opportunities.
+                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, focused on high-ROI automation opportunities.
             </p>
 
             <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
@@ -88,7 +88,7 @@
                     Post-Deployment Solution Management
                 </h2>
                 <p class="mt-4 text-gray-500 max-w-full md:max-w-none"> {{-- Removed mx-auto for left alignment --}}
-                    Launching your AI solution is just the beginning. At SynfloW, we offer comprehensive post-deployment support to ensure your systems continue to perform reliably as your business evolves.
+                    Launching your AI solution is just the beginning. At MooseLoon, we offer comprehensive post-deployment support to ensure your systems continue to perform reliably as your business evolves.
                 </p>
                 <p class="mt-2 text-gray-500 max-w-full md:max-w-none"> {{-- Removed mx-auto for left alignment --}}
                     From ongoing system monitoring and performance optimization to adapting workflows as new challenges arise, our team stays engaged to keep your AI solutions running at peak efficiency.
@@ -107,7 +107,7 @@
                     What Sets Our Development Partnership Apart
                 </h2>
                 <p class="mt-4 max-w-3xl mx-auto text-gray-500">
-                    Every SynFlow development partnership includes access to:
+                    Every MooseLoon development partnership includes access to:
                 </p>
                 <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                     

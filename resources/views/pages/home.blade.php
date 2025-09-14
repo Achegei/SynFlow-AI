@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Home - SynFlow AI')
+@section('title', 'Home - MooseLoon AI')
 <style>
 /* CSS for the sliding animation */
 @keyframes slide {

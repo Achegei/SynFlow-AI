@@ -11,9 +11,10 @@ class PostPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+   public function viewAny(User $user): bool
     {
-        return false;
+        // Any authenticated user can see all posts
+        return true;
     }
 
     /**
@@ -21,7 +22,8 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        return false;
+        // User can view a post if they own it
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -29,7 +31,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,7 +39,8 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return false;
+        // User can update a post if they own it
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -45,7 +48,8 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return false;
+        // User can delete a post if they own it
+        return $user->id === $post->user_id;
     }
 
     /**

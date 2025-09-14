@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Services - SynFlow AI')
+@section('title', 'Services - MooseLoon AI')
 
 @section('content')
     <!-- Hero Section -->
@@ -13,7 +13,7 @@
                 </span>
             </h1>
             <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600 md:text-xl">
-                At SynFlow AI, we offer a full suite of services designed to help your business navigate the complexities of AI,
+                At MooseLoon AI, we offer a full suite of services designed to help your business navigate the complexities of AI,
                 from initial strategy to custom development and team education.
             </p>
         </div>
@@ -144,7 +144,7 @@
         <div class="container mx-auto px-4 max-w-3xl">
             <h2 class="text-3xl md:text-4xl font-extrabold">Ready to Get Started?</h2>
             <p class="mt-4 text-lg/8 opacity-90">
-                Contact our team today to discuss your unique business needs and discover how SynFlow AI can help you achieve your goals.
+                Contact our team today to discuss your unique business needs and discover how MooseLoon AI can help you achieve your goals.
             </p>
             <div class="mt-8">
                 <a href="{{ route('contact') }}"

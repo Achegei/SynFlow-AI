@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'About Us - SynFlow AI')
+@section('title', 'About Us - MooseLoon AI')
 
 @section('content')
 
@@ -8,9 +8,9 @@
 <section class="relative bg-gradient-to-r from-indigo-700 to-indigo-900 text-white py-20">
     <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <div>
-            <h1 class="text-5xl font-extrabold leading-tight">About SynFlow AI</h1>
+            <h1 class="text-5xl font-extrabold leading-tight">About MooseLoon AI</h1>
             <p class="mt-6 text-lg text-indigo-100">
-                At SynFlow AI, we design, deploy, and maintain custom AI solutions to drive your business growth, seamlessly integrating with over 850 systems.
+                At MooseLoon AI, we design, deploy, and maintain custom AI solutions to drive your business growth, seamlessly integrating with over 850 systems.
             </p>
             <div class="mt-8">
                 <a href="{{route('careers')}}" class="px-8 py-4 bg-white text-indigo-700 font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition">

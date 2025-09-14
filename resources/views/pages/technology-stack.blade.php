@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Technology Stack - SailrHorizon AI')
+@section('title', 'Technology Stack - MooseLoon AI')
 
 @section('content')
 <div class="flex">
@@ -29,7 +29,7 @@
         <!-- Intro -->
         <section class="mt-12 text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
             <p class="text-lg">
-                At <span class="font-semibold text-gray-900">SynFlow AI</span>, we use a modular, forward-thinking 
+                At <span class="font-semibold text-gray-900">MooseLoon AI</span>, we use a modular, forward-thinking 
                 tech stack built for speed, agility, and robust scalability. 
                 Our stack blends cloud infrastructure, developer tools, and proven AI frameworks—
                 designed to make innovation accessible for both technical and non-technical stakeholders.

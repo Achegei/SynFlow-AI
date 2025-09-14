@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Introduction - SynFlow AI')
+@section('title', 'Introduction - MooseLoon AI')
 
 @section('content')
 <div class="flex">
@@ -31,7 +31,7 @@
                     Our Purpose & Vision
                 </h2>
                 <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">
-                    SynFlow AI was founded to empower businesses with tailored, self-governing AI systems. 
+                    MooseLoon AI was founded to empower businesses with tailored, self-governing AI systems. 
                     Our mission is to help you unlock growth by optimizing operations and providing scalable, 
                     long-term solutions.
                 </p>
@@ -103,7 +103,7 @@
                             </h3>
                         </div>
                         <p class="mt-4 text-gray-600 dark:text-gray-400">
-                            Our partnership plans start at <strong>Kes 100,000</strong> per month. 
+                            Our partnership plans start at <strong>$10,000</strong> per month. 
                             To begin, visit our <a href="{{ route('contact') }}" class="text-indigo-600 hover:underline">Contact Page</a> and fill out the form with details about your project.
                         </p>
                     </div>

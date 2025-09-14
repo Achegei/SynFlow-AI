@@ -6,6 +6,9 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\Activity;
+use App\Models\Category;
+use Illuminate\Http\Request;
+
 
 class PostController extends Controller
 {
@@ -28,14 +31,23 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePostRequest $request)
-    {
-        $points = 10; // your weight
-        Activity::log(auth()->id(), 'post_create', $post->id, $points, [
-        'target_type' => 'Post',
-        'title' => $post->title,
-]);
-    }
+       public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'category_id' => 'required|integer|exists:categories,id',
+    ]);
+
+    $post = Post::create([
+        'title' => $request->title,
+        'content' => $request->content,
+        'category_id' => $request->category_id,
+        'user_id' => auth()->id(), // ✅ Add this
+    ]);
+
+    return response()->json(['success' => true, 'post' => $post]);
+}
 
     /**
      * Display the specified resource.
@@ -68,4 +80,44 @@ class PostController extends Controller
     {
         //
     }
+    public function like(Post $post)
+{
+    // Assuming a many-to-many 'likes' table: post_id, user_id
+    if ($post->likes()->where('user_id', auth()->id())->exists()) {
+        // If already liked, remove like
+        $post->likes()->detach(auth()->id());
+    } else {
+        $post->likes()->attach(auth()->id());
+    }
+
+    return response()->json([
+        'success' => true,
+        'likes_count' => $post->likes()->count()
+    ]);
+}
+
+public function comment(Request $request, Post $post)
+{
+    $request->validate([
+        'content' => 'required|string|max:500',
+    ]);
+
+    $comment = $post->comments()->create([
+        'user_id' => auth()->id(),
+        'content' => $request->content,
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'comment' => [
+            'id' => $comment->id,
+            'user_name' => auth()->user()->name,
+            'user_avatar' => auth()->user()->profile_photo_url,
+            'content' => $comment->content,
+            'created_at' => $comment->created_at->diffForHumans(),
+        ],
+        'comments_count' => $post->comments()->count()
+    ]);
+}
+
 }

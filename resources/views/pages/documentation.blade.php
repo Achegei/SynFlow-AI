@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Documentation - SynFlow AI')
+@section('title', 'Documentation - MooseLoon AI')
 
 @section('content')
 
@@ -13,7 +13,7 @@
         <div class="max-w-6xl mx-auto">
             <!-- Hero -->
             <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">
-                <span class="block">SynFlow AI</span>
+                <span class="block">MooseLoon AI</span>
                 <span class="block bg-gradient-to-r from-indigo-600 to-indigo-400 bg-clip-text text-transparent">
                     Documentation
                 </span>
@@ -52,7 +52,7 @@
                 <a href="#agents-overview"
                    class="group bg-gray-50 dark:bg-gray-800 p-6 rounded-2xl shadow hover:shadow-xl border border-transparent hover:border-indigo-600 transition duration-300">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-indigo-600">
-                        SailRizon AI Agents
+                        MooseLoon AI Agents
                     </h3>
                     <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
                         Detailed guides on how to implement and customize our pre-built AI agents.

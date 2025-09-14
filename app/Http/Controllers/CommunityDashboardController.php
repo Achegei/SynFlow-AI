@@ -27,7 +27,7 @@ class CommunityDashboardController extends Controller
             ->take(3)
             ->get();
 
-        $allCategories = Category::pluck('name')->all();
+        $allCategories = Category::all(); // returns a collection of Category models
         $totalMembers = User::where('is_admin', false)->count();
 
         // Top member (from all_time_score)
