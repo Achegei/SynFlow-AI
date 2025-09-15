@@ -7,34 +7,33 @@
 <div class="flex items-center">
     <!-- Logo -->
     <div class="shrink-0 mr-12">
-        <a href="{{ route('dashboard') }}">
-            <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-        </a>
-    </div>
-
-
-               
+            <a href="{{ route('dashboard') }}">
+                <img src="{{ asset('images/synflowlogo.jpeg') }}" 
+                    alt="App Logo" 
+                    class="block h-9 w-auto" />
+            </a>
+        </div>
                 <!-- Navigation Links -->
-            <div class="hidden sm:flex flex-1 justify-center space-x-12 text-lg font-semibold ms-10 mr-20">
-                <x-nav-link :href="route('community')" :active="request()->routeIs('community')">
+            <div class="hidden sm:flex flex-1 justify-center space-x-12 text-xl font-semibold ms-10 mr-20">
+                <x-nav-link :href="route('community')" :active="request()->routeIs('community')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Community') }}
                 </x-nav-link>
-                <x-nav-link :href="route('classroom')" :active="request()->routeIs('classroom')">
+                <x-nav-link :href="route('classroom')" :active="request()->routeIs('classroom')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Classroom') }}
                 </x-nav-link>
-                <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+                <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Calendar') }}
                 </x-nav-link>
-                <x-nav-link :href="route('members')" :active="request()->routeIs('members')">
+                <x-nav-link :href="route('members')" :active="request()->routeIs('members')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Members') }}
                 </x-nav-link>
-                <x-nav-link :href="route('map')" :active="request()->routeIs('map')">
+                <x-nav-link :href="route('map')" :active="request()->routeIs('map')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Map') }}
                 </x-nav-link>
-                <x-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
+                <x-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Leaderboards') }}
                 </x-nav-link>
-                <x-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')">
+                <x-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('About') }}
                 </x-nav-link>
             </div>
@@ -48,7 +47,7 @@
                         <button class="inline-flex items-center px-3 py-2 border border-transparent 
                             text-sm leading-4 font-medium rounded-md text-gray-500 bg-white 
                             hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div class="text-indigo-600 hover:text-red-700 transition-colors duration-200">{{ Auth::user()->name }}</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" 
                                     viewBox="0 0 20 20">
