@@ -34,7 +34,7 @@
                            <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">About</a>
                            <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
                            <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
-                            <a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>
+                            <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a> -->
                            <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
                        </div>
 
