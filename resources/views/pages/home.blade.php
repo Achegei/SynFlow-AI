@@ -26,18 +26,18 @@
 
         <div class="relative max-w-3xl">
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
-                <span class="block">We build intelligent AI Solutions</span>
-                <span class="block text-indigo-500 mt-2">for measurable business growth.</span>
+                <span class="block">We build intelligent AI solutions that solve real-world problems</span>
+                <span class="block text-indigo-500 mt-2">to cut costs, boost productivity, and drive measurable growth.</span>
             </h1>
             <p class="mt-6 text-lg sm:text-xl text-gray-300">
-                Transform repetitive workflows into automated, intelligent processes.
+                Turn repetitive workflows into smart, automated systems that save time and reduce costs.
             </p>
             <div class="mt-8 flex justify-center gap-4 flex-wrap">
                 <a href="{{ route('services') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                    Explore Services
+                    See What We Offer
                 </a>
                 <a href="{{ route('contactus') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
-                    Get Started
+                    Start Your AI Journey
                 </a>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 <!-- Collaborating Brands Slider -->
         <div class="container mx-auto px-4 text-center py-12">
             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl mb-6">
-                Collaborating with Leading Brands
+                Trusted by Leading Platforms and Partners
             </h2>
             <div class="relative overflow-hidden h-20">
                 <div class="absolute inset-0 flex items-center justify-start space-x-12">
@@ -80,10 +80,10 @@
                     <!-- Left Text & Features -->
                     <div class="md:text-left">
                         <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                            Everything You Need In One Place
+                            All-in-One AI & Automation Hub
                         </h2>
                         <p class="mt-4 text-xl text-gray-500">
-                            Powerful features designed to make your business seamless.
+                            Tools and features designed to simplify, automate, and scale your business operations
                         </p>
 
                         <div class="mt-8 space-y-6">
@@ -98,10 +98,10 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Custom AI agent engineering
+                                        Tailored AI Agents for Your Business
                                     </h3>
                                     <p class="mt-1 text-gray-600">
-                                        We design, deploy, and maintain custom AI agents specifically tailored to your business growth goals.
+                                        We design and maintain AI agents that directly support your growth goals—cutting costs, improving speed, and driving results.
                                     </p>
                                 </div>
                             </div>
@@ -193,7 +193,7 @@
                 <div class="py-16">
                     <div class="container mx-auto px-4">
                         <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 text-center sm:text-4xl">
-                            Our Process
+                            How We Build AI That Works
                         </h2>
 
                         <div class="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-12 md:items-center">
@@ -261,10 +261,10 @@
                         <!-- Text Content -->
                         <div>
                             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                                The Core Components of an AI Agent
+                                What Makes an AI Agent Work
                             </h2>
                             <p class="mt-4 text-lg text-gray-600">
-                                Every AI Agent relies on three key pillars working together:
+                                Behind every AI agent are three building blocks working together
                             </p>
 
                             <div class="mt-8 space-y-6">
@@ -317,13 +317,10 @@
                             <!-- Left Content -->
                             <div class="md:w-1/2 text-center md:text-left">
                                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                                    A Good Agent Relies on a Good Prompt
+                                    Great AI Starts with the Right Instruction
                                 </h2>
                                 <p class="mt-4 text-lg text-gray-600">
-                                    At the heart of every powerful AI Agent is a well-crafted prompt.  
-                                    A strong prompt sets the foundation for accurate reasoning, reliable answers,  
-                                    and effective task execution. With the right prompt, your AI agent becomes more  
-                                    efficient, context-aware, and capable of solving complex problems.
+                                    Clear instructions make AI smarter. The better the prompt, the better the outcomes.
                                 </p>
                             </div>
 
@@ -338,17 +335,17 @@
 
 
                 
-            <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Metric 1 -->
+            <!-- <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                Metric 1
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <!-- The data-target attribute holds the final number to count to. -->
+                    The data-target attribute holds the final number to count to.
                     <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="17000">0</p>
                     <p class="mt-2 text-lg font-medium text-gray-500">
                         Professionals upskilled in AI via our platforms
                     </p>
                 </div>
 
-                <!-- Metric 2 -->
+                Metric 2 
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="435">0</p>
                     <p class="mt-2 text-lg font-medium text-gray-500">
@@ -356,16 +353,16 @@
                     </p>
                 </div>
 
-                <!-- Metric 3 -->
+                 Metric 3 
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="15">0</p>
                     <p class="mt-2 text-lg font-medium text-gray-500">
                         Bespoke AI solutions developed
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
-    </div>
+    </div> 
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

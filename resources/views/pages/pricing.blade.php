@@ -5,11 +5,11 @@
 @section('content')
    <div class="container mx-auto px-4 py-12 text-center">
             <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-5xl">
-                <span class="block text-indigo-600">AI Development Partner Package</span>
+                <span class="block text-indigo-600">Your Strategic AI Development Partner</span>
             </h1>
 
             <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700 md:text-xl">
-                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, focused on high-ROI automation opportunities.
+                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, We help Canadian businesses unlock measurable impact with AI — cutting costs, streamlining workflows, and preparing for global competition..
             </p>
 
             <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
@@ -17,21 +17,21 @@
                     <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
-                    <p><span class="font-semibold text-gray-900">Reclaim hours:</span> Automate repetitive tasks and streamline workflows.</p>
+                    <p><span class="font-semibold text-gray-900">Reclaim hours:</span> Free up your team by automating repetitive work and eliminating bottlenecks.</p>
                 </div>
 
                 <div class="flex items-start space-x-3">
                     <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
-                    <p><span class="font-semibold text-gray-900">Scale easily:</span> Build intelligent systems that grow with your business.</p>
+                    <p><span class="font-semibold text-gray-900">Scale easily:</span> AI that adapts as you grow — smarter systems for scaling seamlessly.</p>
                 </div>
 
                 <div class="flex items-start space-x-3">
                     <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                     </svg>
-                    <p><span class="font-semibold text-gray-900">Maximize efficiency:</span> Convert saved time into higher productivity and growth.</p>
+                    <p><span class="font-semibold text-gray-900">Maximize efficiency:</span> Turn efficiency into measurable gains — higher productivity, lower costs.</p>
                 </div>
             </div>
     </div>
@@ -40,7 +40,7 @@
     <div class="bg-gray-50 py-16">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Choose Your Partnership
+                Flexible Partnerships for Every Growth Stage
             </h2>
             <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
                 <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center">
@@ -280,10 +280,10 @@
     <div class="py-16 text-center">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Unlock hidden potential within your business
+                Unlock Hidden Value with AI
             </h2>
             <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-500">
-                Unlock untapped potential with safe, responsible, and powerful AI solutions.
+                Harness AI responsibly to cut costs, improve resilience, and future-proof your business.
             </p>
             <div class="mt-8">
                 <a href="{{ route('contactus') }}" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">

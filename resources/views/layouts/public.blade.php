@@ -46,7 +46,7 @@
                            </a>
                        </div> -->
                        <div class="hidden md:flex items-center space-x-4">
-                           <a href="{{route('register')}}" class="text-sm font-medium text-indigo-700 hover:text-gray-700 transition-colors">Join our School Community</a>
+                           <!--<a href="{{route('register')}}" class="text-sm font-medium text-indigo-700 hover:text-gray-700 transition-colors">Join our School Community</a>-->
                            <a href="{{ route('contactus') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                                Get Started
                            </a>
