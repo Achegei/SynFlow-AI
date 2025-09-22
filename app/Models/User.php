@@ -21,6 +21,7 @@ class User extends Authenticatable
         'bio',
         'latitude',  
         'longitude',
+        'profile_photo_url'
     ];
 
     protected $hidden = [
@@ -32,6 +33,16 @@ class User extends Authenticatable
     {
         return true;
     }
+      public function getProfilePhotoUrlAttribute($value)
+{
+    if ($value) {
+        return asset('storage/' . ltrim($value, '/'));
+    }
+
+    return asset('images/default-avatar.png');
+}
+
+
 
     protected function casts(): array
     {
