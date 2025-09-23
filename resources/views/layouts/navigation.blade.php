@@ -8,7 +8,7 @@
     <!-- Logo -->
     <div class="shrink-0 mr-12">
             <a href="{{ route('dashboard') }}">
-                <img src="{{ asset('images/synflowlogo.jpeg') }}" 
+                <img src="{{ asset('images/synflowlogo2.jpeg') }}" 
                     alt="App Logo" 
                     class="block h-9 w-auto" />
             </a>
