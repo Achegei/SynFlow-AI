@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-400 ">
             <div>
                 <a href="/">
-                    <img src="{{ asset('images/uson.png') }}" alt="Logo" class="w-20 h-20">
+                    <img src="{{ asset('images/synflowlogo2.jpeg') }}" alt="Logo" class="w-20 h-20">
                 </a>
 
             </div>
