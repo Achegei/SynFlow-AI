@@ -33,7 +33,7 @@
 
     <!-- Episodes List -->
     <div class="mt-8 space-y-4">
-        <h2 class="text-2xl font-semibold text-gray-900">Episodes</h2>
+        <h2 class="text-2xl font-semibold text-gray-900">Modules</h2>
         @foreach ($episodes as $episode)
             <div class="bg-gray-100 rounded-xl p-4 flex items-center justify-between hover:bg-gray-200 transition">
                 <div class="flex items-center space-x-4 cursor-pointer"

@@ -16,6 +16,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\EpisodeProgressController;
 use App\Http\Controllers\PostController;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\SitemapGenerator;
+use Spatie\Sitemap\Tags\Url;
+use App\Models\Post;
+use App\Models\Career;
 
 
 
@@ -127,3 +132,58 @@ Route::middleware(['auth', 'can:access-admin-panel'])->prefix('admin')->name('ad
 // This route is fine as it's outside the admin group and points to a public-facing controller.
 Route::get('/videos', [VideoController::class, 'indexPublic'])->name('videos.index');
 
+Route::get('/generate-sitemap', function () {
+    $sitemapPath = public_path('sitemap.xml');
+
+    // 1️⃣ Crawl the whole site (publicly accessible URLs)
+    SitemapGenerator::create(config('app.url'))
+        ->writeToFile($sitemapPath);
+
+    // 2️⃣ Add custom/dynamic URLs (Posts, Careers, etc.)
+    $sitemap = Sitemap::create();
+
+    // Static pages
+    $staticRoutes = [
+        '/',
+        '/about',
+        '/services',
+        '/contact',
+        '/terms',
+        '/privacy-policy',
+        '/pricing',
+        '/documentation',
+        '/technology-stack',
+        '/processes',
+        '/faqs',
+        '/careers',
+        '/assistant',
+        '/newsletter-creation',
+        '/rag-pipeline',
+    ];
+
+    foreach ($staticRoutes as $url) {
+        $sitemap->add(Url::create($url));
+    }
+
+    // Add all dynamic careers (if model exists)
+    if (class_exists(Career::class)) {
+        foreach (Career::all() as $career) {
+            $sitemap->add(Url::create("/careers/{$career->slug}"));
+        }
+    }
+
+    // Add all blog posts (if model exists)
+    if (class_exists(Post::class)) {
+        foreach (Post::all() as $post) {
+            $sitemap->add(Url::create("/posts/{$post->id}"));
+        }
+    }
+
+    // Merge and write final file
+    $sitemap->writeToFile($sitemapPath);
+
+    return response()->json([
+        'message' => '✅ Sitemap generated successfully!',
+        'path' => asset('sitemap.xml'),
+    ]);
+});
