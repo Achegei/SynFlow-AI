@@ -9,7 +9,7 @@
             </h1>
 
             <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700 md:text-xl">
-                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, We help Canadian businesses unlock measurable impact with AI — cutting costs, streamlining workflows, and preparing for global competition..
+                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, We help businesses unlock measurable impact with AI — cutting costs, streamlining workflows, and preparing for global competition..
             </p>
 
             <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
@@ -37,48 +37,90 @@
     </div>
 
 
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Flexible Partnerships for Every Growth Stage
-            </h2>
-            <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
-                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center">
-                    <span class="text-xs font-semibold text-white bg-indigo-600 px-2.5 py-0.5 rounded-full">POPULAR</span>
-                    <h3 class="mt-4 text-2xl font-bold text-gray-900">Business Partner</h3>
-                    <p class="mt-2 text-4xl font-extrabold text-indigo-600">$10,000/month</p>
-                    <ul class="mt-4 text-left space-y-2 text-gray-600">
-                        <li>Dedicated AI Engineer</li>
-                        <li>VIP support queue</li>
-                        <li>Documentation and user guides</li>
-                        <li>Live debugging and solution management</li>
-                        <li>Client portal</li>
-                    </ul>
-                    <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                        Get Started
-                    </a>
-                </div>
+    <div class="bg-gradient-to-b from-white to-gray-50 py-24">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 mb-4">
+            Flexible Plans for Every Business
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+            Start small or scale big — our AI-powered chatbot plans grow with your needs.
+        </p>
 
-                <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center">
-                    <h3 class="mt-4 text-2xl font-bold text-gray-900">Enterprise Partner</h3>
-                    <p class="mt-2 text-4xl font-extrabold text-indigo-600">Custom</p>
-                    <p class="mt-4 text-gray-500">Includes all Business Partner features, plus:</p>
-                    <ul class="mt-4 text-left space-y-2 text-gray-600">
-                        <li>Dedicated Project Manager</li>
-                        <li>Weekly 60 minute meetings with our executive team</li>
-                        <li>Strategic roadmap review</li>
-                        <li>Team training and enablement sessions</li>
-                        <li>Documentation of all completed work</li>
-                        <li>Quarterly executive briefing</li>
-                        <li>Everything customized for you and your business</li>
-                    </ul>
-                    <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
-                        Contact Sales
-                    </a>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <!-- Starter Plan -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-900">Starter</h3>
+                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$49<span class="text-base font-medium text-gray-500">/month</span></p>
+                <p class="mt-3 text-gray-500">Perfect for small businesses testing AI automation.</p>
+                <ul class="mt-6 text-left space-y-2 text-gray-600">
+                    <li>500 messages per month</li>
+                    <li>Basic chatbot training</li>
+                    <li>Email support</li>
+                    <li>Easy setup in minutes</li>
+                </ul>
+                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                    Get Started
+                </a>
+            </div>
+
+            <!-- Growth Plan -->
+            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border-2 border-indigo-600 relative">
+                <span class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                    MOST POPULAR
+                </span>
+                <h3 class="text-2xl font-bold text-gray-900 mt-3">Growth</h3>
+                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$99<span class="text-base font-medium text-gray-500">/month</span></p>
+                <p class="mt-3 text-gray-500">Best for growing brands who want deeper insights.</p>
+                <ul class="mt-6 text-left space-y-2 text-gray-600">
+                    <li>2,000 messages per month</li>
+                    <li>Advanced analytics dashboard</li>
+                    <li>Priority support</li>
+                    <li>Multiple chatbot profiles</li>
+                </ul>
+                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                    Choose Plan
+                </a>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-900">Pro</h3>
+                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$199<span class="text-base font-medium text-gray-500">/month</span></p>
+                <p class="mt-3 text-gray-500">Unlimited power for teams ready to scale AI automation.</p>
+                <ul class="mt-6 text-left space-y-2 text-gray-600">
+                    <li>Unlimited messages</li>
+                    <li>RAG (Retrieval-Augmented Generation) integration</li>
+                    <li>Dedicated AI assistant setup</li>
+                    <li>Full analytics & API access</li>
+                </ul>
+                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
+                    Contact Sales
+                </a>
+            </div>
+
+            <!-- Enterprise / Custom Plan -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-900">Enterprise</h3>
+                <p class="mt-2 text-4xl font-extrabold text-indigo-600">Custom</p>
+                <p class="mt-3 text-gray-500">Tailored AI solutions for large teams and special integrations.</p>
+                <ul class="mt-6 text-left space-y-2 text-gray-600">
+                    <li>Unlimited messages + custom features</li>
+                    <li>Private deployment & RAG fine-tuning</li>
+                    <li>Dedicated technical manager</li>
+                    <li>On-site or cloud integration</li>
+                    <li>Training for your internal teams</li>
+                </ul>
+                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
+                    Let’s Talk
+                </a>
+                <p class="mt-3 text-sm text-gray-500">
+                    Contact us to discuss a plan that fits your organization.
+                </p>
             </div>
         </div>
     </div>
+</div>
+
 
    <div class="py-16">
     <div class="container mx-auto px-4"> {{-- Removed text-center from container --}}

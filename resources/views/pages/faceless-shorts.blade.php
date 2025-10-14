@@ -82,12 +82,7 @@
                 Simply fill out our pre-formatted Google Sheets template with your video ideas, topics, and any specific content requirements. 
                 Our system will then automatically process the entries and generate a queue of completed short-form videos.
             </p>
-            <div class="mt-8">
-                <a href="https://docs.google.com/spreadsheets/d/123456789/edit"
-                   class="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-md shadow-md hover:bg-indigo-700 transition">
-                    View Google Sheet Template
-                </a>
-            </div>
+            
         </section>
     </div>
 </div>

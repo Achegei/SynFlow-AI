@@ -109,6 +109,89 @@
     </div>
 </section>
 
+<!-- Mission & Vision -->
+<section class="py-24 bg-gradient-to-b from-white to-gray-50 text-center">
+    <div class="container mx-auto px-6 text-center max-w-4xl">
+        <h2 class="text-4xl font-extrabold text-indigo-700">Our Mission & Vision</h2>
+
+        <div class="mt-12 space-y-10 text-gray-700">
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900">Our Mission</h3>
+                <p class="mt-3 text-gray-600">
+                    To make AI education accessible, practical, and affordable for everyone — enabling learners and teams to use Canadian innovation to solve real problems.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900">Our Vision</h3>
+                <p class="mt-3 text-gray-600">
+                    A world where AI literacy is as common as digital literacy, with graduates who design, automate, and deploy AI-powered solutions that deliver measurable impact.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900">Our Values</h3>
+                <ul class="mt-4 text-left list-disc list-inside space-y-2 text-gray-600">
+                    <li><strong>Innovation:</strong> Canadian excellence for global problems</li>
+                    <li><strong>Accessibility:</strong> Clear teaching, flexible delivery, inclusive pricing</li>
+                    <li><strong>Practical Skills:</strong> Projects, workflows, and job-ready portfolios</li>
+                    <li><strong>Integrity:</strong> Responsible AI and data respect</li>
+                    <li><strong>Impact:</strong> Outcomes that advance careers, teams, and communities</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900">What Sets Us Apart</h3>
+                <ul class="mt-4 text-left list-disc list-inside space-y-2 text-gray-600">
+                    <li>Internationally accredited, headquartered in Canada</li>
+                    <li>Hands-on labs with n8n, OpenAI API, Google Sheets, and real APIs</li>
+                    <li>Mentor feedback and employer-aligned projects</li>
+                    <li>Certificates of Completion to validate your skills</li>
+                </ul>
+                <div class="mt-8">
+                    <a href="{{ route('classroom') }}" class="px-8 py-3 bg-indigo-700 text-white font-semibold rounded-full shadow-lg hover:bg-indigo-800 transform hover:-translate-y-1 transition">
+                        Start Learning · Explore Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose MooseLoon AI Academy -->
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6 text-center max-w-5xl">
+        <h2 class="text-4xl font-extrabold text-indigo-700">Why Choose MooseLoon AI Academy</h2>
+        <p class="mt-4 text-gray-600">Empowering the World Through Canadian Innovation</p>
+
+        <div class="mt-12 grid md:grid-cols-2 gap-8 text-left">
+            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                <li>🇨🇦 <strong>Canadian Excellence, Global Reach</strong> — Accredited in Alberta, Canada with a branch in Nairobi, Kenya — powered by world-class Canadian innovation.</li>
+                <li>💡 <strong>Affordable for Everyone</strong> — Quality AI education at a price anyone can afford.</li>
+                <li>🪙 <strong>Flexible Payment</strong> — Pay 50% deposit, balance after course completion and certification.</li>
+                <li>💱 <strong>Any Currency Accepted</strong> — Enroll easily from anywhere in the world.</li>
+                <li>🕐 <strong>24/7 Student Support</strong> — Help is always available whenever you need it.</li>
+            </ul>
+
+            <ul class="space-y-3 text-gray-700 list-disc list-inside">
+                <li>🧠 <strong>Hands-On Learning</strong> — Practice real AI tools like n8n, OpenAI API, and Google Sheets — no coding required.</li>
+                <li>🎓 <strong>Recognized Certificates</strong> — Get an official Certificate of Completion to boost your résumé and LinkedIn profile.</li>
+                <li>🤝 <strong>Employer Demand</strong> — Companies value MooseLoon AI graduates for their practical skills and innovation mindset.</li>
+                <li>📅 <strong>Weekly Live Q&A</strong> — Join live Saturday sessions or watch replays anytime.</li>
+                <li>🚀 <strong>Future-Focused Vision</strong> — Start your AI journey now and become the expert the world needs.</li>
+            </ul>
+        </div>
+
+        <div class="mt-12 bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-indigo-700 mb-4">Career Timeline</h3>
+            <ul class="text-gray-700 space-y-2 list-disc list-inside">
+                <li><strong>By 2027:</strong> Employers will seek AI-trained professionals.</li>
+                <li><strong>By 2030:</strong> AI literacy becomes a required skill everywhere.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
 <!-- Closing -->
 <section class="py-20 bg-indigo-700 text-white">
     <div class="container mx-auto px-6 text-center max-w-3xl">

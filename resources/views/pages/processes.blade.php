@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Our Process - SailRizon AI')
+@section('title', 'Our Process - MooseLoon AI')
 
 @section('content')
 <div class="flex">
@@ -26,7 +26,7 @@
         <!-- Intro -->
         <div class="mt-12 text-center max-w-3xl mx-auto">
             <p class="text-lg text-gray-600">
-                At SynFlow AI, we're not just a service provider—we're your long-term partner in AI transformation. Our deeply collaborative approach ensures that every system we develop is tailored to your business vision, designed to scale with your growth, and built to deliver a measurable impact across your organization. We aim to move beyond simple use cases to find where AI can create true, lasting value.
+                At MooseLoon AI, we're not just a service provider—we're your long-term partner in AI transformation. Our deeply collaborative approach ensures that every system we develop is tailored to your business vision, designed to scale with your growth, and built to deliver a measurable impact across your organization. We aim to move beyond simple use cases to find where AI can create true, lasting value.
             </p>
             <div class="mt-8 rounded-lg overflow-hidden shadow-lg"></div>
         </div>

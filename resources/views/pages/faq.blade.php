@@ -26,7 +26,7 @@
                             </button>
                             <div id="faq1" class="accordion-content hidden">
                                 <p class="mt-4 text-gray-600">
-                                    We work with businesses of all sizes, from startups to large enterprises. However, we currently only accept partnerships with companies who have a minimum AI budget of $20,000 per month.
+                                    We work with businesses of all sizes, from startups to large enterprises. We Also offer AI Education and Training for individuals and teams looking to upskill in AI technologies.
                                 </p>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                             </button>
                             <div id="faq3" class="accordion-content hidden">
                                 <p class="mt-4 text-gray-600">
-                                    You, the client, own all the intellectual property rights and licensing for the software we build, including custom code, workflows, and infrastructure. Upon completion or termination of our partnership, we provide a full, well-documented handoff with all necessary training and user guides. The IP is yours from day one.
+                                    For those ideas that came from client, you the client, own all the intellectual property rights and licensing for the software we build, including custom code, workflows, and infrastructure. Upon completion or termination of our partnership, we provide a full, well-documented handoff with all necessary training and user guides. The IP is yours from day one. However those originating from us, we retain the rights.
                                 </p>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                             </button>
                             <div id="faq5" class="accordion-content hidden">
                                 <p class="mt-4 text-gray-600">
-                                    Yes! We provide free resources through our community of over 40,000 members and our weekly tutorials and walkthroughs on our YouTube channel.
+                                    Yes! We provide free resources through our community and our weekly tutorials and walkthroughs on our YouTube channel.
                                 </p>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                             </button>
                             <div id="faq6" class="accordion-content hidden">
                                 <p class="mt-4 text-gray-600">
-                                    Our team has experience with a wide variety of industries, including SaaS, Retail, Finance, Real Estate, and E-commerce. Our consultative approach to AI is industry-agnostic, and we'd be happy to discuss your specific industry needs.
+                                    Our team has experience with a wide variety of industries, including SaaS, Education, Retail, Finance, Real Estate, and E-commerce. Our consultative approach to AI is industry-agnostic, and we'd be happy to discuss your specific industry needs.
                                 </p>
                             </div>
                         </div>
