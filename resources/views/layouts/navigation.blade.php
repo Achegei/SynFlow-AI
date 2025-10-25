@@ -15,24 +15,24 @@
         </div>
                 <!-- Navigation Links -->
             <div class="hidden sm:flex flex-1 justify-center space-x-12 text-xl font-semibold ms-10 mr-20">
-                <x-nav-link :href="route('community')" :active="request()->routeIs('community')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
+               <!-- <x-nav-link :href="route('community')" :active="request()->routeIs('community')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Community') }}
-                </x-nav-link>
+                </x-nav-link> -->
                 <x-nav-link :href="route('classroom')" :active="request()->routeIs('classroom')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Classroom') }}
                 </x-nav-link>
-                <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
+                <!-- <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Calendar') }}
-                </x-nav-link>
-                <x-nav-link :href="route('members')" :active="request()->routeIs('members')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
+                </x-nav-link> -->
+                <!--<x-nav-link :href="route('members')" :active="request()->routeIs('members')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Members') }}
-                </x-nav-link>
-                <x-nav-link :href="route('map')" :active="request()->routeIs('map')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
+                </x-nav-link> -->
+                <!--<x-nav-link :href="route('map')" :active="request()->routeIs('map')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Map') }}
-                </x-nav-link>
-                <x-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
+                </x-nav-link> -->
+                <!--<x-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('Leaderboards') }}
-                </x-nav-link>
+                </x-nav-link> -->
                 <x-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')" class="text-indigo-600 hover:text-red-700 transition-colors duration-200" class="text-indigo-600 hover:text-red-700 transition-colors duration-200">
                     {{ __('About') }}
                 </x-nav-link>

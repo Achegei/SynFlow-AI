@@ -14,7 +14,7 @@
                 <!-- Video Slot -->
                 <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden mb-6">
                     <iframe class="w-full h-full"
-                            src="https://www.youtube.com/embed/VIDEO_ID"
+                            src="https://www.youtube.com/embed/UdE-W30oOXo?si=HsA_rjR_e5Drsz3w"
                             frameborder="0"
                             allowfullscreen>
                     </iframe>

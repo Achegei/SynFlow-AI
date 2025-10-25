@@ -44,6 +44,12 @@
                             <label for="episodes[0][video_url]" class="block text-sm font-medium">Video URL</label>
                             <input type="url" name="episodes[0][video_url]" required class="mt-1 block w-full rounded-md border-gray-300 bg-white text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
                         </div>
+                        <!-- NEW: PDF Upload Field -->
+                        <div>
+                            <label for="episodes[0][pdf]" class="block text-sm font-medium">Attach PDF (optional)</label>
+                            <input type="file" name="episodes[0][pdf]" accept=".pdf" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-none p-2">
+                            <p class="text-xs text-gray-500 mt-1">Upload a PDF handout or notes for this video.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,6 +93,11 @@
                         <div>
                             <label for="episodes[${episodeIndex}][video_url]" class="block text-sm font-medium">Video URL</label>
                             <input type="url" name="episodes[${episodeIndex}][video_url]" required class="mt-1 block w-full rounded-md border-gray-300 bg-white text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2">
+                        </div>
+                        <div>
+                            <label for="episodes[${episodeIndex}][pdf]" class="block text-sm font-medium">Attach PDF (optional)</label>
+                            <input type="file" name="episodes[${episodeIndex}][pdf]" accept=".pdf" class="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-white focus:outline-none p-2">
+                            <p class="text-xs text-gray-500 mt-1">Upload a PDF handout or notes for this video.</p>
                         </div>
                     </div>
                 </div>
