@@ -13,6 +13,7 @@ class Episode extends Model
     protected $fillable = [
         'course_id',
         'title',
+        'pdf_path',
         'video_url',
     ];
 

@@ -50,6 +50,20 @@
                         {{ $episode->is_completed ? 'Completed' : 'Mark as Watched' }}
                     </button>
                 </form>
+                <!-- ✅ NEW: PDF Download Section -->
+                @if ($episode->pdf_path)
+                    <div class="mt-3 flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 4v16m8-8H4" />
+                        </svg>
+                        <a href="{{ asset('storage/' . $episode->pdf_path) }}" target="_blank"
+                           class="text-blue-600 hover:underline font-medium">
+                           Download PDF Notes
+                        </a>
+                    </div>
+                @endif
+                <!-- ✅ END NEW -->
             </div>
         @endforeach
     </div>

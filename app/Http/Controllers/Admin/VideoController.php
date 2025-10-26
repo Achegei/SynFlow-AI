@@ -9,26 +9,17 @@ use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $videos = Video::orderBy('order')->get();
         return view('admin.videos.index', compact('videos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.videos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -38,29 +29,33 @@ class VideoController extends Controller
             'thumbnail_url' => 'nullable|url',
             'order' => 'required|integer',
             'is_published' => 'boolean',
+            'pdf' => 'nullable|file|mimes:pdf|max:5120', // ✅ New PDF validation
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Video::create($request->all());
+        // ✅ Handle file upload if present
+        $pdfPath = null;
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('pdfs', 'public');
+        }
+
+        // ✅ Create new video with pdf path
+        $video = new Video($request->except('pdf'));
+        $video->pdf_path = $pdfPath;
+        $video->save();
 
         return redirect()->route('admin.videos.index')->with('success', 'Video added successfully!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $video = Video::findOrFail($id);
         return view('admin.videos.edit', compact('video'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
@@ -70,6 +65,7 @@ class VideoController extends Controller
             'thumbnail_url' => 'nullable|url',
             'order' => 'required|integer',
             'is_published' => 'boolean',
+            'pdf' => 'nullable|file|mimes:pdf|max:5120', // ✅ Add same validation here
         ]);
 
         if ($validator->fails()) {
@@ -77,14 +73,18 @@ class VideoController extends Controller
         }
 
         $video = Video::findOrFail($id);
-        $video->update($request->all());
+
+        // ✅ If new PDF uploaded, replace old one
+        if ($request->hasFile('pdf')) {
+            $pdfPath = $request->file('pdf')->store('pdfs', 'public');
+            $video->pdf_path = $pdfPath;
+        }
+
+        $video->update($request->except('pdf'));
 
         return redirect()->route('admin.videos.index')->with('success', 'Video updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $video = Video::findOrFail($id);
@@ -92,10 +92,10 @@ class VideoController extends Controller
 
         return redirect()->route('admin.videos.index')->with('success', 'Video deleted successfully!');
     }
+
     public function indexPublic()
     {
         $videos = Video::orderBy('order')->get();
         return view('admin.videos.index', compact('videos'));
     }
-
 }

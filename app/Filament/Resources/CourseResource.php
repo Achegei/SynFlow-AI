@@ -50,6 +50,13 @@ class CourseResource extends Resource
                         ->required()
                         ->url()
                         ->maxLength(2048),
+
+            \Filament\Forms\Components\FileUpload::make('pdf_path')
+            ->label('Attach PDF (optional)')
+            ->directory('episodes/pdfs')
+            ->preserveFilenames()
+            ->acceptedFileTypes(['application/pdf'])
+            ->nullable(),
                 ])
                 ->columns(1)
                 ->collapsed(false)
