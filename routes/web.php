@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CareerController;
@@ -63,6 +65,9 @@ Route::controller(CareerController::class)->group(function () {
     Route::get('/careers/{position}', 'show')->name('careers.description');
 });
 
+// Webhook route for payment providers
+Route::post('/webhook/{provider}', [App\Http\Controllers\WebhookController::class, 'handle']);
+
 
 Route::get('/dashboard', [CommunityDashboardController::class, 'community'])
     ->middleware(['auth'])
@@ -99,6 +104,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/episodes/{episode}/toggle', [EpisodeProgressController::class, 'toggle'])
     ->name('episodes.toggle');
 
+    //Course payment routes
+    Route::get('/purchase/{course}', [PurchaseController::class, 'purchase'])->name('purchase.course');
+    Route::get('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
+
 
     // Events (bookings)
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
@@ -113,6 +122,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 });
+
 
 //================================================
 // 4. Admin-Only Routes
@@ -187,3 +197,5 @@ Route::get('/generate-sitemap', function () {
         'path' => asset('sitemap.xml'),
     ]);
 });
+
+

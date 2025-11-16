@@ -12,39 +12,58 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
-    {
-        // Fetch all courses from the database.
-        $courses = Course::all();
-
-        // NOTE: The progress_percentage should be calculated for each user.
-        // This is a simplified example. A more robust solution would track user
-        // progress in a pivot table (e.g., user_episode_completions).
-        foreach ($courses as $course) {
-            $totalEpisodes = $course->episodes->count();
-            $completedEpisodes = 0; // This should be fetched from a user's progress table
-            $course->progress_percentage = $totalEpisodes > 0 ? ($completedEpisodes / $totalEpisodes) * 100 : 0;
-        }
-
-        return view('classroom.index', compact('courses'));
-    }
-
-    /**
-     * Display the specified course with its episodes.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
     public function show($id)
 {
     $course = Course::with('episodes')->findOrFail($id);
+    $user = auth()->user();
+
+    // ✅ 1. Ensure user is logged in
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Please log in to access this course.');
+    }
+
+    // ✅ 2. Check if user has access to this course
+    if (!$user->courses->contains($course->id)) {
+        // Option 1: Redirect to purchase page
+        return redirect()
+            ->route('purchase.course', $course->id)
+            ->with('error', 'You need to purchase this course to access it.');
+
+        // Option 2 (alternative): Just block it completely
+        // abort(403, 'You do not have permission to access this course.');
+    }
+
+    // ✅ 3. Calculate user progress (based on completed episodes)
     $episodes = $course->episodes;
-
-    // Calculate course progress using the accessor
     $totalEpisodes = $episodes->count();
-    $completedEpisodes = $episodes->filter(fn($e) => $e->is_completed)->count();
-    $course->progress_percentage = $totalEpisodes > 0 ? ($completedEpisodes / $totalEpisodes) * 100 : 0;
 
+    // Later, you'll want to store completions per user in a pivot table
+    $completedEpisodes = $episodes->filter(fn($e) => $e->is_completed)->count();
+
+    $course->progress_percentage = $totalEpisodes > 0
+        ? ($completedEpisodes / $totalEpisodes) * 100
+        : 0;
+
+    // ✅ 4. Return view
     return view('classroom.course-details', compact('course', 'episodes'));
 }
+
+    public function index()
+    {
+        // Fetch all courses
+        $courses = Course::with('episodes')->get();
+
+        // Optionally calculate a fake progress for now
+        foreach ($courses as $course) {
+            $totalEpisodes = $course->episodes->count();
+            $completedEpisodes = 0; // Later link this to user progress
+            $course->progress_percentage = $totalEpisodes > 0 
+                ? ($completedEpisodes / $totalEpisodes) * 100 
+                : 0;
+        }
+
+        // Pass $courses to the Blade view
+        return view('classroom.index', compact('courses'));
+    }
+
 }

@@ -94,4 +94,14 @@ class User extends Authenticatable
             }
         });
     }
+    public function courses()
+        {
+            return $this->belongsToMany(Course::class, 'course_user')->withTimestamps();
+        }
+
+        public function hasCourse($courseId)
+        {
+            return $this->courses()->where('course_id', $courseId)->exists();
+        }
+
 }

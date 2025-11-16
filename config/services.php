@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'payment' => [
+            'link' => env('PAYMENT_LINK'),
+        ],
+
 ];

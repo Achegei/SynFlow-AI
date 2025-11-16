@@ -731,6 +731,10 @@
         'channel' => NULL,
       ),
     ),
+    'payment' => 
+    array (
+      'link' => 'https://payment.intasend.com/pay/ae1022e4-f534-46ff-9378-6bbafaf3cd1e/',
+    ),
   ),
   'session' => 
   array (
