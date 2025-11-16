@@ -57,7 +57,7 @@
                             {{-- Buy Button: Redirect to /purchase/{course} --}}
                             <form action="{{ route('purchase.course', $course->id) }}" method="GET">
                                 <button type="submit"
-                                        class="inline-block w-full text-center bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition relative">
+                                        class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
                                     <svg xmlns="http://www.w3.org/2000/svg" 
                                          class="w-4 h-4 inline-block mr-1 text-gray-600" 
                                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
