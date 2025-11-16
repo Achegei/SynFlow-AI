@@ -34,10 +34,10 @@
             </p>
             <div class="mt-8 flex justify-center gap-4 flex-wrap">
                 <a href="{{ route('services') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                    See What We Offer
+                    Explore Sales Programs
                 </a>
                 <a href="{{ route('register') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
-                    Want to learn AI? Start Journey
+                    Ready to Start Your AI Sales Training? Begin Journey
                 </a>
             </div>
         </div>
