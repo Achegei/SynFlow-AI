@@ -22,7 +22,7 @@
                    <nav class="flex justify-between items-center h-16">
                        <div class="flex items-center">
                            <a href="{{ route('home') }}" class="flex items-center">
-                               <img src="{{ asset('images/synflowlogo.jpeg') }}" alt="SailRizon AI Logo" class="h-16 w-40 object-contain">
+                               <img src="{{ asset('images/synflowlogo2.jpeg') }}" alt="SailRizon AI Logo" class="h-16 w-40 object-contain">
                            </a>
                        </div>
 

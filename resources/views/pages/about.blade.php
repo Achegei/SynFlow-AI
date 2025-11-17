@@ -72,6 +72,21 @@
     </div>
 </section>
 
+    <!-- NORTH AMERICAN SALES TEAM IMAGE -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-bold text-indigo-700 mb-6">North American Sales Team</h3>
+
+            <div class="flex justify-center">
+                <div class="w-full max-w-4xl">
+                    <img src="{{ asset('images/north-american-sales.jpg') }}" alt="North American Sales Team" class="w-full rounded-xl shadow-lg object-cover">
+                    <p class="mt-4 text-gray-600 text-sm">Our North American Sales Team driving innovation, client engagement, and growth across the continent.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 <!-- GLOBAL OFFICES -->
 <section class="py-20 bg-gray-100">
     <div class="container mx-auto px-6 text-center">
