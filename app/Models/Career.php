@@ -35,4 +35,10 @@ class Career extends Model
         'desirable' => 'array',
         'we_offer' => 'array',
     ];
+
+    // Relationship
+    public function applications()
+    {
+        return $this->hasMany(CareerApplication::class);
+    }
 }

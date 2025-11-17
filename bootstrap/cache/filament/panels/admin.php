@@ -1,6 +1,9 @@
 <?php return array (
   'livewireComponents' => 
   array (
+    'app.filament.resources.career-application-resource.pages.create-career-application' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\CreateCareerApplication',
+    'app.filament.resources.career-application-resource.pages.edit-career-application' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\EditCareerApplication',
+    'app.filament.resources.career-application-resource.pages.list-career-applications' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\ListCareerApplications',
     'app.filament.resources.course-resource.pages.create-course' => 'App\\Filament\\Resources\\CourseResource\\Pages\\CreateCourse',
     'app.filament.resources.course-resource.pages.edit-course' => 'App\\Filament\\Resources\\CourseResource\\Pages\\EditCourse',
     'app.filament.resources.course-resource.pages.list-courses' => 'App\\Filament\\Resources\\CourseResource\\Pages\\ListCourses',
@@ -42,6 +45,7 @@
   ),
   'resources' => 
   array (
+    '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/CareerApplicationResource.php' => 'App\\Filament\\Resources\\CareerApplicationResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/CourseResource.php' => 'App\\Filament\\Resources\\CourseResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/EventResource.php' => 'App\\Filament\\Resources\\EventResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/PostResource.php' => 'App\\Filament\\Resources\\PostResource',

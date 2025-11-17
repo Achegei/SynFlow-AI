@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\CareerApplicationController;
 use App\Http\Controllers\CommunityDashboardController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\CourseAdminController;
@@ -57,14 +58,17 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
-Route::controller(CareerController::class)->group(function () {
-    Route::get('/careers', 'index')->name('careers');
-    // The specific 'apply' route must be defined before the dynamic route below
-    Route::get('/careers/apply', [ApplicationController::class, 'showForm'])->name('careers.apply');
-    // Route for dynamic job descriptions
-    Route::get('/careers/{position}', 'show')->name('careers.description');
-});
+Route::prefix('careers')->group(function () {
+    // Careers listing
+    Route::get('/', [CareerController::class, 'index'])->name('careers');
+    Route::post('/submit', [CareerApplicationController::class, 'store'])->name('careers.submit');
 
+    // Apply form must come before the dynamic job description
+    Route::get('/apply', [ApplicationController::class, 'showForm'])->name('careers.apply');
+
+    // Dynamic job descriptions
+    Route::get('/{position}', [CareerController::class, 'show'])->name('careers.description');
+});
 // Webhook route for payment providers
 Route::post('/webhook/{provider}', [App\Http\Controllers\WebhookController::class, 'handle']);
 

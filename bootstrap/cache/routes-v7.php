@@ -66,6 +66,46 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/admin/career-applications' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'filament.admin.resources.career-applications.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/admin/career-applications/create' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'filament.admin.resources.career-applications.create',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/admin/courses' => 
       array (
         0 => 
@@ -227,7 +267,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::y2oBLbbIJtHTzGT8',
+            '_route' => 'generated::2bbnnvyGhHZEXBa6',
           ),
           1 => NULL,
           2 => 
@@ -247,7 +287,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::nNAjhznouYfACWWS',
+            '_route' => 'generated::t6AXmDv8gdcR4AyP',
           ),
           1 => NULL,
           2 => 
@@ -286,7 +326,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::7Yqj6tGRePKusswa',
+            '_route' => 'generated::01QgAjth5B30oDlE',
           ),
           1 => NULL,
           2 => 
@@ -700,6 +740,25 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
+      '/careers/submit' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'careers.submit',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
       '/careers/apply' => 
       array (
         0 => 
@@ -763,7 +822,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::ApuOZzsYRFaBVU5q',
+            '_route' => 'generated::5AUnOKrZf7pJLnUE',
           ),
           1 => NULL,
           2 => 
@@ -799,7 +858,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2rWjyDN8ZPhpyIFX',
+            '_route' => 'generated::cg7AUcE249JBwUTB',
           ),
           1 => NULL,
           2 => 
@@ -929,7 +988,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::TYD15MwQ09bxLxnq',
+            '_route' => 'generated::TZTX77ADpO3PHf1M',
           ),
           1 => NULL,
           2 => 
@@ -1236,7 +1295,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::gRB5QJUso9rjsFXX',
+            '_route' => 'generated::dZDU0zMRaWQpVAkM',
           ),
           1 => NULL,
           2 => 
@@ -1256,7 +1315,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1T17mrOeTo0TiTnf',
+            '_route' => 'generated::NVor4sOShE7hxeEo',
           ),
           1 => NULL,
           2 => 
@@ -1273,7 +1332,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/filament/(?|exports/([^/]++)/download(*:45)|imports/([^/]++)/failed\\-rows/download(*:90))|/admin/(?|courses/([^/]++)/edit(*:129)|events/([^/]++)(?|/edit(*:160)|(*:168))|posts/([^/]++)/edit(*:196))|/livewire/preview\\-file/([^/]++)(*:237)|/c(?|areers/([^/]++)(*:265)|lassroom/([^/]++)(*:290))|/webhook/([^/]++)(*:316)|/reset\\-password/([^/]++)(*:349)|/verify\\-email/([^/]++)/([^/]++)(*:389)|/p(?|osts/([^/]++)/(?|like(*:423)|comment(*:438))|urchase/(?|([^/]++)(*:466)|complete(*:482)))|/e(?|pisodes/([^/]++)/(?|watched(*:524)|toggle(*:538))|vents/([^/]++)(*:561))|/storage/(.*)(*:583))/?$}sDu',
+      0 => '{^(?|/filament/(?|exports/([^/]++)/download(*:45)|imports/([^/]++)/failed\\-rows/download(*:90))|/admin/(?|c(?|areer\\-applications/([^/]++)/edit(*:145)|ourses/([^/]++)/edit(*:173))|events/([^/]++)(?|/edit(*:205)|(*:213))|posts/([^/]++)/edit(*:241))|/livewire/preview\\-file/([^/]++)(*:282)|/c(?|areers/([^/]++)(*:310)|lassroom/([^/]++)(*:335))|/webhook/([^/]++)(*:361)|/reset\\-password/([^/]++)(*:394)|/verify\\-email/([^/]++)/([^/]++)(*:434)|/p(?|osts/([^/]++)/(?|like(*:468)|comment(*:483))|urchase/(?|([^/]++)(*:511)|complete(*:527)))|/e(?|pisodes/([^/]++)/(?|watched(*:569)|toggle(*:583))|vents/([^/]++)(*:606))|/storage/(.*)(*:628))/?$}sDu',
     ),
     3 => 
     array (
@@ -1323,7 +1382,30 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      129 => 
+      145 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'filament.admin.resources.career-applications.edit',
+          ),
+          1 => 
+          array (
+            0 => 'record',
+          ),
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      173 => 
       array (
         0 => 
         array (
@@ -1346,7 +1428,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      160 => 
+      205 => 
       array (
         0 => 
         array (
@@ -1369,7 +1451,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      168 => 
+      213 => 
       array (
         0 => 
         array (
@@ -1392,7 +1474,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      196 => 
+      241 => 
       array (
         0 => 
         array (
@@ -1415,7 +1497,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      237 => 
+      282 => 
       array (
         0 => 
         array (
@@ -1438,7 +1520,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      265 => 
+      310 => 
       array (
         0 => 
         array (
@@ -1461,7 +1543,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      290 => 
+      335 => 
       array (
         0 => 
         array (
@@ -1484,13 +1566,13 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      316 => 
+      361 => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'generated::tRH8hcf5ZvmgPEKm',
+            '_route' => 'generated::EIBJpXntsUg3HkYx',
           ),
           1 => 
           array (
@@ -1506,7 +1588,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      349 => 
+      394 => 
       array (
         0 => 
         array (
@@ -1529,7 +1611,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      389 => 
+      434 => 
       array (
         0 => 
         array (
@@ -1553,7 +1635,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      423 => 
+      468 => 
       array (
         0 => 
         array (
@@ -1575,7 +1657,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      438 => 
+      483 => 
       array (
         0 => 
         array (
@@ -1597,7 +1679,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      466 => 
+      511 => 
       array (
         0 => 
         array (
@@ -1620,7 +1702,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      482 => 
+      527 => 
       array (
         0 => 
         array (
@@ -1642,7 +1724,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      524 => 
+      569 => 
       array (
         0 => 
         array (
@@ -1664,7 +1746,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      538 => 
+      583 => 
       array (
         0 => 
         array (
@@ -1686,7 +1768,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      561 => 
+      606 => 
       array (
         0 => 
         array (
@@ -1708,7 +1790,7 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      583 => 
+      628 => 
       array (
         0 => 
         array (
@@ -1941,6 +2023,156 @@ app('router')->setCompiledRoutes(
         'as' => 'filament.admin.home',
         'namespace' => NULL,
         'prefix' => 'admin/',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'filament.admin.resources.career-applications.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/career-applications',
+      'action' => 
+      array (
+        'domain' => NULL,
+        'middleware' => 
+        array (
+          0 => 'panel:admin',
+          1 => 'Illuminate\\Cookie\\Middleware\\EncryptCookies',
+          2 => 'Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse',
+          3 => 'Illuminate\\Session\\Middleware\\StartSession',
+          4 => 'Illuminate\\Session\\Middleware\\AuthenticateSession',
+          5 => 'Illuminate\\View\\Middleware\\ShareErrorsFromSession',
+          6 => 'Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken',
+          7 => 'Illuminate\\Routing\\Middleware\\SubstituteBindings',
+          8 => 'Filament\\Http\\Middleware\\DispatchServingFilamentEvent',
+          9 => 'Illuminate\\Auth\\Middleware\\Authenticate',
+        ),
+        'excluded_middleware' => 
+        array (
+        ),
+        'uses' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\ListCareerApplications@__invoke',
+        'controller' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\ListCareerApplications',
+        'as' => 'filament.admin.resources.career-applications.index',
+        'namespace' => NULL,
+        'prefix' => 'admin/career-applications',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'filament.admin.resources.career-applications.create' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/career-applications/create',
+      'action' => 
+      array (
+        'domain' => NULL,
+        'middleware' => 
+        array (
+          0 => 'panel:admin',
+          1 => 'Illuminate\\Cookie\\Middleware\\EncryptCookies',
+          2 => 'Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse',
+          3 => 'Illuminate\\Session\\Middleware\\StartSession',
+          4 => 'Illuminate\\Session\\Middleware\\AuthenticateSession',
+          5 => 'Illuminate\\View\\Middleware\\ShareErrorsFromSession',
+          6 => 'Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken',
+          7 => 'Illuminate\\Routing\\Middleware\\SubstituteBindings',
+          8 => 'Filament\\Http\\Middleware\\DispatchServingFilamentEvent',
+          9 => 'Illuminate\\Auth\\Middleware\\Authenticate',
+        ),
+        'excluded_middleware' => 
+        array (
+        ),
+        'uses' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\CreateCareerApplication@__invoke',
+        'controller' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\CreateCareerApplication',
+        'as' => 'filament.admin.resources.career-applications.create',
+        'namespace' => NULL,
+        'prefix' => 'admin/career-applications',
+        'where' => 
+        array (
+        ),
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'filament.admin.resources.career-applications.edit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'admin/career-applications/{record}/edit',
+      'action' => 
+      array (
+        'domain' => NULL,
+        'middleware' => 
+        array (
+          0 => 'panel:admin',
+          1 => 'Illuminate\\Cookie\\Middleware\\EncryptCookies',
+          2 => 'Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse',
+          3 => 'Illuminate\\Session\\Middleware\\StartSession',
+          4 => 'Illuminate\\Session\\Middleware\\AuthenticateSession',
+          5 => 'Illuminate\\View\\Middleware\\ShareErrorsFromSession',
+          6 => 'Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken',
+          7 => 'Illuminate\\Routing\\Middleware\\SubstituteBindings',
+          8 => 'Filament\\Http\\Middleware\\DispatchServingFilamentEvent',
+          9 => 'Illuminate\\Auth\\Middleware\\Authenticate',
+        ),
+        'excluded_middleware' => 
+        array (
+        ),
+        'uses' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\EditCareerApplication@__invoke',
+        'controller' => 'App\\Filament\\Resources\\CareerApplicationResource\\Pages\\EditCareerApplication',
+        'as' => 'filament.admin.resources.career-applications.edit',
+        'namespace' => NULL,
+        'prefix' => 'admin/career-applications',
         'where' => 
         array (
         ),
@@ -2490,7 +2722,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::y2oBLbbIJtHTzGT8' => 
+    'generated::2bbnnvyGhHZEXBa6' => 
     array (
       'methods' => 
       array (
@@ -2502,7 +2734,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile',
-        'as' => 'generated::y2oBLbbIJtHTzGT8',
+        'as' => 'generated::2bbnnvyGhHZEXBa6',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2518,7 +2750,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::nNAjhznouYfACWWS' => 
+    'generated::t6AXmDv8gdcR4AyP' => 
     array (
       'methods' => 
       array (
@@ -2530,7 +2762,7 @@ app('router')->setCompiledRoutes(
       array (
         'uses' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
         'controller' => 'Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps',
-        'as' => 'generated::nNAjhznouYfACWWS',
+        'as' => 'generated::t6AXmDv8gdcR4AyP',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2601,7 +2833,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::7Yqj6tGRePKusswa' => 
+    'generated::01QgAjth5B30oDlE' => 
     array (
       'methods' => 
       array (
@@ -2629,8 +2861,8 @@ app('router')->setCompiledRoutes(
                     return response(\\Illuminate\\Support\\Facades\\View::file(\'/Users/mohamudhassanmayow/Desktop/synflow-Ai/vendor/laravel/framework/src/Illuminate/Foundation/Configuration\'.\'/../resources/health-up.blade.php\', [
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
-                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"0000000000000dee0000000000000000";}}',
-        'as' => 'generated::7Yqj6tGRePKusswa',
+                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"0000000000000df00000000000000000";}}',
+        'as' => 'generated::01QgAjth5B30oDlE',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3366,11 +3598,47 @@ app('router')->setCompiledRoutes(
         'uses' => 'App\\Http\\Controllers\\CareerController@index',
         'controller' => 'App\\Http\\Controllers\\CareerController@index',
         'namespace' => NULL,
-        'prefix' => '',
+        'prefix' => '/careers',
         'where' => 
         array (
         ),
         'as' => 'careers',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'careers.submit' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'careers/submit',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\CareerApplicationController@store',
+        'controller' => 'App\\Http\\Controllers\\CareerApplicationController@store',
+        'namespace' => NULL,
+        'prefix' => '/careers',
+        'where' => 
+        array (
+        ),
+        'as' => 'careers.submit',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3403,7 +3671,7 @@ app('router')->setCompiledRoutes(
         'uses' => 'App\\Http\\Controllers\\ApplicationController@showForm',
         'controller' => 'App\\Http\\Controllers\\ApplicationController@showForm',
         'namespace' => NULL,
-        'prefix' => '',
+        'prefix' => '/careers',
         'where' => 
         array (
         ),
@@ -3440,7 +3708,7 @@ app('router')->setCompiledRoutes(
         'uses' => 'App\\Http\\Controllers\\CareerController@show',
         'controller' => 'App\\Http\\Controllers\\CareerController@show',
         'namespace' => NULL,
-        'prefix' => '',
+        'prefix' => '/careers',
         'where' => 
         array (
         ),
@@ -3460,7 +3728,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::tRH8hcf5ZvmgPEKm' => 
+    'generated::EIBJpXntsUg3HkYx' => 
     array (
       'methods' => 
       array (
@@ -3480,7 +3748,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::tRH8hcf5ZvmgPEKm',
+        'as' => 'generated::EIBJpXntsUg3HkYx',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3572,7 +3840,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::ApuOZzsYRFaBVU5q' => 
+    'generated::5AUnOKrZf7pJLnUE' => 
     array (
       'methods' => 
       array (
@@ -3593,7 +3861,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::ApuOZzsYRFaBVU5q',
+        'as' => 'generated::5AUnOKrZf7pJLnUE',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3647,7 +3915,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2rWjyDN8ZPhpyIFX' => 
+    'generated::cg7AUcE249JBwUTB' => 
     array (
       'methods' => 
       array (
@@ -3668,7 +3936,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2rWjyDN8ZPhpyIFX',
+        'as' => 'generated::cg7AUcE249JBwUTB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3988,7 +4256,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::TYD15MwQ09bxLxnq' => 
+    'generated::TZTX77ADpO3PHf1M' => 
     array (
       'methods' => 
       array (
@@ -4009,7 +4277,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::TYD15MwQ09bxLxnq',
+        'as' => 'generated::TZTX77ADpO3PHf1M',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4928,7 +5196,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::gRB5QJUso9rjsFXX' => 
+    'generated::dZDU0zMRaWQpVAkM' => 
     array (
       'methods' => 
       array (
@@ -4996,13 +5264,13 @@ app('router')->setCompiledRoutes(
         \'message\' => \'✅ Sitemap generated successfully!\',
         \'path\' => \\asset(\'sitemap.xml\'),
     ]);
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000e250000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000e280000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::gRB5QJUso9rjsFXX',
+        'as' => 'generated::dZDU0zMRaWQpVAkM',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5018,7 +5286,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1T17mrOeTo0TiTnf' => 
+    'generated::NVor4sOShE7hxeEo' => 
     array (
       'methods' => 
       array (
@@ -5035,13 +5303,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000de70000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"0000000000000de90000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::1T17mrOeTo0TiTnf',
+        'as' => 'generated::NVor4sOShE7hxeEo',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5073,7 +5341,7 @@ app('router')->setCompiledRoutes(
                         $config,
                         $isProduction
                     ))($request, $path);
-                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"0000000000000e100000000000000000";}}',
+                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"0000000000000e120000000000000000";}}',
         'as' => 'storage.local',
       ),
       'fallback' => false,
