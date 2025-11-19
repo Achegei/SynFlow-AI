@@ -29,32 +29,91 @@
                 <li><strong>We develop strong, well-trained salespeople:</strong> Salespeople who understand AI can sell 10× better, close more deals, and support clients confidently.</li>
             </ul>
         </section>
+        <!-- Additional Option for North America Applicants -->
+        <div class="mt-6 mb-6">
+            <button 
+                type="button"
+                id="toggleNorthAmericaBtn"
+                class="px-4 py-2 bg-orange-600 text-white font-semibold rounded-md shadow hover:bg-orange-700 transition">
+                North America Sales Team Applicants Section
+            </button>
+
+            <div 
+                id="northAmericaMessage"
+                class="mt-3 p-4 bg-orange-50 border-l-4 border-orange-600 text-gray-900 rounded-md text-sm hidden">
+                <strong class="text-orange-700">Important Notice:</strong><br>
+                This option applies only to sales applicants located in 
+                <strong>North America (Canada and the United States)</strong>.
+                <br><br>
+                If you are applying from Kenya or any other African country, please ignore this section and continue with the 
+                East Africa Sales Team application form below.
+            </div>
+        </div>
 
         <!-- Training Programs & Prices -->
         <section class="prose max-w-none mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Moose Loon AI Sales Team – Training Structure</h2>
-            <p>All recruits pay a 50% deposit to begin training and pay the balance after employment, based on a personal agreement.</p>
+            <p>All recruits pay a 50% deposit to begin training and pay the remaining balance after employment, based on a personal agreement.</p>
 
             <div class="space-y-6 mt-6">
+
                 <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-indigo-700">1. AI Sales Foundation Program – KSh 1,900</h3>
-                    <p>Deposit (50%): KSh 950<br>Balance After Employment: KSh 950</p>
-                    <p class="mt-1 font-semibold">Title After Completion: AI Sales Associate</p>
+                    <h3 class="font-bold text-indigo-700">1. AI Sales Foundation Program (Mandatory) – KSh 3,000</h3>
+                    <p>Deposit (50%): KSh 1,500<br>Balance After Employment: KSh 1,500</p>
                 </div>
 
                 <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-indigo-700">2. AI Sales Supervisory Program – KSh 2,900</h3>
-                    <p>Deposit (50%): KSh 1,450<br>Balance After Employment: KSh 1,450</p>
-                    <p class="mt-1 font-semibold">Title After Completion: AI Sales Supervisor</p>
+                    <h3 class="font-bold text-indigo-700">2. AI Sales Supervisory Program – KSh 5,000</h3>
+                    <p>Deposit (50%): KSh 2,500<br>Balance After Employment: KSh 2,500</p>
                 </div>
 
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-indigo-700">3. AI Sales Leadership Program – KSh 3,900</h3>
-                    <p>Deposit (50%): KSh 1,950<br>Balance After Employment: KSh 1,950</p>
-                    <p class="mt-1 font-semibold">Title After Completion: AI Sales Manager</p>
+                <div class="bg-gray-50 p-6 rounded-lg shadow-sm border border-indigo-200">
+                    <h3 class="font-bold text-indigo-700">🔥 Combo Package: Foundation + Supervisory – KSh 6,000</h3>
+                    <p>Deposit (50%): KSh 3,000<br>Balance After Employment: KSh 3,000</p>
+                    <p class="mt-1 font-semibold text-green-700">Best Value • Save KSh 2,000</p>
                 </div>
+
             </div>
         </section>
+
+        <!-- Orientation Delivery Format -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4 text-center">Orientation Delivery Format</h2>
+                
+                <div class="space-y-6 text-gray-700 leading-relaxed">
+
+                    <!-- Nairobi Onsite -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-xl font-semibold text-indigo-700 mb-2">Nairobi Sales Team – In-Person Orientation</h3>
+                        <p>
+                            The Nairobi Sales Team will receive their full orientation <strong>in person</strong> at the designated 
+                            Moose Loon AI training venue. This session will include an introduction to the company, an overview 
+                            of sales tools, expectations, reporting procedures, and field guidelines.
+                        </p>
+                    </div>
+
+                    <!-- Outside Nairobi Digital Orientation -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-xl font-semibold text-indigo-700 mb-2">Outside Nairobi – Digital Orientation</h3>
+                        <p>
+                            All other sales teams operating outside Nairobi will receive their orientation 
+                            <strong>digitally</strong> through a structured online program. This will include video briefings, 
+                            onboarding materials, sales scripts, compliance guidelines, and performance expectations delivered 
+                            through our online platforms.
+                        </p>
+                    </div>
+
+                    <!-- Consistency Note -->
+                    <div class="bg-indigo-50 p-5 rounded-lg border-l-4 border-indigo-500">
+                        <p class="text-indigo-800">
+                            This approach ensures that every team member—regardless of location—receives a consistent, 
+                            comprehensive, and professional onboarding experience.
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
 
         <hr class="my-8 border-t border-gray-200">
 
@@ -83,7 +142,7 @@
                         <option value="" disabled selected>Select a program</option>
                         <option value="AI Sales Foundation Program">AI Sales Foundation Program</option>
                         <option value="AI Sales Supervisory Program">AI Sales Supervisory Program</option>
-                        <option value="AI Sales Leadership Program">AI Sales Leadership Program</option>
+                        <option value="Combo Package: Foundation + Supervisory">Combo Package: Foundation + Supervisory</option>
                     </select>
                     @error('position_slug') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
@@ -93,7 +152,6 @@
                     <input type="file" name="cv_cover" id="cv_cover" required accept=".pdf" class="w-full text-gray-700">
                     @error('cv_cover') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
-
                 <button type="submit" class="w-full py-3 px-4 rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                     Submit Application
                 </button>
@@ -116,6 +174,19 @@ function slugify(text) {
 
 positionSelect.addEventListener('change', function() {
     positionSlugInput.value = slugify(this.value);
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // NORTH AMERICA SECTION
+    const toggleNA = document.getElementById('toggleNorthAmericaBtn');
+    const naMsg = document.getElementById('northAmericaMessage');
+
+    toggleNA.addEventListener('click', () => {
+        naMsg.classList.toggle('hidden');
+    });
+
 });
 </script>
 @endsection

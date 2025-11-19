@@ -94,12 +94,22 @@
 
         <div class="mt-12 grid md:grid-cols-2 gap-10">
             <div class="bg-white p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-900">🇨🇦 Canada Headquarters</h3>
-                <p class="mt-3 text-gray-600">Executive & Technology Division</p>
+                <h3 class="text-2xl font-bold text-gray-900">🇨🇦 Toronto Headquarters</h3>
+                <p class="mt-3 text-gray-600">Executive, Technology & North American Division
+                Serving Canada & the United States <br>
+                📍 Moose Loon AI Solutions – Canada HQ
+                Toronto, Ontario, Canada <br>
+                Website: www.mooseloonai.ca</p>
             </div>
             <div class="bg-white p-8 rounded-xl shadow-lg">
                 <h3 class="text-2xl font-bold text-gray-900">🇰🇪 Nairobi Headquarters</h3>
-                <p class="mt-3 text-gray-600">AI Business Solutions & Sales Division</p>
+                <p class="mt-3 text-gray-600">AI Business Solutions & East Africa Sales Division
+                Serving East Africa <br>
+                📍 Moose Loon AI Solutions – Nairobi HQ <br>
+                14th Floor, Delta Corner Tower 2 <br>
+                Waiyaki Way, Westlands <br>
+                Nairobi, Kenya <br>
+                Website: www.mooseloonai.ca</p>
             </div>
         </div>
 

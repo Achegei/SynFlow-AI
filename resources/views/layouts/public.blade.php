@@ -33,7 +33,7 @@
                            <a href="{{ route('home') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Home</a>
                            <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a>
                            <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
-                           <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
+                           <!--<a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>-->
                            <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a>
                         <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>. -->
                            <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
@@ -79,7 +79,7 @@
                     <a href="{{ route('home') }}" class="text-gray-700 hover:text-indigo-600">Home</a>
                     <a href="{{ route('about') }}" class="text-gray-700 hover:text-indigo-600">Our Team</a>
                     <a href="{{ route('services') }}" class="text-gray-700 hover:text-indigo-600">Services</a>
-                    <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>
+                    <!--<a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>-->
                     <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a>
                     <a href="{{ route('contact') }}" class="text-gray-700 hover:text-indigo-600">Contact</a>
 
@@ -124,16 +124,19 @@
 
                         <!-- Company Info Section -->
                         <div>
-                            <h4 class="text-xl font-bold text-white mb-4">Moose Loon AI Business Solutions – Global Offices</h4>
-                            <h1 class="text-sm leading-relaxed">North America</h1>
+                            
+                            <h5 class="text-sm font-semibold text-white mb-1">North America</h5>
+                            <h3 class="text-sm leading-relaxed mt-3">Moose Loon AI Business Solutions – Toronto Office (Canada HQ)</h3>
 
-                            <p class="text-sm font-semibold mb-1 mt-3">🇨🇦 Canada Headquarters</p>
+                            <p class="text-sm font-semibold mb-1 mt-3">🇨🇦 Toronto Headquarters</p>
                             <ul class="text-sm space-y-1">
                                 <li class="flex items-center space-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
-                                    <span>The central hub for Moose Loon AI Business Solutions, overseeing global technology development, automation engineering, and international business strategy.</span>
+                                    <span>Executive, Technology & North American Division Serving Canada & the United States
+                                    📍 Moose Loon AI Solutions – Canada HQ Toronto, Ontario, Canada <br>
+                                    Website: www.mooseloonai.ca</span>
                                 </li>
                             </ul>
                         </div>
@@ -168,9 +171,12 @@
                         <div>
                             <h5 class="text-sm font-semibold text-white mb-1">East Africa</h5>
 
-                            <h3 class="text-sm leading-relaxed mt-3">🇰🇪 Nairobi Headquarters</h3>
+                            <h3 class="text-sm leading-relaxed mt-3">🇰🇪 Moose Loon AI Solutions – Nairobi Office (Kenya HQ)</h3>
                             <p class="text-sm mt-1">
-                                The operational base for Moose Loon AI Business Solutions in Africa, managing sales teams, business automation projects, client onboarding, and regional expansion.
+                               Delta Corner Tower 2 – Westlands
+                                14th Floor, Delta Corner Tower 2
+                                Waiyaki Way, Westlands
+                                Nairobi, Kenya
                             </p>
                         </div>
 

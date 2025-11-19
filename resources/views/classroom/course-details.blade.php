@@ -19,6 +19,15 @@
                 <span class="text-sm font-medium text-gray-500">
                     Course Progress: {{ number_format($course->progress_percentage) }}%
                 </span>
+                @if ($course->progress_percentage == 100)
+                    <div class="mt-4">
+                        <a href="{{ route('certificate.generate', $course->id) }}"
+                        class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
+                            🎉 Download Your Certificate
+                        </a>
+                    </div>
+                @endif
+
                 <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
                     <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $course->progress_percentage }}%;"></div>
                 </div>

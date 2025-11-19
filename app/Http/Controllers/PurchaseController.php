@@ -6,63 +6,97 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use IntaSend\IntaSendPHP\Checkout;
+use IntaSend\IntaSendPHP\Customer;
 
 class PurchaseController extends Controller
 {
     /**
-     * Redirect user to the course's payment page
+     * Redirect user to the course's IntaSend payment page
      */
     public function purchase($courseId)
     {
         $user = Auth::user();
         $course = Course::findOrFail($courseId);
 
-        // If user already owns course, skip purchase
+        // Already owns course
         if ($user->courses->contains($course->id)) {
             return redirect()->route('classroom.show', $course->id)
                 ->with('info', 'You already have access to this course.');
         }
 
-        // Universal payment URL (update per course or per provider)
-        $paymentUrl = $course->payment_link ?? config('services.payment.link');
+        // Build customer info
+        $customer = new Customer();
+        $customer->first_name = $user->name;
+        $customer->last_name = $user->name; // optional, separate field if available
+        $customer->email = $user->email;
+        $customer->country = "KE";
 
-        // Build a redirect URL after successful payment
-        $redirectUrl = route('purchase.complete', [
-            'course_id' => $course->id,
-            'user_id' => $user->id,
+        $amount = $course->price; // Ensure courses table has price column
+        $currency = "KES";
+
+        $host = config('app.url'); // Website URL
+        $redirect_url = route('purchase.complete', ['course_id' => $course->id]);
+
+        $ref_order_number = "course-{$course->id}-user-{$user->id}-" . time();
+
+        $card_tarrif = "BUSINESS-PAYS";
+        $mobile_tarrif = "BUSINESS-PAYS";
+
+        // Initialize IntaSend checkout
+        dd(env('INTASEND_PUBLISHABLE_KEY'), env('INTASEND_TEST_ENVIRONMENT'));
+
+        $checkout = new Checkout();
+        $checkout->init([
+            'publishable_key' => env('INTASEND_PUBLISHABLE_KEY'),
+            'test' => env('INTASEND_TEST_ENVIRONMENT', true),
         ]);
 
-        // Track this payment as pending (optional but good practice)
-        $provider = parse_url($paymentUrl, PHP_URL_HOST) ?? 'custom';
-
-            if (empty($provider)) {
-                $provider = 'custom';
-            }
-
-            Payment::updateOrCreate(
-                [
-                    'user_id'   => $user->id,
-                    'course_id' => $course->id,
-                ],
-                [
-                    'status'   => 'pending',
-                    'provider' => $provider,
-                ]
+        try {
+            $response = $checkout->create(
+                $amount,
+                $currency,
+                $customer,
+                $host,
+                $redirect_url,
+                $ref_order_number,
+                null,
+                null,
+                $card_tarrif,
+                $mobile_tarrif
             );
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $responseBody = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $retryAfter = $responseBody['errors'][0]['detail'] ?? null;
+            return redirect()->back()->with('error', "Too many requests. Please wait {$retryAfter} seconds and try again.");
+        }
 
 
-        // Add metadata for your payment provider
-        $query = http_build_query([
-            'user_id'      => $user->id,
-            'course_id'    => $course->id,
-            'redirect_url' => $redirectUrl,
-        ]);
+        if (!$response || !isset($response->invoice->url)) {
+            return redirect()->back()->with('error', 'Failed to initiate payment.');
+        }
 
-        return redirect("$paymentUrl?$query");
+        // Track pending payment in DB
+        Payment::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'course_id' => $course->id,
+            ],
+            [
+                'status' => 'pending',
+                'provider' => 'intasend',
+                'payment_id' => $response->invoice->invoice_id, // fixed
+                'amount' => $amount,
+                'payload' => json_encode($response),
+            ]
+        );
+
+        // Redirect user to IntaSend payment page
+       return redirect($response->invoice->url);
     }
 
     /**
-     * Payment redirect after success
+     * Redirect after successful payment
      */
     public function complete(Request $request)
     {
@@ -70,21 +104,23 @@ class PurchaseController extends Controller
         $courseId = $request->query('course_id');
 
         if (!$user || !$courseId) {
-            abort(400, 'Invalid payment confirmation.');
+            abort(400, 'Invalid request.');
         }
 
         $course = Course::findOrFail($courseId);
 
-        // Optional: Verify transaction from provider API before granting access
-        // e.g. $verified = app(PaymentVerifier::class)->verify($request);
-        // if (!$verified) abort(403, 'Payment not verified.');
-
-        // Update payment status
-        Payment::where('user_id', $user->id)
+        // Check if payment is marked completed by webhook
+        $payment = Payment::where('user_id', $user->id)
             ->where('course_id', $courseId)
-            ->update(['status' => 'completed']);
+            ->where('status', 'completed')
+            ->first();
 
-        // Grant access if not yet enrolled
+        if (!$payment) {
+            return redirect()->route('courses.show', $course->id)
+                ->with('error', 'Payment not confirmed yet. Please wait a few moments.');
+        }
+
+        // Grant access to course
         $user->courses()->syncWithoutDetaching([$course->id]);
 
         return redirect()->route('classroom.show', $course->id)

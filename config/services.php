@@ -17,6 +17,12 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
+    
+    'intasend' => [
+    'publishable_key' => env('INTASEND_PUBLISHABLE_KEY'),
+    'secret_key' => env('INTASEND_SECRET_KEY'),
+    'env' => env('INTASEND_TEST_ENVIRONMENT', true) ? 'sandbox' : 'live',
+    ],
 
     'resend' => [
         'key' => env('RESEND_KEY'),

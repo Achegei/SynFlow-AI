@@ -67,11 +67,11 @@
                     <label for="revenue" class="block text-sm font-medium text-gray-700 mb-1">Annual Revenue (approx.)</label>
                     <select id="revenue" name="revenue" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
                         <option value="">Select revenue range</option>
-                        <option value="Less than $100K">Less than $100K</option>
-                        <option value="$100K-$500K">$100K-$500K</option>
-                        <option value="$500K-$1M">$500K-$1M</option>
-                        <option value="$1M-$2M">$1M-$2M</option>
-                        <option value="More than $2M">More than $2M</option>
+                        <option value="Less than KES 100K">Less than KES 100K</option>
+                        <option value="KES100K-KES500K">KES 100K - KES 500K</option>
+                        <option value="KES500K-KES1M">KES 500K - KES 1M</option>
+                        <option value="KES1M-KES2M">KES 1M - KES 2M</option>
+                        <option value="More than KES2M">More than KES 2M</option>
                     </select>
                 </div>
 
@@ -80,10 +80,10 @@
                     <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">Estimated Project Budget</label>
                     <select id="budget" name="budget" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors">
                         <option value="">Select budget range</option>
-                        <option value="Less than $10K">Less than $10K</option>
-                        <option value="$10K-$50K">$10K-$50K</option>
-                        <option value="$50K-$100K">$50K-$100K</option>
-                        <option value="More than $100K">More than $100K</option>
+                        <option value="Less than KES10K">Less than  KES 10K</option>
+                        <option value="KES10K-KES50K">KES 10K - KES 50K</option>
+                        <option value="KES50K-KES100K">KES 50K - KES 100K</option>
+                        <option value="More than KES100K">More than KES 100K</option>
                     </select>
                 </div>
             </div>

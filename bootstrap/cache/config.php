@@ -430,6 +430,26 @@
       ),
     ),
   ),
+  'filament' => 
+  array (
+    'broadcasting' => 
+    array (
+    ),
+    'default_filesystem_disk' => 'public',
+    'assets_path' => NULL,
+    'cache_path' => '/Users/mohamudhassanmayow/Desktop/synflow-Ai/bootstrap/cache/filament',
+    'livewire_loading_delay' => 'default',
+    'system_route_prefix' => 'filament',
+    'pages' => 
+    array (
+    ),
+    'resources' => 
+    array (
+    ),
+    'widgets' => 
+    array (
+    ),
+  ),
   'filesystems' => 
   array (
     'default' => 'local',
@@ -731,9 +751,15 @@
         'channel' => NULL,
       ),
     ),
+    'intasend' => 
+    array (
+      'publishable_key' => 'ISPubKey_live_4fa9e68a-f376-4db3-8f8c-d9e1f71c42d8',
+      'secret_key' => 'ISSecretKey_live_420e27eb-8237-4dae-8109-b5bccae93ac6',
+      'env' => 'sandbox',
+    ),
     'payment' => 
     array (
-      'link' => 'https://payment.intasend.com/pay/ae1022e4-f534-46ff-9378-6bbafaf3cd1e/',
+      'link' => NULL,
     ),
   ),
   'session' => 
@@ -784,17 +810,6 @@
       'default' => 'icon',
     ),
   ),
-  'filament' => 
-  array (
-    'broadcasting' => 
-    array (
-    ),
-    'default_filesystem_disk' => 'public',
-    'assets_path' => NULL,
-    'cache_path' => '/Users/mohamudhassanmayow/Desktop/synflow-Ai/bootstrap/cache/filament',
-    'livewire_loading_delay' => 'default',
-    'system_route_prefix' => 'filament',
-  ),
   'livewire' => 
   array (
     'class_namespace' => 'App\\Livewire',
@@ -839,6 +854,19 @@
     ),
     'inject_morph_markers' => true,
     'pagination_theme' => 'tailwind',
+  ),
+  'sitemap' => 
+  array (
+    'guzzle_options' => 
+    array (
+      'cookies' => true,
+      'connect_timeout' => 10,
+      'timeout' => 10,
+      'allow_redirects' => false,
+    ),
+    'execute_javascript' => false,
+    'chrome_binary_path' => NULL,
+    'crawl_profile' => 'Spatie\\Sitemap\\Crawler\\Profile',
   ),
   'tinker' => 
   array (

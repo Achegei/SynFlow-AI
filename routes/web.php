@@ -5,6 +5,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\CareerApplicationController;
@@ -32,6 +33,10 @@ use App\Models\Career;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/certificate/download', [CertificateController::class, 'generate'])
+    ->middleware('auth')
+    ->name('certificate.download');
 
 //================================================
 // 1. Public-Facing Site Routes
