@@ -45,6 +45,10 @@ class PurchaseController extends Controller
 
         // Initialize IntaSend checkout
         //dd(env('INTASEND_PUBLISHABLE_KEY'), env('INTASEND_TEST_ENVIRONMENT'));
+        logger('IntaSend publishable key: ' . env('INTASEND_PUBLISHABLE_KEY'));
+        logger('IntaSend secret key: ' . env('INTASEND_SECRET_KEY'));
+        logger('IntaSend test mode: ' . env('INTASEND_TEST_ENVIRONMENT'));
+
 
         $checkout = new Checkout();
         $checkout->init([
