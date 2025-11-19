@@ -28,11 +28,11 @@ class PurchaseController extends Controller
         // Build customer info
         $customer = new Customer();
         $customer->first_name = $user->name;
-        $customer->last_name = $user->name; // optional
+        $customer->last_name = $user->name; // optional, separate if available
         $customer->email = $user->email;
         $customer->country = "KE";
 
-        $amount = $course->price; // Ensure courses table has price column
+        $amount = $course->price; // Make sure courses table has price column
         $currency = "KES";
 
         // Correct host & redirect URLs
@@ -40,7 +40,6 @@ class PurchaseController extends Controller
         $redirect_url = route('purchase.complete', ['course_id' => $course->id]);
 
         $ref_order_number = "course-{$course->id}-user-{$user->id}-" . time();
-
         $card_tarrif = "BUSINESS-PAYS";
         $mobile_tarrif = "BUSINESS-PAYS";
 
@@ -67,8 +66,8 @@ class PurchaseController extends Controller
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $responseBody = json_decode($e->getResponse()->getBody()->getContents(), true);
-            $retryAfter = $responseBody['errors'][0]['detail'] ?? null;
-            return redirect()->back()->with('error', "Payment request failed. Please wait {$retryAfter} seconds and try again.");
+            $retryAfter = $responseBody['errors'][0]['detail'] ?? 'a few seconds';
+            return redirect()->back()->with('error', "Payment request failed. Please wait {$retryAfter} and try again.");
         }
 
         if (!$response || !isset($response->invoice->url)) {
