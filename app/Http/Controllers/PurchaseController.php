@@ -44,7 +44,7 @@ class PurchaseController extends Controller
         $mobile_tarrif = "BUSINESS-PAYS";
 
         // Initialize IntaSend checkout
-        dd(env('INTASEND_PUBLISHABLE_KEY'), env('INTASEND_TEST_ENVIRONMENT'));
+        //dd(env('INTASEND_PUBLISHABLE_KEY'), env('INTASEND_TEST_ENVIRONMENT'));
 
         $checkout = new Checkout();
         $checkout->init([
