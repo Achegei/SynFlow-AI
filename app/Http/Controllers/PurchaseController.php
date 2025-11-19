@@ -28,14 +28,15 @@ class PurchaseController extends Controller
         // Build customer info
         $customer = new Customer();
         $customer->first_name = $user->name;
-        $customer->last_name = $user->name; // optional, separate field if available
+        $customer->last_name = $user->name; // optional
         $customer->email = $user->email;
         $customer->country = "KE";
 
         $amount = $course->price; // Ensure courses table has price column
         $currency = "KES";
 
-        $host = config('app.url'); // Website URL
+        // Correct host & redirect URLs
+        $host = "https://mooseloonai.ca";
         $redirect_url = route('purchase.complete', ['course_id' => $course->id]);
 
         $ref_order_number = "course-{$course->id}-user-{$user->id}-" . time();
@@ -44,16 +45,10 @@ class PurchaseController extends Controller
         $mobile_tarrif = "BUSINESS-PAYS";
 
         // Initialize IntaSend checkout
-        //dd(env('INTASEND_PUBLISHABLE_KEY'), env('INTASEND_TEST_ENVIRONMENT'));
-        logger('IntaSend publishable key: ' . env('INTASEND_PUBLISHABLE_KEY'));
-        logger('IntaSend secret key: ' . env('INTASEND_SECRET_KEY'));
-        logger('IntaSend test mode: ' . env('INTASEND_TEST_ENVIRONMENT'));
-
-
         $checkout = new Checkout();
         $checkout->init([
             'publishable_key' => env('INTASEND_PUBLISHABLE_KEY'),
-            'test' => env('INTASEND_TEST_ENVIRONMENT', true),
+            'test' => filter_var(env('INTASEND_TEST_ENVIRONMENT', true), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         try {
@@ -64,20 +59,20 @@ class PurchaseController extends Controller
                 $host,
                 $redirect_url,
                 $ref_order_number,
-                null,
-                null,
+                null, // comment
+                null, // method
                 $card_tarrif,
-                $mobile_tarrif
+                $mobile_tarrif,
+                null // wallet_id
             );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             $responseBody = json_decode($e->getResponse()->getBody()->getContents(), true);
             $retryAfter = $responseBody['errors'][0]['detail'] ?? null;
-            return redirect()->back()->with('error', "Too many requests. Please wait {$retryAfter} seconds and try again.");
+            return redirect()->back()->with('error', "Payment request failed. Please wait {$retryAfter} seconds and try again.");
         }
 
-
         if (!$response || !isset($response->invoice->url)) {
-            return redirect()->back()->with('error', 'Failed to initiate payment.');
+            return redirect()->back()->with('error', 'Failed to initiate payment. Please contact support.');
         }
 
         // Track pending payment in DB
@@ -89,14 +84,14 @@ class PurchaseController extends Controller
             [
                 'status' => 'pending',
                 'provider' => 'intasend',
-                'payment_id' => $response->invoice->invoice_id, // fixed
+                'payment_id' => $response->invoice->invoice_id ?? null,
                 'amount' => $amount,
                 'payload' => json_encode($response),
             ]
         );
 
         // Redirect user to IntaSend payment page
-       return redirect($response->invoice->url);
+        return redirect($response->invoice->url);
     }
 
     /**
