@@ -58,11 +58,16 @@
                             <form action="{{ route('purchase.course', $course->id) }}" method="POST">
                                 @csrf
                                 <button type="submit"
-    class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-    Buy Course to Unlock
-</button>
+                                        class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                        class="w-4 h-4 inline-block mr-1 text-gray-600" 
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 11c0-1.105.895-2 2-2h.5A1.5 1.5 0 0116 10.5V11m-4 0v2m0 0a2 2 0 11-4 0v-2a2 2 0 114 0z" />
+                                    </svg>
+                                    Buy Course to Unlock
+                                </button>
                             </form>
-
 
                         @endif
                     </div>

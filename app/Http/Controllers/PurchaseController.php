@@ -49,9 +49,7 @@ class PurchaseController extends Controller
         $currency = "KES";
 
         // Where IntaSend redirects after payment
-        $redirectUrl = route('purchase.complete') . "?course_id={$courseId}&user_id={$user->id}";
-
-
+        $redirectUrl = route('purchase.complete', ['course_id' => $courseId]);
 
         // Order reference
         $reference = "order-user{$user->id}-course{$courseId}-" . time();
@@ -61,8 +59,9 @@ class PurchaseController extends Controller
         $checkout->init([
             'token'            => env('INTASEND_SECRET_KEY'),
             'publishable_key'  => env('INTASEND_PUBLISHABLE_KEY'),
-            'test'             => filter_var(env('INTASEND_TEST_ENVIRONMENT', true), FILTER_VALIDATE_BOOLEAN),
+            'test'             => false, // live environment
         ]);
+
 
         try {
             $response = $checkout->create(
