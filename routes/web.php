@@ -115,7 +115,8 @@ Route::middleware('auth')->group(function () {
 
     //Course payment routes
     //Route::get('/purchase/{course}', [PurchaseController::class, 'purchase'])->name('purchase.course');
-    Route::get('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
+    Route::match(['get', 'post'], '/purchase/complete', [PurchaseController::class, 'complete'])
+    ->name('purchase.complete');
     Route::post('/purchase/{course}', [PurchaseController::class, 'purchase'])->name('purchase.course');
 
 
