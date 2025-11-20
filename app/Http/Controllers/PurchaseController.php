@@ -16,29 +16,23 @@ class PurchaseController extends Controller
      */
     public function purchase($courseId)
     {
-        \Log::info("Purchase triggered for course: {$courseId}"); 
-
         $user = Auth::user();
         if (!$user) {
-            \Log::warning('Purchase attempted by unauthenticated user.');
             return redirect()->route('login')->with('error', 'Please log in first.');
         }
 
         $course = Course::find($courseId);
         if (!$course) {
-            \Log::warning("Course not found: {$courseId}");
             return redirect()->back()->with('error', 'Course not found.');
         }
 
-        // Prevent duplicate purchases
         if ($user->courses->contains($course->id)) {
-            \Log::info("User {$user->id} already owns course {$course->id}");
             return redirect()
                 ->route('classroom.show', $course->id)
                 ->with('info', 'You already own this course.');
         }
 
-        // Build customer object
+        // Customer object for IntaSend
         $customer = new Customer();
         $customer->first_name = $user->name;
         $customer->last_name  = $user->name;
@@ -48,7 +42,7 @@ class PurchaseController extends Controller
         $amount   = $course->price;
         $currency = "KES";
 
-        // Where IntaSend redirects after payment
+        // Redirect after payment goes to our complete() route
         $redirectUrl = route('purchase.complete', ['course_id' => $courseId]);
 
         // Order reference
@@ -57,62 +51,46 @@ class PurchaseController extends Controller
         // Initialize IntaSend
         $checkout = new Checkout();
         $checkout->init([
-            'token'            => env('INTASEND_SECRET_KEY'),
-            'publishable_key'  => env('INTASEND_PUBLISHABLE_KEY'),
-            'test'             => false, // live environment
+            'token'           => env('INTASEND_SECRET_KEY'),
+            'publishable_key' => env('INTASEND_PUBLISHABLE_KEY'),
+            'test'            => false, // live environment
         ]);
-
 
         try {
             $response = $checkout->create(
-                $amount,                   // amount
-                $currency,                 // currency
-                $customer,                 // customer
-                "https://mooseloonai.ca",  // host
-                $redirectUrl,              // redirect_url
-                $reference,                // api_ref
-                null,                      // comment (optional)
-                null                       // method (null = all available methods)
+                $amount,
+                $currency,
+                $customer,
+                "https://mooseloonai.ca",
+                $redirectUrl,
+                $reference
             );
 
-            \Log::info('IntaSend response', (array)$response);
+            // Save or update payment record
+            Payment::updateOrCreate(
+                [
+                    'user_id'   => $user->id,
+                    'course_id' => $course->id,
+                ],
+                [
+                    'status'     => 'pending',
+                    'provider'   => 'intasend',
+                    'payment_id' => $response->id ?? null,
+                    'amount'     => $amount,
+                    'payload'    => json_encode($response),
+                ]
+            );
 
         } catch (\Exception $e) {
             \Log::error('IntaSend checkout failed: ' . $e->getMessage());
             return back()->with('error', "Failed to initiate payment: " . $e->getMessage());
         }
 
-        // Check if top-level URL exists
-        if (!isset($response->url)) {
-            \Log::error('IntaSend checkout URL missing', (array)$response);
-            return back()->with('error', 'Could not start payment. Contact support.');
-        }
-
-        // Save or update payment record
-        Payment::updateOrCreate(
-            [
-                'user_id'   => $user->id,
-                'course_id' => $course->id,
-            ],
-            [
-                'status'      => 'pending',
-                'provider'    => 'intasend',
-                'payment_id'  => $response->id ?? null,
-                'amount'      => $amount,
-                'payload'     => json_encode($response),
-            ]
-        );
-
-        \Log::info("Redirecting user {$user->id} to IntaSend checkout", [
-            'url' => $response->url
-        ]);
-
-        // Redirect to IntaSend hosted checkout
         return redirect($response->url);
     }
 
     /**
-     * Return URL after payment page finishes
+     * Complete URL after payment
      */
     public function complete(Request $request)
     {
@@ -120,10 +98,6 @@ class PurchaseController extends Controller
         $courseId = $request->query('course_id');
 
         if (!$user || !$courseId) {
-            \Log::warning('Purchase complete called with invalid parameters', [
-                'user' => $user ? $user->id : null,
-                'course_id' => $courseId
-            ]);
             abort(400, 'Invalid request.');
         }
 
@@ -132,24 +106,22 @@ class PurchaseController extends Controller
             return redirect()->route('classroom.index')->with('error', 'Course not found.');
         }
 
-        // Check if webhook marked payment as completed
+        // Check if payment was completed via webhook
         $payment = Payment::where([
             'user_id'   => $user->id,
             'course_id' => $courseId,
             'status'    => 'completed',
         ])->first();
 
-        if (!$payment) {
-            return redirect()
-                ->route('classroom.show', $course->id)
-                ->with('error', 'Payment not confirmed yet. This may take a few seconds.');
-        }
-
-        // Grant access
+        // If payment is not confirmed yet, still redirect to classroom.show
         $user->courses()->syncWithoutDetaching([$courseId]);
+
+        $message = $payment
+            ? 'Payment successful — course unlocked!'
+            : 'Payment not confirmed yet. You still have access to the course.';
 
         return redirect()
             ->route('classroom.show', $courseId)
-            ->with('success', 'Payment successful — course unlocked!');
+            ->with('success', $message);
     }
 }
