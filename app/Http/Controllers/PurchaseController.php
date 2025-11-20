@@ -49,11 +49,8 @@ class PurchaseController extends Controller
         $currency = "KES";
 
         // Where IntaSend redirects after payment
-        //$redirectUrl = route('purchase.complete', ['course_id' => $courseId]);
-        $redirectUrl = route('purchase.complete', [
-                'course_id' => $courseId,
-                'user_id'   => $user->id,
-            ]);
+        $redirectUrl = route('purchase.complete') . "?course_id={$courseId}&user_id={$user->id}";
+
 
 
         // Order reference
@@ -122,13 +119,14 @@ class PurchaseController extends Controller
     {
         $user     = Auth::user();
         $courseId = $request->query('course_id');
-        $userId   = $request->query('user_id');
 
-        $user = \App\Models\User::find($userId);
         if (!$user || !$courseId) {
+            \Log::warning('Purchase complete called with invalid parameters', [
+                'user' => $user ? $user->id : null,
+                'course_id' => $courseId
+            ]);
             abort(400, 'Invalid request.');
         }
-
 
         $course = Course::find($courseId);
         if (!$course) {
