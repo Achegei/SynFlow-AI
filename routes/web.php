@@ -113,11 +113,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/episodes/{episode}/toggle', [EpisodeProgressController::class, 'toggle'])
     ->name('episodes.toggle');
 
-    //Course payment routes
-    Route::post('/purchase/{course}', [PurchaseController::class, 'purchase'])->name('purchase.course');
-    Route::get('/purchase/complete', [PurchaseController::class, 'complete'])->name('purchase.complete');
-    
+    //==============================
+// Course Payment Routes
+//==============================
 
+// 1️⃣ POST route for actual purchase
+Route::post('/purchase/{course}', [PurchaseController::class, 'purchase'])
+    ->name('purchase.course');
+
+// 3️⃣ GET route for successful completion redirect from IntaSend
+Route::get('/purchase/complete', [PurchaseController::class, 'complete'])
+    ->name('purchase.complete');
 
 
     // Events (bookings)

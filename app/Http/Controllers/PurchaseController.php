@@ -11,106 +11,127 @@ use IntaSend\IntaSendPHP\Customer;
 
 class PurchaseController extends Controller
 {
-    public function purchase($courseId)
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'Please log in first.');
-        }
+    /**
+     * Start IntaSend checkout session
+     */
+            public function purchase($courseId)
+        {
+            \Log::info("Purchase triggered for course: {$courseId}");
 
-        $course = Course::find($courseId);
-        if (!$course) {
-            return redirect()->back()->with('error', 'Course not found.');
-        }
+            $user = Auth::user();
+            if (!$user) {
+                \Log::warning('Purchase attempted by unauthenticated user.');
+                return redirect()->route('login')->with('error', 'Please log in first.');
+            }
 
-        if ($user->courses->contains($course->id)) {
-            return redirect()
-                ->route('classroom.show', $course->id)
-                ->with('info', 'You already own this course.');
-        }
+            $course = Course::find($courseId);
+            if (!$course) {
+                return redirect()->back()->with('error', 'Course not found.');
+            }
 
-        $customer = new Customer();
-        $customer->first_name = $user->name;
-        $customer->last_name  = $user->name;
-        $customer->email      = $user->email;
-        $customer->country    = "KE";
+            // Prevent duplicate purchases
+            if ($user->courses->contains($course->id)) {
+                return redirect()
+                    ->route('classroom.show', $course->id)
+                    ->with('info', 'You already own this course.');
+            }
 
-        $amount = (float) $course->price;
-        $currency = "KES";
+            // Create customer
+            $customer = new Customer();
+            $customer->first_name = $user->name;
+            $customer->last_name  = $user->name;
+            $customer->email      = $user->email;
+            $customer->country    = "KE";
 
-        $redirectUrl = route('purchase.complete', ['course_id' => $courseId]);
-        $reference = "order-user{$user->id}-course{$courseId}-" . time();
+            $amount   = $course->price;
+            $currency = "KES";
+            $reference = "order-user{$user->id}-course{$courseId}-" . time();
+            $redirectUrl = route('purchase.complete', ['course' => $courseId]);
+            //$redirectUrl = route('purchase.complete', ['course_id' => $courseId]);
 
-        $checkout = new Checkout();
-        $checkout->init([
-            'token' => env('INTASEND_SECRET_KEY'),
-            'publishable_key' => env('INTASEND_PUBLISHABLE_KEY'),
-            'test' => filter_var(env('INTASEND_TEST_ENVIRONMENT', true), FILTER_VALIDATE_BOOLEAN),
-        ]);
+            $checkout = new Checkout();
+            $checkout->init([
+                'token' => config('intasend.secret_key'),
+                'publishable_key' => config('intasend.publishable_key'),
+                'test' => filter_var(config('intasend.test'), FILTER_VALIDATE_BOOLEAN),
+            ]);
 
-        try {
-            $response = $checkout->create(
-                $amount,                 // 1. amount
-                $currency,               // 2. currency
-                $customer,               // 3. customer
-                config('app.url'),       // 4. host
-                $redirectUrl,            // 5. redirect_url
-                $reference,              // 6. api_ref
-                '',                      // 7. comment
-                'M-PESA'                 // 8. method
+            try {
+                $response = $checkout->create(
+                    $amount,
+                    $currency,
+                    $customer,
+                    "https://mooseloonai.ca", // host
+                    $redirectUrl,
+                    $reference,
+                    null,     // comment
+                    "M-PESA"  // method
+                );
+
+                \Log::info('IntaSend response', (array)$response);
+
+            } catch (\Exception $e) {
+                \Log::error('IntaSend checkout failed: ' . $e->getMessage());
+                return back()->with('error', "Failed to initiate payment: " . $e->getMessage());
+            }
+
+            // Save payment record using the correct response properties
+            $payment = Payment::updateOrCreate(
+                [
+                    'user_id'   => $user->id,
+                    'course_id' => $course->id,
+                ],
+                [
+                    'status'      => 'pending',
+                    'provider'    => 'intasend',
+                    'payment_id'  => $response->id,          // <-- use $response->id
+                    'amount'      => $amount,
+                    'payload'     => json_encode($response),
+                ]
             );
-        } catch (\Exception $e) {
-            return back()->with('error', "Payment initialization failed: {$e->getMessage()}");
+
+            // Redirect to the IntaSend checkout URL
+            return redirect($response->url); // <-- use $response->url
         }
 
-        if (!isset($response->invoice->url)) {
-            return back()->with('error', 'Could not start payment. Contact support.');
-        }
+    /**
+     * Return URL after payment page finishes
+     */
+   public function complete(Request $request, $course)
+{
+    $user = Auth::user();
+    $courseId = $course;
 
-        Payment::updateOrCreate(
-            ['user_id' => $user->id, 'course_id' => $course->id],
-            [
-                'status' => 'pending',
-                'provider' => 'intasend',
-                'payment_id' => $response->invoice->invoice_id ?? null,
-                'amount' => $amount,
-                'payload' => json_encode($response),
-            ]
-        );
-
-        return redirect($response->invoice->url);
+    if (!$user || !$courseId) {
+        \Log::warning('Purchase complete called with invalid parameters', [
+            'user' => $user ? $user->id : null,
+            'course_id' => $courseId
+        ]);
+        abort(400, 'Invalid request.');
     }
 
-    public function complete(Request $request)
-    {
-        $user = Auth::user();
-        $courseId = $request->query('course_id');
+    $course = Course::find($courseId);
+    if (!$course) {
+        return redirect()->route('classroom.index')->with('error', 'Course not found.');
+    }
 
-        if (!$user || !$courseId) {
-            abort(400, 'Invalid request.');
-        }
+    $payment = Payment::where([
+        'user_id' => $user->id,
+        'course_id' => $courseId,
+        'status' => 'completed',
+    ])->first();
 
-        $course = Course::find($courseId);
-        if (!$course) {
-            return redirect()->route('classroom.index')->with('error', 'Course not found.');
-        }
-
-        $payment = Payment::where([
-            'user_id' => $user->id,
-            'course_id' => $courseId,
-            'status' => 'completed',
-        ])->first();
-
-        if (!$payment) {
-            return redirect()
-                ->route('classroom.show', $course->id)
-                ->with('error', 'Payment not confirmed yet. Please wait a few seconds.');
-        }
-
-        $user->courses()->syncWithoutDetaching([$courseId]);
-
+    if (!$payment) {
         return redirect()
-            ->route('classroom.show', $courseId)
-            ->with('success', 'Payment successful — course unlocked!');
+            ->route('classroom.show', $course->id)
+            ->with('error', 'Payment not confirmed yet. This may take a few seconds.');
     }
+
+    $user->courses()->syncWithoutDetaching([$courseId]);
+
+    return redirect()
+        ->route('classroom.show', $courseId)
+        ->with('success', 'Payment successful — course unlocked!');
+}
+
 }
