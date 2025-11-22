@@ -18,30 +18,49 @@ class WebhookController extends Controller
 
         if (strtolower($provider) === 'intasend') {
 
-            $invoice = $request->input('invoice');
-            $meta = $request->input('meta', []);
-
-            if (!$invoice || empty($meta['course_id']) || empty($invoice['invoice_id'])) {
-                return response()->json(['error' => 'Invalid payload'], 400);
+            // Step 1: Handle challenge verification
+            if ($request->has('challenge')) {
+                Log::info("[Webhook] Challenge verification received: " . $request->input('challenge'));
+                return response()->json(['challenge' => $request->input('challenge')]);
             }
 
-            // Find the payment record
-                $payment = Payment::where('payment_id', $invoice['invoice_id'])->first();
+            // Step 2: Map payload
+            $state = $request->input('state'); // e.g., PENDING, PROCESSING, COMPLETE, FAILED
+            $apiRef = $request->input('api_ref'); // your unique order reference
+            $courseId = $request->input('meta.course_id'); // optional if you sent it in meta
 
-                if ($payment) {
-                    $payment->status = strtolower($invoice['state']) === 'paid' ? 'completed' : $invoice['state'];
-                    $payment->payload = json_encode($request->all());
-                    $payment->save();
-
-                    // Grant course access
-                    $user = User::find($payment->user_id);
-                    if ($user && $payment->status === 'completed') {
-                        $user->courses()->syncWithoutDetaching([$invoice['meta']['course_id']]);
-                    }
-                return response()->json(['message' => 'Payment recorded']);
+            if (!$apiRef) {
+                return response()->json(['error' => 'Missing api_ref'], 400);
             }
+
+            $payment = Payment::where('payment_id', $apiRef)->first();
+
+            if (!$payment) {
+                return response()->json(['error' => 'Payment not found'], 404);
+            }
+
+            // Step 3: Update payment status
+            if (strtoupper($state) === 'COMPLETE') {
+                $payment->status = 'completed';
+                $payment->payload = json_encode($request->all());
+                $payment->save();
+
+                // Grant course access
+                $user = User::find($payment->user_id);
+                if ($user) {
+                    $user->courses()->syncWithoutDetaching([$payment->course_id]);
+                    Log::info("[Webhook] Course unlocked for user {$user->id}");
+                }
+
+            } else {
+                $payment->status = strtolower($state); // pending, processing, failed
+                $payment->payload = json_encode($request->all());
+                $payment->save();
+            }
+
+            return response()->json(['message' => 'Payment recorded']);
         }
 
-        return response()->json(['error' => 'Unknown provider or payment not found'], 400);
+        return response()->json(['error' => 'Unknown provider'], 400);
     }
 }

@@ -3,335 +3,207 @@
 @section('title', 'AI Development Partner Package - MooseLoon')
 
 @section('content')
-   <div class="container mx-auto px-4 py-12 text-center">
-            <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-5xl">
-                <span class="block text-indigo-600">Your Strategic AI Development Partner</span>
-            </h1>
 
-            <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700 md:text-xl">
-                MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>, We help businesses unlock measurable impact with AI — cutting costs, streamlining workflows, and preparing for global competition..
+<!-- HERO -->
+<div class="container mx-auto px-4 py-16 text-center">
+    <h1 class="text-4xl sm:text-5xl font-extrabold leading-tight">
+        <span class="text-indigo-600 block">Your Strategic AI Development Partner</span>
+    </h1>
+
+    <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-700">
+        MooseLoon AI is your <span class="font-semibold text-indigo-600">dedicated AI partner</span>.
+        We help businesses unlock measurable impact with AI — cutting costs, streamlining workflows,
+        and preparing for global competition.
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
+        @foreach([
+            ['Reclaim hours:', 'Free up your team by automating repetitive work and eliminating bottlenecks.'],
+            ['Scale easily:', 'AI that adapts as you grow — smarter systems for scaling seamlessly.'],
+            ['Maximize efficiency:', 'Turn efficiency into measurable gains — higher productivity, lower costs.']
+        ] as $benefit)
+        <div class="flex items-start space-x-3">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5 13l4 4L19 7"/>
+            </svg>
+            <p>
+                <span class="font-semibold text-gray-900">{{ $benefit[0] }}</span>
+                {{ $benefit[1] }}
             </p>
-
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
-                <div class="flex items-start space-x-3">
-                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p><span class="font-semibold text-gray-900">Reclaim hours:</span> Free up your team by automating repetitive work and eliminating bottlenecks.</p>
-                </div>
-
-                <div class="flex items-start space-x-3">
-                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p><span class="font-semibold text-gray-900">Scale easily:</span> AI that adapts as you grow — smarter systems for scaling seamlessly.</p>
-                </div>
-
-                <div class="flex items-start space-x-3">
-                    <svg class="h-6 w-6 text-indigo-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <p><span class="font-semibold text-gray-900">Maximize efficiency:</span> Turn efficiency into measurable gains — higher productivity, lower costs.</p>
-                </div>
-            </div>
+        </div>
+        @endforeach
     </div>
+</div>
 
 
-    <div class="bg-gradient-to-b from-white to-gray-50 py-24">
+<!-- PRICING -->
+<div class="bg-gradient-to-b from-white to-gray-50 py-24">
     <div class="container mx-auto px-6 text-center">
-        <h2 class="text-4xl font-extrabold tracking-tight text-gray-900 mb-4">
-            Flexible Plans for Every Business
-        </h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12">
+        <h2 class="text-4xl font-extrabold text-gray-900">Flexible Plans for Every Business</h2>
+        <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
             Start small or scale big — our AI-powered chatbot plans grow with your needs.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-            <!-- Starter Plan -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
-                <h3 class="text-2xl font-bold text-gray-900">Starter</h3>
-                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$49<span class="text-base font-medium text-gray-500">/month</span></p>
-                <p class="mt-3 text-gray-500">Perfect for small businesses testing AI automation.</p>
-                <ul class="mt-6 text-left space-y-2 text-gray-600">
-                    <li>500 messages per month</li>
-                    <li>Basic chatbot training</li>
-                    <li>Email support</li>
-                    <li>Easy setup in minutes</li>
-                </ul>
-                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
-                    Get Started
-                </a>
-            </div>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-4 gap-10">
 
-            <!-- Growth Plan -->
-            <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border-2 border-indigo-600 relative">
-                <span class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
-                    MOST POPULAR
-                </span>
-                <h3 class="text-2xl font-bold text-gray-900 mt-3">Growth</h3>
-                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$99<span class="text-base font-medium text-gray-500">/month</span></p>
-                <p class="mt-3 text-gray-500">Best for growing brands who want deeper insights.</p>
-                <ul class="mt-6 text-left space-y-2 text-gray-600">
-                    <li>2,000 messages per month</li>
-                    <li>Advanced analytics dashboard</li>
-                    <li>Priority support</li>
-                    <li>Multiple chatbot profiles</li>
-                </ul>
-                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
-                    Choose Plan
-                </a>
-            </div>
+            <x-pricing-card
+                title="Starter"
+                price="$49"
+                color="indigo"
+                description="Perfect for small businesses testing AI automation."
+                button="Get Started"
+                :features="['500 messages per month','Basic chatbot training','Email support','Easy setup in minutes']"
+            />
 
-            <!-- Pro Plan -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
-                <h3 class="text-2xl font-bold text-gray-900">Pro</h3>
-                <p class="mt-2 text-4xl font-extrabold text-indigo-600">$199<span class="text-base font-medium text-gray-500">/month</span></p>
-                <p class="mt-3 text-gray-500">Unlimited power for teams ready to scale AI automation.</p>
-                <ul class="mt-6 text-left space-y-2 text-gray-600">
-                    <li>Unlimited messages</li>
-                    <li>RAG (Retrieval-Augmented Generation) integration</li>
-                    <li>Dedicated AI assistant setup</li>
-                    <li>Full analytics & API access</li>
-                </ul>
-                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
-                    Contact Sales
-                </a>
-            </div>
+            <x-pricing-card
+                popular="true"
+                title="Growth"
+                price="$99"
+                color="indigo"
+                description="Best for growing brands who want deeper insights."
+                button="Choose Plan"
+                :features="['2,000 messages per month','Advanced analytics dashboard','Priority support','Multiple chatbot profiles']"
+            />
 
-            <!-- Enterprise / Custom Plan -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 flex flex-col items-center text-center border border-gray-100">
-                <h3 class="text-2xl font-bold text-gray-900">Enterprise</h3>
-                <p class="mt-2 text-4xl font-extrabold text-indigo-600">Custom</p>
-                <p class="mt-3 text-gray-500">Tailored AI solutions for large teams and special integrations.</p>
-                <ul class="mt-6 text-left space-y-2 text-gray-600">
-                    <li>Unlimited messages + custom features</li>
-                    <li>Private deployment & RAG fine-tuning</li>
-                    <li>Dedicated technical manager</li>
-                    <li>On-site or cloud integration</li>
-                    <li>Training for your internal teams</li>
-                </ul>
-                <a href="{{ route('contactus') }}" class="mt-8 w-full inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 transition">
-                    Let’s Talk
-                </a>
-                <p class="mt-3 text-sm text-gray-500">
-                    Contact us to discuss a plan that fits your organization.
-                </p>
-            </div>
+            <x-pricing-card
+                title="Pro"
+                price="$199"
+                color="indigo"
+                type="outline"
+                description="Unlimited power for teams ready to scale AI automation."
+                button="Contact Sales"
+                :features="['Unlimited messages','RAG integration','Dedicated AI assistant setup','Full analytics & API access']"
+            />
+
+            <x-pricing-card
+                title="Enterprise"
+                price="Custom"
+                color="indigo"
+                description="Tailored AI solutions for large teams and special integrations."
+                button="Let’s Talk"
+                :features="['Unlimited messages + custom features','Private deployment','Dedicated technical manager','On-site/cloud integration','Team training included']"
+            />
+
         </div>
     </div>
 </div>
 
 
-   <div class="py-16">
-    <div class="container mx-auto px-4"> {{-- Removed text-center from container --}}
-        <div class="md:flex md:items-center md:space-x-8"> {{-- Flex container for text and image --}}
-            <div class="md:w-1/2 md:text-left"> {{-- Text content on the left --}}
-                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    Post-Deployment Solution Management
-                </h2>
-                <p class="mt-4 text-gray-500 max-w-full md:max-w-none"> {{-- Removed mx-auto for left alignment --}}
-                    Launching your AI solution is just the beginning. At MooseLoon, we offer comprehensive post-deployment support to ensure your systems continue to perform reliably as your business evolves.
-                </p>
-                <p class="mt-2 text-gray-500 max-w-full md:max-w-none"> {{-- Removed mx-auto for left alignment --}}
-                    From ongoing system monitoring and performance optimization to adapting workflows as new challenges arise, our team stays engaged to keep your AI solutions running at peak efficiency.
-                </p>
-            </div>
-            <div class="mt-8 md:mt-0 md:w-1/2 flex justify-center"> {{-- Image on the right --}}
-                <img src="{{ asset('images/post_deployment_management.png') }}" alt="Post-Deployment Solution Management" class="max-w-full h-auto rounded-lg shadow-lg">
-            </div>
-            </div>
-        </div>
-    </div>
+<!-- POST DEPLOYMENT SECTION -->
+<div class="py-20">
+    <div class="container mx-auto px-4 md:flex md:space-x-10 md:items-center">
 
-    <div class="bg-gray-50 py-16">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    What Sets Our Development Partnership Apart
-                </h2>
-                <p class="mt-4 max-w-3xl mx-auto text-gray-500">
-                    Every MooseLoon development partnership includes access to:
-                </p>
-                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/ai_ml.png') }}" alt="AI/ML Engineers" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">AI/ML Engineers</h3>
-                    </div>
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/business_consultant.png') }}" alt="Business Process Consultants" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Business Process Consultants</h3>
-                    </div>
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/data_scientist.png') }}" alt="Data Scientists" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Data Scientists</h3>
-                    </div>
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/solution_architect.png') }}" alt="Solution Architects" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Solution Architects</h3>
-                    </div>
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/project_manager.png') }}" alt="Project Managers" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">Project Managers</h3>
-                    </div>
-                    
-                    <div class="border border-indigo-600 rounded-xl p-4 md:p-6 flex flex-col items-center justify-center transition-transform hover:-translate-y-1">
-                        <div class="w-30 h-30 bg-none rounded-lg mb-4 flex items-center justify-center">
-                            <img src="{{ asset('images/ui_ux_specialist.png') }}" alt="UX/UI Specialists" class="w-30 h-30 object-contain">
-                        </div>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-900 text-center">UX/UI Specialists</h3>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-
-    <div class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    Flexible Resource Allocation
-                </h2>
-                <p class="mt-4 text-gray-500 max-w-2xl mx-auto">
-                    Allocate your monthly hours across multiple AI and business initiatives:
-                </p>
-
-                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p class="text-gray-700 font-medium">Custom AI system development</p>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p class="text-gray-700 font-medium">Integration with existing systems and data sources</p>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p class="text-gray-700 font-medium">Data pipeline engineering and optimization</p>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p class="text-gray-700 font-medium">Business process optimization and automation</p>
-                    </div>
-
-                    <div class="flex items-start space-x-4 p-6 bg-white rounded-lg shadow hover:shadow-lg transition">
-                        <div class="flex-shrink-0">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <p class="text-gray-700 font-medium">Team training and knowledge transfer</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    <div class="bg-indigo-50 py-16 text-indigo-600">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
-                    Transparent Process
-                </h2>
-                <p class="mt-4 text-gray-700 max-w-2xl mx-auto">
-                    Our process is designed to keep you informed, involved, and confident every step of the way.
-                </p>
-
-                <!-- Workflow -->
-                <div class="mt-12 flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6">
-                    
-                    <!-- Step 1 -->
-                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
-                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">1</div>
-                        <p class="text-lg font-medium">Clear documentation of all work completed</p>
-                    </div>
-                    
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center">
-                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
-                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">2</div>
-                        <p class="text-lg font-medium">Regular progress updates and demonstrations</p>
-                    </div>
-                    
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center">
-                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
-                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">3</div>
-                        <p class="text-lg font-medium">Collaborative planning sessions</p>
-                    </div>
-                    
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center">
-                        <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </div>
-                    
-                    <!-- Step 4 -->
-                    <div class="flex flex-col items-center bg-white rounded-lg shadow-md p-6 w-64">
-                        <div class="bg-indigo-600 text-white font-bold rounded-full w-12 h-12 flex items-center justify-center mb-4">4</div>
-                        <p class="text-lg font-medium">Detailed time tracking and reporting</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    <div class="py-16 text-center">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Unlock Hidden Value with AI
+        <div class="md:w-1/2 md:text-left">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
+                Post-Deployment Solution Management
             </h2>
-            <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-500">
-                Harness AI responsibly to cut costs, improve resilience, and future-proof your business.
+
+            <p class="mt-4 text-gray-600 leading-relaxed">
+                Launching your AI solution is just the beginning. We offer comprehensive post-deployment
+                support to ensure your systems continue to perform reliably as your business evolves.
             </p>
-            <div class="mt-8">
-                <a href="{{ route('contactus') }}" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                    Get Started
-                </a>
+
+            <p class="mt-4 text-gray-600 leading-relaxed">
+                From ongoing monitoring to performance optimization and workflow adjustments,
+                we keep your systems running at peak efficiency.
+            </p>
+        </div>
+
+        <div class="mt-10 md:mt-0 md:w-1/2 flex justify-center">
+            <img src="{{ asset('images/post_deployment_management.png') }}"
+                 class="rounded-xl shadow-lg w-full max-w-lg" alt="Post Deployment">
+        </div>
+
+    </div>
+</div>
+
+
+<!-- OUR TEAM -->
+<div class="bg-gray-50 py-20">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">
+            What Sets Our Development Partnership Apart
+        </h2>
+        <p class="mt-3 max-w-3xl mx-auto text-gray-600">
+            Every MooseLoon development partnership includes access to:
+        </p>
+
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            @foreach([
+                ['AI/ML Engineers','ai_ml.png'],
+                ['Business Process Consultants','business_consultant.png'],
+                ['Data Scientists','data_scientist.png'],
+                ['Solution Architects','solution_architect.png'],
+                ['Project Managers','project_manager.png'],
+                ['UX/UI Specialists','ui_ux_specialist.png'],
+            ] as $item)
+            <div class="border border-indigo-600 rounded-xl p-6 flex flex-col items-center hover:-translate-y-1 transition-transform bg-white">
+                <img src="{{ asset('images/'.$item[1]) }}" class="w-16 h-16 mb-4" alt="">
+                <h3 class="text-lg font-semibold">{{ $item[0] }}</h3>
             </div>
+            @endforeach
         </div>
     </div>
+</div>
+
+
+<!-- RESOURCE ALLOCATION -->
+<div class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4 text-center">
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900">Flexible Resource Allocation</h2>
+        <p class="mt-3 max-w-xl mx-auto text-gray-600">
+            Allocate your monthly hours across multiple AI and business initiatives:
+        </p>
+
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+            @foreach([
+                'Custom AI system development',
+                'Integrations with existing systems and data sources',
+                'Data pipeline engineering and optimization',
+                'Business process automation & optimization',
+                'Team training and knowledge transfer'
+            ] as $task)
+            <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg flex items-start space-x-4">
+                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12l2 2 4-4"/>
+                </svg>
+                <p class="text-gray-700 font-medium">{{ $task }}</p>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+
+
+<!-- PROCESS -->
+<div class="bg-indigo-50 py-20 text-indigo-600">
+    <div class="container mx-auto px-4 text-center">
+
+        <h2 class="text-3xl sm:text-4xl font-extrabold">Transparent Process</h2>
+        <p class="mt-4 text-gray-700 max-w-2xl mx-auto">
+            Our process keeps you informed, involved, and confident every step of the way.
+        </p>
+
+        <div class="mt-14 flex flex-col md:flex-row justify-center items-center md:space-x-6 space-y-8 md:space-y-0">
+
+            @foreach([
+                'Clear documentation of all work completed',
+                'Weekly progress updates',
+                'Monthly strategy review call'
+            ] as $i => $step)
+            <div class="bg-white rounded-lg shadow-md p-6 w-64 flex flex-col items-center">
+                <div class="w-12 h-12 bg-indigo-600 text-white font-bold rounded-full flex items-center justify-center mb-4">
+                    {{ $i+1 }}
+                </div>
+                <p class="text-gray-800 font-medium">{{ $step }}</p>
+            </div>
+            @endforeach
+
+        </div>
+    </div>
+</div>
+
 @endsection

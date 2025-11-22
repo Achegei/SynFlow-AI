@@ -118,7 +118,7 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'https://9502bb1b8cd0.ngrok-free.app',
     'frontend_url' => 'http://localhost:3000',
     'asset_url' => NULL,
     'timezone' => 'Africa/Nairobi',
@@ -467,7 +467,7 @@
       array (
         'driver' => 'local',
         'root' => '/Users/mohamudhassanmayow/Desktop/synflow-Ai/storage/app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'https://9502bb1b8cd0.ngrok-free.app/storage',
         'visibility' => 'public',
         'throw' => false,
         'report' => false,
@@ -610,7 +610,7 @@
         'username' => NULL,
         'password' => NULL,
         'timeout' => NULL,
-        'local_domain' => 'localhost',
+        'local_domain' => '9502bb1b8cd0.ngrok-free.app',
       ),
       'ses' => 
       array (

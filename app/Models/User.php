@@ -103,5 +103,12 @@ class User extends Authenticatable
         {
             return $this->courses()->where('course_id', $courseId)->exists();
         }
+        // app/Models/User.php
+
+public function payments()
+{
+    return $this->hasMany(\App\Models\Payment::class);
+}
+
 
 }
