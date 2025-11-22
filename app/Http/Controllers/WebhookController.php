@@ -19,31 +19,34 @@ class WebhookController extends Controller
 
         $intasendSecret = config('intasend.secret_key');
 
-        // IntaSend may send signature in either header
+        $payload = $request->getContent();
+        $providerType = strtoupper($request->input('provider', ''));
+
+        // Card / Checkout events require signature verification
+        $requiresSignature = !in_array($providerType, ['M-PESA', 'MPESA']);
+
         $receivedSignature = $request->header('IntaSend-Signature')
             ?? $request->header('X-IntaSend-Signature');
 
-        if (!$receivedSignature) {
-            Log::warning('[Webhook] Missing signature');
-            return response()->json(['error' => 'Missing signature'], 400);
+        if ($requiresSignature) {
+            if (!$receivedSignature) {
+                Log::warning('[Webhook] Missing signature for card/checkout event');
+                return response()->json(['error' => 'Missing signature'], 400);
+            }
+
+            $calculatedSignature = hash_hmac('sha256', $payload, $intasendSecret);
+
+            if (!hash_equals($calculatedSignature, $receivedSignature)) {
+                Log::warning('[Webhook] Signature verification failed', [
+                    'calculated' => $calculatedSignature,
+                    'received' => $receivedSignature,
+                    'payload' => $payload
+                ]);
+                return response()->json(['error' => 'Invalid signature'], 403);
+            }
         }
 
-        // Use raw payload (string) for HMAC verification
-        $payload = $request->getContent();
-
-        // IntaSend requires HMAC-SHA256 using your secret key
-        $calculatedSignature = hash_hmac('sha256', $payload, $intasendSecret);
-
-        if (!hash_equals($calculatedSignature, $receivedSignature)) {
-            Log::warning('[Webhook] Signature verification failed', [
-                'calculated' => $calculatedSignature,
-                'received' => $receivedSignature,
-                'payload' => $payload
-            ]);
-            return response()->json(['error' => 'Invalid signature'], 403);
-        }
-
-        // Handle IntaSend handshake
+        // Handle IntaSend handshake challenge
         if ($request->has('challenge')) {
             Log::info("[Webhook] Challenge received: " . $request->input('challenge'));
             return response()->json(['challenge' => $request->input('challenge')]);
@@ -61,9 +64,10 @@ class WebhookController extends Controller
             return response()->json(['error' => 'Payment not found'], 404);
         }
 
-        // Save payload for debugging
+        // Save webhook payload for debugging
         $payment->payload = $payload;
 
+        // Update payment status
         if ($state === 'COMPLETE') {
             if ($payment->status !== 'completed') {
                 $payment->status = 'completed';
