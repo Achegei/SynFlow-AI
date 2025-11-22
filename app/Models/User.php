@@ -105,10 +105,10 @@ class User extends Authenticatable
         }
         // app/Models/User.php
 
-public function payments()
-{
-    return $this->hasMany(\App\Models\Payment::class);
-}
+        public function payments()
+        {
+            return $this->hasMany(\App\Models\Payment::class);
+        }
 
 
 }
