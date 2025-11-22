@@ -495,6 +495,7 @@
   array (
     'publishable_key' => 'ISPubKey_test_7abf3df7-0e20-417a-9464-5133da025479',
     'secret_key' => 'ISSecretKey_test_3e0b89bd-ec31-4ac9-9879-f62e9525a6e8',
+    'webhook_secret' => NULL,
     'test' => true,
   ),
   'logging' => 
