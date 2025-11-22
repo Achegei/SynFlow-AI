@@ -35,8 +35,8 @@ class PurchaseController extends Controller
 
         // Customer object
         $customer = new Customer();
-        $customer->first_name = $user->name;
-        $customer->last_name  = $user->name;
+        $customer->first_name = $user->first_name ?? $user->name;
+        $customer->last_name  = $user->last_name ?? $user->name;
         $customer->email      = $user->email;
         $customer->country    = "KE";
 
@@ -46,7 +46,7 @@ class PurchaseController extends Controller
 
         Log::info("[Purchase] Redirect URL = {$redirectUrl}");
 
-        // IntaSend Init
+        // Initialize IntaSend Checkout
         $checkout = new Checkout();
         $checkout->init([
             'token'           => config('intasend.secret_key'),
@@ -59,11 +59,13 @@ class PurchaseController extends Controller
                 $amount,
                 $currency,
                 $customer,
-                config('app.url'),
-                $redirectUrl,
-                $reference,
-                "course_id:{$courseId}", // comment as string
-                null
+                config('app.url'),          // Host URL
+                $redirectUrl,               // Redirect URL after payment
+                $reference,                 // API reference
+                "course_id:{$courseId}",    // Comment
+                null,                       // Method (optional)
+                'BUSINESS-PAYS',            // Card tariff
+                'BUSINESS-PAYS'             // Mobile tariff
             );
 
             Log::info("[Purchase] IntaSend Response:", json_decode(json_encode($response), true));
@@ -89,7 +91,7 @@ class PurchaseController extends Controller
             return back()->with('error', 'Payment failed to start.');
         }
 
-        // Redirect user to IntaSend checkout
+        // Redirect user to IntaSend checkout page
         return redirect($response->url);
     }
 
@@ -116,7 +118,7 @@ class PurchaseController extends Controller
         Log::info("[Complete] Verifying payment with api_ref: {$apiRef}");
 
         try {
-            // Live verification
+            // Verify payment via IntaSend API
             $response = Http::withToken(config('intasend.secret_key'))
                 ->post('https://api.intasend.com/api/v1/checkout/verify', [
                     'api_ref' => $apiRef
