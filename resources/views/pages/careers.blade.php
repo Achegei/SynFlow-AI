@@ -1,6 +1,24 @@
 @extends('layouts.public')
 
 @section('title', 'Careers')
+<!-- Animations (optional but recommended) -->
+<style>
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.animate-fadeIn { animation: fadeIn .9s ease-out; }
+
+@keyframes fadeInUp { 
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeInUp { animation: fadeInUp .8s ease-out; }
+</style>
+
 
 @section('content')
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -29,6 +47,84 @@
                 <li><strong>We develop strong, well-trained salespeople:</strong> Salespeople who understand AI can sell 10× better, close more deals, and support clients confidently.</li>
             </ul>
         </section>
+        <!-- PREMIUM + BOLD TRAINING NOTICE -->
+<section 
+    class="relative overflow-hidden mb-14 p-8 rounded-3xl border shadow-xl 
+           bg-gradient-to-br from-blue-50 via-white to-orange-50"
+>
+    <!-- Decorative gradient orbs -->
+    <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-300/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-orange-300/20 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 animate-fadeIn">
+        <!-- Title -->
+        <div class="text-center mb-6">
+            <div class="inline-block px-4 py-1 mb-3 rounded-full bg-orange-100 text-orange-800 font-semibold animate-pulse">
+                IMPORTANT TRAINING NOTICE
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9 text-blue-600 animate-float" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M12 14l9-5-9-5-9 5 9 5zm0 0l9-5v6a2 2 0 01-1 1.732l-7 4.041a2 2 0 01-2 0l-7-4.041A2 2 0 013 15V9l9 5z" 
+                    />
+                </svg>
+                Moose Loon AI Training Update
+            </h2>
+        </div>
+
+        <!-- Main content -->
+        <div class="space-y-6 text-gray-800 leading-relaxed text-lg">
+            <p>
+                Moose Loon AI training programs are designed to build <strong>real-world job skills</strong>, strengthen your performance,
+                and prepare you to operate confidently as a Sales & Leadership representative anywhere you work.
+            </p>
+
+            <p>
+                The training is fully practical — <strong>no exams</strong> are required during or after the program.
+                Your progress is measured by participation, performance, and mastery of skills.
+            </p>
+
+            <hr class="my-6 border-gray-300/50">
+
+            <!-- Certificate section -->
+            <h3 class="text-2xl font-bold flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-orange-600 animate-fadeInUp" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 
+                        10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 
+                        17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                Certificate Issuance & Verification
+            </h3>
+
+            <p>
+                Once you complete the training, your official <strong>Moose Loon AI Certificate</strong> will be available for 
+                online download and printing. Each certificate includes a <strong>unique Certificate ID Number</strong> for
+                global verification and authenticity.
+            </p>
+
+            <p>All certificates issued are:</p>
+
+            <ul class="list-disc list-inside space-y-1 text-gray-800">
+                <li>Digitally authenticated</li>
+                <li>Securely recorded in our training system</li>
+                <li>Globally verifiable using the Certificate ID</li>
+                <li>Recognized under Moose Loon AI’s compliance standards</li>
+            </ul>
+
+            <hr class="my-6 border-gray-300/50">
+
+            <!-- Final message -->
+            <p class="italic bg-white/70 p-5 rounded-xl shadow-md border-l-4 border-blue-500 animate-fadeIn">
+                Thank you for your dedication, professionalism, and commitment to growing your Artificial Intelligence
+                career with Moose Loon AI.
+            </p>
+        </div>
+    </div>
+</section>
+
+
 
         <!-- North America Toggle -->
         <div class="mt-6 mb-6">
