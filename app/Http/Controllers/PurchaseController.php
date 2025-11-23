@@ -78,11 +78,12 @@ class PurchaseController extends Controller
                     'status'    => 'pending'
                 ],
                 [
-                    'payment_id' => $response->api_ref,
-                    'status'     => 'pending',
-                    'provider'   => 'intasend',
-                    'amount'     => $amount,
-                    'payload'    => json_encode($response)
+                    'payment_id'   => $response->api_ref,
+                    'invoice_id'   => $response->invoice_id ?? null,
+                    'status'       => 'pending',
+                    'provider'     => strtoupper($response->provider ?? 'CARD'),
+                    'amount'       => $amount,
+                    'payload'      => json_encode($response)
                 ]
             );
 
@@ -105,20 +106,33 @@ class PurchaseController extends Controller
 
         // Get latest pending payment for this course
         $payment = Payment::where([
-            'user_id' => $user->id,
+            'user_id'   => $user->id,
             'course_id' => $course->id,
-            'status' => 'pending'
+            'status'    => 'pending'
         ])->latest()->first();
 
         if (!$payment) {
             return redirect()->route('classroom')->with('error', 'Pending payment not found.');
         }
 
+        $paymentMethod = strtoupper($payment->provider ?? 'CARD');
         $apiRef = $payment->payment_id;
-        Log::info("[Complete] Verifying payment with api_ref: {$apiRef}");
 
+        Log::info("[Complete] Payment method: {$paymentMethod}, api_ref: {$apiRef}");
+
+        // --- M-PESA payments ---
+        if ($paymentMethod === 'MPESA') {
+            if ($payment->status === 'completed') {
+                $user->courses()->syncWithoutDetaching([$course->id]);
+                return redirect()->route('classroom.show', $course->id)
+                    ->with('success', 'Payment confirmed! Course unlocked.');
+            } else {
+                return redirect()->route('classroom')->with('info', 'Payment is still processing. Please wait a moment.');
+            }
+        }
+
+        // --- Card / Checkout payments ---
         try {
-            // Verify payment via IntaSend API
             $response = Http::withToken(config('intasend.secret_key'))
                 ->post('https://api.intasend.com/api/v1/checkout/verify', [
                     'api_ref' => $apiRef
@@ -142,7 +156,7 @@ class PurchaseController extends Controller
                     ->with('success', 'Payment confirmed! Course unlocked.');
             }
 
-            return redirect()->route('classroom')->with('error', 'Payment not completed yet.');
+            return redirect()->route('classroom')->with('info', 'Payment is still processing.');
 
         } catch (\Exception $e) {
             Log::error("[Complete] Exception during verification: " . $e->getMessage());
