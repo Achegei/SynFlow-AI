@@ -19,9 +19,9 @@ class WebhookController extends Controller
             return response()->json(['error' => 'Unknown provider'], 400);
         }
 
-        $payload = $request->getContent();
-        $apiRef  = $request->input('api_ref');
-        $state   = strtoupper($request->input('state', ''));
+        $payload      = $request->getContent();
+        $apiRef       = $request->input('api_ref');
+        $state        = strtoupper($request->input('state', ''));
         $providerType = strtoupper($request->input('provider', ''));
 
         if (!$apiRef) {
@@ -33,7 +33,7 @@ class WebhookController extends Controller
             return response()->json(['error' => 'Payment not found'], 404);
         }
 
-        // Save raw payload for debugging
+        // Save raw payload
         $payment->payload = $payload;
         $payment->save();
 
@@ -43,7 +43,7 @@ class WebhookController extends Controller
             return response()->json(['challenge' => $request->input('challenge')]);
         }
 
-        // Signature verification for card/checkout only
+        // Signature verification only for card/checkout payments
         if (!in_array($providerType, ['M-PESA', 'MPESA'])) {
             $intasendSecret = config('intasend.secret_key');
             $receivedSignature = $request->header('IntaSend-Signature') 
@@ -65,44 +65,45 @@ class WebhookController extends Controller
             }
         }
 
-        // Update payment based on state
-        if ($state === 'COMPLETE') {
+        // Handle payment states
+        switch ($state) {
+            case 'COMPLETE':
+                if ($payment->status !== 'completed') {
+                    $payment->status = 'completed';
+                    $payment->save();
 
-            if ($payment->status !== 'completed') {
-                $payment->status = 'completed';
+                    // Unlock course immediately
+                    $user = User::find($payment->user_id);
+                    if ($user) {
+                        $user->courses()->syncWithoutDetaching([$payment->course_id]);
+                        Log::info("[Webhook] Course unlocked for user {$user->id} via {$providerType}");
+                    }
+                }
+
+                // Only verify card/checkout payments
+                if (!in_array($providerType, ['M-PESA', 'MPESA'])) {
+                    try {
+                        Log::info("[Complete] Verifying card payment api_ref: {$apiRef}");
+                        $this->verifyWithIntaSend($apiRef);
+                    } catch (\Exception $e) {
+                        Log::error("[Complete] Verification failed: " . $e->getMessage());
+                    }
+                } else {
+                    Log::info("[Complete] Mobile payment confirmed via webhook, no API verification needed.");
+                }
+                break;
+
+            default:
+                // Save other states: PENDING, PROCESSING, FAILED, etc.
+                $payment->status = strtolower($state);
                 $payment->save();
-
-                // Unlock course for user
-                $user = User::find($payment->user_id);
-                if ($user) {
-                    $user->courses()->syncWithoutDetaching([$payment->course_id]);
-                    Log::info("[Webhook] Course unlocked for user {$user->id}");
-                }
-            }
-
-            // Optional: API verification only for card/checkout payments
-            if (!in_array($providerType, ['M-PESA', 'MPESA'])) {
-                try {
-                    Log::info("[Complete] Verifying card payment with api_ref: {$apiRef}");
-                    $this->verifyWithIntaSend($apiRef);
-                } catch (\Exception $e) {
-                    Log::error("[Complete] Verification failed: " . $e->getMessage());
-                }
-            } else {
-                Log::info("[Complete] M-PESA payment confirmed via webhook, no verification needed.");
-            }
-
-        } else {
-            // Save other states: PENDING, PROCESSING, FAILED, etc.
-            $payment->status = strtolower($state);
-            $payment->save();
-            Log::info("[Webhook] Payment state updated => {$state}");
+                Log::info("[Webhook] Payment state updated => {$state}");
         }
 
         return response()->json(['message' => 'OK'], 200);
     }
 
-    // Optional helper for card payment verification
+    // Card verification helper
     private function verifyWithIntaSend($apiRef)
     {
         $secretKey = config('intasend.secret_key');
