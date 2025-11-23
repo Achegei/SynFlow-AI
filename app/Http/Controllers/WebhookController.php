@@ -6,89 +6,118 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
 
 class WebhookController extends Controller
 {
     public function handle(Request $request, $provider)
     {
-        $provider = strtolower($provider);
-        Log::info("[Webhook] Received from {$provider}", $request->all());
+        $providerLower = strtolower($provider);
+        Log::info("[Webhook] Received from {$providerLower}", $request->all());
 
-        if ($provider !== 'intasend') {
+        if ($providerLower !== 'intasend') {
             return response()->json(['error' => 'Unknown provider'], 400);
         }
 
         $payload = $request->getContent();
+        $apiRef  = $request->input('api_ref');
+        $state   = strtoupper($request->input('state', ''));
         $providerType = strtoupper($request->input('provider', ''));
 
-        // Determine if signature is required (card/checkout payments)
-        $requiresSignature = !in_array($providerType, ['M-PESA', 'MPESA']);
+        if (!$apiRef) {
+            return response()->json(['error' => 'Missing api_ref'], 400);
+        }
 
-        $receivedSignature = $request->header('IntaSend-Signature')
-            ?? $request->header('X-IntaSend-Signature');
+        $payment = Payment::where('payment_id', $apiRef)->first();
+        if (!$payment) {
+            return response()->json(['error' => 'Payment not found'], 404);
+        }
 
-        $intasendSecret = config('intasend.secret_key');
+        // Save raw payload for debugging
+        $payment->payload = $payload;
+        $payment->save();
 
-        // Verify signature for card/checkout events
-        if ($requiresSignature) {
+        // Handle IntaSend handshake challenge
+        if ($request->has('challenge')) {
+            Log::info("[Webhook] Challenge received: " . $request->input('challenge'));
+            return response()->json(['challenge' => $request->input('challenge')]);
+        }
+
+        // Signature verification for card/checkout only
+        if (!in_array($providerType, ['M-PESA', 'MPESA'])) {
+            $intasendSecret = config('intasend.secret_key');
+            $receivedSignature = $request->header('IntaSend-Signature') 
+                              ?? $request->header('X-IntaSend-Signature');
+
             if (!$receivedSignature) {
                 Log::warning('[Webhook] Missing signature for card/checkout event');
                 return response()->json(['error' => 'Missing signature'], 400);
             }
 
             $calculatedSignature = hash_hmac('sha256', $payload, $intasendSecret);
-
             if (!hash_equals($calculatedSignature, $receivedSignature)) {
                 Log::warning('[Webhook] Signature verification failed', [
                     'calculated' => $calculatedSignature,
-                    'received' => $receivedSignature,
-                    'payload' => $payload
+                    'received'   => $receivedSignature,
+                    'payload'    => $payload
                 ]);
                 return response()->json(['error' => 'Invalid signature'], 403);
             }
         }
 
-        // Handle IntaSend handshake challenge
-        if ($request->has('challenge')) {
-            $challenge = $request->input('challenge');
-            Log::info("[Webhook] Challenge received: {$challenge}");
-            return response()->json(['challenge' => $challenge]);
-        }
-
-        $apiRef = $request->input('api_ref');
-        $state  = strtoupper($request->input('state', ''));
-
-        if (!$apiRef) {
-            return response()->json(['error' => 'Missing api_ref'], 400);
-        }
-
-        $payment = Payment::where('api_ref', $apiRef)->first();
-        if (!$payment) {
-            return response()->json(['error' => 'Payment not found'], 404);
-        }
-
-        // Save webhook payload for debugging
-        $payment->payload = $payload;
-
-        // Handle payment completion
+        // Update payment based on state
         if ($state === 'COMPLETE') {
-            if ($payment->status !== 'completed' && $payment->status !== 'paid') {
-                $payment->status = 'paid';
+
+            if ($payment->status !== 'completed') {
+                $payment->status = 'completed';
                 $payment->save();
 
+                // Unlock course for user
                 $user = User::find($payment->user_id);
                 if ($user) {
                     $user->courses()->syncWithoutDetaching([$payment->course_id]);
                     Log::info("[Webhook] Course unlocked for user {$user->id}");
                 }
             }
+
+            // Optional: API verification only for card/checkout payments
+            if (!in_array($providerType, ['M-PESA', 'MPESA'])) {
+                try {
+                    Log::info("[Complete] Verifying card payment with api_ref: {$apiRef}");
+                    $this->verifyWithIntaSend($apiRef);
+                } catch (\Exception $e) {
+                    Log::error("[Complete] Verification failed: " . $e->getMessage());
+                }
+            } else {
+                Log::info("[Complete] M-PESA payment confirmed via webhook, no verification needed.");
+            }
+
         } else {
-            // For PENDING / PROCESSING / FAILED, just log and save status
+            // Save other states: PENDING, PROCESSING, FAILED, etc.
             $payment->status = strtolower($state);
             $payment->save();
             Log::info("[Webhook] Payment state updated => {$state}");
         }
 
         return response()->json(['message' => 'OK'], 200);
+    }
+
+    // Optional helper for card payment verification
+    private function verifyWithIntaSend($apiRef)
+    {
+        $secretKey = config('intasend.secret_key');
+
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer {$secretKey}"
+        ])->get("https://api.intasend.com/v1/payments/{$apiRef}");
+
+        if ($response->failed()) {
+            throw new \Exception($response->body());
+        }
+
+        $data = $response->json();
+        Log::info("[Verify] IntaSend response: ", $data);
+
+        return $data;
     }
 }
