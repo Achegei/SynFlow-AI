@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use App\Models\Payment;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
-use IntaSend\IntaSendPHP\IntaSendAPI;
 
 class WebhookController extends Controller
 {
@@ -14,88 +14,123 @@ class WebhookController extends Controller
     {
         Log::info("[Webhook] Received from {$provider}", $request->all());
 
+        // Handle unknown provider
         if (strtolower($provider) !== 'intasend') {
             return response()->json(['error' => 'Unknown provider'], 400);
         }
 
-        $payload = $request->getContent();
-        $state   = strtoupper($request->input('state', ''));
-        $apiRef  = $request->input('api_ref');
-
-        // 1. Handshake challenge
+        // Handle IntaSend challenge
         if ($request->has('challenge')) {
-            Log::info("[Webhook] Challenge received: " . $request->input('challenge'));
-            return response()->json(['challenge' => $request->input('challenge')]);
+            Log::info("[Webhook] Challenge received: " . $request->challenge);
+            return response($request->challenge, 200);
         }
 
-        // 2. Missing API reference
+        $invoiceState = $request->state ?? null;
+        $apiRef       = $request->api_ref ?? null;
+
         if (!$apiRef) {
-            Log::warning('[Webhook] Missing api_ref');
+            Log::error("[Webhook] Missing api_ref. Cannot continue.");
             return response()->json(['error' => 'Missing api_ref'], 400);
         }
 
-        // 3. Locate payment (correct field is api_ref)
-        $payment = Payment::where('api_ref', $apiRef)->first();
-        if (!$payment) {
-            Log::warning("[Webhook] Payment NOT FOUND with api_ref: {$apiRef}");
-            return response()->json(['error' => 'Payment not found'], 404);
+        // Only process final payment state
+        if ($invoiceState === "COMPLETE") {
+            Log::info("[Webhook] Payment COMPLETE. Starting verification...", [
+                'api_ref' => $apiRef
+            ]);
+
+            return $this->verifyAndComplete($apiRef);
         }
 
-        // Store webhook payload
-        $payment->payload = $payload;
-        $payment->save();
+        Log::info("[Webhook] Non-final state received: {$invoiceState}");
+        return response()->json(['status' => 'ok']);
+    }
 
-        Log::info("[Webhook] State received: {$state} for api_ref {$apiRef}");
 
-        // 4. Only process full completion
-        if ($state !== 'COMPLETE') {
-            $payment->status = strtolower($state);
-            $payment->save();
-            return response()->json(['message' => 'ACK'], 200);
-        }
+    /**
+     * Verify with IntaSend API using SECRET KEY, not session
+     */
+    private function verifyAndComplete($apiRef)
+    {
+        Log::info("[Complete] Verifying payment with api_ref: " . $apiRef);
 
-        // 5. Prevent double processing
-        if ($payment->status === 'completed') {
-            Log::info("[Webhook] Already processed for {$apiRef}");
-            return response()->json(['message' => 'OK'], 200);
-        }
-
-        Log::info("[Webhook] COMPLETE received — verifying with IntaSend API...");
-
-        // 6. Verify with IntaSend API first
         try {
-            $intaSend = new IntaSendAPI(
-                env('INTASEND_PUBLISHABLE_KEY'),
-                env('INTASEND_SECRET_KEY'),
-                env('INTASEND_TEST_ENVIRONMENT') == "false" ? "live" : "sandbox"
-            );
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . env('INTASEND_SECRET_KEY'),
+                'Accept' => 'application/json'
+            ])->get("https://payment.intasend.com/api/v1/checkout/{$apiRef}/payment_status/");
 
-            $verification = $intaSend->payment()->status($apiRef);
+            $data = $response->json();
+            Log::info("[Complete] Verification Response", $data);
 
-            Log::info("[Webhook Verification] API Response", $verification);
-
-            // Verification must show COMPLETE
-            if (!isset($verification['state']) || strtoupper($verification['state']) !== 'COMPLETE') {
-                Log::warning("[Webhook] Verification FAILED or INCOMPLETE", $verification);
-                return response()->json(['error' => 'Verification failed'], 400);
-            }
         } catch (\Exception $e) {
-            Log::error('[Webhook] Verification Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Verification error'], 400);
+            Log::error("[Complete] Verification exception: " . $e->getMessage());
+            return response()->json(['error' => 'Verification failed'], 500);
         }
 
-        // 7. Mark payment completed
-        $payment->status = 'completed';
-        $payment->mpesa_reference = $request->input('mpesa_reference');
+        // Handle API errors
+        if (!$response->ok() || isset($data['type']) && $data['type'] === 'client_error') {
+            Log::error("[Complete] Verification failed: ", $data);
+            return response()->json(['error' => 'Failed to verify'], 400);
+        }
+
+        // Must be paid to unlock
+        if (!isset($data['paid']) || $data['paid'] !== true) {
+            Log::warning("[Complete] Transaction NOT paid");
+            return response()->json(['error' => 'Not paid'], 400);
+        }
+
+        // Look up the matching purchase by api_ref
+        $payment = Payment::where('api_ref', $apiRef)->first();
+
+        if (!$payment) {
+            Log::error("[Complete] Payment record not found for api_ref: $apiRef");
+            return response()->json(['error' => 'Payment record missing'], 404);
+        }
+
+        // Prevent duplicates
+        if ($payment->status === "paid") {
+            Log::info("[Complete] Payment already processed. Skipping.");
+            return response()->json(['status' => 'already_processed']);
+        }
+
+        // Mark payment completed
+        $payment->status = "paid";
         $payment->save();
 
-        // 8. Unlock course
+        // Unlock course for the user
+        $this->unlockCourseForUser($payment);
+
+        Log::info("[Complete] Course unlocked successfully for user {$payment->user_id}");
+
+        return response()->json(['success' => true]);
+    }
+
+
+    private function unlockCourseForUser($payment)
+    {
         $user = User::find($payment->user_id);
-        if ($user) {
-            $user->courses()->syncWithoutDetaching([$payment->course_id]);
-            Log::info("[Webhook] Course ID {$payment->course_id} UNLOCKED for User ID {$user->id}");
+
+        if (!$user) {
+            Log::error("[Complete] User does not exist: {$payment->user_id}");
+            return;
         }
 
-        return response()->json(['message' => 'SUCCESS'], 200);
+        // Example: store purchased course IDs in settings JSON
+        $settings = json_decode($user->settings, true) ?? [];
+        $purchased = $settings['purchased_courses'] ?? [];
+
+        if (!in_array($payment->course_id, $purchased)) {
+            $purchased[] = $payment->course_id;
+        }
+
+        $settings['purchased_courses'] = $purchased;
+        $user->settings = json_encode($settings);
+        $user->save();
+
+        Log::info("[Complete] Updated user settings for course unlock", [
+            "user_id" => $user->id,
+            "courses" => $purchased
+        ]);
     }
 }
