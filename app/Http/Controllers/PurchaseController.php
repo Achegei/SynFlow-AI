@@ -13,43 +13,38 @@ use Illuminate\Support\Facades\Log;
 class PurchaseController extends Controller
 {
     /**
-     * Start payment
+     * Start M-PESA payment
      */
     public function purchase($courseId)
     {
-        Log::info("[Purchase] Started for course {$courseId}");
-
         $user = Auth::user();
-        if (!$user) return redirect()->route('login');
+        if (!$user) return redirect()->route('login')->with('error', 'Please log in first.');
 
-        $course = Course::findOrFail($courseId);
+        $course = Course::find($courseId);
+        if (!$course) return redirect()->back()->with('error', 'Course not found.');
 
+        // Prevent duplicate purchases
         if ($user->courses->contains($courseId)) {
-            return redirect()->route('classroom.show', $courseId)
+            return redirect()->route('courses.show', $courseId)
                 ->with('info', 'You already own this course.');
         }
 
-        $currency = "KES";
-
-        // Customer object
+        // Create IntaSend customer
         $customer = new Customer();
-        $customer->first_name = $user->first_name ?? $user->name;
-        $customer->last_name  = $user->last_name ?? $user->name;
+        $customer->first_name = $user->name;
+        $customer->last_name  = $user->name;
         $customer->email      = $user->email;
         $customer->country    = "KE";
 
-        $amount = $course->price;
-        $reference = "order-{$user->id}-{$courseId}-" . time();
-        $redirectUrl = url("/purchase/complete/{$courseId}"); // fallback for card payments
+        $amount    = $course->price;
+        $currency  = "KES";
+        $reference = "order-user{$user->id}-course{$courseId}-" . time();
 
-        Log::info("[Purchase] Redirect URL = {$redirectUrl}");
-
-        // Initialize IntaSend Checkout
         $checkout = new Checkout();
         $checkout->init([
-            'token'           => config('intasend.secret_key'),
+            'token' => config('intasend.secret_key'),
             'publishable_key' => config('intasend.publishable_key'),
-            'test'            => false,
+            'test' => filter_var(config('intasend.test'), FILTER_VALIDATE_BOOLEAN),
         ]);
 
         try {
@@ -58,97 +53,35 @@ class PurchaseController extends Controller
                 $currency,
                 $customer,
                 config('app.url'),
-                $redirectUrl,
+                null, // no redirect needed for M-PESA
                 $reference,
-                "course_id:{$courseId}",
                 null,
-                'BUSINESS-PAYS',
-                'BUSINESS-PAYS'
+                "M-PESA" // only M-PESA
             );
 
-            Log::info("[Purchase] IntaSend Response:", json_decode(json_encode($response), true));
-
-            // Save pending payment
-            Payment::updateOrCreate(
-                [
-                    'user_id'   => $user->id,
-                    'course_id' => $courseId,
-                    'status'    => 'pending'
-                ],
-                [
-                    'payment_id' => $response->api_ref,
-                    'status'     => 'pending',
-                    'provider'   => 'intasend',
-                    'amount'     => $amount,
-                    'payload'    => json_encode($response)
-                ]
-            );
-
+            Log::info("M-PESA checkout created", (array) $response);
         } catch (\Exception $e) {
-            Log::error("[Purchase] Error: {$e->getMessage()}");
-            return back()->with('error', 'Payment failed to start.');
+            Log::error("M-PESA checkout failed: " . $e->getMessage());
+            return back()->with('error', "Failed to initiate M-PESA payment: " . $e->getMessage());
         }
 
-        // **Automatic flow for M-PESA:** skip /purchase/complete entirely
-        if (in_array('mpesa', array_map('strtolower', $response->methods))) {
-            return redirect($response->url)
-                ->with('info', 'Follow the M-PESA prompts to complete your payment. Once confirmed, your course will unlock automatically.');
-        }
+        // Save pending payment
+        Payment::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+            ],
+            [
+                'status' => 'pending',
+                'provider' => 'intasend',
+                'payment_id' => $response->id,
+                'amount' => $amount,
+                'payload' => json_encode($response),
+            ]
+        );
 
-        // Fallback for card / other payments
-        return redirect($response->url);
-    }
-
-    /**
-     * Complete / Verify payment (for card only)
-     */
-    public function complete(Course $course)
-    {
-        $user = Auth::user();
-        if (!$user) return redirect()->route('login');
-
-        // Get latest pending payment for this course
-        $payment = Payment::where([
-            'user_id' => $user->id,
-            'course_id' => $course->id,
-            'status' => 'pending'
-        ])->latest()->first();
-
-        if (!$payment) {
-            return redirect()->route('classroom')->with('error', 'Pending payment not found.');
-        }
-
-        $apiRef = $payment->payment_id;
-        Log::info("[Complete] Verifying payment with api_ref: {$apiRef}");
-
-        try {
-            $response = \Illuminate\Support\Facades\Http::withToken(config('intasend.secret_key'))
-                ->post('https://api.intasend.com/api/v1/checkout/verify', [
-                    'api_ref' => $apiRef
-                ]);
-
-            if (!$response->ok()) {
-                Log::error("[Complete] Verification failed: " . $response->body());
-                return redirect()->route('classroom')->with('error', 'Payment verification failed.');
-            }
-
-            $data = $response->json();
-            Log::info("[Complete] IntaSend Verification:", $data);
-
-            if (!empty($data['paid']) && $data['paid'] === true) {
-                $payment->update(['status' => 'completed']);
-                $user->courses()->syncWithoutDetaching([$course->id]);
-                Log::info("[Complete] COURSE UNLOCKED for user {$user->id}");
-
-                return redirect()->route('classroom.show', $course->id)
-                    ->with('success', 'Payment confirmed! Course unlocked.');
-            }
-
-            return redirect()->route('classroom')->with('error', 'Payment not completed yet.');
-
-        } catch (\Exception $e) {
-            Log::error("[Complete] Exception during verification: " . $e->getMessage());
-            return redirect()->route('classroom.show')->with('error', 'Payment verification failed.');
-        }
+        // Redirect to IntaSend M-PESA page
+        return redirect($response->url)
+            ->with('info', 'Follow the M-PESA prompts to complete your payment. Your course will unlock automatically.');
     }
 }

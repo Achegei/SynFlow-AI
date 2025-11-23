@@ -6,14 +6,21 @@
         Moose Loon AI Solutions
     </h1>
 
-        @php
-        $user = auth()->user()?->fresh('courses'); // reload user courses
+    @php
+        $user = auth()->user()?->fresh('courses');
     @endphp
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach ($courses as $course)
         @php
             $hasAccess = $user && $user->courses->contains($course->id);
+            $pendingPayment = $user
+                ? \App\Models\Payment::where('user_id', $user->id)
+                    ->where('course_id', $course->id)
+                    ->where('status', 'pending')
+                    ->where('provider', 'intasend')
+                    ->exists()
+                : false;
         @endphp
 
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -29,12 +36,16 @@
                        class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mt-4">
                         Continue Course
                     </a>
+                @elseif ($pendingPayment)
+                    <div class="mt-4 text-center bg-yellow-100 text-yellow-700 px-4 py-2 rounded-lg">
+                        ⏳ Your M-PESA payment is being processed
+                    </div>
                 @else
                     <form action="{{ route('purchase.course', $course->id) }}" method="POST" class="mt-4">
                         @csrf
                         <button type="submit"
                                 class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-                            Buy Course to Unlock
+                            Pay with M-PESA to Unlock
                         </button>
                     </form>
                 @endif

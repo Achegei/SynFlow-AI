@@ -1,155 +1,164 @@
-<?php
+@extends('layouts.app')
 
-namespace App\Http\Controllers;
+@section('content')
+<div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 
-use Illuminate\Http\Request;
-use App\Models\Course;
-use App\Models\Payment;
-use Illuminate\Support\Facades\Auth;
-use IntaSend\IntaSendPHP\Checkout;
-use IntaSend\IntaSendPHP\Customer;
-use Illuminate\Support\Facades\Http;
-
-class PurchaseController extends Controller
-{
-    /**
-     * Start IntaSend checkout session
-     */
-    public function purchase($courseId)
-    {
-        \Log::info("Purchase triggered for course: {$courseId}");
-
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'Please log in first.');
-        }
-
-        $course = Course::find($courseId);
-        if (!$course) {
-            return redirect()->back()->with('error', 'Course not found.');
-        }
-
-        // Prevent duplicate purchases
-        if ($user->courses->contains($courseId)) {
-            return redirect()
-                ->route('courses.show', $courseId)
-                ->with('info', 'You already own this course.');
-        }
-
-        // Create IntaSend Customer Object
-        $customer = new Customer();
-        $customer->first_name = $user->name;
-        $customer->last_name  = $user->name;
-        $customer->email      = $user->email;
-        $customer->country    = "KE";
-
-        $amount    = $course->price;
-        $currency  = "KES";
-        $reference = "order-user{$user->id}-course{$courseId}-" . time();
-
-        // Dynamically detect host (ngrok in dev, otherwise production)
-        $host = request()->getSchemeAndHttpHost();
-        $redirectUrl = $host . route('purchase.complete', ['course' => $courseId], false);
-
-        // Initialize Checkout
-        $checkout = new Checkout();
-        $checkout->init([
-            'token' => config('intasend.secret_key'),
-            'publishable_key' => config('intasend.publishable_key'),
-            'test' => filter_var(config('intasend.test'), FILTER_VALIDATE_BOOLEAN),
-        ]);
-
-        try {
-            $response = $checkout->create(
-                $amount,
-                $currency,
-                $customer,
-                config('app.url'),
-                $redirectUrl,
-                $reference,
-                null,
-                "M-PESA"
-            );
-
-            \Log::info("IntaSend checkout created", (array) $response);
-        } catch (\Exception $e) {
-            \Log::error("IntaSend checkout failed: " . $e->getMessage());
-            return back()->with('error', "Failed to initiate payment: " . $e->getMessage());
-        }
-
-        // Save pending payment
-        Payment::updateOrCreate(
-            [
-                'user_id' => $user->id,
-                'course_id' => $courseId,
-            ],
-            [
-                'status' => 'pending',
-                'provider' => 'intasend',
-                'payment_id' => $response->id,
-                'amount' => $amount,
-                'payload' => json_encode($response),
-            ]
-        );
-
-        // Redirect user to IntaSend hosted checkout page
-        return redirect($response->url);
-    }
-
-    /**
-     * Complete the payment and unlock the course
-     */
-    public function complete(Course $course)
-    {
+    @php
         $user = auth()->user();
-        if (!$user) return redirect()->route('login');
+        $hasAccess = $user && $user->courses->contains($course->id);
+        $pendingPayment = $user 
+            ? \App\Models\Payment::where('user_id', $user->id)
+                ->where('course_id', $course->id)
+                ->where('status', 'pending')
+                ->where('provider', 'intasend')
+                ->exists()
+            : false;
+    @endphp
 
-        $payment = Payment::where('user_id', $user->id)
-            ->where('course_id', $course->id)
-            ->where('status', 'pending')
-            ->first();
+    <!-- Back Button -->
+    <a href="{{ route('classroom') }}" class="flex items-center text-blue-500 hover:underline mb-6">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        Back to Courses
+    </a>
 
-        if (!$payment) {
-            return redirect()->route('courses.index')
-                ->with('error', 'No pending payment found.');
-        }
+    <!-- Pending Payment Alert -->
+    @if (!$hasAccess && $pendingPayment)
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+            ⏳ Your M-PESA payment is being processed. The course will unlock automatically once confirmed.
+        </div>
+    @endif
 
-        // Retry payment verification for up to 5 seconds
-        $attempts = 5;
-        $data = null;
+    <!-- Locked Course CTA -->
+    @if (!$hasAccess && !$pendingPayment)
+        <div class="text-center bg-gray-100 p-6 rounded-xl shadow mb-6">
+            <p class="text-lg text-gray-700 mb-4">
+                You need to complete payment to access this course.
+            </p>
+            <form action="{{ route('purchase.course', $course->id) }}" method="POST">
+                @csrf
+                <button type="submit"
+                        class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                    Pay with M-PESA to Unlock
+                </button>
+            </form>
+        </div>
+    @endif
 
-        while ($attempts > 0) {
-            $response = Http::withToken(config('intasend.secret_key'))
-                ->get("https://payment.intasend.com/api/v1/payment/transactions/{$payment->payment_id}/");
+    <!-- Course Header (only if access) -->
+    @if ($hasAccess)
+        <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
+            <img src="{{ $course->image_url }}" alt="Course image for {{ $course->title }}" class="w-full sm:w-48 h-auto rounded-xl object-cover">
+            <div class="flex-1">
+                <h1 class="text-3xl font-bold text-gray-900">{{ $course->title }}</h1>
+                <p class="mt-2 text-gray-600">{{ $course->description }}</p>
 
-            if ($response->ok()) {
-                $data = $response->json();
-                \Log::info("IntaSend Verify Response", $data);
+                <div class="mt-4">
+                    <span class="text-sm font-medium text-gray-500">
+                        Course Progress: {{ number_format($course->progress_percentage) }}%
+                    </span>
 
-                if (isset($data['state']) && $data['state'] === 'SUCCESS') {
-                    break;
+                    @if ($course->progress_percentage == 100)
+                        <div class="mt-4">
+                            <a href="{{ route('certificate.generate', $course->id) }}"
+                               class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
+                                🎉 Download Your Certificate
+                            </a>
+                        </div>
+                    @endif
+
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $course->progress_percentage }}%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Player -->
+        <div id="video-player" class="mt-8 hidden">
+            <div id="youtube-player" class="w-full h-64 rounded-lg"></div>
+        </div>
+
+        <!-- Episodes List -->
+        <div class="mt-8 space-y-4">
+            <h2 class="text-2xl font-semibold text-gray-900">Modules</h2>
+            @foreach ($episodes as $episode)
+                <div class="bg-gray-100 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between hover:bg-gray-200 transition">
+                    <div class="flex items-center space-x-4 cursor-pointer mb-2 sm:mb-0"
+                         onclick="playEpisode('{{ $episode->youtube_id }}', {{ $episode->id }})">
+                        <span class="text-lg font-semibold text-gray-700">{{ $loop->iteration }}.</span>
+                        <span class="text-lg font-semibold text-gray-700">{{ $episode->title }}</span>
+                    </div>
+
+                    <!-- Manual Toggle -->
+                    <form action="{{ route('episodes.toggle', $episode->id) }}" method="POST" class="mb-2 sm:mb-0">
+                        @csrf
+                        <button type="submit" class="px-3 py-1 rounded text-sm font-medium
+                            {{ $episode->is_completed ? 'bg-green-200 text-green-700' : 'bg-yellow-200 text-yellow-700' }}">
+                            {{ $episode->is_completed ? 'Completed' : 'Mark as Watched' }}
+                        </button>
+                    </form>
+
+                    <!-- PDF Download -->
+                    @if ($episode->pdf_path)
+                        <a href="{{ asset('storage/' . $episode->pdf_path) }}" target="_blank"
+                           class="flex items-center text-blue-600 hover:underline font-medium space-x-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 4v16m8-8H4" />
+                            </svg>
+                            <span>Download PDF Notes</span>
+                        </a>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+
+<!-- YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+    let player;
+    let currentEpisodeId = null;
+
+    function playEpisode(videoId, episodeId) {
+        currentEpisodeId = episodeId;
+        document.getElementById('video-player').classList.remove('hidden');
+        document.getElementById('video-player').scrollIntoView({ behavior: 'smooth' });
+
+        if (player) {
+            player.loadVideoById(videoId);
+        } else {
+            player = new YT.Player('youtube-player', {
+                height: '360',
+                width: '100%',
+                videoId: videoId,
+                events: {
+                    'onStateChange': onPlayerStateChange
                 }
-            }
-
-            sleep(1); // wait 1 second before retry
-            $attempts--;
+            });
         }
-
-        if (!$data || !isset($data['state']) || $data['state'] !== 'SUCCESS') {
-            return redirect()->route('courses.index')
-                ->with('error', 'Payment is still processing. Please wait a few seconds and refresh.');
-        }
-
-        // Mark payment as complete
-        $payment->update(['status' => 'completed']);
-
-        // Unlock course for user
-        $user->courses()->syncWithoutDetaching([$course->id]);
-
-        // Reload user's courses to reflect change immediately
-        $user->load('courses');
-
-        return redirect()->route('courses.index')
-            ->with('success', "Payment confirmed! '{$course->title}' unlocked.");
     }
-}
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED && currentEpisodeId) {
+            fetch(`/episodes/${currentEpisodeId}/watched`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    console.log('Episode marked as watched!');
+                    location.reload();
+                }
+            });
+        }
+    }
+</script>
+@endsection
