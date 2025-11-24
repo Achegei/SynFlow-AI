@@ -12,24 +12,23 @@ use Illuminate\Support\Facades\Log;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Start M-PESA payment
-     */
-    public function purchase($courseId)
+    public function purchase(Request $request, $courseId)
     {
         $user = Auth::user();
-        if (!$user) return redirect()->route('login')->with('error', 'Please log in first.');
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Please log in first.');
+        }
 
         $course = Course::find($courseId);
-        if (!$course) return redirect()->back()->with('error', 'Course not found.');
+        if (!$course) {
+            return back()->with('error', 'Course not found.');
+        }
 
-        // Prevent duplicate purchases
         if ($user->courses->contains($courseId)) {
-            return redirect()->route('courses.show', $courseId)
+            return redirect()->route('classroom.show', $courseId)
                 ->with('info', 'You already own this course.');
         }
 
-        // Create IntaSend customer
         $customer = new Customer();
         $customer->first_name = $user->name;
         $customer->last_name  = $user->name;
@@ -42,9 +41,9 @@ class PurchaseController extends Controller
 
         $checkout = new Checkout();
         $checkout->init([
-            'token' => config('intasend.secret_key'),
+            'token'           => config('intasend.secret_key'),
             'publishable_key' => config('intasend.publishable_key'),
-            'test' => filter_var(config('intasend.test'), FILTER_VALIDATE_BOOLEAN),
+            'test'            => false,
         ]);
 
         try {
@@ -52,36 +51,46 @@ class PurchaseController extends Controller
                 $amount,
                 $currency,
                 $customer,
-                config('app.url'),
-                null, // no redirect needed for M-PESA
+                route('purchase.complete', $courseId), // correct redirect
+                null,
                 $reference,
                 null,
-                "M-PESA" // only M-PESA
+                "M-PESA"
             );
 
-            Log::info("M-PESA checkout created", (array) $response);
+            Log::info("M-PESA checkout created", (array)$response);
+
         } catch (\Exception $e) {
-            Log::error("M-PESA checkout failed: " . $e->getMessage());
-            return back()->with('error', "Failed to initiate M-PESA payment: " . $e->getMessage());
+            Log::error("Checkout failed: " . $e->getMessage());
+            return back()->with('error', $e->getMessage());
         }
 
-        // Save pending payment
         Payment::updateOrCreate(
             [
-                'user_id' => $user->id,
+                'user_id'   => $user->id,
                 'course_id' => $courseId,
             ],
             [
-                'status' => 'pending',
-                'provider' => 'intasend',
+                'status'     => 'pending',
+                'provider'   => 'intasend',
                 'payment_id' => $response->id,
-                'amount' => $amount,
-                'payload' => json_encode($response),
+                'api_ref'    => $response->api_ref,
+                'amount'     => $amount,
+                'payload'    => json_encode($response),
             ]
         );
 
-        // Redirect to IntaSend M-PESA page
-        return redirect($response->url)
-            ->with('info', 'Follow the M-PESA prompts to complete your payment. Your course will unlock automatically.');
+        return redirect($response->url);
+    }
+
+    public function complete($courseId)
+    {
+        $user = Auth::user();
+        $payment = Payment::where('user_id', $user->id)
+            ->where('course_id', $courseId)
+            ->latest()
+            ->first();
+
+        return view('purchase.complete', compact('payment'));
     }
 }

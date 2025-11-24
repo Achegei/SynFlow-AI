@@ -74,8 +74,10 @@ Route::prefix('careers')->group(function () {
     // Dynamic job descriptions
     Route::get('/{position}', [CareerController::class, 'show'])->name('careers.description');
 });
+
 // Webhook route for payment providers
-Route::post('/webhook/{provider}', [App\Http\Controllers\WebhookController::class, 'handle']);
+Route::post('/webhook/intasend', [WebhookController::class, 'handleIntaSend']);
+
 
 
 Route::get('/dashboard', [CommunityDashboardController::class, 'community'])

@@ -4,72 +4,87 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
-    public function handle(Request $request, $provider)
+    /**
+     * Handle incoming IntaSend webhook
+     */
+    public function handleIntaSend(Request $request)
     {
-        $providerLower = strtolower($provider);
-        Log::info("[Webhook] Received from {$providerLower}", $request->all());
+        // 1️⃣ Verify HMAC signature
+        $payload   = $request->getContent();
+        $signature = $request->header('X-IntaSend-Signature');
 
-        if ($providerLower !== 'intasend') {
-            return response()->json(['error' => 'Unknown provider'], 400);
+        $expected = hash_hmac('sha256', $payload, config('intasend.secret_key'));
+
+        if (!hash_equals($expected, $signature)) {
+            Log::warning("[Webhook] Invalid signature detected", [
+                'received' => $signature,
+                'expected' => $expected,
+                'payload'  => $request->all()
+            ]);
+            return response()->json(['error' => 'Invalid signature'], 400);
         }
 
-        $payload      = $request->getContent();
-        $apiRef       = $request->input('api_ref');
-        $state        = strtoupper($request->input('state', ''));
-        $providerType = strtoupper($request->input('provider', ''));
+        Log::info("[Webhook] Valid payload received", $request->all());
 
-        if (!$apiRef) {
+        // 2️⃣ Extract invoice
+        $invoice = $request->input('invoice');
+
+        if (!$invoice || !isset($invoice['api_ref'])) {
+            Log::error("[Webhook] Missing api_ref", $request->all());
             return response()->json(['error' => 'Missing api_ref'], 400);
         }
 
-        $payment = Payment::where('payment_id', $apiRef)->first();
+        // 3️⃣ Find corresponding Payment
+        $payment = Payment::where('api_ref', $invoice['api_ref'])->first();
+
         if (!$payment) {
+            Log::warning("[Webhook] Payment not found for api_ref: ".$invoice['api_ref']);
             return response()->json(['error' => 'Payment not found'], 404);
         }
 
-        // Save raw payload
-        $payment->payload = $payload;
-        $payment->save();
+        // 4️⃣ Map status
+        $state = strtoupper($invoice['state']); // e.g., PAID, PENDING, FAILED
 
-        // Handle handshake challenge
-        if ($request->has('challenge')) {
-            Log::info("[Webhook] Challenge received: " . $request->input('challenge'));
-            return response()->json(['challenge' => $request->input('challenge')]);
+        // Idempotent update: only change if status differs
+        if ($payment->status !== $state) {
+            $payment->status  = $state;
+            $payment->payload = json_encode($request->all());
+            $payment->save();
+
+            Log::info("[Webhook] Payment updated", [
+                'payment_id' => $payment->id,
+                'status'     => $state
+            ]);
+        } else {
+            Log::info("[Webhook] Payment status unchanged", [
+                'payment_id' => $payment->id,
+                'status'     => $state
+            ]);
         }
 
-        // Only M-PESA flow
-        if (in_array($providerType, ['M-PESA', 'MPESA'])) {
-            switch ($state) {
-                case 'COMPLETE':
-                    if ($payment->status !== 'completed') {
-                        $payment->status = 'completed';
-                        $payment->save();
+        // 5️⃣ Unlock course if PAID
+        if ($state === 'PAID') {
+            $user = $payment->user;
+            $courseId = $payment->course_id;
 
-                        // Unlock course
-                        $user = User::find($payment->user_id);
-                        if ($user) {
-                            $user->courses()->syncWithoutDetaching([$payment->course_id]);
-                            Log::info("[Webhook] Course unlocked for user {$user->id} via M-PESA");
-                        }
-                    }
-                    break;
-
-                default:
-                    // Save other states: PENDING, PROCESSING, FAILED, etc.
-                    $payment->status = strtolower($state);
-                    $payment->save();
-                    Log::info("[Webhook] Payment state updated => {$state}");
+            if (!$user->courses->contains($courseId)) {
+                $user->courses()->attach($courseId);
+                Log::info("[Webhook] Course unlocked", [
+                    'user_id'   => $user->id,
+                    'course_id' => $courseId
+                ]);
+            } else {
+                Log::info("[Webhook] Course already unlocked", [
+                    'user_id'   => $user->id,
+                    'course_id' => $courseId
+                ]);
             }
-
-            return response()->json(['message' => 'OK'], 200);
         }
 
-        // If somehow non-M-PESA hits this
-        return response()->json(['error' => 'Non-M-PESA payments are not handled'], 400);
+        return response()->json(['ok' => true]);
     }
 }
