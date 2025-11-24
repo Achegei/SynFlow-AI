@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/webhook/intasend', [WebhookController::class, 'handleIntaSend']);
+Route::post('/webhook/intasend', [WebhookController::class, 'handle']);
