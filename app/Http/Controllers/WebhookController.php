@@ -4,87 +4,79 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\UserCourse;
 use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
-    /**
-     * Handle incoming IntaSend webhook
-     */
-    public function handleIntaSend(Request $request)
+    public function handle(Request $request, $provider)
     {
-        // 1️⃣ Verify HMAC signature
-        $payload   = $request->getContent();
-        $signature = $request->header('X-IntaSend-Signature');
+        Log::info("[Webhook] Received from {$provider}", $request->all());
 
-        $expected = hash_hmac('sha256', $payload, config('intasend.secret_key'));
-
-        if (!hash_equals($expected, $signature)) {
-            Log::warning("[Webhook] Invalid signature detected", [
-                'received' => $signature,
-                'expected' => $expected,
-                'payload'  => $request->all()
-            ]);
-            return response()->json(['error' => 'Invalid signature'], 400);
+        // Only accept IntaSend for now
+        if (strtolower($provider) !== 'intasend') {
+            return response()->json(['error' => 'Unknown provider'], 400);
         }
 
-        Log::info("[Webhook] Valid payload received", $request->all());
+        $data = $request->all();
 
-        // 2️⃣ Extract invoice
-        $invoice = $request->input('invoice');
-
-        if (!$invoice || !isset($invoice['api_ref'])) {
-            Log::error("[Webhook] Missing api_ref", $request->all());
-            return response()->json(['error' => 'Missing api_ref'], 400);
+        // Validate required IntaSend fields
+        if (!isset($data['api_ref'], $data['state'], $data['invoice_id'])) {
+            Log::error("[Webhook] Invalid payload", $data);
+            return response()->json(['error' => 'Invalid payload'], 422);
         }
 
-        // 3️⃣ Find corresponding Payment
-        $payment = Payment::where('api_ref', $invoice['api_ref'])->first();
+        // Example api_ref: order-user28-course1-1763927547
+        $refParts = explode('-', $data['api_ref']);
+
+        if (count($refParts) < 4) {
+            Log::error("[Webhook] Invalid api_ref format");
+            return response()->json(['error' => 'Invalid api_ref format'], 422);
+        }
+
+        // Extract user and course
+        $userId   = intval(str_replace('user', '', $refParts[1]));
+        $courseId = intval(str_replace('course', '', $refParts[2]));
+
+        Log::info("[Webhook] Parsed user_id={$userId}, course_id={$courseId}");
+
+        // Find matching payment record
+        $payment = Payment::where('user_id', $userId)
+            ->where('course_id', $courseId)
+            ->where('payment_id', $data['invoice_id'])
+            ->first();
 
         if (!$payment) {
-            Log::warning("[Webhook] Payment not found for api_ref: ".$invoice['api_ref']);
-            return response()->json(['error' => 'Payment not found'], 404);
+            Log::warning("[Webhook] Payment record not found for invoice_id: {$data['invoice_id']}");
+
+            return response()->json(['error' => 'Payment record not found'], 404);
         }
 
-        // 4️⃣ Map status
-        $state = strtoupper($invoice['state']); // e.g., PAID, PENDING, FAILED
-
-        // Idempotent update: only change if status differs
-        if ($payment->status !== $state) {
-            $payment->status  = $state;
-            $payment->payload = json_encode($request->all());
-            $payment->save();
-
-            Log::info("[Webhook] Payment updated", [
-                'payment_id' => $payment->id,
-                'status'     => $state
-            ]);
+        // Update payment status
+        if (strtolower($data['state']) === 'complete') {
+            $payment->status  = 'paid';
         } else {
-            Log::info("[Webhook] Payment status unchanged", [
-                'payment_id' => $payment->id,
-                'status'     => $state
+            $payment->status  = strtolower($data['state']);
+        }
+
+        $payment->payload = $data;
+        $payment->save();
+
+        Log::info("[Webhook] Payment updated successfully", [
+            'payment_id' => $payment->id,
+            'status' => $payment->status
+        ]);
+
+        // If payment is paid, unlock the course
+        if ($payment->status === 'paid') {
+            UserCourse::firstOrCreate([
+                'user_id'   => $userId,
+                'course_id' => $courseId,
             ]);
+
+            Log::info("[Webhook] Course unlocked for user {$userId}");
         }
 
-        // 5️⃣ Unlock course if PAID
-        if ($state === 'PAID') {
-            $user = $payment->user;
-            $courseId = $payment->course_id;
-
-            if (!$user->courses->contains($courseId)) {
-                $user->courses()->attach($courseId);
-                Log::info("[Webhook] Course unlocked", [
-                    'user_id'   => $user->id,
-                    'course_id' => $courseId
-                ]);
-            } else {
-                Log::info("[Webhook] Course already unlocked", [
-                    'user_id'   => $user->id,
-                    'course_id' => $courseId
-                ]);
-            }
-        }
-
-        return response()->json(['ok' => true]);
+        return response()->json(['message' => 'Webhook processed'], 200);
     }
 }

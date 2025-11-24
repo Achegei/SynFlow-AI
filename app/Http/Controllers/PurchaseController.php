@@ -24,11 +24,13 @@ class PurchaseController extends Controller
             return back()->with('error', 'Course not found.');
         }
 
+        // If already owns course
         if ($user->courses->contains($courseId)) {
             return redirect()->route('classroom.show', $courseId)
                 ->with('info', 'You already own this course.');
         }
 
+        // Build customer
         $customer = new Customer();
         $customer->first_name = $user->name;
         $customer->last_name  = $user->name;
@@ -39,6 +41,7 @@ class PurchaseController extends Controller
         $currency  = "KES";
         $reference = "order-user{$user->id}-course{$courseId}-" . time();
 
+        // Init IntaSend Checkout
         $checkout = new Checkout();
         $checkout->init([
             'token'           => config('intasend.secret_key'),
@@ -51,9 +54,9 @@ class PurchaseController extends Controller
                 $amount,
                 $currency,
                 $customer,
-                route('purchase.complete', $courseId), // correct redirect
+                route('purchase.complete', $courseId),
                 null,
-                $reference,
+                $reference, // api_ref here
                 null,
                 "M-PESA"
             );
@@ -65,6 +68,7 @@ class PurchaseController extends Controller
             return back()->with('error', $e->getMessage());
         }
 
+        // Save payment record
         Payment::updateOrCreate(
             [
                 'user_id'   => $user->id,
@@ -74,18 +78,20 @@ class PurchaseController extends Controller
                 'status'     => 'pending',
                 'provider'   => 'intasend',
                 'payment_id' => $response->id,
-                'api_ref'    => $response->api_ref,
+                'api_ref'    => $response->api_ref,   // <── REQUIRED
                 'amount'     => $amount,
                 'payload'    => json_encode($response),
             ]
         );
 
+        // Redirect user to IntaSend payment page
         return redirect($response->url);
     }
 
     public function complete($courseId)
     {
         $user = Auth::user();
+
         $payment = Payment::where('user_id', $user->id)
             ->where('course_id', $courseId)
             ->latest()

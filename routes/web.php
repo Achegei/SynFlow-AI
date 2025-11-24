@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\WebhookController;
+//use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CertificateController;
@@ -74,10 +74,6 @@ Route::prefix('careers')->group(function () {
     // Dynamic job descriptions
     Route::get('/{position}', [CareerController::class, 'show'])->name('careers.description');
 });
-
-// Webhook route for payment providers
-Route::post('/webhook/intasend', [WebhookController::class, 'handleIntaSend']);
-
 
 
 Route::get('/dashboard', [CommunityDashboardController::class, 'community'])
