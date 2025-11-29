@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
-//use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CertificateController;
@@ -213,4 +213,7 @@ Route::get('/generate-sitemap', function () {
     ]);
 });
 
+//Route::post('webhook/intasend', [WebhookController::class, 'handleIntaSend']);
+Route::middleware('web')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
+     ->post('/webhook/intasend', [WebhookController::class, 'handleIntaSend']);
 

@@ -4,64 +4,94 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
-use App\Models\UserCourse;
+use App\Models\PaymentLog;
+use App\Models\User;
+use App\Models\Course;
 use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
+    /**
+     * Handle IntaSend Webhook (MPESA / Card / Wallet)
+     */
     public function handleIntaSend(Request $request)
     {
-        Log::info("[IntaSend Webhook] Received:", $request->all());
-
         $data = $request->all();
+        Log::info("[Webhook] Incoming payload", $data);
 
-        // Validate required fields
-        if (!isset($data['api_ref'], $data['state'], $data['invoice_id'])) {
-            Log::error("[IntaSend Webhook] Invalid payload", $data);
-            return response()->json(['error' => 'Invalid payload'], 422);
+        // 1️⃣ Determine invoice_id and API reference
+        $invoiceId = $data['invoice_id'] ?? $data['id'] ?? null;
+        $apiRef    = $data['api_ref'] ?? null;
+        $paid      = $data['paid'] ?? false;
+        $state     = strtolower($data['state'] ?? '');
+
+        // 2️⃣ Save webhook log for auditing
+        $log = PaymentLog::create([
+            'invoice_id' => $invoiceId,
+            'api_ref'    => $apiRef,
+            'state'      => $state,
+            'payload'    => json_encode($data),
+        ]);
+        Log::info("[Webhook] PaymentLog saved", ['id' => $log->id]);
+
+        // 3️⃣ Validate required fields
+        if (!$invoiceId || !$apiRef) {
+            Log::error("[Webhook] Missing invoice_id or api_ref.");
+            return response()->json(['success' => true]); // always return 200
         }
 
-        // Parse api_ref: order-user{userId}-course{courseId}-timestamp
-        $refParts = explode('-', $data['api_ref']);
-        if (count($refParts) < 4) {
-            Log::error("[IntaSend Webhook] Invalid api_ref format: {$data['api_ref']}");
-            return response()->json(['error' => 'Invalid api_ref format'], 422);
+        // 4️⃣ Parse user_id and course_id from api_ref (expected format: order-user{userId}-course{courseId}-timestamp)
+        if (!preg_match('/order-user(\d+)-course(\d+)-/', $apiRef, $matches)) {
+            Log::error("[Webhook] Invalid api_ref format: {$apiRef}");
+            return response()->json(['success' => true]);
         }
 
-        $userId   = intval(str_replace('user', '', $refParts[1]));
-        $courseId = intval(str_replace('course', '', $refParts[2]));
+        $userId   = intval($matches[1]);
+        $courseId = intval($matches[2]);
 
-        Log::info("[IntaSend Webhook] Parsed user_id={$userId}, course_id={$courseId}");
+        // 5️⃣ Find or create payment record
+        $payment = Payment::firstOrCreate(
+            ['payment_id' => $invoiceId],
+            [
+                'user_id'   => $userId,
+                'course_id' => $courseId,
+                'status'    => 'pending',
+                'provider'  => 'intasend',
+                'api_ref'   => $apiRef,
+                'amount'    => $data['amount'] ?? 0,
+                'payload'   => json_encode($data),
+            ]
+        );
 
-        // Find payment
-        $payment = Payment::where('user_id', $userId)
-            ->where('course_id', $courseId)
-            ->where('payment_id', $data['invoice_id'])
-            ->first();
-
-        if (!$payment) {
-            Log::warning("[IntaSend Webhook] Payment record not found for invoice_id: {$data['invoice_id']}");
-            return response()->json(['error' => 'Payment record not found'], 404);
+        // 6️⃣ Only process if payment is complete
+        if (!$paid && $state !== 'complete') {
+            Log::info("[Webhook] Payment not complete yet (paid={$paid}, state={$state})");
+            return response()->json(['success' => true]);
         }
 
-        // Update status
-        $state = strtolower($data['state']);
-        $payment->status = ($state === 'complete') ? 'paid' : $state;
+        // 7️⃣ Prevent duplicate processing
+        if ($payment->status === 'paid') {
+            Log::info("[Webhook] Payment already processed for invoice {$invoiceId}");
+            return response()->json(['success' => true]);
+        }
+
+        // 8️⃣ Update payment status
+        $payment->status  = 'paid';
         $payment->payload = json_encode($data);
         $payment->save();
+        Log::info("[Webhook] Payment updated → PAID", ['payment_id' => $payment->id]);
 
-        Log::info("[IntaSend Webhook] Payment updated", ['payment_id' => $payment->id, 'status' => $payment->status]);
+        // 9️⃣ Unlock course for user using pivot table
+        $user = User::find($userId);
+        $course = Course::find($courseId);
 
-        // Unlock course if paid
-        if ($payment->status === 'paid') {
-            UserCourse::firstOrCreate([
-                'user_id' => $userId,
-                'course_id' => $courseId,
-            ]);
-
-            Log::info("[IntaSend Webhook] Course unlocked for user {$userId}");
+        if ($user && $course) {
+            $user->courses()->syncWithoutDetaching([$course->id]);
+            Log::info("[Webhook] Course {$courseId} unlocked for User {$userId}");
+        } else {
+            Log::error("[Webhook] User or Course not found. user_id={$userId}, course_id={$courseId}");
         }
 
-        return response()->json(['message' => 'Webhook processed'], 200);
+        return response()->json(['success' => true]);
     }
 }
