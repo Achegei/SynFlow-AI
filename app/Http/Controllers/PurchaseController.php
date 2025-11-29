@@ -63,8 +63,8 @@ class PurchaseController extends Controller
                 $amount,
                 $currency,
                 $customer,
-                route('purchase.complete', $courseId), // redirect url
-                null,                                  // host (optional)
+                $host = "https://mooseloonai.ca",     // host
+                $redirect_url = $host . route('purchase.complete', $courseId, false), // redirect_url
                 $apiRef,                               // api_ref
                 null,                                  // comment
                 "M-PESA"                               // method
