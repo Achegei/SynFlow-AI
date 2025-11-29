@@ -115,17 +115,30 @@ class PurchaseController extends Controller
      * Redirect after payment (NOT webhook)
      */
     public function complete($courseId)
-    {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'Please log in first.');
+{
+    $user = Auth::user();
+    if (!$user) {
+        return redirect()->route('login')->with('error', 'Please log in first.');
+    }
+
+    $payment = Payment::where('user_id', $user->id)
+        ->where('course_id', $courseId)
+        ->latest()
+        ->first();
+
+    if ($payment && $payment->status === 'paid') {
+        // Ensure user has course access
+        if (!$user->courses->contains($courseId)) {
+            $user->courses()->attach($courseId);
         }
 
-        $payment = Payment::where('user_id', $user->id)
-            ->where('course_id', $courseId)
-            ->latest()
-            ->first();
-
-        return view('purchase.complete', compact('payment'));
+        // Optional: flash a success message
+        return redirect()->route('classroom.show', $courseId)
+            ->with('success', '🎉 Payment confirmed! Course unlocked.');
     }
+
+    // If payment not complete yet
+    return view('purchase.complete', compact('payment'))
+        ->with('info', 'Your payment is still being processed. The course will unlock automatically.');
+}
 }
