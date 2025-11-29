@@ -126,16 +126,21 @@ class PurchaseController extends Controller
         ->latest()
         ->first();
 
-    if ($payment && $payment->status === 'paid') {
-        // Ensure user has course access
-        if (!$user->courses->contains($courseId)) {
-            $user->courses()->attach($courseId);
+            if ($payment && $payment->status === 'paid') {
+
+            // Unlock courses logic
+            if ($courseId == 2) {
+                // Buying Course 2 unlocks Course 1 and Course 2
+                $user->courses()->syncWithoutDetaching([1, 2]);
+            } else {
+                // Buying Course 1 unlocks only Course 1
+                $user->courses()->syncWithoutDetaching([$courseId]);
+            }
+
+            return redirect()->route('classroom.show', $courseId)
+                ->with('success', '🎉 Payment confirmed! Course unlocked.');
         }
 
-        // Optional: flash a success message
-        return redirect()->route('classroom.show', $courseId)
-            ->with('success', '🎉 Payment confirmed! Course unlocked.');
-    }
 
     // If payment not complete yet
     return view('purchase.complete', compact('payment'))
