@@ -99,24 +99,24 @@
     <!-- Responsive Navigation Menu -->
             <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
                 <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('community')" :active="request()->routeIs('community')">
+            <!--<x-responsive-nav-link :href="route('community')" :active="request()->routeIs('community')">
                 {{ __('Community') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> -->
             <x-responsive-nav-link :href="route('classroom')" :active="request()->routeIs('classroom')">
                 {{ __('Classroom') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+            <!--<x-responsive-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                 {{ __('Calendar') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
+            </x-responsive-nav-link> -->
+            <!--<x-responsive-nav-link :href="route('members')" :active="request()->routeIs('members')">
                 {{ __('Members') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('map')" :active="request()->routeIs('map')">
+            </x-responsive-nav-link> -->
+            <!--<x-responsive-nav-link :href="route('map')" :active="request()->routeIs('map')">
                 {{ __('Map') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
+            </x-responsive-nav-link -->
+            <!--<x-responsive-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
                 {{ __('Leaderboards') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> -->
             <x-responsive-nav-link :href="route('auth-about')" :active="request()->routeIs('auth-about')">
                 {{ __('About') }}
             </x-responsive-nav-link>
