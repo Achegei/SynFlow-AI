@@ -97,8 +97,8 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-            <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-                <div class="pt-2 pb-3 space-y-1">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
             <!--<x-responsive-nav-link :href="route('community')" :active="request()->routeIs('community')">
                 {{ __('Community') }}
             </x-responsive-nav-link> -->
@@ -113,7 +113,7 @@
             </x-responsive-nav-link> -->
             <!--<x-responsive-nav-link :href="route('map')" :active="request()->routeIs('map')">
                 {{ __('Map') }}
-            </x-responsive-nav-link -->
+            </x-responsive-nav-link>-->
             <!--<x-responsive-nav-link :href="route('leaderboards')" :active="request()->routeIs('leaderboards')">
                 {{ __('Leaderboards') }}
             </x-responsive-nav-link> -->
@@ -148,5 +148,4 @@
             </div>
         </div>
     </div>
-     </div>
 </nav>
