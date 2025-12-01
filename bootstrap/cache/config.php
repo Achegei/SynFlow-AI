@@ -817,6 +817,17 @@
       'default' => 'icon',
     ),
   ),
+  'image' => 
+  array (
+    'driver' => 'Intervention\\Image\\Drivers\\Gd\\Driver',
+    'options' => 
+    array (
+      'autoOrientation' => true,
+      'decodeAnimation' => true,
+      'blendingColor' => 'ffffff',
+      'strip' => false,
+    ),
+  ),
   'livewire' => 
   array (
     'class_namespace' => 'App\\Livewire',

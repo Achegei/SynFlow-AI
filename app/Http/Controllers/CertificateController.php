@@ -4,52 +4,108 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
-use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 class CertificateController extends Controller
 {
-    public function generate($courseId)
+    public function download(Request $request, $courseId)
     {
+        // Validate full name input
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+        ]);
+
         $course = Course::findOrFail($courseId);
-        $user = auth()->user();
+        $userName = $request->full_name;
 
-        // Storage paths
-        $templatePath = storage_path('app/public/certificates/template.png');
-        $fontPath = storage_path('app/public/fonts/PlayfairDisplay-Bold.ttf');
+        // Generate unique certificate ID and current date
+        $uniqueId = strtoupper(uniqid());
+        $date = date('F d, Y');
 
-        // Load certificate template
-        $img = Image::make($templatePath);
+        /**
+         * -------------------------------------------------------
+         * SELECT TEMPLATE BASED ON COURSE ID
+         * -------------------------------------------------------
+         */
+        $templateFile = match ((int)$courseId) {
+            1 => 'template1.png',
+            2 => 'template2.png',
+            default => 'template1.png',
+        };
 
-        // Write student name
-        $img->text($user->name, 960, 720, function ($font) use ($fontPath) {
-            $font->file($fontPath);
-            $font->size(80);
-            $font->color('#000000');
-            $font->align('center');
-            $font->valign('middle');
-        });
+        $templatePath = public_path("certificates/{$templateFile}");
+        $outputPath   = storage_path("app/certificates/{$userName}_certificate.png");
 
-        // Write course title
-        $img->text($course->title, 960, 880, function ($font) use ($fontPath) {
-            $font->file($fontPath);
-            $font->size(50);
-            $font->color('#444444');
-            $font->align('center');
-            $font->valign('middle');
-        });
+        // Use your existing font
+        $fontPath = public_path('certificates/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf');
 
-        // Save generated certificate
-        $fileName = 'certificate-' . $course->id . '-' . $user->id . '.png';
-        $savePath = storage_path('app/public/certificates/generated/' . $fileName);
+        // Font sizes
+        $nameFontSize  = 42;
+        $otherFontSize = 24;
 
-        // Ensure directory exists
-        if (!file_exists(dirname($savePath))) {
-            mkdir(dirname($savePath), 0777, true);
+        $image = imagecreatefrompng($templatePath);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+        $black = imagecolorallocate($image, 0, 0, 0);
+
+        /**
+         * -------------------------------------------------------
+         * CERTIFICATE ID (bold using multiple draws)
+         * -------------------------------------------------------
+         */
+        $idX = 440;
+        $idY = 495;
+        for ($i = 0; $i < 2; $i++) { // draw twice with 1px offset
+            imagettftext($image, $otherFontSize, 0, $idX + $i, $idY, $black, $fontPath, $uniqueId);
         }
 
-        $img->save($savePath);
+        /**
+         * -------------------------------------------------------
+         * NAME OF AWARDEE (keep perfect)
+         * -------------------------------------------------------
+         */
+        $maxWidth = 1000; 
+        $box = imagettfbbox($nameFontSize, 0, $fontPath, $userName);
+        $nameWidth = $box[2] - $box[0];
 
-        // Download file
-        return response()->download($savePath)->deleteFileAfterSend(true);
+        // Reduce font size if name is too long
+        $scaledFontSize = $nameFontSize;
+        while ($nameWidth > $maxWidth && $scaledFontSize > 10) {
+            $scaledFontSize--;
+            $box = imagettfbbox($scaledFontSize, 0, $fontPath, $userName);
+            $nameWidth = $box[2] - $box[0];
+        }
+
+        $nameX = (imagesx($image) - $nameWidth) / 2;
+        $nameY = 1050;
+
+        // Draw name with subtle shadow (still using same font)
+        imagettftext($image, $scaledFontSize, 0, $nameX, $nameY, $black, $fontPath, $userName);
+        imagettftext($image, $scaledFontSize, 0, $nameX + 1, $nameY, $black, $fontPath, $userName);
+
+        /**
+         * -------------------------------------------------------
+         * DATE (bold using multiple draws)
+         * -------------------------------------------------------
+         */
+        $dateX = 900;
+        $dateY = 1550;
+        for ($i = 0; $i < 2; $i++) {
+            imagettftext($image, $otherFontSize, 0, $dateX + $i, $dateY, $black, $fontPath, $date);
+        }
+
+        /**
+         * -------------------------------------------------------
+         * SAVE FINAL CERTIFICATE
+         * -------------------------------------------------------
+         */
+        if (!file_exists(storage_path('app/certificates'))) {
+            mkdir(storage_path('app/certificates'), 0777, true);
+        }
+
+        imagepng($image, $outputPath);
+        imagedestroy($image);
+
+        return response()->download($outputPath, "{$course->title}_certificate.png");
     }
 }

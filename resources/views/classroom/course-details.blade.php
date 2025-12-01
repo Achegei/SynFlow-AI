@@ -23,33 +23,33 @@
         Back to Courses
     </a>
 
-    <!-- Pending Payment Alert -->
+    <!-- Pending Payment -->
     @if (!$hasAccess && $pendingPayment)
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
-            ⏳ Your M-PESA payment is being processed. The course will unlock automatically once confirmed.
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6">
+            ⏳ Your M-PESA payment is being processed. The course will unlock once confirmed.
         </div>
     @endif
 
     <!-- Locked Course CTA -->
     @if (!$hasAccess && !$pendingPayment)
         <div class="text-center bg-gray-100 p-6 rounded-xl shadow mb-6">
-            <p class="text-lg text-gray-700 mb-4">
-                You need to complete payment to access this course.
-            </p>
+            <p class="text-lg text-gray-700 mb-4">You need to complete payment to access this course.</p>
             <form action="{{ route('purchase.course', $course->id) }}" method="POST">
                 @csrf
-                <button type="submit"
-                        class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
                     Pay with M-PESA to Unlock
                 </button>
             </form>
         </div>
     @endif
 
-    <!-- Course Header (only if access) -->
     @if ($hasAccess)
+    <div x-data="{ showCertificateModal: false }">
+
+        <!-- Course Header -->
         <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
-            <img src="{{ $course->image_url }}" alt="Course image for {{ $course->title }}" class="w-full sm:w-48 h-auto rounded-xl object-cover">
+            <img src="{{ $course->image_url }}" class="w-full sm:w-48 h-auto rounded-xl object-cover">
+
             <div class="flex-1">
                 <h1 class="text-3xl font-bold text-gray-900">{{ $course->title }}</h1>
                 <p class="mt-2 text-gray-600">{{ $course->description }}</p>
@@ -60,64 +60,82 @@
                     </span>
 
                     @if ($course->progress_percentage == 100)
-                        <div class="mt-4">
-                            <a href="{{ route('certificate.generate', $course->id) }}"
-                               class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
-                                🎉 Download Your Certificate
-                            </a>
-                        </div>
+                        <button
+                            @click="showCertificateModal = true"
+                            class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700"
+                        >
+                            🎉 Download Your Certificate
+                        </button>
                     @endif
 
-                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
                         <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $course->progress_percentage }}%;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Video Player -->
-        <div id="video-player" class="mt-8 hidden">
-            <div id="youtube-player" class="w-full h-64 rounded-lg"></div>
-        </div>
+        <!-- Modal -->
+        <div
+            x-show="showCertificateModal"
+            x-cloak
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+            <div class="bg-white rounded-xl p-6 max-w-md w-full">
+                <h3 class="text-xl font-semibold mb-4">Enter Your Official Name</h3>
 
-        <!-- Episodes List -->
-        <div class="mt-8 space-y-4">
-            <h2 class="text-2xl font-semibold text-gray-900">Modules</h2>
-            @foreach ($episodes as $episode)
-                <div class="bg-gray-100 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between hover:bg-gray-200 transition">
-                    <div class="flex items-center space-x-4 cursor-pointer mb-2 sm:mb-0"
-                         onclick="playEpisode('{{ $episode->youtube_id }}', {{ $episode->id }})">
-                        <span class="text-lg font-semibold text-gray-700">{{ $loop->iteration }}.</span>
-                        <span class="text-lg font-semibold text-gray-700">{{ $episode->title }}</span>
+                <form action="{{ route('certificate.download', $course->id) }}" method="POST">
+                    @csrf
+                    <input type="text" name="full_name" required class="w-full border rounded px-3 py-2 mb-4" placeholder="e.g. John Doe">
+
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" @click="showCertificateModal = false" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Download</button>
                     </div>
-
-                    <!-- Manual Toggle -->
-                    <form action="{{ route('episodes.toggle', $episode->id) }}" method="POST" class="mb-2 sm:mb-0">
-                        @csrf
-                        <button type="submit" class="px-3 py-1 rounded text-sm font-medium
-                            {{ $episode->is_completed ? 'bg-green-200 text-green-700' : 'bg-yellow-200 text-yellow-700' }}">
-                            {{ $episode->is_completed ? 'Completed' : 'Mark as Watched' }}
-                        </button>
-                    </form>
-
-                    <!-- PDF Download -->
-                    @if ($episode->pdf_path)
-                        <a href="{{ asset('storage/' . $episode->pdf_path) }}" target="_blank"
-                           class="flex items-center text-blue-600 hover:underline font-medium space-x-1">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M12 4v16m8-8H4" />
-                            </svg>
-                            <span>Download PDF Notes</span>
-                        </a>
-                    @endif
-                </div>
-            @endforeach
+                </form>
+            </div>
         </div>
+
+    </div>
+
+    <!-- Video Player -->
+    <div id="video-player" class="mt-8 hidden">
+        <div id="youtube-player" class="w-full h-64 rounded-lg"></div>
+    </div>
+
+    <!-- Episodes -->
+    <div class="mt-8 space-y-4">
+        <h2 class="text-2xl font-semibold text-gray-900">Modules</h2>
+
+        @foreach ($episodes as $episode)
+            <div class="bg-gray-100 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between hover:bg-gray-200 transition">
+
+                <div class="flex items-center space-x-4 cursor-pointer"
+                     onclick="playEpisode('{{ $episode->youtube_id }}', {{ $episode->id }})">
+                    <span class="text-lg font-semibold text-gray-700">{{ $loop->iteration }}.</span>
+                    <span class="text-lg font-semibold text-gray-700">{{ $episode->title }}</span>
+                </div>
+
+                <form action="{{ route('episodes.toggle', $episode->id) }}" method="POST">
+                    @csrf
+                    <button class="px-3 py-1 rounded text-sm font-medium {{ $episode->is_completed ? 'bg-green-200 text-green-700' : 'bg-yellow-200 text-yellow-700' }}">
+                        {{ $episode->is_completed ? 'Completed' : 'Mark as Watched' }}
+                    </button>
+                </form>
+
+                @if ($episode->pdf_path)
+                    <a href="{{ asset('storage/' . $episode->pdf_path) }}" target="_blank" class="text-blue-600 hover:underline font-medium">
+                        📄 PDF Notes
+                    </a>
+                @endif
+
+            </div>
+        @endforeach
+    </div>
+
     @endif
 </div>
 
-<!-- YouTube API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
     let player;
@@ -126,11 +144,9 @@
     function playEpisode(videoId, episodeId) {
         currentEpisodeId = episodeId;
         document.getElementById('video-player').classList.remove('hidden');
-        document.getElementById('video-player').scrollIntoView({ behavior: 'smooth' });
 
-        if (player) {
-            player.loadVideoById(videoId);
-        } else {
+        if (player) player.loadVideoById(videoId);
+        else {
             player = new YT.Player('youtube-player', {
                 height: '360',
                 width: '100%',
@@ -153,10 +169,7 @@
             })
             .then(res => res.json())
             .then(data => {
-                if (data.status === 'success') {
-                    console.log('Episode marked as watched!');
-                    location.reload();
-                }
+                if (data.status === 'success') location.reload();
             });
         }
     }

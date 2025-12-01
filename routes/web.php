@@ -34,9 +34,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/certificate/download', [CertificateController::class, 'generate'])
+// GET – show page or auto-generate
+Route::get('/certificate/download/{course}', 
+    [CertificateController::class, 'generate'])
+    ->middleware('auth')
+    ->name('certificate.generate');
+
+// POST – process name input + download
+Route::post('/certificate/download/{courseId}', 
+    [CertificateController::class, 'download'])
     ->middleware('auth')
     ->name('certificate.download');
+
 
 //================================================
 // 1. Public-Facing Site Routes
