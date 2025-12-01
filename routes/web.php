@@ -56,6 +56,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/services', 'services')->name('services');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/contactus', 'contact')->name('contactus'); // Alias for the contact page
+    Route::post('/contact', 'contactSubmit')->name('contact.submit');
     Route::get('/terms', 'terms')->name('terms');
     Route::get('/privacy-policy', 'policy')->name('policy');
     Route::get('/pricing', 'pricing')->name('pricing');

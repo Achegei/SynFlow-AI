@@ -10,8 +10,14 @@
             <p class="text-lg text-gray-600">Share a bit about your company and goals — we’ll get back to you soon.</p>
         </div>
 
+        @if(session('success'))
+            <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- The form action is set to '#' as requested. -->
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
