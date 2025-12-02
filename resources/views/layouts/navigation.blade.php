@@ -7,7 +7,7 @@
 <div class="flex items-center">
     <!-- Logo -->
     <div class="shrink-0 mr-12">
-            <a href="{{ route('dashboard') }}">
+            <a href="{{ route('classroom') }}">
                 <img src="{{ asset('images/synflowlogo2.jpeg') }}" 
                     alt="App Logo" 
                     class="block h-9 w-auto" />

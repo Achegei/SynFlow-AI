@@ -129,3 +129,18 @@
     </div>
 </div>
 @endsection
+<script>
+document.querySelector("form").addEventListener("submit", function (e) {
+    const checkboxes = document.querySelectorAll("input[name='services[]']");
+    let checked = false;
+
+    checkboxes.forEach((box) => {
+        if (box.checked) checked = true;
+    });
+
+    if (!checked) {
+        e.preventDefault();
+        alert("Please select at least one service.");
+    }
+});
+</script>
