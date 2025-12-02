@@ -47,7 +47,7 @@ class CourseResource extends Resource
                         ->required()
                         ->maxLength(255),
                     TextInput::make('video_url')
-                        ->required()
+                        ->nullable()
                         ->url()
                         ->maxLength(2048),
 
