@@ -267,8 +267,8 @@
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Moose Loon AI Sales Team – Training Structure</h2>
 
             <p class="text-gray-700">
-                All recruits are required to pay a <strong>50% deposit</strong> to begin training.  
-                The remaining balance is paid <strong>after employment</strong>, based on a personal agreement.
+                All recruits are required to pay a <strong>50% deposit</strong> Required to Access Program.  
+                Balance Payable <strong>after employment</strong>, contract with agreement terms.
             </p>
 
             <hr class="my-6">
@@ -277,10 +277,11 @@
 
                 <!-- Foundation Program -->
                 <div class="bg-gray-50 p-6 rounded-lg shadow border border-indigo-200">
-                    <h3 class="font-bold text-indigo-700 text-xl">✅ 1. AI Sales Foundation Program (Mandatory) – KSh 3,000</h3>
+                    <h3 class="font-bold text-indigo-700 text-xl">✅ Mandatory-AI Sales Foundation Program</h3>
+                    <h3 class="font-bold text-blue-700 text-xl">🔥 Total Fee – KSh 2,200</h3>
                     <ul class="mt-2 text-gray-700">
-                        <li>• Access Deposit (50%): <strong>KSh 1,500</strong></li>
-                        <li>• Balance After Employment: <strong>KSh 1,500</strong></li>
+                        <li>• Deposit (50% to access program): <strong>KSh 1,100</strong></li>
+                        <li>• Balance Payment: <strong>KSh 1,100 <span>Payable after employment contractwith agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
@@ -288,10 +289,12 @@
 
                 <!-- Combo Package -->
                 <div class="bg-yellow-50 p-6 rounded-lg shadow border border-yellow-300">
-                    <h3 class="font-bold text-yellow-700 text-xl">🔥 Combo Package: Foundation + Supervisory Program – KSh 5,000</h3>
+                    <h3 class="font-bold text-yellow-700 text-xl">🔥 Combo Package: Foundation + Supervisory Program</h3>
+                    <p>Get both certificates in one. Idea for Supervisor or Leadership applicants</p>
+                    <h3 class="font-bold text-yellow-700 text-xl">🔥 Total Fee – KSh 3,200</h3>
                     <ul class="mt-2 text-gray-700">
-                        <li>• Access Deposit (50%): <strong>KSh 2,500</strong></li>
-                        <li>• Balance After Employment: <strong>KSh 2,500</strong></li>
+                        <li>• Deposit (50% to access program): <strong>KSh 1,600</strong></li>
+                        <li>• Balance Payment: <strong>KSh 1,600 <span>Payable after employment contractwith agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
@@ -404,7 +407,7 @@
                 </div>
 
                 <div>
-                    <label for="cv_cover" class="block text-sm font-medium text-gray-700 mb-1">Upload CV, Moose Loon AI Training Certificate & Cover Letter (PDF, max 5MB) <span class="text-red-500">*</span></label>
+                    <label for="cv_cover" class="block text-sm font-medium text-indigo-700 mb-1">Upload CV, Moose Loon AI Training Certificate & Cover Letter (PDF, max 5MB) <span class="text-red-500">*</span></label>
                     <input type="file" name="cv_cover" id="cv_cover" required accept=".pdf" class="w-full">
                 </div>
 

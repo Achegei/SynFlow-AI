@@ -99,7 +99,7 @@
                 <legend class="block text-sm font-medium text-gray-700 mb-2">Which areas can we support you with? <span class="text-red-500">*</span></legend>
                 <div class="space-y-2">
                     <div class="flex items-center">
-                        <input type="checkbox" id="service1" name="services[]" value="Identifying AI opportunities" required class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <input type="checkbox" id="service1" name="services[]" value="Identifying AI opportunities" class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
                         <label for="service1" class="ml-2 block text-sm text-gray-900">Finding the right AI opportunities</label>
                     </div>
                     <div class="flex items-center">
