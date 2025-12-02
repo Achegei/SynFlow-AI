@@ -379,6 +379,14 @@
         </section>
 
         <hr class="my-8 border-t border-gray-200">
+            <section class="text-center my-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Ready to start your AI Sales Training?</h3>
+                <p class="text-indigo-600 mb-6">Take the course Training of your Choice, once you get your certificate, come back to complete your job application below</p>
+                <a href="{{route('register')}}" class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow hover:bg-blue-700 transition">
+                    Take Training Now
+                </a>
+            </section>
+        <hr class="my-8 border-t border-gray-200">
 
         <!-- Job Application Form -->
         <section>

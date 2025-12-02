@@ -18,30 +18,121 @@
 </style>
 
 @section('content')
-    <section class="relative min-h-screen bg-gray-900 flex items-center justify-center text-center px-4 sm:px-6 lg:px-8">
-        <div class="absolute inset-0">
-            <img src="{{ asset('images/aiherobg.jpg') }}" alt="AI background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/25"></div>
+
+        <section class="relative bg-gray-900">
+            <!-- Background image -->
+            <div class="absolute inset-0">
+                <img src="{{ asset('images/aiherobg.jpg') }}" alt="AI career background" class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- dark overlay for contrast -->
+            </div>
+        <!-- Content -->
+        <div class="relative max-w-4xl mx-auto py-24 px-4 sm:px-8 lg:px-16 text-center">
+            <div class="space-y-6" data-aos="fade-up">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-white">
+            Start Your AI Career With Moose Loon AI — East Africa Expansion
+        </h1>
+
+        <p class="text-gray-200 text-base md:text-lg max-w-2xl mx-auto">
+            Moose Loon AI is building Kenya’s largest nationwide network of AI-skilled
+            sales professionals, supervisors, and future leaders. Our programs equip
+            you with the knowledge, confidence, and practical skills needed to succeed
+            in the rapidly growing AI industry.
+        </p>
+
+        <p class="text-gray-300 text-sm md:text-base uppercase tracking-wide font-semibold">
+            Grow With Moose Loon AI
+            <br>
+            <span class="text-gray-400">AI Knowledge • Sales Skills • Leadership Opportunities</span>
+        </p>
+
+        <ul class="text-gray-300 space-y-2 list-none pl-6 max-w-md mx-auto">
+            <li>AI fundamentals</li>
+            <li>AI sales systems</li>
+            <li>Automated communication tools</li>
+            <li>Customer engagement using modern AI</li>
+            <li>Professional sales & business presentation skills</li>
+        </ul>
+
+        <!-- CTA Buttons -->
+        <div class="mt-6 flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+            <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
+                Apply Now — Foundation Program
+            </a>
+            <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
+                Apply Now — Combo Program
+            </a>
+        </div>
+    </div>
+</div>
+</section>
+
+    
+
+    <section class="bg-white text-gray-900 py-16 px-4 sm:px-8 lg:px-16">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Moose Loon AI Program Highlights</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Supervisory & Leadership -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up">
+            <h3 class="text-xl font-semibold mb-4">Supervisory & Leadership</h3>
+            <p class="text-gray-700 mb-4">Completing the Foundation + Supervisory Combo makes you:</p>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                <li>Certified Moose Loon AI Supervisor</li>
+                <li>Trained leadership professional</li>
+                <li>Eligible for leadership roles:
+                    <ul class="list-disc pl-5 mt-1 space-y-1">
+                        <li>County level</li>
+                        <li>Regional level</li>
+                        <li>National level</li>
+                        <li>East Africa expansion</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
 
-        <div class="relative max-w-3xl">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
-                <span class="block">We build intelligent AI solutions that solve real-world problems</span>
-                <span class="block text-indigo-500 mt-2">to cut costs, boost productivity, and drive measurable growth.</span>
-            </h1>
-            <p class="mt-6 text-lg sm:text-xl text-gray-300">
-                Turn repetitive workflows into smart, automated systems that save time and reduce costs.
-            </p>
-            <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                <a href="{{ route('services') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                    Explore Sales Programs
-                </a>
-                <a href="{{ route('register') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
-                    Ready to Start Your AI Sales Training? Begin Journey
-                </a>
-            </div>
+        <!-- Why Mandatory -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-xl font-semibold mb-4">Why Mandatory</h3>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                <li>Understand our AI products</li>
+                <li>Present professionally</li>
+                <li>Communicate confidently with clients</li>
+                <li>Close sales using the correct systems</li>
+                <li>Represent the Moose Loon AI brand at a high standard</li>
+            </ul>
         </div>
-    </section>
+
+        <!-- Certificate -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-xl font-semibold mb-4">Certificate & Verification</h3>
+            <ul class="list-disc pl-5 space-y-1 text-gray-700 text-sm">
+                <li>Official Moose Loon AI Certificate</li>
+                <li>Downloadable online and printable</li>
+                <li>Includes unique Certificate ID Number</li>
+                <li>Globally verifiable by employers & organizations</li>
+            </ul>
+        </div>
+
+        <!-- Payment -->
+        <div class="bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="text-xl font-semibold mb-4">Training Access & Payment</h3>
+            <p class="text-gray-700 mb-2 text-sm">50% deposit required to access the program; balance payable after employment.</p>
+        </div>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="mt-12 flex flex-wrap gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
+        <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
+            Apply Now — Foundation Program
+        </a>
+        <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
+            Apply Now — Combo Program
+        </a>
+    </div>
+</div>
+</section>
+
 
 
     <!-- New Section: Impact & Results -->
