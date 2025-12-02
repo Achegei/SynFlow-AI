@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class CommunityDashboardController extends Controller
 {
+
     public function community(LeaderboardService $service): View
     {
         $posts = Post::with(['author', 'category', 'comments', 'likes'])
@@ -62,18 +63,19 @@ class CommunityDashboardController extends Controller
             ? $nextEvent->title . ' starts ' . $nextEvent->start_time->diffForHumans()
             : 'Q&A is happening soon';
 
-        return view('community.dashboard', compact(
-            'posts',
-            'recentPosts',
-            'allCategories',
-            'leaderboard',
-            'membersCount',
-            'postsCount',
-            'adminsCount',
-            'onlineMembers',
-            'qnaEventText',
-            'topMember'
-        ));
+       // return view('community.dashboard', compact(
+            //'posts',
+            //'recentPosts',
+            //'allCategories',
+            //'leaderboard',
+            //'membersCount',
+            //'postsCount',
+            //'adminsCount',
+            //'onlineMembers',
+            //'qnaEventText',
+            //'topMember'
+        //));
+        return redirect()->route('classroom');
     }
 
 public function showLeaderboard(): View
@@ -140,7 +142,7 @@ public function showLeaderboard(): View
 
     ];
 
-    return view('community.leaderboard', compact('totalMembers', 'topMember', 'levels', 'leaderboards'));
+    //return view('community.leaderboard', compact('totalMembers', 'topMember', 'levels', 'leaderboards'));
 }
 
 
@@ -156,12 +158,12 @@ public function showLeaderboard(): View
     // Online members using 'is_online' column
     $onlineMembers = User::where('is_online', true)->get();
 
-    return view('community.members', compact(
-        'members', 
-        'membersCount', 
-        'adminsCount', 
-        'onlineMembers'
-    ));
+    //return view('community.members', compact(
+       // 'members', 
+        //'membersCount', 
+       // 'adminsCount', 
+       // 'onlineMembers'
+    //));
 }
 
 }
