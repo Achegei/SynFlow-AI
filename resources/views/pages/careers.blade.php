@@ -408,6 +408,7 @@
 
                 <div>
                     <label for="cv_cover" class="block text-sm font-medium text-indigo-700 mb-1">Upload CV, Moose Loon AI Training Certificate & Cover Letter (PDF, max 5MB) <span class="text-red-500">*</span></label>
+                    <label>Kindly submit the CV, Moose Loon AI Training Certificate & Cover Letter  as one PDF file</label>
                     <input type="file" name="cv_cover" id="cv_cover" required accept=".pdf" class="w-full">
                 </div>
 
