@@ -16,6 +16,7 @@ class CareerApplication extends Model
         'email',
         'cv_cover_letter',
         'cv_cover_path',
+        'certificate_path',
     ];
 
     public function career()

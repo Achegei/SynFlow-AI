@@ -10,80 +10,89 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\LinkColumn;
 
 class CareerApplicationResource extends Resource
 {
     protected static ?string $model = CareerApplication::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     protected static ?string $navigationGroup = 'Recruitment';
     protected static ?string $navigationLabel = 'Career Applications';
 
     public static function form(Form $form): Form
     {
         return $form
-                ->schema([
-                    Forms\Components\TextInput::make('full_name')
-                        ->required()
-                        ->maxLength(255),
+            ->schema([
+                Forms\Components\TextInput::make('full_name')
+                    ->required()
+                    ->maxLength(255),
 
-                    Forms\Components\TextInput::make('email')
-                        ->email()
-                        ->required(),
+                Forms\Components\TextInput::make('email')
+                    ->email()
+                    ->required(),
 
-                    Forms\Components\Select::make('career_id')
-                        ->label('Position')
-                        ->relationship('career', 'title')
-                        ->searchable()
-                        ->required(),
+                Forms\Components\Select::make('career_id')
+                    ->label('Position')
+                    ->relationship('career', 'title')
+                    ->searchable()
+                    ->required(),
 
-                    Forms\Components\FileUpload::make('cv_cover_path')
-                        ->label('CV / Cover Letter')
-                        ->directory('career_applications')
-                        ->downloadable()
-                        ->required()
-                        ->acceptedFileTypes(['application/pdf']),
-                ]);
-            }
+                Forms\Components\FileUpload::make('cv_cover_path')
+                    ->label('CV & Cover Letter (PDF)')
+                    ->directory('career_applications')
+                    ->downloadable()
+                    ->required()
+                    ->acceptedFileTypes(['application/pdf']),
+
+                Forms\Components\FileUpload::make('certificate_path')
+                    ->label('Training Certificate (PDF)')
+                    ->directory('career_applications')
+                    ->downloadable()
+                    ->required()
+                    ->acceptedFileTypes(['application/pdf']),
+            ]);
+    }
 
     public static function table(Table $table): Table
     {
         return $table
-                    ->columns([
-            TextColumn::make('id')
-                ->sortable(),
+            ->columns([
+                TextColumn::make('id')
+                    ->sortable(),
 
-            TextColumn::make('full_name')
-                ->label('Full Name')
-                ->searchable(),
+                TextColumn::make('full_name')
+                    ->label('Full Name')
+                    ->searchable(),
 
-            TextColumn::make('email')
-                ->searchable(),
+                TextColumn::make('email')
+                    ->searchable(),
 
-            TextColumn::make('career.title')
-                ->label('Position'),
+                TextColumn::make('career.title')
+                    ->label('Position'),
 
-            TextColumn::make('cv_cover_path')
-                ->label('Download CV')
-                ->formatStateUsing(fn($state) => 'Download CV')
-                ->url(fn($record) => asset('storage/' . $record->cv_cover_path))
-                ->openUrlInNewTab()
-                ->icon('heroicon-o-arrow-down-tray'),
+                TextColumn::make('cv_cover_path')
+                    ->label('Download CV')
+                    ->formatStateUsing(fn () => 'Download CV')
+                    ->url(fn ($record) => asset('storage/' . $record->cv_cover_path))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-arrow-down-tray'),
 
-            TextColumn::make('created_at')
-                ->dateTime()
-                ->label('Applied At'),
-                    ]);
+                TextColumn::make('certificate_path')
+                    ->label('Download Certificate')
+                    ->formatStateUsing(fn () => 'Download Certificate')
+                    ->url(fn ($record) => asset('storage/' . $record->certificate_path))
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-arrow-down-tray'),
 
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Applied At'),
+            ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

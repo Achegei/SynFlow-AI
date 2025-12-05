@@ -414,11 +414,48 @@
                     </select>
                 </div>
 
+                <!-- CV + Cover Letter -->
                 <div>
-                    <label for="cv_cover" class="block text-sm font-medium text-indigo-700 mb-1">Upload CV, Moose Loon AI Training Certificate & Cover Letter (PDF, max 5MB) <span class="text-red-500">*</span></label>
-                    <label>Kindly submit the CV, Moose Loon AI Training Certificate & Cover Letter  as one PDF file</label>
-                    <input type="file" name="cv_cover" id="cv_cover" required accept=".pdf" class="w-full">
+                    <label for="cv_cover" class="block text-sm font-medium text-indigo-700 mb-1">
+                        Upload CV & Cover Letter (PDF, max 5MB)
+                        <span class="text-red-500">*</span>
+                    </label>
+
+                    <label class="text-gray-600">
+                        Kindly submit your CV & Cover Letter as one combined PDF file
+                    </label>
+
+                    <input 
+                        type="file" 
+                        name="cv_cover" 
+                        id="cv_cover" 
+                        required 
+                        accept=".pdf" 
+                        class="w-full"
+                    >
                 </div>
+
+                <!-- Moose Loon Training Certificate -->
+                <div class="mt-6">
+                    <label for="certificate" class="block text-sm font-medium text-indigo-700 mb-1">
+                        Upload Moose Loon AI Training Certificate (PDF, max 5MB)
+                        <span class="text-red-500">*</span>
+                    </label>
+
+                    <label class="text-gray-600">
+                        Kindly upload your Moose Loon AI Training Certificate as a separate PDF file
+                    </label>
+
+                    <input 
+                        type="file" 
+                        name="certificate" 
+                        id="certificate" 
+                        required 
+                        accept=".pdf" 
+                        class="w-full"
+                    >
+                </div>
+
 
                 <button type="submit" class="w-full py-3 px-4 rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
                     Submit Application
