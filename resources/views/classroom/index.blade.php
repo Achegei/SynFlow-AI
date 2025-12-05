@@ -15,12 +15,14 @@
         @php
             $hasAccess = $user && $user->courses->contains($course->id);
             $pendingPayment = $user
-                ? \App\Models\Payment::where('user_id', $user->id)
-                    ->where('course_id', $course->id)
-                    ->where('status', 'pending')
-                    ->where('provider', 'intasend')
-                    ->exists()
-                : false;
+            ? \App\Models\Payment::where('user_id', $user->id)
+                ->where('course_id', $course->id)
+                ->where('status', 'pending')
+                ->where('provider', 'intasend')
+                ->where('created_at', '>=', now()->subMinutes(2))
+                ->exists()
+            : false;
+
         @endphp
 
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
