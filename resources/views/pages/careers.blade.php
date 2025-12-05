@@ -278,10 +278,10 @@
                 <!-- Foundation Program -->
                 <div class="bg-gray-50 p-6 rounded-lg shadow border border-indigo-200">
                     <h3 class="font-bold text-indigo-700 text-xl">✅ Mandatory-AI Sales Foundation Program</h3>
-                    <h3 class="font-bold text-blue-700 text-xl">🔥 Total Fee – KSh 2,200</h3>
+                    <h3 class="font-bold text-blue-700 text-xl">🔥 Total Fee – KSh 1,200</h3>
                     <ul class="mt-2 text-gray-700">
-                        <li>• Deposit (50% to access program): <strong>KSh 1,100</strong></li>
-                        <li>• Balance Payment: <strong>KSh 1,100 <span>Payable after employment contract with agreement terms</span> </strong></li>
+                        <li>• Deposit (50% to access program): <strong>KSh 600</strong></li>
+                        <li>• Balance Payment: <strong>KSh 600 <span>Payable after employment contract with agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
@@ -291,10 +291,10 @@
                 <div class="bg-yellow-50 p-6 rounded-lg shadow border border-yellow-300">
                     <h3 class="font-bold text-yellow-700 text-xl">🔥 Combo Package: Foundation + Supervisory Program</h3>
                     <p>Get both certificates in one. Idea for Supervisor or Leadership applicants</p>
-                    <h3 class="font-bold text-yellow-700 text-xl">🔥 Total Fee – KSh 3,200</h3>
+                    <h3 class="font-bold text-yellow-700 text-xl">🔥 Total Fee – KSh 1,800</h3>
                     <ul class="mt-2 text-gray-700">
-                        <li>• Deposit (50% to access program): <strong>KSh 1,600</strong></li>
-                        <li>• Balance Payment: <strong>KSh 1,600 <span>Payable after employment contract with agreement terms</span> </strong></li>
+                        <li>• Deposit (50% to access program): <strong>KSh 900</strong></li>
+                        <li>• Balance Payment: <strong>KSh 900 <span>Payable after employment contract with agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
