@@ -281,7 +281,7 @@
                     <h3 class="font-bold text-blue-700 text-xl">🔥 Total Fee – KSh 1,200</h3>
                     <ul class="mt-2 text-gray-700">
                         <li>• Deposit (50% to access program): <strong>KSh 600</strong></li>
-                        <li>• Balance Payment: <strong>KSh 600 <span>Payable after employment contract with agreement terms</span> </strong></li>
+                        <li>• Balance Payment: <strong>KSh 600 <span>Payable within 90 days after employment contract with agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
@@ -294,7 +294,7 @@
                     <h3 class="font-bold text-yellow-700 text-xl">🔥 Total Fee – KSh 1,800</h3>
                     <ul class="mt-2 text-gray-700">
                         <li>• Deposit (50% to access program): <strong>KSh 900</strong></li>
-                        <li>• Balance Payment: <strong>KSh 900 <span>Payable after employment contract with agreement terms</span> </strong></li>
+                        <li>• Balance Payment: <strong>KSh 900 <span>Payable within 90 days after employment contract with agreement terms</span> </strong></li>
                     </ul>
                 </div>
 
