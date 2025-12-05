@@ -268,7 +268,7 @@
 
             <p class="text-gray-700">
                 All recruits are required to pay a <strong>50% deposit</strong> Required to Access Program.  
-                Balance Payable <strong>after employment</strong>, contract with agreement terms.
+                The remaining Balance is payable within 90 days  <strong>after signing the employment contract</strong>, as per the agreement terms.
             </p>
 
             <hr class="my-6">
