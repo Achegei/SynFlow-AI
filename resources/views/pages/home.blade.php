@@ -43,6 +43,104 @@
         </div>
     </section>
 
+    <!-- Moose Loon AI — Income Skills Section -->
+        <section class="bg-white py-16">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="mx-auto max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
+                        Moose Loon AI — We Teach You How to Make Money With AI
+                    </h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        At Moose Loon AI, we don’t teach theory — we teach <span class="font-semibold text-indigo-600">income-generating skills.</span>
+                        You can skip the traditional university path completely and still build a high-income future because:
+                    </p>
+
+                    <div class="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg mb-10">
+                        <p class="text-lg text-gray-800">
+                            <span class="font-bold text-indigo-700">All our instructors and AI Sales Professors</span> have already made
+                            millions using AI skills.  
+                            They teach the exact systems they used to transform their own lives — no theory,
+                            no guesswork, only real-world income strategies.
+                        </p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="my-12">
+                        <div class="border-t border-gray-300 w-24 mx-auto"></div>
+                    </div>
+
+                    <!-- Truth -->
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Truth About the Future of Work</h3>
+                    <p class="text-gray-700 mb-8">
+                        AI will not replace you — but people who know how to use AI <span class="font-semibold text-indigo-600">will.</span>
+                        This is the new reality.
+                    </p>
+
+                    <!-- Only Time in History -->
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Only Time in History</h3>
+                    <p class="text-gray-700 mb-8">
+                        For the first time ever, a single skill can outperform a university degree.
+                        In the AI era, the person who masters automation, AI tools, and digital systems will earn more,
+                        advance faster, and become more valuable — <span class="font-semibold text-indigo-600">regardless of academic background.</span>
+                    </p>
+
+                    <p class="text-lg font-semibold text-gray-800 italic mb-12">
+                        This is why Moose Loon AI exists.
+                    </p>
+
+                    <!-- Your Future Starts Here -->
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Your Future Starts Here</h3>
+                    <p class="text-gray-700 mb-6">
+                        Universities teach you how to study.  
+                        <span class="font-bold text-indigo-700">We teach you how to earn.</span>
+                    </p>
+
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto mb-12">
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> AI business solutions
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> AI sales mastery
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> Workflow automation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> Digital communication
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> Customer support AI
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> Modern productivity systems
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-indigo-600 font-bold">•</span> AI-powered entrepreneurship
+                        </li>
+                    </ul>
+
+                    <!-- Shortcut -->
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">🌍 Your Shortcut to Success</h3>
+                    <p class="text-gray-700 mb-6">
+                        When you join Moose Loon AI, you gain:
+                    </p>
+
+                    <ul class="text-left max-w-2xl mx-auto space-y-3 text-gray-800 mb-12">
+                        <li>• Access to professors who already earned millions from AI</li>
+                        <li>• Real, practical, income-producing skills</li>
+                        <li>• A fast career path without needing a degree</li>
+                        <li>• Opportunities in sales, automation, business solutions, and global AI jobs</li>
+                    </ul>
+
+                    <p class="text-xl font-semibold text-gray-900">
+                        This is education for the AI generation.  
+                        <br>This is your chance to succeed faster than ever before.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
 
     <!-- New Section: Impact & Results -->
     
