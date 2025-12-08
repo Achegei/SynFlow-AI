@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class CareerApplication extends Model
 {
     use HasFactory;
@@ -14,9 +13,10 @@ class CareerApplication extends Model
         'career_id',
         'full_name',
         'email',
-        'cv_cover_letter',
+        'cv_cover_letter',  // keep if used
         'cv_cover_path',
-        'certificate_path',
+        'position',         // <-- add this
+        'position_slug',    // <-- add this
     ];
 
     public function career()

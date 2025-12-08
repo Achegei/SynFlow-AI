@@ -31,25 +31,26 @@ class CareerApplicationResource extends Resource
                     ->email()
                     ->required(),
 
+                Forms\Components\TextInput::make('position')
+                    ->label('Position (Submitted)')
+                    ->disabled(),
+
+                Forms\Components\TextInput::make('position_slug')
+                    ->label('Position Slug')
+                    ->disabled(),
+
                 Forms\Components\Select::make('career_id')
-                    ->label('Position')
+                    ->label('Matched Career (Optional)')
                     ->relationship('career', 'title')
                     ->searchable()
-                    ->required(),
+                    ->nullable(),
 
                 Forms\Components\FileUpload::make('cv_cover_path')
-                    ->label('CV & Cover Letter (PDF)')
+                    ->label('CV (PDF)')
                     ->directory('career_applications')
                     ->downloadable()
-                    ->required()
-                    ->acceptedFileTypes(['application/pdf']),
-
-                Forms\Components\FileUpload::make('certificate_path')
-                    ->label('Training Certificate (PDF)')
-                    ->directory('career_applications')
-                    ->downloadable()
-                    ->required()
-                    ->acceptedFileTypes(['application/pdf']),
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->required(),
             ]);
     }
 
@@ -67,8 +68,9 @@ class CareerApplicationResource extends Resource
                 TextColumn::make('email')
                     ->searchable(),
 
-                TextColumn::make('career.title')
-                    ->label('Position'),
+                TextColumn::make('position')
+                    ->label('Position (Submitted)')
+                    ->searchable(),
 
                 TextColumn::make('cv_cover_path')
                     ->label('Download CV')
@@ -77,17 +79,11 @@ class CareerApplicationResource extends Resource
                     ->openUrlInNewTab()
                     ->icon('heroicon-o-arrow-down-tray'),
 
-                TextColumn::make('certificate_path')
-                    ->label('Download Certificate')
-                    ->formatStateUsing(fn () => 'Download Certificate')
-                    ->url(fn ($record) => asset('storage/' . $record->certificate_path))
-                    ->openUrlInNewTab()
-                    ->icon('heroicon-o-arrow-down-tray'),
-
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->label('Applied At'),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
