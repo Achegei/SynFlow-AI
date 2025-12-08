@@ -62,6 +62,21 @@
 
         </section>
 
+        <!-- Structured Training Info -->
+<section class="mb-10 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Structured Training Program</h2>
+    <p class="text-gray-800 mb-2">
+        All selected applicants will undergo the <span class="font-semibold text-indigo-600">Moose Loon AI Structured Training Program</span>.
+    </p>
+    <p class="text-gray-800 mb-2">
+        This program equips you with the knowledge and tools required to represent our AI business solutions professionally.
+    </p>
+    <p class="text-gray-800">
+        <span class="font-semibold">No prior AI experience needed</span> — structured training will be provided.
+    </p>
+</section>
+
+
         <!-- Job Application Form -->
         <section>
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Apply Now</h2>
