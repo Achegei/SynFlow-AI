@@ -27,7 +27,6 @@
                 <p class="text-gray-800 mb-2">💰 Estimated Monthly Earnings: 40,000 – 60,000 KES</p>
                 <h4 class="font-semibold text-gray-900 mt-3">Qualifications:</h4>
                 <ul class="list-disc list-inside text-gray-800 space-y-1">
-                    <li>Minimum 12 months of sales experience</li>
                     <li>High School Diploma (KCSE)</li>
                     <li>Fluency in English & Kiswahili</li>
                 </ul>
@@ -49,7 +48,7 @@
                 <p class="text-gray-800 mb-2">💰 Estimated Monthly Earnings: 80,000 – 120,000 KES</p>
                 <h4 class="font-semibold text-gray-900 mt-3">Qualifications:</h4>
                 <ul class="list-disc list-inside text-gray-800 space-y-1">
-                    <li>Minimum 2 years of sales experience</li>
+                    <li>Minimum 12 months of sales experience</li>
                     <li>High School Diploma (KCSE)</li>
                     <li>Fluency in English & Kiswahili</li>
                 </ul>
@@ -68,6 +67,27 @@
     <p class="text-gray-800 mb-2">
         All selected applicants will undergo the <span class="font-semibold text-indigo-600">Moose Loon AI Structured Training Program</span>.
     </p>
+    <!-- Application Notice -->
+    <section class="mb-8">
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
+            <h2 class="text-xl font-bold text-gray-900 mb-3">
+                Important Application Guidelines
+            </h2>
+
+            <p class="text-gray-800 mb-4">
+                Applicants are <span class="font-semibold">required to apply for only one role.</span> Submitting applications for both the <span class="font-semibold">Sales Associate</span> and <span class="font-semibold">Sales Supervisor</span> positions will result in <span class="font-semibold text-red-600">automatic disqualification</span>.
+            </p>
+
+            <p class="text-gray-800 mb-4">
+                Moose Loon AI reserves the right to evaluate strong candidates and may upgrade them to a higher role during the selection process.
+            </p>
+
+            <p class="text-gray-800">
+                Candidates with proven leadership experience are strongly encouraged to apply for the <span class="font-semibold">Sales Supervisor</span> position, as it offers higher earnings, greater responsibility, and priority consideration.
+            </p>
+        </div>
+    </section>
+
     <p class="text-gray-800 mb-2">
         This program equips you with the knowledge and tools required to represent our AI business solutions professionally.
     </p>
