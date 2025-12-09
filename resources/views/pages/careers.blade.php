@@ -10,8 +10,9 @@
         <!-- Header -->
         <div class="text-center mb-10">
             <h1 class="text-4xl font-bold text-gray-900 mb-4">NOW HIRING — Nationwide in Kenya 🇰🇪🇨🇦</h1>
-            <p class="text-lg text-gray-600">Moose Loon AI, a Canadian Artificial Intelligence company, is expanding across Kenya and inviting applications from qualified and motivated individuals to join our growing team.</p>
-        </div>
+            <p class="text-lg text-indigo-600">Moose Loon AI, a Canadian Artificial Intelligence company, is expanding across Kenya and inviting applications from qualified and motivated individuals to join our growing team.</p>
+             <h1 class="text-4xl font-bold text-gray-900 mb-4">Application Deadline: December 31, 2025</h1>
+             <p class="text-lg text-indigo-600">Moose Loon AI, reserves the right to close applications earlier once the required number of succesful candidates has been reached.</p>
 
         <!-- Open Positions / Job Descriptions -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -29,11 +30,14 @@
                 <ul class="list-disc list-inside text-gray-800 space-y-1">
                     <li>High School Diploma (KCSE)</li>
                     <li>Fluency in English & Kiswahili</li>
+                    <li>Ability to communicate clearly with customers</li>
                 </ul>
                 <h4 class="font-semibold text-gray-900 mt-3">Core Competencies:</h4>
                 <ul class="list-disc list-inside text-gray-800 space-y-1">
                     <li>Professional and reliable</li>
                     <li>Goal-oriented and self-motivated</li>
+                    <li>Positive attitude and willingness to learn</li>
+                    <li>Strong customer service mindset</li>
                 </ul>
             </div>
 
@@ -51,11 +55,13 @@
                     <li>Minimum 12 months of sales experience</li>
                     <li>High School Diploma (KCSE)</li>
                     <li>Fluency in English & Kiswahili</li>
+                    <li>Ability to travel to the headquaters in Nairobi for scheduled events(accommodation and facilitation provided)</li>
                 </ul>
                 <h4 class="font-semibold text-gray-900 mt-3">Core Competencies:</h4>
                 <ul class="list-disc list-inside text-gray-800 space-y-1">
                     <li>Reliability & leadership ability</li>
-                    <li>Strong communication skills</li>
+                    <li>Excellent communication skills</li>
+                     <li>Team Leadership: Supervises a team of 10-15 sales Associates</li>
                 </ul>
             </div>
 
@@ -98,6 +104,13 @@
 
 
         <!-- Job Application Form -->
+         <h2 class="text-2xl font-bold text-orange-900 mb-6">
+                Email Submission Send CV and cover letter to 
+                <span class="font-semibold text-blue-900 !text-blue-900">
+                    careers@mooseloonai.ca
+                </span> 
+                or apply via below submission
+            </h2>
         <section>
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Apply Now</h2>
 
