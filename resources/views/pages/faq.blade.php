@@ -19,7 +19,7 @@
                 @php
                     $faqs = [
                         ['q' => 'What positions are currently open?', 
-                         'a' => 'We are hiring for two nationwide roles across Kenya:<br>• AI Sales Associate<br>• AI Sales Supervisor'],
+                         'a' => 'We are hiring for a nationwide role across Kenya:<br>• AI Sales Associate'],
 
                         ['q' => 'Do I need prior AI experience to apply?', 
                          'a' => 'No. Moose Loon AI provides full training for all applicants, regardless of background.'],
