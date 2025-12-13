@@ -12,7 +12,8 @@
             <h1 class="text-4xl font-bold text-gray-900 mb-4">NOW HIRING — Nationwide in Kenya 🇰🇪🇨🇦</h1>
             <p class="text-lg text-indigo-600">Moose Loon AI, a Canadian Artificial Intelligence company, is expanding across Kenya and inviting applications from qualified and motivated individuals to join our growing team.</p>
              <h1 class="text-4xl font-bold text-gray-900 mb-4">Application Deadline: December 31, 2025</h1>
-             <p class="text-lg text-indigo-600">Moose Loon AI, reserves the right to close applications earlier once the required number of succesful candidates has been reached.</p>
+             <p class="text-lg text-indigo-600">Moose Loon AI, reserves the right to close applications earlier once the required number of successful candidates has been reached.</p>
+        </div>
 
         <!-- Open Positions / Job Descriptions -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
@@ -41,76 +42,83 @@
                 </ul>
             </div>
 
-            <!-- Sales Supervisors -->
-            <div class="bg-gradient-to-r from-orange-100 to-orange-200 p-6 rounded-xl shadow-lg border border-orange-300">
-                <div class="flex items-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-orange-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m0 0l-7-4.041A2 2 0 015 16v-5m14 5v-5a2 2 0 00-.595-1.436L12 14z" />
+         <!-- Important Notice: Supervisors & Management -->
+            <div class="bg-gradient-to-r from-yellow-50 to-yellow-200 p-6 rounded-xl shadow-lg border-l-8 border-yellow-400 flex flex-col md:flex-row md:items-start gap-4 mb-6">
+                <div class="flex-shrink-0">
+                    <!-- Attention Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
                     </svg>
-                    <h3 class="text-xl font-bold text-orange-900">Sales Supervisor</h3>
                 </div>
-                <p class="text-gray-800 mb-2">💰 Estimated Monthly Earnings: 80,000 – 120,000 KES</p>
-                <h4 class="font-semibold text-gray-900 mt-3">Qualifications:</h4>
-                <ul class="list-disc list-inside text-gray-800 space-y-1">
-                    <li>Minimum 12 months of sales experience</li>
-                    <li>High School Diploma (KCSE)</li>
-                    <li>Fluency in English & Kiswahili</li>
-                    <li>Ability to travel to the headquaters in Nairobi for scheduled events(accommodation and facilitation provided)</li>
-                </ul>
-                <h4 class="font-semibold text-gray-900 mt-3">Core Competencies:</h4>
-                <ul class="list-disc list-inside text-gray-800 space-y-1">
-                    <li>Reliability & leadership ability</li>
-                    <li>Excellent communication skills</li>
-                     <li>Team Leadership: Supervises a team of 10-15 sales Associates</li>
-                </ul>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-yellow-900 mb-3">Supervisors & Management Position Update</h3>
+                    <p class="text-gray-800 mb-2">
+                        At this time, all Supervisor positions have been filled. This reflects the strong growth of Moose Loon AI and the high performance of our current leadership team.
+                    </p>
+                    <p class="text-gray-800 mb-2">
+                        Management positions are scheduled to open on <span class="font-semibold">February 05, 2026</span>. These roles will be filled primarily through internal promotion, with priority consideration given to:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-800 space-y-1 mb-2">
+                        <li>Moose Loon AI pioneer Sales Associates</li>
+                        <li>Current Supervisors in good standing</li>
+                    </ul>
+                    <p class="text-gray-800 mb-2">
+                        Leadership is earned through commitment, ownership, and consistent results. The effort you put in today builds the opportunities you step into tomorrow.
+                    </p>
+                    <p class="text-gray-800 mb-2">
+                        All management opportunities will be communicated and posted internally when they become available.
+                    </p>
+                    <p class="text-gray-800 italic mb-2">
+                        “Growth is not given — it is built through consistency, ownership, and the courage to lead.” — Moose Loon AI Leadership Principle
+                    </p>
+                    <p class="text-gray-800">
+                        We encourage every team member to stay focused, keep learning, and take pride in being part of a company that believes in developing leaders from within.
+                    </p>
+                </div>
             </div>
+
 
         </section>
 
         <!-- Structured Training Info -->
-<section class="mb-10 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Structured Training Program</h2>
-    <p class="text-gray-800 mb-2">
-        All selected applicants will undergo the <span class="font-semibold text-indigo-600">Moose Loon AI Structured Training Program</span>.
-    </p>
-    <!-- Application Notice -->
-    <section class="mb-8">
-        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-            <h2 class="text-xl font-bold text-gray-900 mb-3">
-                Important Application Guidelines
-            </h2>
-
-            <p class="text-gray-800 mb-4">
-                Applicants are <span class="font-semibold">required to apply for only one role.</span> Submitting applications for both the <span class="font-semibold">Sales Associate</span> and <span class="font-semibold">Sales Supervisor</span> positions will result in <span class="font-semibold text-red-600">automatic disqualification</span>.
+        <section class="mb-10 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Structured Training Program</h2>
+            <p class="text-gray-800 mb-2">
+                All selected applicants will undergo the <span class="font-semibold text-indigo-600">Moose Loon AI Structured Training Program</span>.
             </p>
+            <!-- Application Notice -->
+            <section class="mb-8">
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
+                    <h2 class="text-xl font-bold text-gray-900 mb-3">
+                        Important Application Guidelines
+                    </h2>
 
-            <p class="text-gray-800 mb-4">
-                Moose Loon AI reserves the right to evaluate strong candidates and may upgrade them to a higher role during the selection process.
+                    <p class="text-gray-800 mb-4">
+                        Applicants are <span class="font-semibold">required to apply for only one role.</span> Submitting applications for both the <span class="font-semibold">Sales Associate</span> and any management role will result in <span class="font-semibold text-red-600">automatic disqualification</span>.
+                    </p>
+
+                    <p class="text-gray-800 mb-4">
+                        Moose Loon AI reserves the right to evaluate strong candidates and may upgrade them to a higher role during the selection process.
+                    </p>
+                </div>
+            </section>
+
+            <p class="text-gray-800 mb-2">
+                This program equips you with the knowledge and tools required to represent our AI business solutions professionally.
             </p>
-
             <p class="text-gray-800">
-                Candidates with proven leadership experience are strongly encouraged to apply for the <span class="font-semibold">Sales Supervisor</span> position, as it offers higher earnings, greater responsibility, and priority consideration.
+                <span class="font-semibold">No prior AI experience needed</span> — structured training will be provided.
             </p>
-        </div>
-    </section>
-
-    <p class="text-gray-800 mb-2">
-        This program equips you with the knowledge and tools required to represent our AI business solutions professionally.
-    </p>
-    <p class="text-gray-800">
-        <span class="font-semibold">No prior AI experience needed</span> — structured training will be provided.
-    </p>
-</section>
-
+        </section>
 
         <!-- Job Application Form -->
-         <h2 class="text-2xl font-bold text-orange-900 mb-6">
-                Email Submission Send CV and cover letter to 
-                <span class="font-semibold text-blue-900 !text-blue-900">
-                    careers@mooseloonai.ca
-                </span> 
-                or apply via below submission
-            </h2>
+        <h2 class="text-2xl font-bold text-orange-900 mb-6">
+            Email Submission Send CV and cover letter to 
+            <span class="font-semibold text-blue-900 !text-blue-900">
+                careers@mooseloonai.ca
+            </span> 
+            or apply via below submission
+        </h2>
         <section>
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Apply Now</h2>
 
@@ -141,7 +149,6 @@
                     <select id="position" name="position" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
                         <option value="" disabled selected>Select a position</option>
                         <option value="Sales Associate">Sales Associate</option>
-                        <option value="Sales Supervisor">Sales Supervisor</option>
                     </select>
                 </div>
 
