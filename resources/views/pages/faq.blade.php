@@ -25,7 +25,7 @@
                          'a' => 'No. Moose Loon AI provides full training for all applicants, regardless of background.'],
 
                         ['q' => 'Is training mandatory?', 
-                         'a' => 'YES. All applicants MUST complete:<br>• AI Sales Foundation Program — Mandatory for all applicants<br>• AI Sales Supervisory Program — Required only for Supervisor role<br>Applicants without certificates will not be considered.'],
+                         'a' => 'YES. All applicants MUST complete:<br>• AI Sales Foundation Program — Mandatory for all applicants<br>Applicants without certificates will not be considered.'],
 
                         ['q' => 'Why is the training mandatory?', 
                          'a' => 'Because you will be presenting AI solutions to companies. Training ensures you:<br>• Understand our products<br>• Present professionally<br>• Close sales confidently<br>• Represent the brand at a high standard'],
