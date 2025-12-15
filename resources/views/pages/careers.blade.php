@@ -94,11 +94,18 @@
                     </h2>
 
                     <p class="text-gray-800 mb-4">
-                        Applicants are <span class="font-semibold">required to apply for only one role.</span> Submitting applications for both the <span class="font-semibold">Sales Associate</span> and any management role will result in <span class="font-semibold text-red-600">automatic disqualification</span>.
+                        Applicants are <span class="font-semibold">required to apply for only one role.</span> 
+                        Submitting applications for both the <span class="font-semibold">Sales Associate</span> 
+                        and any management role will result in 
+                        <span class="font-semibold text-red-600">automatic disqualification</span>.
                     </p>
 
                     <p class="text-gray-800 mb-4">
                         Moose Loon AI reserves the right to evaluate strong candidates and may upgrade them to a higher role during the selection process.
+                    </p>
+
+                    <p class="text-gray-800 font-semibold">
+                        The Company reserves the right to close this recruitment process earlier upon receiving the required number of suitable applications.
                     </p>
                 </div>
             </section>
@@ -109,7 +116,7 @@
             <p class="text-gray-800">
                 <span class="font-semibold">No prior AI experience needed</span> — structured training will be provided.
             </p>
-        </section>
+
 
         <!-- Job Application Form -->
         <h2 class="text-2xl font-bold text-orange-900 mb-6">
