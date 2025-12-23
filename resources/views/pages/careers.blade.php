@@ -329,14 +329,13 @@
             <section class="mb-8">
                 <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
                     <h2 class="text-xl font-bold text-gray-900 mb-3">
-                        Important Application Guidelines
+                        Applicant Notice
                     </h2>
 
                     <p class="text-gray-800 mb-4">
-                        Applicants are <span class="font-semibold">required to apply for only one role.</span> 
-                        Submitting applications for both the <span class="font-semibold">Sales Associate</span> 
-                        and any management role will result in 
-                        <span class="font-semibold text-red-600">automatic disqualification</span>.
+                        This opportunity is for candidates who are seeking employment with Moose Loon AI. If your goal is only to obtain an AI Sales Business Solutions certificate<span class="font-semibold"> please do not apply, as positions are limited and reserved for employment-focused applicants.</span> 
+                         We have received certificate verification requests from employers
+                        <span class="font-semibold text-red-600"> AI Sales Skills and AI Business Solutions certificate training are provided as part of employment.</span>.
                     </p>
 
                     <p class="text-gray-800 mb-4">
