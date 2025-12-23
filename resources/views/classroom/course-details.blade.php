@@ -17,7 +17,7 @@
             ->where('course_id', $course->id)
             ->where('status', 'pending')
             ->where('provider', 'intasend')
-            ->where('created_at', '>=', now()->subMinutes(2))
+            ->where('created_at', '>=', now()->subMinutes(1))
             ->exists()
         : false;
     @endphp
