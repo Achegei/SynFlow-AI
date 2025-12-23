@@ -78,6 +78,38 @@
             </div>
         </section>
 
+        <!-- Beginner-Friendly AI Sales Course Section -->
+            <section class="mb-12 bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-200">
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
+                    🌍 Moose Loon AI – Building an AI Sales Team Empire for Ordinary People
+                </h2>
+                <p class="text-gray-800 mb-4">
+                    This course is designed for complete beginners. If you can use WhatsApp, you can learn AI.
+                </p>
+
+                <p class="text-gray-800 font-semibold mb-2">At Moose Loon AI, we are creating an AI Sales Team Empire designed for ordinary people, making it easy to participate in the new AI-era economy.</p>
+
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">🚫 What You Do NOT Need</h3>
+                    <ul class="list-disc list-inside text-gray-800 space-y-1">
+                        <li>❌ Coding</li>
+                        <li>❌ Mathematics</li>
+                        <li>❌ Computer science</li>
+                        <li>❌ Prior AI knowledge</li>
+                        <li>❌ University degree</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">✅ What You DO Need</h3>
+                    <ul class="list-disc list-inside text-gray-800 space-y-1">
+                        <li>✔ Ability to read and listen</li>
+                        <li>✔ Willingness to learn</li>
+                    </ul>
+                </div>
+            </section>
+
+
         <!-- Sales Associate Application & Onboarding Process -->
         <section class="mb-12 bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
 
@@ -122,11 +154,11 @@
 
             <!-- STEP 2 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 2: AI Sales Skills Program</h3>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 2: Free Access AI Sales Skill Program (Shortlisted Applicants)</h3>
                 <h4 class="text-xl font-bold text-indigo-700 mb-2">Sales Skills Program – Learn practical skills to sell AI-powered business solutions professionally in the AI era. No technical background required.</h4>
 
                 <p class="text-gray-800 mb-2">
-                    Shortlisted candidates receive free access to the AI Business & Sales Skills Overview, fully covered by Moose Loon AI.
+                    Shortlisted candidates receive free access to the AI Sales Skill Program Overview, fully covered by Moose Loon AI.
                 </p>
 
                 <p class="text-gray-800 mb-4">
