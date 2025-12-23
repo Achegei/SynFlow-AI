@@ -110,7 +110,7 @@
             </section>
 
 
-        <!-- Sales Associate Application & Onboarding Process -->
+        <!-- Moose Loon AI – Sales Associate Application & Onboarding Process -->
         <section class="mb-12 bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
 
             <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
@@ -135,30 +135,35 @@
                 Below is our transparent, step-by-step selection and onboarding process.
             </p>
 
+            <hr class="my-6 border-gray-300">
+
             <!-- STEP 1 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 1: Apply Online</h3>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🧭 STEP 1: Apply Online</h3>
+
                 <p class="text-gray-800 mb-2">Submit your application through our official website.</p>
 
                 <p class="text-gray-800 mb-2">Applications are reviewed based on:</p>
-                <ul class="list-disc list-inside text-gray-800 space-y-1">
+                <ul class="list-disc list-inside text-gray-800 space-y-1 mb-2">
                     <li>Learning mindset and professionalism</li>
                     <li>Interest in AI-powered business solutions</li>
                     <li>Alignment with Moose Loon AI values and ethics</li>
                 </ul>
 
-                <p class="text-gray-700 mt-2 font-semibold">
-                    📌 Only shortlisted applicants proceed to the next stage.
-                </p>
+                <p class="text-gray-700 font-semibold">📌 Only shortlisted applicants proceed to the next stage.</p>
             </div>
+
+            <hr class="my-6 border-gray-300">
 
             <!-- STEP 2 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 2: Free Access AI Sales Skill Program (Shortlisted Applicants)</h3>
-                <h4 class="text-xl font-bold text-indigo-700 mb-2">Sales Skills Program – Learn practical skills to sell AI-powered business solutions professionally in the AI era. No technical background required.</h4>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🧠 STEP 2: Step 2 : Free Access AI Sales Skill Program( Shortlisted Applicants)- No technical background required.</h3>
+                <p class="text-gray-800 mb-2 font-semibold">
+                    Sales Skills Program – you Learn practical skills to sell AI-powered business solutions professionally in the AI era. No technical background required.
+                </p>
 
                 <p class="text-gray-800 mb-2">
-                    Shortlisted candidates receive free access to the AI Sales Skill Program Overview, fully covered by Moose Loon AI.
+                    Shortlisted candidates receive free access to the AI Sales Skills Program, fully covered by Moose Loon AI.
                 </p>
 
                 <p class="text-gray-800 mb-4">
@@ -171,13 +176,13 @@
                     <li>Skills transferable across countries, industries, and markets</li>
                 </ul>
 
-                <h4 class="font-semibold text-gray-900 mb-1">Future-Proof Career Skills</h4>
+                <h4 class="font-semibold text-gray-900 mb-1">🚀 Future-Proof Career Skills</h4>
                 <ul class="list-disc list-inside text-gray-800 mb-3">
                     <li>Practical sales skills designed specifically for AI-driven environments</li>
                     <li>Preparation for modern sales roles across multiple industries</li>
                 </ul>
 
-                <h4 class="font-semibold text-gray-900 mb-1">AI Business Communication Skills</h4>
+                <h4 class="font-semibold text-gray-900 mb-1">🤖 AI Business Communication Skills</h4>
                 <ul class="list-disc list-inside text-gray-800 mb-3">
                     <li>Explain AI benefits and solutions clearly (non-technical)</li>
                     <li>Handle real client scenarios with confidence</li>
@@ -191,26 +196,28 @@
                     <li>Professional presentation and follow-up</li>
                 </ul>
 
-                <h4 class="font-semibold text-gray-900 mb-1">Ethical & Trust-Based Selling</h4>
-                <ul class="list-disc list-inside text-gray-800">
+                <h4 class="font-semibold text-gray-900 mb-1">🧭 Ethical & Trust-Based Selling</h4>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
                     <li>Commitment to ethical sales practices</li>
                     <li>Focus on long-term customer value, not short-term sales</li>
                     <li>Skills applicable across multiple AI-enabled careers</li>
                 </ul>
+
+                <p class="text-gray-800">
+                    This overview ensures candidates understand the foundations, expectations, and real-world application of AI-powered sales before moving forward.
+                </p>
             </div>
+
+            <hr class="my-6 border-gray-300">
 
             <!-- STEP 3 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 3: Short Essay Submission (250–400 Words)</h3>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">✍️ STEP 3: Short Essay Submission (250–400 Words)</h3>
 
-                <p class="text-gray-800 mb-2">
-                    Candidates are required to submit a short essay on the following topic:
-                </p>
+                <p class="text-gray-800 mb-2">Candidates are required to submit a short essay on the following topic:</p>
+                <p class="font-semibold text-gray-900 mb-2">“How Does Moose Loon AI Transform Businesses Through AI Solutions?”</p>
 
-                <p class="font-semibold text-gray-900 mb-2">
-                    “How Does Moose Loon AI Transform Businesses Through AI Solutions?”
-                </p>
-
+                <p class="text-gray-800 mb-2">This helps us evaluate:</p>
                 <ul class="list-disc list-inside text-gray-800 mb-2">
                     <li>Written communication ability</li>
                     <li>Understanding of our mission and offerings</li>
@@ -218,37 +225,89 @@
                     <li>Critical thinking around business transformation</li>
                 </ul>
 
-                <p class="font-semibold text-gray-700">
-                    📌 This is a key evaluation stage in the selection process.
-                </p>
+                <p class="font-semibold text-gray-700">📌 This is a key evaluation stage in the selection process.</p>
             </div>
+
+            <hr class="my-6 border-gray-300">
 
             <!-- STEP 4 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 4: Sales Associate Selection Decision</h3>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">✅ STEP 4: Sales Associate Selection Decision</h3>
                 <p class="text-gray-800">
                     Candidates who successfully pass the evaluation receive a Congratulations & Offer Email, officially confirming acceptance into the Moose Loon AI Sales Associate role.
                 </p>
             </div>
 
+            <hr class="my-6 border-gray-300">
+
             <!-- STEP 5 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">🎓 STEP 5: Official Invitation to Training & Certification</h3>
-
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🎓 STEP 5: Official Invitation to Training & Certification on AI Business Solutions Program</h3>
                 <p class="text-gray-800 mb-2">
                     Accepted candidates are formally invited to begin the:
                 </p>
-
                 <p class="font-semibold text-gray-900 mb-4">
                     Moose Loon AI Business Solutions Training & Certification Program
                 </p>
 
-                <ul class="list-disc list-inside text-gray-800">
+                <ul class="list-disc list-inside text-gray-800 mb-3">
                     <li>High-performance AI-powered sales roles</li>
                     <li>Ethical, consultative client engagement</li>
                     <li>Long-term career growth in the global AI economy</li>
                 </ul>
             </div>
+
+            <hr class="my-6 border-gray-300">
+
+            <!-- STEP 6 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🔐 STEP 6: Secure Access & Refundable Commitment Fee</h3>
+
+                <p class="text-gray-800 mb-2">
+                    To activate training access, candidates receive secure payment instructions for:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>Total Program Value: KES 1,199</li>
+                    <li>Candidate Payment Required: Commitment Fee (50%) – KES 599 (Fully refundable and paid back together with your first salary)</li>
+                </ul>
+
+                <p class="text-gray-800 mb-2">
+                    Moose Loon AI covers 100% of the full program cost (KES 1,199).
+                </p>
+
+                <p class="text-gray-800 font-semibold">
+                    Transparency Notice
+                </p>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>This is NOT a hiring or application fee</li>
+                    <li>Used strictly for seriousness and training commitment confirmation</li>
+                    <li>Controlled access to training materials</li>
+                    <li>Third-party tools and certification logistics</li>
+                </ul>
+            </div>
+
+            <hr class="my-6 border-gray-300">
+
+            <!-- STEP 7 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🏆 STEP 7: Certification, Tracking, Welcome & Contract</h3>
+
+                <p class="text-gray-800 mb-2">
+                    Upon successful completion of the program:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>You print your AI Business Solutions Certificate and send it back for secure record-keeping, allowing Moose Loon AI to track training history, skill progression, eligibility for advanced roles or leadership opportunities, and future verification when requested by a third party (e.g., employer or institution)</li>
+                    <li>You receive an official welcome message from: <br>
+                        <span class="font-semibold">Alexandre Bouchard, Founder & Chief Executive Officer (CEO), Moose Loon AI</span>
+                    </li>
+                    <li>You receive your Sales Associate Contract Agreement</li>
+                    <li>You officially begin your role as a Moose Loon AI Sales Associate</li>
+                </ul>
+            </div>
+
+            <hr class="my-6 border-gray-300">
 
             <!-- Commitment -->
             <div class="mt-10 border-t pt-6">
@@ -262,6 +321,7 @@
             </div>
 
         </section>
+
 
         <!-- Structured Training Info -->
         <section class="mb-10 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
