@@ -66,7 +66,8 @@
                         Course Progress: {{ number_format($course->progress_percentage) }}%
                     </span>
 
-                    @if ($course->progress_percentage == 100)
+                    {{-- Certificate button only for non-free courses --}}
+                    @if (!$isFreeCourse && $course->progress_percentage == 100)
                         <button
                             @click="showCertificateModal = true"
                             class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700"
@@ -82,7 +83,8 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        {{-- Certificate Modal --}}
+        @if (!$isFreeCourse && $course->progress_percentage == 100)
         <div
             x-show="showCertificateModal"
             x-cloak
@@ -102,6 +104,7 @@
                 </form>
             </div>
         </div>
+        @endif
 
     </div>
 
