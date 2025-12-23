@@ -83,10 +83,6 @@
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
                     🌍 Moose Loon AI – Building an AI Sales Team Empire for Ordinary People
                 </h2>
-                <p class="text-gray-800 mb-4">
-                    This course is designed for complete beginners. If you can use WhatsApp, you can learn AI.
-                </p>
-
                 <p class="text-gray-800 font-semibold mb-2">At Moose Loon AI, we are creating an AI Sales Team Empire designed for ordinary people, making it easy to participate in the new AI-era economy.</p>
 
                 <div class="mb-4">
