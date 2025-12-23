@@ -10,6 +10,10 @@ class CertificateController extends Controller
 {
     public function download(Request $request, $courseId)
     {
+        
+        if ((int) $courseId === 1) {
+        abort(403, 'Certificates are not available for this course.');
+         }
         // Validate full name input
         $request->validate([
             'full_name' => 'required|string|max:255',
@@ -27,11 +31,16 @@ class CertificateController extends Controller
          * SELECT TEMPLATE BASED ON COURSE ID
          * -------------------------------------------------------
          */
-        $templateFile = match ((int)$courseId) {
-            1 => 'template1.png',
+        //$templateFile = match ((int)$courseId) {
+            //1 => 'template1.png',
+            //2 => 'template2.png',
+            //default => 'template1.png',
+        //};
+        $templateFile = match ((int) $courseId) {
             2 => 'template2.png',
             default => 'template1.png',
         };
+
 
         $templatePath = public_path("certificates/{$templateFile}");
         $outputPath   = storage_path("app/certificates/{$userName}_certificate.png");

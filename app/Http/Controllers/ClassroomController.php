@@ -12,33 +12,33 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
+ public function show($id)
 {
     $course = Course::with('episodes')->findOrFail($id);
     $user = auth()->user();
 
     // ✅ 1. Ensure user is logged in
     if (!$user) {
-        return redirect()->route('login')->with('error', 'Please log in to access this course.');
+        return redirect()->route('login')
+            ->with('error', 'Please log in to access this course.');
     }
 
-    // ✅ 2. Check if user has access to this course
-    if (!$user->courses->contains($course->id)) {
-        // Option 1: Redirect to purchase page
+    // ✅ 2. Access control
+    $isFreeCourse = (int) $course->id === 1;
+
+    if (!$isFreeCourse && !$user->courses->contains($course->id)) {
         return redirect()
             ->route('purchase.course', $course->id)
             ->with('error', 'You need to purchase this course to access it.');
-
-        // Option 2 (alternative): Just block it completely
-        // abort(403, 'You do not have permission to access this course.');
     }
 
-    // ✅ 3. Calculate user progress (based on completed episodes)
+    // ✅ 3. Calculate user progress
     $episodes = $course->episodes;
     $totalEpisodes = $episodes->count();
 
-    // Later, you'll want to store completions per user in a pivot table
-    $completedEpisodes = $episodes->filter(fn($e) => $e->is_completed)->count();
+    $completedEpisodes = $episodes
+        ->filter(fn ($e) => $e->is_completed)
+        ->count();
 
     $course->progress_percentage = $totalEpisodes > 0
         ? ($completedEpisodes / $totalEpisodes) * 100

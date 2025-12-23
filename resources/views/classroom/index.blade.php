@@ -13,17 +13,22 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
     @foreach ($courses as $course)
         @php
-            $hasAccess = $user && $user->courses->contains($course->id);
-            $pendingPayment = $user
-            ? \App\Models\Payment::where('user_id', $user->id)
-                ->where('course_id', $course->id)
-                ->where('status', 'pending')
-                ->where('provider', 'intasend')
-                ->where('created_at', '>=', now()->subMinutes(2))
-                ->exists()
-            : false;
+            $isFreeCourse = (int) $course->id === 1;
 
+            $hasAccess = $isFreeCourse
+                ? true
+                : ($user && $user->courses->contains($course->id));
+
+            $pendingPayment = (!$isFreeCourse && $user)
+                ? \App\Models\Payment::where('user_id', $user->id)
+                    ->where('course_id', $course->id)
+                    ->where('status', 'pending')
+                    ->where('provider', 'intasend')
+                    ->where('created_at', '>=', now()->subMinutes(2))
+                    ->exists()
+                : false;
         @endphp
+
 
         <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
             <img src="{{ $course->image_url }}" alt="{{ $course->title }}"
@@ -33,7 +38,18 @@
                 <h2 class="text-xl font-semibold">{{ $course->title }}</h2>
                 <p class="mt-2 text-sm text-gray-600">{{ $course->description }}</p>
 
-                @if ($hasAccess)
+                @if ($isFreeCourse)
+                        <a href="{{ route('classroom.show', $course->id) }}"
+                        class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mt-4">
+                            Start Free Course
+                        </a>
+
+                        <p class="mt-2 text-xs text-gray-500 text-center italic">
+                            Certificate not available for this course
+                        </p>
+
+                    @elseif ($hasAccess)
+
                     <a href="{{ route('classroom.show', $course->id) }}"
                        class="inline-block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mt-4">
                         Continue Course

@@ -76,7 +76,158 @@
                     </p>
                 </div>
             </div>
+        </section>
 
+        <!-- Sales Associate Application & Onboarding Process -->
+        <section class="mb-12 bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-4">
+                Moose Loon AI – Sales Associate Application & Onboarding Process
+            </h2>
+
+            <p class="text-gray-700 mb-6 italic">
+                A Message from Alexandre Bouchard, Founder & Chief Executive Officer (CEO), on How We Select and Prepare AI-Era Sales Professionals
+            </p>
+
+            <p class="text-gray-800 mb-4">
+                At Moose Loon AI, we don’t just recruit salespeople — we build future-ready AI professionals.
+                Our onboarding process is designed to identify motivated individuals and equip them with Canadian-standard AI business and sales skills that remain valuable across any AI-enabled industry worldwide.
+            </p>
+
+            <p class="text-gray-800 mb-4">
+                Whether a Sales Associate is based in North America, South America, Europe, Africa, Asia, Australia, or Antarctica, our selection, training, and onboarding process remains the same.
+                This consistency is essential to our mission and vision of building a trusted, world-class AI business solutions company.
+            </p>
+
+            <p class="text-gray-800 mb-8">
+                Below is our transparent, step-by-step selection and onboarding process.
+            </p>
+
+            <!-- STEP 1 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 1: Apply Online</h3>
+                <p class="text-gray-800 mb-2">Submit your application through our official website.</p>
+
+                <p class="text-gray-800 mb-2">Applications are reviewed based on:</p>
+                <ul class="list-disc list-inside text-gray-800 space-y-1">
+                    <li>Learning mindset and professionalism</li>
+                    <li>Interest in AI-powered business solutions</li>
+                    <li>Alignment with Moose Loon AI values and ethics</li>
+                </ul>
+
+                <p class="text-gray-700 mt-2 font-semibold">
+                    📌 Only shortlisted applicants proceed to the next stage.
+                </p>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 2: AI Sales Skills Program</h3>
+                <h4 class="text-xl font-bold text-indigo-700 mb-2">Sales Skills Program – Learn practical skills to sell AI-powered business solutions professionally in the AI era. No technical background required.</h4>
+
+                <p class="text-gray-800 mb-2">
+                    Shortlisted candidates receive free access to the AI Business & Sales Skills Overview, fully covered by Moose Loon AI.
+                </p>
+
+                <p class="text-gray-800 mb-4">
+                    This stage introduces candidates to global-standard, future-ready sales skills designed for the AI era.
+                </p>
+
+                <h4 class="font-semibold text-gray-900 mb-1">🌍 Global-Standard Sales Training</h4>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>Training aligned with international best practices</li>
+                    <li>Skills transferable across countries, industries, and markets</li>
+                </ul>
+
+                <h4 class="font-semibold text-gray-900 mb-1">Future-Proof Career Skills</h4>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>Practical sales skills designed specifically for AI-driven environments</li>
+                    <li>Preparation for modern sales roles across multiple industries</li>
+                </ul>
+
+                <h4 class="font-semibold text-gray-900 mb-1">AI Business Communication Skills</h4>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>Explain AI benefits and solutions clearly (non-technical)</li>
+                    <li>Handle real client scenarios with confidence</li>
+                    <li>Respond to common client questions accurately and professionally</li>
+                </ul>
+
+                <h4 class="font-semibold text-gray-900 mb-1">💬 Professional Sales Techniques</h4>
+                <ul class="list-disc list-inside text-gray-800 mb-3">
+                    <li>Objection handling</li>
+                    <li>Consultative selling approach</li>
+                    <li>Professional presentation and follow-up</li>
+                </ul>
+
+                <h4 class="font-semibold text-gray-900 mb-1">Ethical & Trust-Based Selling</h4>
+                <ul class="list-disc list-inside text-gray-800">
+                    <li>Commitment to ethical sales practices</li>
+                    <li>Focus on long-term customer value, not short-term sales</li>
+                    <li>Skills applicable across multiple AI-enabled careers</li>
+                </ul>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 3: Short Essay Submission (250–400 Words)</h3>
+
+                <p class="text-gray-800 mb-2">
+                    Candidates are required to submit a short essay on the following topic:
+                </p>
+
+                <p class="font-semibold text-gray-900 mb-2">
+                    “How Does Moose Loon AI Transform Businesses Through AI Solutions?”
+                </p>
+
+                <ul class="list-disc list-inside text-gray-800 mb-2">
+                    <li>Written communication ability</li>
+                    <li>Understanding of our mission and offerings</li>
+                    <li>Passion for selling modern AI and digital solutions</li>
+                    <li>Critical thinking around business transformation</li>
+                </ul>
+
+                <p class="font-semibold text-gray-700">
+                    📌 This is a key evaluation stage in the selection process.
+                </p>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">STEP 4: Sales Associate Selection Decision</h3>
+                <p class="text-gray-800">
+                    Candidates who successfully pass the evaluation receive a Congratulations & Offer Email, officially confirming acceptance into the Moose Loon AI Sales Associate role.
+                </p>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🎓 STEP 5: Official Invitation to Training & Certification</h3>
+
+                <p class="text-gray-800 mb-2">
+                    Accepted candidates are formally invited to begin the:
+                </p>
+
+                <p class="font-semibold text-gray-900 mb-4">
+                    Moose Loon AI Business Solutions Training & Certification Program
+                </p>
+
+                <ul class="list-disc list-inside text-gray-800">
+                    <li>High-performance AI-powered sales roles</li>
+                    <li>Ethical, consultative client engagement</li>
+                    <li>Long-term career growth in the global AI economy</li>
+                </ul>
+            </div>
+
+            <!-- Commitment -->
+            <div class="mt-10 border-t pt-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-3">🌍 Our Commitment</h3>
+                <p class="text-gray-800">
+                    At Moose Loon AI, we invest in people before expecting performance.
+                </p>
+                <p class="text-gray-800 font-semibold mt-1">
+                    We don’t just offer sales roles — we build AI-powered careers.
+                </p>
+            </div>
 
         </section>
 
