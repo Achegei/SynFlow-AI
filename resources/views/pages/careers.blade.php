@@ -257,31 +257,17 @@
 
             <!-- STEP 6 -->
             <div class="mb-8">
-                <h3 class="text-xl font-bold text-indigo-700 mb-2">🔐 STEP 6: Secure Access & Refundable Commitment Fee</h3>
+                <h3 class="text-xl font-bold text-indigo-700 mb-2">🔐 STEP 6: Candidate Selection & Training Activation Notice</h3>
 
                 <p class="text-gray-800 mb-2">
-                    To activate training access, candidates receive secure payment instructions for:
+                    Selected candidates are required to complete a small, fully refundable commitment to activate access to training and certification resources.
                 </p>
-
-                <ul class="list-disc list-inside text-gray-800 mb-3">
-                    <li>Total Program Value: KES 1,199</li>
-                    <li>Candidate Payment Required: Commitment Fee (50%) – KES 599 (Fully refundable and paid back together with your first salary)</li>
-                </ul>
 
                 <p class="text-gray-800 mb-2">
-                    Moose Loon AI covers 100% of the full program cost (KES 1,199).
+                    Full details are shared during the onboarding process.
                 </p>
-
-                <p class="text-gray-800 font-semibold">
-                    Transparency Notice
-                </p>
-                <ul class="list-disc list-inside text-gray-800 mb-3">
-                    <li>This is NOT a hiring or application fee</li>
-                    <li>Used strictly for seriousness and training commitment confirmation</li>
-                    <li>Controlled access to training materials</li>
-                    <li>Third-party tools and certification logistics</li>
-                </ul>
             </div>
+
 
             <hr class="my-6 border-gray-300">
 
@@ -321,10 +307,14 @@
 
         <!-- Structured Training Info -->
         <section class="mb-10 bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Structured Training Program</h2>
+            <h2 class="text-xl font-bold text-gray-900 mb-4">CERTIFICATE VERIFICATION</h2>
             <p class="text-gray-800 mb-2">
-                All selected applicants will undergo the <span class="font-semibold text-indigo-600">Moose Loon AI Structured Training Program</span>.
-            </p>
+                For Employers, Government Partners & Institutions. <br>
+
+                The certificate is valid only if verified through the official Moose Loon AI Certificate Verification System or formally confirmed in writing by Moose Loon AI Solutions.
+
+                The Moose Loon AI Certificate Verification System is maintained in accordance with international best practices for transparency, accountability, data integrity, and auditability.
+                </p>
             <!-- Application Notice -->
             <section class="mb-8">
                 <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
@@ -334,8 +324,8 @@
 
                     <p class="text-gray-800 mb-4">
                         This opportunity is for candidates who are seeking employment with Moose Loon AI. If your goal is only to obtain an AI Sales Business Solutions certificate<span class="font-semibold"> please do not apply, as positions are limited and reserved for employment-focused applicants.</span> 
-                         We have received certificate verification requests from employers
-                        <span class="font-semibold text-red-600"> AI Sales Skills and AI Business Solutions certificate training are provided as part of employment.</span>.
+                         We have received certificate verification requests from employers.
+                        <span class="font-semibold text-red-600"> AI Sales Skills and AI Business Solutions certificate training are provided as part of employment.</span>
                     </p>
 
                     <p class="text-gray-800 mb-4">
