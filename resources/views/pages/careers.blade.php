@@ -15,6 +15,15 @@
              <p class="text-lg text-indigo-600">Moose Loon AI, reserves the right to close applications earlier once the required number of successful candidates has been reached.</p>
         </div>
 
+        <!-- Sales Team Image -->
+        <div class="mb-10 flex justify-center">
+            <img 
+                src="{{ asset('images/mooseloonsalesteam.jpg') }}" 
+                alt="Moose Loon AI Sales Team"
+                class="w-full max-w-5xl rounded-2xl shadow-xl object-cover"
+            >
+        </div>
+
         <!-- Open Positions / Job Descriptions -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
 
