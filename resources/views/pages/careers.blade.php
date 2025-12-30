@@ -277,8 +277,45 @@
                 </p>
             </div>
 
+            <hr class="my-6 border-gray-300">
+
+            <!-- WHY WE USE A REFUNDABLE COMMITMENT -->
+            <div class="mb-8 bg-indigo-50 p-6 rounded-2xl border border-indigo-200">
+                <h3 class="text-xl font-bold text-indigo-700 mb-3">
+                    💡 Why We Use a Refundable Commitment
+                </h3>
+
+                <p class="text-gray-800 mb-3">
+                    At Moose Loon AI, we work with a high volume of applicants.
+                    The refundable commitment helps us maintain fairness, quality, and efficiency throughout the onboarding process.
+                </p>
+
+                <p class="text-gray-800 mb-2">
+                    The commitment allows us to:
+                </p>
+
+                <ul class="list-disc list-inside text-gray-800 mb-4">
+                    <li>Reserve training and onboarding resources for candidates who are ready to work</li>
+                    <li>Confirm mutual readiness between the candidate and Moose Loon AI</li>
+                    <li>Protect serious applicants from delays caused by non-committed participants</li>
+                </ul>
+
+                <p class="text-gray-800 mb-3">
+                    This approach is a standard professional practice used to ensure smooth onboarding and long-term success for both the candidate and the organization.
+                </p>
+
+                <p class="text-gray-800 mb-3">
+                    Just like a gym membership, results come when someone commits and shows up.
+                    This small, refundable commitment helps us prioritize candidates who are ready to work, learn, and earn in the AI economy.
+                </p>
+
+                <p class="text-gray-900 font-semibold">
+                    Moose Loon AI builds people through employment-linked training in the AI economy.
+                </p>
+            </div>
 
             <hr class="my-6 border-gray-300">
+
 
             <!-- STEP 7 -->
             <div class="mb-8">
