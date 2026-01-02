@@ -15,8 +15,54 @@
 
        @vite(['resources/css/app.css', 'resources/js/app.js'])
    </head>
+   <style>
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateX(-30px) scale(0.95);
+        }
+        60% {
+            opacity: 1;
+            transform: translateX(4px) scale(1.02);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(6px) scale(0.96);
+        }
+    }
+
+    /* Entry animation */
+    .animate-slide-in {
+        animation: slideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+    }
+
+    /* Exit animation */
+    .animate-fade-out {
+        animation: fadeOut 0.4s ease-in forwards;
+        will-change: transform, opacity;
+    }
+    </style>
+
+
    <body class="font-sans antialiased bg-gray-50 text-gray-800">
        <div class="min-h-screen flex flex-col">
+        <!-- Social Proof Toast Container -->
+         <div
+            id="social-proof-container"
+            class="fixed bottom-5 left-5 z-50 pointer-events-none">
+        </div>
            <header class="bg-white shadow-sm sticky top-0 z-50">
                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                    <nav class="flex justify-between items-center h-16">
@@ -196,3 +242,88 @@
        </div>
    </body>
 </html>
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+    let toastActive = false;
+
+    async function showSocialProofToast() {
+        if (toastActive) return;
+
+        try {
+            const response = await fetch('/social-proof', {
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            if (!data.name || !data.county) return;
+
+            const toast = document.createElement('div');
+            toast.className = `
+                relative
+                bg-gradient-to-r from-green-500 to-emerald-600
+                text-white
+                shadow-2xl shadow-green-500/40
+                rounded-2xl
+                px-4 py-3
+                max-w-xs
+                animate-slide-in
+            `;
+
+            toast.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <!-- Icon -->
+                    <div class="flex-shrink-0">
+                        <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center animate-pulse">
+                            ✅
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="text-sm leading-snug">
+                        <p class="font-semibold">
+                            ${data.name}
+                            <span class="font-normal text-green-100">
+                                from ${data.county} County
+                            </span>
+                        </p>
+
+                        <p class="text-green-50 text-xs mt-1">
+                            ${data.message}
+                        </p>
+
+                        <p class="text-[11px] text-green-200 mt-1">
+                            Moose Loon AI · Just now
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            const container = document.getElementById('social-proof-container');
+            if (!container) return;
+
+            container.appendChild(toast);
+            toastActive = true;
+
+            // Auto-dismiss
+            setTimeout(() => {
+                toast.classList.add('animate-fade-out');
+                setTimeout(() => {
+                    toast.remove();
+                    toastActive = false;
+                }, 400);
+            }, 5000);
+
+        } catch (error) {
+            console.error('Social proof error:', error);
+        }
+    }
+
+    // First toast after short delay
+    setTimeout(showSocialProofToast, 4000);
+
+    // Then randomly every 15–30 seconds
+    setInterval(showSocialProofToast, Math.random() * 15000 + 15000);
+});
+</script>

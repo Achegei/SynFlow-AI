@@ -25,6 +25,7 @@ use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Post;
 use App\Models\Career;
+use App\Models\User;
 
 
 
@@ -33,6 +34,35 @@ use App\Models\Career;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/social-proof', function () {
+    $counties = [
+        'Mombasa', 'Nairobi', 'Kiambu', 'Nakuru', 'Kwale', 'Kilifi',
+        'Tana River', 'Lamu', 'Taita/Taveta', 'Garissa', 'Wajir', 'Mandera',
+        'Marsabit', 'Isiolo', 'Meru', 'Tharaka-Nithi', 'Embu', 'Kitui',
+        'Machakos', 'Makueni', 'Nyandarua', 'Nyeri', 'Kirinyaga', 'Murang\'a',
+        'Turkana', 'West Pokot', 'Samburu', 'Trans Nzoia', 'Uasin Gishu',
+        'Elgeyo/Marakwet', 'Nandi', 'Baringo', 'Laikipia', 'Narok',
+        'Kajiado', 'Kericho', 'Bomet', 'Kakamega', 'Vihiga', 'Bungoma',
+        'Busia', 'Siaya', 'Kisumu', 'Homa Bay', 'Migori', 'Kisii', 'Nyamira'
+    ];
+
+    $user = User::query()
+        ->whereNotNull('name')
+        ->inRandomOrder()
+        ->first();
+
+    if (!$user) {
+        return response()->json([], 204);
+    }
+
+    return response()->json([
+        'name' => strtok($user->name, ' '), // first name only
+        'county' => $counties[array_rand($counties)],
+        'message' => 'is now certified in AI Business Solutions'
+    ]);
+});
+
 
 // GET – show page or auto-generate
 Route::get('/certificate/download/{course}', 
