@@ -16,53 +16,105 @@
        @vite(['resources/css/app.css', 'resources/js/app.js'])
    </head>
    <style>
-    @keyframes slideIn {
-        0% {
-            opacity: 0;
-            transform: translateX(-30px) scale(0.95);
-        }
-        60% {
-            opacity: 1;
-            transform: translateX(4px) scale(1.02);
-        }
-        100% {
-            opacity: 1;
-            transform: translateX(0) scale(1);
-        }
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.4s ease-out;
+}
+
+.animate-fade-out {
+    animation: fadeOut 0.35s ease-in forwards;
+}
+
+/* =====================================================
+   SOCIAL PROOF CONTAINER (FIXED BOTTOM)
+===================================================== */
+
+.social-proof-container {
+    position: fixed;
+    bottom: 16px;              /* HARD bottom lock */
+    left: 16px;
+    z-index: 99999;            /* Above headers & heroes */
+    pointer-events: none;
+}
+
+/* =====================================================
+   SOCIAL PROOF TOAST (COMPACT, ORIGINAL SIZE)
+===================================================== */
+
+.social-toast {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+
+    box-shadow:
+        0 12px 28px rgba(34, 197, 94, 0.45),
+        0 0 18px rgba(34, 197, 94, 0.55);
+
+    border-radius: 14px;
+    padding: 12px 14px;
+    max-width: 320px;
+
+    font-size: 13px;          /* RESTORED smaller font */
+    line-height: 1.35;
+}
+
+/* Title */
+.social-toast-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Meta text */
+.social-toast-meta {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+/* =====================================================
+   MOBILE — CENTERED & SAFE
+===================================================== */
+
+@media (max-width: 640px) {
+    .social-proof-container {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 12px;
     }
 
-    @keyframes fadeOut {
-        0% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(6px) scale(0.96);
-        }
+    .social-toast {
+        max-width: calc(100vw - 24px);
     }
-
-    /* Entry animation */
-    .animate-slide-in {
-        animation: slideIn 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-        will-change: transform, opacity;
-    }
-
-    /* Exit animation */
-    .animate-fade-out {
-        animation: fadeOut 0.4s ease-in forwards;
-        will-change: transform, opacity;
-    }
-    </style>
-
-
+}
+</style>
    <body class="font-sans antialiased bg-gray-50 text-gray-800">
        <div class="min-h-screen flex flex-col">
         <!-- Social Proof Toast Container -->
-         <div
-            id="social-proof-container"
-            class="fixed bottom-5 left-5 z-50 pointer-events-none">
-        </div>
+         <!-- Social Proof Toast Container -->
+        <div id="social-proof-container" class="social-proof-container"></div>
            <header class="bg-white shadow-sm sticky top-0 z-50">
                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                    <nav class="flex justify-between items-center h-16">
@@ -244,86 +296,103 @@
 </html>
  <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    const USERS = [
+        { first: 'Ahmed', full: 'Ahmed Hassan', county: 'Garissa' },
+        { first: 'Amina', full: 'Amina Mohamed', county: 'Wajir' },
+        { first: 'Abdirahman', full: 'Abdirahman Duale', county: 'Mandera' },
+        { first: 'Kevin', full: 'Kevin Mwangi', county: 'Nairobi' },
+        { first: 'Grace', full: 'Grace Wanjiku', county: 'Kiambu' },
+        { first: 'Brian', full: 'Brian Mutua', county: 'Machakos' },
+        { first: 'Salim', full: 'Salim Omar', county: 'Mombasa' },
+        { first: 'Zainab', full: 'Zainab Ali', county: 'Kilifi' },
+        { first: 'Kelvin', full: 'Kelvin Kiptoo', county: 'Nakuru' },
+        { first: 'Sharon', full: 'Sharon Cheruiyot', county: 'Kericho' },
+        { first: 'Collins', full: 'Collins Wekesa', county: 'Kakamega' },
+        { first: 'Naomi', full: 'Naomi Barasa', county: 'Bungoma' },
+        { first: 'Evans', full: 'Evans Otieno', county: 'Kisumu' },
+        { first: 'Millicent', full: 'Millicent Ochieng', county: 'Siaya' },
+        { first: 'George', full: 'George Odhiambo', county: 'Homa Bay' },
+        { first: 'Antony', full: 'Antony Musyoka', county: 'Kitui' },
+        { first: 'Ruth', full: 'Ruth Mwende', county: 'Embu' },
+        { first: 'David', full: 'David Kathure', county: 'Meru' },
+        { first: 'James', full: 'James Kariuki', county: 'Nyeri' },
+        { first: 'Lucy', full: 'Lucy Maina', county: 'Murang’a' },
+    ];
+
+    const EVENTS = [
+        { weight: 1, icon: '📝', private: true,  text: 'has applied for the AI Sales position' },
+        { weight: 2, icon: '🔹', private: true,  text: 'has signed up for AI Sales and Business Solutions' },
+        { weight: 3, icon: '🎓', private: false, text: 'has enrolled in AI Sales and Business Solutions' },
+        { weight: 3, icon: '🚀', private: false, text: 'has started AI Sales and Business Solutions training' },
+        { weight: 4, icon: '✅', private: false, text: 'has completed AI Sales and Business Solutions training' },
+    ];
+
+    const randomUser = () =>
+        USERS[Math.floor(Math.random() * USERS.length)];
+
+    const weightedEvent = () => {
+        const pool = EVENTS.flatMap(e => Array(e.weight).fill(e));
+        return pool[Math.floor(Math.random() * pool.length)];
+    };
+
     let toastActive = false;
 
-    async function showSocialProofToast() {
+    function showToast() {
         if (toastActive) return;
 
-        try {
-            const response = await fetch('/social-proof', {
-                headers: { 'Accept': 'application/json' }
-            });
+        const user = randomUser();
+        const event = weightedEvent();
+        const name = event.private ? user.first : user.full;
 
-            if (!response.ok) return;
+        const toast = document.createElement('div');
+        toast.className = `
+            social-toast
+            bg-gradient-to-r from-green-500 to-emerald-600
+            text-white
+            shadow-2xl shadow-green-500/40
+            rounded-2xl
+            px-5 py-4
+            max-w-sm
+            animate-slide-in
+        `;
 
-            const data = await response.json();
-            if (!data.name || !data.county) return;
-
-            const toast = document.createElement('div');
-            toast.className = `
-                relative
-                bg-gradient-to-r from-green-500 to-emerald-600
-                text-white
-                shadow-2xl shadow-green-500/40
-                rounded-2xl
-                px-4 py-3
-                max-w-xs
-                animate-slide-in
-            `;
-
-            toast.innerHTML = `
-                <div class="flex items-start gap-3">
-                    <!-- Icon -->
-                    <div class="flex-shrink-0">
-                        <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center animate-pulse">
-                            ✅
-                        </div>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="text-sm leading-snug">
-                        <p class="font-semibold">
-                            ${data.name}
-                            <span class="font-normal text-green-100">
-                                from ${data.county} County
-                            </span>
-                        </p>
-
-                        <p class="text-green-50 text-xs mt-1">
-                            ${data.message}
-                        </p>
-
-                        <p class="text-[11px] text-green-200 mt-1">
-                            Moose Loon AI · Just now
-                        </p>
-                    </div>
+        toast.innerHTML = `
+            <div class="flex gap-3">
+                <div class="text-xl">${event.icon}</div>
+                <div>
+                    <p class="social-toast-title">
+                        ${name}
+                        <span class="text-green-100 font-normal">
+                            from ${user.county} County
+                        </span>
+                    </p>
+                    <p class="text-green-50 mt-1">${event.text}</p>
+                    <p class="social-toast-meta mt-1">Moose Loon AI · Just now</p>
                 </div>
-            `;
+            </div>
+        `;
 
-            const container = document.getElementById('social-proof-container');
-            if (!container) return;
+        const container = document.getElementById('social-proof-container');
+        if (!container) return;
 
-            container.appendChild(toast);
-            toastActive = true;
+        container.appendChild(toast);
+        toastActive = true;
 
-            // Auto-dismiss
+        setTimeout(() => {
+            toast.classList.add('animate-fade-out');
             setTimeout(() => {
-                toast.classList.add('animate-fade-out');
-                setTimeout(() => {
-                    toast.remove();
-                    toastActive = false;
-                }, 400);
-            }, 5000);
-
-        } catch (error) {
-            console.error('Social proof error:', error);
-        }
+                toast.remove();
+                toastActive = false;
+            }, 400);
+        }, 20000); // ✅ 20 seconds
     }
 
-    // First toast after short delay
-    setTimeout(showSocialProofToast, 4000);
+    // Initial delay
+    setTimeout(showToast, 4000);
 
-    // Then randomly every 15–30 seconds
-    setInterval(showSocialProofToast, Math.random() * 15000 + 15000);
+    // Repeat every 30–45s
+    setInterval(showToast, Math.random() * 15000 + 30000);
+
 });
 </script>
