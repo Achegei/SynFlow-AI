@@ -25,7 +25,7 @@
                 class="block mt-1 w-full"
                 type="text"
                 name="referral_code"
-                value="{{ old('referral_code', session('referral_code')) }}"
+                value="{{ old('referral_code', $referralCode ?? session('referral_code')) }}"
                 placeholder="e.g. ML-X7P9QK"
                 autocomplete="off"
             />
