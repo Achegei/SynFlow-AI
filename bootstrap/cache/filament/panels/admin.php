@@ -17,6 +17,9 @@
     'app.filament.resources.post-resource.pages.create-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\CreatePost',
     'app.filament.resources.post-resource.pages.edit-post' => 'App\\Filament\\Resources\\PostResource\\Pages\\EditPost',
     'app.filament.resources.post-resource.pages.list-posts' => 'App\\Filament\\Resources\\PostResource\\Pages\\ListPosts',
+    'app.filament.resources.user-resource.pages.create-user' => 'App\\Filament\\Resources\\UserResource\\Pages\\CreateUser',
+    'app.filament.resources.user-resource.pages.edit-user' => 'App\\Filament\\Resources\\UserResource\\Pages\\EditUser',
+    'app.filament.resources.user-resource.pages.list-users' => 'App\\Filament\\Resources\\UserResource\\Pages\\ListUsers',
     'app.filament.widgets.account-widget' => 'App\\Filament\\Widgets\\AccountWidget',
     'app.filament.widgets.stats-overview' => 'App\\Filament\\Widgets\\StatsOverview',
     'filament.livewire.database-notifications' => 'Filament\\Livewire\\DatabaseNotifications',
@@ -53,6 +56,7 @@
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/CourseResource.php' => 'App\\Filament\\Resources\\CourseResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/EventResource.php' => 'App\\Filament\\Resources\\EventResource',
     '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/PostResource.php' => 'App\\Filament\\Resources\\PostResource',
+    '/Users/mohamudhassanmayow/Desktop/synflow-Ai/app/Filament/Resources/UserResource.php' => 'App\\Filament\\Resources\\UserResource',
   ),
   'resourceDirectories' => 
   array (
