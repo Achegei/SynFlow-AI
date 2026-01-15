@@ -35,26 +35,39 @@ class RegisteredUserController extends Controller
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'profile_photo' => ['nullable', 'image', 'max:2048'], // ✅ validate image
+        'profile_photo' => ['nullable', 'image', 'max:2048'],
+        'referral_code' => ['nullable', 'string'],
     ]);
 
+    // ✅ Handle profile photo
     $profilePhotoUrl = null;
+    if ($request->hasFile('profile_photo')) {
+        $profilePhotoUrl = $request->file('profile_photo')
+            ->store('profile-photos', 'public');
+    }
 
-            if ($request->hasFile('profile_photo')) {
-            $path = $request->file('profile_photo')->store('profile-photos', 'public');
-            $profilePhotoUrl = $path; // store relative path
-        }
+    // ✅ Resolve referrer (if any)
+    $referrer = null;
+    if ($request->filled('referral_code')) {
+        $referrer = User::where('referral_code', $request->referral_code)->first();
+    }
 
-
+    // ✅ Create user
     $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
-        'profile_photo_url' => $profilePhotoUrl, // ✅ store path or null
+        'profile_photo_url' => $profilePhotoUrl,
+        'referral_code' => strtoupper(uniqid('ML-')), // auto-generated
+        'referred_by' => $referrer?->id,
     ]);
 
-    event(new Registered($user));
+    // 🚫 Block self-referral (extra safety)
+    if ($user->referred_by === $user->id) {
+        $user->update(['referred_by' => null]);
+    }
 
+    event(new Registered($user));
     Auth::login($user);
 
     return redirect(route('classroom', absolute: false));

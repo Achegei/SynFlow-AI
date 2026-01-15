@@ -6,6 +6,19 @@
         Moose Loon AI Solutions
     </h1>
 
+    @auth
+<div class="mb-6 flex items-center space-x-4">
+    <button onclick="copyReferralCode()"
+            class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-semibold">
+        Copy Your Referral Code
+    </button>
+    <span class="text-gray-700 text-sm">
+        Share this code with friends to give them access and earn rewards!
+    </span>
+    <span id="copyStatus" class="text-green-800 font-medium hidden">Copied!</span>
+</div>
+@endauth
+
     @php
         $user = auth()->user()?->fresh('courses');
     @endphp
@@ -73,3 +86,15 @@
 </div>
 </div>
 @endsection
+<script>
+function copyReferralCode() {
+    const referralCode = "{{ auth()->user()->referral_code }}";
+    const fullLink = "{{ url('/register?ref=') }}" + referralCode;
+
+    navigator.clipboard.writeText(fullLink).then(() => {
+        const status = document.getElementById('copyStatus');
+        status.classList.remove('hidden');
+        setTimeout(() => status.classList.add('hidden'), 2000);
+    });
+}
+</script>

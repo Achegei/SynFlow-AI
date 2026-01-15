@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Services\GeocodingService;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,9 @@ class User extends Authenticatable
         'bio',
         'latitude',  
         'longitude',
-        'profile_photo_url'
+        'profile_photo_url',
+        'referral_code',     // ✅ added
+        'referred_by'        // ✅ added
     ];
 
     protected $hidden = [
@@ -33,16 +36,15 @@ class User extends Authenticatable
     {
         return true;
     }
-      public function getProfilePhotoUrlAttribute($value)
-{
-    if ($value) {
-        return asset('storage/' . ltrim($value, '/'));
+
+    public function getProfilePhotoUrlAttribute($value)
+    {
+        if ($value) {
+            return asset('storage/' . ltrim($value, '/'));
+        }
+
+        return asset('images/default-avatar.png');
     }
-
-    return asset('images/default-avatar.png');
-}
-
-
 
     protected function casts(): array
     {
@@ -52,7 +54,10 @@ class User extends Authenticatable
         ];
     }
 
-    // Relationships
+    /* ============================
+       RELATIONSHIPS
+    ============================ */
+
     public function episodes()
     {
         return $this->belongsToMany(Episode::class)
@@ -70,20 +75,54 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-        public function activities()
+    public function activities()
     {
         return $this->hasMany(Activity::class);
     }
-
 
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
 
-    // Hook into model events
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_user')->withTimestamps();
+    }
+
+    public function hasCourse($courseId)
+    {
+        return $this->courses()->where('course_id', $courseId)->exists();
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(\App\Models\Payment::class);
+    }
+
+    /* ============================
+       REFERRAL RELATIONSHIPS ✅
+    ============================ */
+
+    // Who referred this user
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
+    }
+
+    // Users referred by this user
+    public function referredUsers()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    /* ============================
+       MODEL EVENTS
+    ============================ */
+
     protected static function booted()
     {
+        // Existing geocoding logic
         static::saving(function ($user) {
             if ($user->isDirty('location') && $user->location) {
                 $coords = GeocodingService::geocode($user->location);
@@ -93,22 +132,12 @@ class User extends Authenticatable
                 }
             }
         });
+
+        // ✅ Auto-generate referral code on create
+        static::creating(function ($user) {
+            if (empty($user->referral_code)) {
+                $user->referral_code = 'ML-' . strtoupper(Str::random(4)); // 4 characters
+            }
+        });
     }
-    public function courses()
-        {
-            return $this->belongsToMany(Course::class, 'course_user')->withTimestamps();
-        }
-
-        public function hasCourse($courseId)
-        {
-            return $this->courses()->where('course_id', $courseId)->exists();
-        }
-        // app/Models/User.php
-
-        public function payments()
-        {
-            return $this->hasMany(\App\Models\Payment::class);
-        }
-
-
 }

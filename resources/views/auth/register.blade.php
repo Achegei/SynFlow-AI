@@ -16,35 +16,46 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- ✅ Referral Code (Optional) -->
+        <div class="mt-4">
+            <x-input-label for="referral_code" value="Referral Code (optional)" />
+
+            <x-text-input
+                id="referral_code"
+                class="block mt-1 w-full"
+                type="text"
+                name="referral_code"
+                value="{{ old('referral_code', session('referral_code')) }}"
+                placeholder="e.g. ML-X7P9QK"
+                autocomplete="off"
+            />
+
+            <x-input-error :messages="$errors->get('referral_code')" class="mt-2" />
+        </div>
+
         <!-- Profile Photo -->
         <div class="mt-4">
             <x-input-label for="profile_photo" :value="__('Profile Photo')" />
             <input id="profile_photo" class="block mt-1 w-full" type="file" name="profile_photo" accept="image/*">
             <x-input-error :messages="$errors->get('profile_photo')" class="mt-2" />
         </div>
-        
-
 
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-
             <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+                          type="password"
+                          name="password"
+                          required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
             <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+                          type="password"
+                          name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
