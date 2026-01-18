@@ -64,6 +64,133 @@
                         </p>
                     </div>
 
+                    <!-- Testimonials Title -->
+<h3 class="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-8">
+    Hear From Our Sales Associates
+</h3>
+
+                    <!-- Video Testimonials -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
+
+    <!-- Testimonial 1 -->
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/Kelvin.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/Kelvin.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Kelvin N.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+             <p class="text-sm text-gray-600">Mombasa County</p>
+        </div>
+    </div>
+
+    <!-- Testimonial 2 -->
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/rosemary.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/rosemary.mp4') }}" type="video/mp4">
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">RoseMary K.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+            <p class="text-sm text-gray-600">Kirinyaga County</p>
+        </div>
+    </div>
+
+  <!-- Testimonial 3 -->
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/Esther.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/Esther.mp4') }}" type="video/mp4">
+        </video>
+
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Esther M.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+            <p class="text-sm text-gray-600">Nairobi County</p>
+        </div>
+    </div>
+
+
+    <!-- Testimonial 4 -->
+  <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/nicholas.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/nicholas.mp4') }}" type="video/mp4">
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Nicholas O.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+             <p class="text-sm text-gray-600">Nairobi County</p>
+        </div>
+    </div>
+
+    <!-- Testimonial 5 -->
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/kimetto.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/kimetto.mp4') }}" type="video/mp4">
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Caroline K.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+            <p class="text-sm text-gray-600">Nairobi County</p>
+        </div>
+    </div>
+
+    <!-- Testimonial 6 -->
+      <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/mark.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/mark.mp4') }}" type="video/mp4">
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Mark W.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+            <p class="text-sm text-gray-600">Nairobi County</p>
+        </div>
+    </div>
+
+<!-- Testimonial 7 -->
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+        <video
+            class="w-full h-auto max-h-80 object-contain bg-black"
+            controls
+            preload="none"
+            poster="{{ asset('images/testimonials/symon.jpeg') }}">
+            <source src="{{ asset('videos/testimonials/symon.mp4') }}" type="video/mp4">
+        </video>
+        <div class="p-4 text-center">
+            <p class="font-semibold text-gray-900">Symon K.</p>
+            <p class="text-sm text-gray-600">AI Sales Associate</p>
+            <p class="text-sm text-gray-600">Kiambu County</p>
+        </div>
+    </div>
+
+
+</div>
+
+
                     <!-- Divider -->
                     <div class="my-12">
                         <div class="border-t border-gray-300 w-24 mx-auto"></div>
