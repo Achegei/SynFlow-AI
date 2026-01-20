@@ -172,7 +172,7 @@
     </div>
 
 <!-- Testimonial 7 -->
-    <!--<div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
         <video
             class="w-full h-auto max-h-80 object-contain bg-black"
             controls
@@ -185,7 +185,7 @@
             <p class="text-sm text-gray-600">AI Sales Associate</p>
             <p class="text-sm text-gray-600">Kiambu County</p>
         </div>
-    </div> -->
+    </div>
 
 
 </div>
