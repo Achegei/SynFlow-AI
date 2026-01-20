@@ -185,7 +185,8 @@
             <p class="text-sm text-gray-600">AI Sales Associate</p>
             <p class="text-sm text-gray-600">Kiambu County</p>
         </div>
-    </div>
+    </div>"
+    "
 
 
 </div>
