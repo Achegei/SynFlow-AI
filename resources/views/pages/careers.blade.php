@@ -29,72 +29,176 @@
            >
        </div>
 
+<!-- Testimonials Title -->
+            <h3 class="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-8">
+                Hear From Some of Our Sales Associates
+            </h3>
 
-       <!-- Open Positions / Job Descriptions -->
-       <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                                <!-- Video Testimonials -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
+
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/Kelvin.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/Kelvin.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Kelvin N.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Mombasa County</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/rosemary.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/rosemary.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">RoseMary K.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Kirinyaga County</p>
+                    </div>
+                </div>
+
+            <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/Esther.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/Esther.mp4') }}" type="video/mp4">
+                    </video>
+
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Esther M.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Nairobi County</p>
+                    </div>
+                </div>
 
 
-           <!-- Sales Associates -->
-           <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-xl shadow-lg border border-blue-300">
-               <div class="flex items-center mb-4">
-                   <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A4.978 4.978 0 016 16h12a4.978 4.978 0 01.879 1.804M12 14a4 4 0 100-8 4 4 0 000 8z" />
-                   </svg>
-                   <h3 class="text-xl font-bold text-blue-900">Sales Associate</h3>
-               </div>
-               <p class="text-gray-800 mb-2">💰 Estimated Monthly Earnings: 40,000 – 60,000 KES</p>
-               <h4 class="font-semibold text-gray-900 mt-3">Qualifications:</h4>
-               <ul class="list-disc list-inside text-gray-800 space-y-1">
-                   <li>High School Diploma (KCSE)</li>
-                   <li>Fluency in English & Kiswahili</li>
-                   <li>Ability to communicate clearly with customers</li>
-               </ul>
-               <h4 class="font-semibold text-gray-900 mt-3">Core Competencies:</h4>
-               <ul class="list-disc list-inside text-gray-800 space-y-1">
-                   <li>Professional and reliable</li>
-                   <li>Goal-oriented and self-motivated</li>
-                   <li>Positive attitude and willingness to learn</li>
-                   <li>Strong customer service mindset</li>
-               </ul>
-           </div>
+                <!-- Testimonial 4 -->
+            <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/nicholas.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/nicholas.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Nicholas O.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Nairobi County</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 5 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/kimetto.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/kimetto.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Caroline K.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Nairobi County</p>
+                    </div>
+                </div>
+
+                <!-- Testimonial 6 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/mark.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/mark.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Mark W.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Nairobi County</p>
+                    </div>
+                </div>
+
+            <!-- Testimonial 7 -->
+                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
+                    <video
+                        class="w-full h-auto max-h-80 object-contain bg-black"
+                        controls
+                        preload="none"
+                        poster="{{ asset('images/testimonials/symon.jpeg') }}">
+                        <source src="{{ asset('videos/testimonials/symon.mp4') }}" type="video/mp4">
+                    </video>
+                    <div class="p-4 text-center">
+                        <p class="font-semibold text-gray-900">Symon K.</p>
+                        <p class="text-sm text-gray-600">AI Sales Associate</p>
+                        <p class="text-sm text-gray-600">Kiambu County</p>
+                    </div>
+                </div>"
+                "
 
 
-        <!-- Important Notice: Supervisors & Management -->
-           <div class="bg-gradient-to-r from-yellow-50 to-yellow-200 p-6 rounded-xl shadow-lg border-l-8 border-yellow-400 flex flex-col md:flex-row md:items-start gap-4 mb-6">
-               <div class="flex-shrink-0">
-                   <!-- Attention Icon -->
-                   <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-                   </svg>
-               </div>
-               <div class="flex-1">
-                   <h3 class="text-2xl font-bold text-yellow-900 mb-3">Supervisors & Management Position Update</h3>
-                   <p class="text-gray-800 mb-2">
-                       At this time, all Supervisor positions have been filled. This reflects the strong growth of Moose Loon AI and the high performance of our current leadership team.
-                   </p>
-                   <p class="text-gray-800 mb-2">
-                       Management positions are scheduled to open on <span class="font-semibold">May 04, 2026</span>. These roles will be filled primarily through internal promotion, with priority consideration given to:
-                   </p>
-                   <ul class="list-disc list-inside text-gray-800 space-y-1 mb-2">
-                       <li>Moose Loon AI pioneer Sales Associates</li>
-                       <li>Current Supervisors in good standing</li>
-                   </ul>
-                   <p class="text-gray-800 mb-2">
-                       Leadership is earned through commitment, ownership, and consistent results. The effort you put in today builds the opportunities you step into tomorrow.
-                   </p>
-                   <p class="text-gray-800 mb-2">
-                       All management opportunities will be communicated and posted internally when they become available.
-                   </p>
-                   <p class="text-gray-800 italic mb-2">
-                       “Growth is not given — it is built through consistency, ownership, and the courage to lead.” — Moose Loon AI Leadership Principle
-                   </p>
-                   <p class="text-gray-800">
-                       We encourage every team member to stay focused, keep learning, and take pride in being part of a company that believes in developing leaders from within.
-                   </p>
-               </div>
-           </div>
-       </section>
+            </div>
+      <!-- Open Positions / Job Descriptions -->
+            <section class="mb-12 bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-200">
 
+                <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
+                    📌 Open Positions
+                </h2>
+
+                <div class="grid grid-cols-1 gap-6">
+
+                    <!-- Sales Associate -->
+                    <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-8 rounded-2xl shadow-lg border border-blue-300">
+                        <div class="flex items-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="w-10 h-10 text-blue-600 mr-3"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.121 17.804A4.978 4.978 0 016 16h12a4.978 4.978 0 01.879 1.804M12 14a4 4 0 100-8 4 4 0 000 8z" />
+                            </svg>
+                            <h3 class="text-2xl font-bold text-blue-900">Sales Associate</h3>
+                        </div>
+
+                        <p class="text-gray-800 mb-3 font-medium">
+                            💰 Estimated Monthly Earnings:
+                            <span class="font-semibold">40,000 – 60,000 KES</span>
+                        </p>
+
+                        <h4 class="font-semibold text-gray-900 mt-4">Qualifications:</h4>
+                        <ul class="list-disc list-inside text-gray-800 space-y-1">
+                            <li>High School Diploma (KCSE)</li>
+                            <li>Fluency in English & Kiswahili</li>
+                            <li>Ability to communicate clearly with customers</li>
+                        </ul>
+
+                        <h4 class="font-semibold text-gray-900 mt-4">Core Competencies:</h4>
+                        <ul class="list-disc list-inside text-gray-800 space-y-1">
+                            <li>Professional and reliable</li>
+                            <li>Goal-oriented and self-motivated</li>
+                            <li>Positive attitude and willingness to learn</li>
+                            <li>Strong customer service mindset</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </section>
 
        <!-- Beginner-Friendly AI Sales Course Section -->
            <section class="mb-12 bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-200">
