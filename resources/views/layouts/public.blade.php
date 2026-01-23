@@ -132,7 +132,7 @@
                            <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a>
                            <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
                            <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
-                           <!--<a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a>-->
+                           <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a>
                         <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>. -->
                            <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
                        </div>
@@ -178,7 +178,7 @@
                     <a href="{{ route('about') }}" class="text-gray-700 hover:text-indigo-600">Our Team</a>
                     <a href="{{ route('services') }}" class="text-gray-700 hover:text-indigo-600">Services</a>
                     <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>
-                    <!--<a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a>-->
+                    <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a>
                     <a href="{{ route('contact') }}" class="text-gray-700 hover:text-indigo-600">Contact</a>
 
                     <!-- Optional Contact Info -->
