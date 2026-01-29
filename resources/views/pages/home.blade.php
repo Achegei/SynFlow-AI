@@ -43,231 +43,148 @@
         </div>
     </section>
 
-    <!-- Moose Loon AI — Income Skills Section -->
-        <section class="bg-white py-16">
-            <div class="container mx-auto px-6 lg:px-8">
-                <div class="mx-auto max-w-4xl text-center">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
-                        Moose Loon AI — We Teach You How to Make Money With AI
-                    </h2>
-                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
-                        At Moose Loon AI, we don’t teach theory — we teach <span class="font-semibold text-indigo-600">income-generating skills.</span>
-                        You can skip the traditional university path completely and still build a high-income future because:
-                    </p>
 
-                    <div class="bg-indigo-50 border-l-4 border-indigo-600 p-6 rounded-lg mb-10">
-                        <p class="text-lg text-gray-800">
-                            <span class="font-bold text-indigo-700">All our instructors and AI Sales Professors</span> have already made
-                            millions using AI skills.  
-                            They teach the exact systems they used to transform their own lives — no theory,
-                            no guesswork, only real-world income strategies.
-                        </p>
-                    </div>
-
-                    <!-- Testimonials Title -->
-<h3 class="text-2xl md:text-3xl font-extrabold text-center text-gray-900 mb-8">
-    Hear From Our Sales Associates
-</h3>
-
-                    <!-- Video Testimonials -->
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-14">
-
-    <!-- Testimonial 1 -->
-    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/Kelvin.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/Kelvin.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Kelvin N.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-             <p class="text-sm text-gray-600">Mombasa County</p>
+    <!-- AI Automation for Fast Business Growth Section -->
+<section class="bg-white py-20">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
+                AI AUTOMATION FOR FAST BUSINESS GROWTH
+            </h2>
+            <p class="text-xl font-semibold text-indigo-600 mb-6">
+                Turn Every Inquiry Into Revenue — 24/7
+            </p>
+            <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                Stop losing customers due to slow responses.<br>
+                Our AI agents instantly respond, capture leads, book appointments, and follow up automatically across WhatsApp, website chat, voice calls, and email.
+            </p>
         </div>
-    </div>
 
-    <!-- Testimonial 2 -->
-    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/rosemary.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/rosemary.mp4') }}" type="video/mp4">
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">RoseMary K.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-            <p class="text-sm text-gray-600">Kirinyaga County</p>
+        <!-- Benefits -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Instant customer response</div>
+            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ More leads converted into sales</div>
+            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Automated bookings & follow-ups</div>
+            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ 24/7 customer engagement</div>
+            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Setup in days</div>
         </div>
-    </div>
 
-  <!-- Testimonial 3 -->
-    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/Esther.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/Esther.mp4') }}" type="video/mp4">
-        </video>
+        <!-- AI Agents Included -->
+        <div class="mb-20">
+            <h3 class="text-3xl font-bold text-gray-900 mb-10 text-center">
+                AI AGENTS INCLUDED
+            </h3>
 
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Esther M.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-            <p class="text-sm text-gray-600">Nairobi County</p>
-        </div>
-    </div>
+            <div class="space-y-6">
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>WhatsApp AI Agent</strong><br>
+                    Handles customer inquiries, captures leads, schedules bookings, and sends automated follow-ups on WhatsApp.
+                </div>
 
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>Website Chat Agent</strong><br>
+                    Instantly responds to website visitors and converts traffic into qualified leads.
+                </div>
 
-    <!-- Testimonial 4 -->
-  <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/nicholas.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/nicholas.mp4') }}" type="video/mp4">
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Nicholas O.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-             <p class="text-sm text-gray-600">Nairobi County</p>
-        </div>
-    </div>
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>Voice Call AI Agent</strong><br>
+                    Answers incoming calls, handles FAQs, captures customer details, and schedules appointments automatically.
+                </div>
 
-    <!-- Testimonial 5 -->
-    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/kimetto.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/kimetto.mp4') }}" type="video/mp4">
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Caroline K.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-            <p class="text-sm text-gray-600">Nairobi County</p>
-        </div>
-    </div>
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>Email AI Agent</strong><br>
+                    Manages inbox responses, professional replies, and automated customer follow-ups.
+                </div>
 
-    <!-- Testimonial 6 -->
-      <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/mark.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/mark.mp4') }}" type="video/mp4">
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Mark W.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-            <p class="text-sm text-gray-600">Nairobi County</p>
-        </div>
-    </div>
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>Booking & Scheduling Automation</strong><br>
+                    Manages appointment bookings and calendar scheduling automatically.
+                </div>
 
-<!-- Testimonial 7 -->
-    <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-        <video
-            class="w-full h-auto max-h-80 object-contain bg-black"
-            controls
-            preload="none"
-            poster="{{ asset('images/testimonials/symon.jpeg') }}">
-            <source src="{{ asset('videos/testimonials/symon.mp4') }}" type="video/mp4">
-        </video>
-        <div class="p-4 text-center">
-            <p class="font-semibold text-gray-900">Symon K.</p>
-            <p class="text-sm text-gray-600">AI Sales Associate</p>
-            <p class="text-sm text-gray-600">Kiambu County</p>
-        </div>
-    </div>"
-    "
-
-
-</div>
-
-
-                    <!-- Divider -->
-                    <div class="my-12">
-                        <div class="border-t border-gray-300 w-24 mx-auto"></div>
-                    </div>
-
-                    <!-- Truth -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Truth About the Future of Work</h3>
-                    <p class="text-gray-700 mb-8">
-                        AI will not replace you — but people who know how to use AI <span class="font-semibold text-indigo-600">will.</span>
-                        This is the new reality.
-                    </p>
-
-                    <!-- Only Time in History -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">The Only Time in History</h3>
-                    <p class="text-gray-700 mb-8">
-                        For the first time ever, a single skill can outperform a university degree.
-                        In the AI era, the person who masters automation, AI tools, and digital systems will earn more,
-                        advance faster, and become more valuable — <span class="font-semibold text-indigo-600">regardless of academic background.</span>
-                    </p>
-
-                    <p class="text-lg font-semibold text-gray-800 italic mb-12">
-                        This is why Moose Loon AI exists.
-                    </p>
-
-                    <!-- Your Future Starts Here -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Your Future Starts Here</h3>
-                    <p class="text-gray-700 mb-6">
-                        Universities teach you how to study.  
-                        <span class="font-bold text-indigo-700">We teach you how to earn.</span>
-                    </p>
-
-                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-2xl mx-auto mb-12">
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> AI business solutions
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> AI sales mastery
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> Workflow automation
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> Digital communication
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> Customer support AI
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> Modern productivity systems
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="text-indigo-600 font-bold">•</span> AI-powered entrepreneurship
-                        </li>
-                    </ul>
-
-                    <!-- Shortcut -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">🌍 Your Shortcut to Success</h3>
-                    <p class="text-gray-700 mb-6">
-                        When you join Moose Loon AI, you gain:
-                    </p>
-
-                    <ul class="text-left max-w-2xl mx-auto space-y-3 text-gray-800 mb-12">
-                        <li>• Access to professors who already earned millions from AI</li>
-                        <li>• Real, practical, income-producing skills</li>
-                        <li>• A fast career path without needing a degree</li>
-                        <li>• Opportunities in sales, automation, business solutions, and global AI jobs</li>
-                    </ul>
-
-                    <p class="text-xl font-semibold text-gray-900">
-                        This is education for the AI generation.  
-                        <br>This is your chance to succeed faster than ever before.
-                    </p>
+                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
+                    <strong>AI Sales & Support Assistants</strong><br>
+                    Automate customer engagement, ensuring every inquiry receives an instant professional response while helping businesses convert more leads into paying customers.
                 </div>
             </div>
-        </section>
+        </div>
 
+        <!-- Why Businesses Lose Customers -->
+        <div class="mb-20">
+            <h3 class="text-3xl font-bold text-gray-900 mb-6 text-center">
+                WHY BUSINESSES LOSE CUSTOMERS
+            </h3>
+
+            <p class="text-center text-gray-600 mb-8">
+                Every day, businesses lose opportunities because:
+            </p>
+
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-gray-700">
+                <li>• Customers wait too long for responses</li>
+                <li>• Inquiries are missed after working hours</li>
+                <li>• Follow-ups are inconsistent</li>
+                <li>• Sales opportunities slip away</li>
+                <li>• Staff become overwhelmed handling repetitive inquiries</li>
+            </ul>
+
+            <p class="text-center font-semibold text-indigo-600 mt-8">
+                In today’s market, speed wins customers.
+            </p>
+        </div>
+
+        <!-- Industries -->
+        <div class="mb-20">
+            <h3 class="text-3xl font-bold text-gray-900 mb-10 text-center">
+                INDUSTRIES ALREADY BENEFITING FROM AI AUTOMATION
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-indigo-700">
+                <div>🏘️ Real estate agencies & property developers</div>
+                <div>🚗  Car dealerships & auto service centers</div>
+                <div>🏨 Hotels, resorts & travel agencies</div>
+                <div>🏥 Clinics, hospitals & medical centers</div>
+                <div>🛍️ Retail stores & e-commerce businesses</div>
+                <div>🚚 Logistics, courier & delivery companies</div>
+                <div>🏦  Banks, SACCOs & financial services</div>
+                <div>🛡️ Insurance companies & brokers</div>
+                <div>🎓 Schools, colleges & training institutions</div>
+                <div>👥 Recruitment agencies & HR firms</div>
+                <div>🍽️ Restaurants, cafés & food delivery businesses</div>
+                <div>🏗️ Construction & contracting companies</div>
+                <div>⚖️ Law firms & professional service providers</div>
+                <div>💆 Beauty salons, spas & wellness centers</div>
+                <div>🏋️ Gyms & fitness centers</div>
+                <div>🎉 Event planners & entertainment businesses</div>
+                <div>🦁  Tour operators & safari companies</div>
+                <div>📡  Telecommunications & internet providers</div>
+                <div>🤝 NGOs & customer-facing organizations</div>
+                <div>🏛️ Government-facing service providers & agencies</div>
+                <div>🏪  SMEs & growing local businesses</div>
+                <div>🏪  Any business that deals with customers or client inquiries</div>
+            </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="bg-indigo-50 p-10 rounded-2xl text-center mb-16">
+            <p class="text-2xl font-semibold text-gray-900 mb-4">
+                “Your best salesperson and support agent working 24/7 without salary or breaks.”
+            </p>
+            <p class="text-gray-700 max-w-4xl mx-auto">
+                Studies consistently show that many businesses struggle or fail due to poor customer engagement and slow response times. Customers often leave not because of price or product quality, but because they choose companies that respond faster and engage them better.
+            </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+            <p class="text-xl font-semibold mb-6">
+                Book your FREE AI demo today and see how automation grows your revenue.
+            </p>
+            <a href="{{route('contactus')}}" class="inline-block px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition">
+                👉 BOOK FREE AI DEMO TODAY
+            </a>
+        </div>
+    </div>
+</section>
 
 
     <!-- New Section: Impact & Results -->

@@ -532,31 +532,144 @@
 
                The Moose Loon AI Certificate Verification System is maintained in accordance with international best practices for transparency, accountability, data integrity, and auditability.
                </p>
-           <!-- Application Notice -->
-           <section class="mb-8">
-               <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-                   <h2 class="text-xl font-bold text-gray-900 mb-3">
-                       Applicant Notice
-                   </h2>
+           <!-- Moose Loon AI – Kenya Impact Section -->
+<section class="mb-8">
+    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-8 rounded-lg">
+        <!-- Header -->
+        <h2 class="text-2xl font-extrabold text-gray-900 mb-4">
+            Kenya — Powered by Moose Loon AI Agents Working 24/7 Without Salary or Breaks
+        </h2>
 
+        <p class="text-gray-800 mb-6">
+            Moose Loon AI deploys intelligent automation agents that help Kenyan businesses respond faster, capture more leads, and convert inquiries into paying customers — day and night.
+        </p>
 
-                   <p class="text-gray-800 mb-4">
-                       This opportunity is for candidates who are seeking employment with Moose Loon AI. If your goal is only to obtain an AI Sales Business Solutions certificate<span class="font-semibold"> please do not apply, as positions are limited and reserved for employment-focused applicants.</span>
-                        We have received certificate verification requests from employers.
-                       <span class="font-semibold text-red-600"> AI Sales Skills and AI Business Solutions certificate training are provided as part of employment.</span>
-                   </p>
+        <p class="font-semibold text-gray-900 mb-4">
+            We support businesses across industries including:
+        </p>
 
+        <!-- Industries -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-gray-800 mb-8">
+            <div>🏘️ Real estate agencies & property developers</div>
+            <div>🚗 Car dealerships & auto service centers</div>
+            <div>🏨 Hotels, resorts & travel agencies</div>
+            <div>🏥 Clinics, hospitals & medical centers</div>
+            <div>🛍️ Retail stores & e-commerce businesses</div>
+            <div>🚚 Logistics, courier & delivery companies</div>
+            <div>🏦 Banks, SACCOs & financial services</div>
+            <div>🛡️ Insurance companies & brokers</div>
+            <div>🎓 Schools, colleges & training institutions</div>
+            <div>👥 Recruitment agencies & HR firms</div>
+            <div>🍽️ Restaurants, cafés & food delivery businesses</div>
+            <div>🏗️ Construction & contracting companies</div>
+            <div>⚖️ Law firms & professional service providers</div>
+            <div>💆 Beauty salons, spas & wellness centers</div>
+            <div>🏋️ Gyms & fitness centers</div>
+            <div>🎉 Event planners & entertainment businesses</div>
+            <div>🦁 Tour operators & safari companies</div>
+            <div>📡 Telecommunications & internet providers</div>
+            <div>🤝 NGOs & customer-facing organizations</div>
+            <div>🏛️ Government-facing service providers & agencies</div>
+            <div>🏪 SMEs & growing local businesses</div>
+            <div>💬 Any business that deals with customers or client inquiries</div>
+        </div>
 
-                   <p class="text-gray-800 mb-4">
-                       Moose Loon AI reserves the right to evaluate strong candidates and may upgrade them to a higher role during the selection process.
-                   </p>
+        <hr class="my-8">
 
+        <!-- Why Businesses Lose Customers -->
+        <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Why Many Businesses Lose Customers
+        </h3>
 
-                   <p class="text-gray-800 font-semibold">
-                       The Company reserves the right to close this recruitment process earlier upon receiving the required number of suitable applications.
-                   </p>
-               </div>
-           </section>
+        <p class="text-gray-800 mb-4">
+            Studies consistently show many businesses struggle or fail due to poor customer engagement and slow response times. Customers often leave not because of price or product quality, but because they choose companies that respond faster and engage them better.
+        </p>
+
+        <p class="text-gray-800 mb-4">
+            Every day, businesses lose opportunities because:
+        </p>
+
+        <ul class="list-disc pl-6 text-gray-800 mb-6 space-y-1">
+            <li>Customers wait too long for responses</li>
+            <li>Inquiries are missed after working hours</li>
+            <li>Follow-ups are inconsistent</li>
+            <li>Sales opportunities slip away</li>
+            <li>Staff become overwhelmed handling repetitive inquiries</li>
+        </ul>
+
+        <p class="font-semibold text-indigo-700 mb-8">
+            In today’s market, faster responses win customers.
+        </p>
+
+        <hr class="my-8">
+
+        <!-- Agents Included -->
+        <h3 class="text-xl font-bold text-gray-900 mb-6">
+            MOOSE LOON AI AGENTS INCLUDED
+        </h3>
+
+        <div class="space-y-4 text-gray-800 mb-8">
+            <div><strong>WhatsApp AI Agent</strong><br>
+                Handles customer inquiries, captures leads, schedules bookings, and sends automated follow-ups on WhatsApp.
+            </div>
+
+            <div><strong>Website Chat Agent</strong><br>
+                Instantly responds to website visitors and converts traffic into qualified leads.
+            </div>
+
+            <div><strong>Voice Call AI Agent</strong><br>
+                Answers incoming calls, handles FAQs, captures customer details, and schedules appointments automatically.
+            </div>
+
+            <div><strong>Email AI Agent</strong><br>
+                Manages inbox responses, professional replies, and automated customer follow-ups.
+            </div>
+
+            <div><strong>Booking & Scheduling Automation</strong><br>
+                Manages appointment bookings and calendar scheduling automatically.
+            </div>
+
+            <div><strong>AI Sales & Support Assistants</strong><br>
+                Automate customer engagement, ensuring every inquiry receives an instant professional response while helping businesses convert more leads into paying customers.
+            </div>
+        </div>
+
+        <hr class="my-8">
+
+        <!-- Career Section -->
+        <h3 class="text-xl font-bold text-gray-900 mb-4">
+            Build Your Career With Moose Loon AI
+        </h3>
+
+        <p class="text-gray-800 mb-4">
+            As a Moose Loon AI Sales Associate, you are not just taking a job — you are joining a fast-growing AI movement helping businesses succeed while building your own income and career.
+        </p>
+
+        <p class="text-gray-800 mb-6">
+            You will represent powerful Canadian AI solutions that businesses genuinely need, backed by AI agents working 24/7 to help companies win more customers and grow faster.
+        </p>
+
+        <ul class="space-y-1 text-gray-800 mb-6">
+            <li>✔ High-demand AI solutions</li>
+            <li>✔ Full training provided</li>
+            <li>✔ Unlimited earning potential</li>
+            <li>✔ Career growth opportunities</li>
+            <li>✔ Work within your county</li>
+        </ul>
+
+        <p class="font-semibold text-gray-900 mb-4">
+            If you are ready to grow with the future of AI-powered business solutions, this is your opportunity.
+        </p>
+
+        <p class="text-gray-800 mb-6">
+            Your future in the AI era starts with Moose Loon AI — a Canadian AI solutions company helping local Kenyan businesses grow and compete in the digital economy.
+        </p>
+
+        <a href="#apply" class="inline-block bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition">
+            ⬇️👇 Submit your Application Now Below abd Become a Moose Loon AI Sales Associate Today.
+        </a>
+    </div>
+</section>
 
 
            <p class="text-gray-800 mb-2">
