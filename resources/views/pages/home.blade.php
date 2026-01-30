@@ -216,6 +216,45 @@
             </div>
         </div>
 
+        <!-- Kenyan Partners Section -->
+        <div class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h3 class="text-center text-2xl font-extrabold text-gray-900 mb-8">
+                    Trusted by Companies We Work With in Kenya
+                </h3>
+
+                <div class="flex flex-wrap items-center justify-center gap-10">
+                    <!-- Company 1 -->
+                    <a href="https://www.briwnet.co.ke/" target="_blank" rel="noopener noreferrer">
+                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
+                            src="{{ asset('images/Briwnet.png') }}"
+                            alt="Company 1">
+                    </a>
+
+                    <!-- Company 2 -->
+                    <a href="https://izzyitdigital.co.ke/" target="_blank" rel="noopener noreferrer">
+                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
+                            src="{{ asset('images/izzyt.png') }}"
+                            alt="Company 2">
+                    </a>
+
+                    <!-- Company 3 -->
+                    <a href="https://spacetaxi.ca/" target="_blank" rel="noopener noreferrer">
+                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
+                            src="{{ asset('images/spacetaxi.png') }}"
+                            alt="Company 3">
+                    </a>
+
+                    <!-- Company 4 -->
+                    <a href="https://iqracanadatestprep.ca/" target="_blank" rel="noopener noreferrer">
+                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
+                            src="{{ asset('images/IQRA.png') }}"
+                            alt="Company 4">
+                    </a>
+                </div>
+            </div>
+        </div>
+
 
     <div class="py-16 bg-gray-50">
             <div class="container mx-auto px-4">
