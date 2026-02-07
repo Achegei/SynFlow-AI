@@ -15,7 +15,7 @@
        <div class="text-center mb-10">
            <h1 class="text-4xl font-bold text-gray-900 mb-4">NOW HIRING — Nationwide in Kenya 🇰🇪🇨🇦</h1>
            <p class="text-lg text-indigo-600">Moose Loon AI, a Canadian Artificial Intelligence company, is expanding across Kenya and inviting applications from qualified and motivated individuals to join our growing team.</p>
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Application Deadline: January 31, 2026</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Application Deadline: February 15, 2026</h1>
             <p class="text-lg text-indigo-600">Moose Loon AI, reserves the right to close applications earlier once the required number of successful candidates has been reached.</p>
        </div>
 
