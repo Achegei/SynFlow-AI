@@ -70,24 +70,6 @@
                     </div>
                 </div>
 
-            <!-- Testimonial 3 -->
-                <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
-                    <video
-                        class="w-full h-auto max-h-80 object-contain bg-black"
-                        controls
-                        preload="none"
-                        poster="{{ asset('images/testimonials/Esther.jpeg') }}">
-                        <source src="{{ asset('videos/testimonials/Esther.mp4') }}" type="video/mp4">
-                    </video>
-
-                    <div class="p-4 text-center">
-                        <p class="font-semibold text-gray-900">Esther M.</p>
-                        <p class="text-sm text-gray-600">AI Sales Associate</p>
-                        <p class="text-sm text-gray-600">Nairobi County</p>
-                    </div>
-                </div>
-
-
                 <!-- Testimonial 4 -->
             <div class="bg-white rounded-xl overflow-hidden border border-gray-200">
                     <video
