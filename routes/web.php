@@ -38,6 +38,10 @@ Route::get('/', function () {
 Route::get('/social-proof', function () {
 });
 
+Route::get('/verify-certificate', [CertificateController::class, 'showVerifyForm'])->name('certificate.verify');
+Route::post('/verify-certificate', [CertificateController::class, 'verify'])->name('certificate.verify.post');
+// QR code link route
+Route::get('/verify/{certificate}', [CertificateController::class, 'verifyQr'])->name('certificate.verify.qr');
 
 // GET – show page or auto-generate
 Route::get('/certificate/download/{course}', 
