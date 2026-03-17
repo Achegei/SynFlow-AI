@@ -134,6 +134,7 @@
                            <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
                            <a href="{{ route('certificate.verify') }}" class="font-semibold text-green-600 hover:text-green-700 transition-colors">Verify Certificate</a>
                            <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a>
+                           <a href="{{ route('courses.page') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Courses</a>
                         <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>. -->
                            <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
                        </div>
@@ -176,6 +177,7 @@
                     </a>
                     <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>
                     <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a>
+                    <a href="{{ route('courses.page') }}" class="text-gray-700 hover:text-indigo-600">Courses</a>
                     <a href="{{ route('contact') }}" class="text-gray-700 hover:text-indigo-600">Contact</a>
 
                     <!-- Optional Contact Info -->
@@ -315,11 +317,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const EVENTS = [
-        { weight: 1, icon: '📝', private: true,  text: 'has applied for the AI Sales position' },
-        { weight: 2, icon: '🔹', private: true,  text: 'has signed up for AI Sales and Business Solutions' },
-        { weight: 3, icon: '🎓', private: false, text: 'has enrolled in AI Sales and Business Solutions' },
-        { weight: 3, icon: '🚀', private: false, text: 'has started AI Sales and Business Solutions training' },
-        { weight: 4, icon: '✅', private: false, text: 'has completed AI Sales and Business Solutions training' },
+        { weight: 1, icon: '📝', private: true,  text: 'has applied for the AI course' },
+        { weight: 2, icon: '🔹', private: true,  text: 'has signed up for the AI course' },
+        { weight: 3, icon: '🎓', private: false, text: 'has enrolled for the AI course' },
+        { weight: 3, icon: '🚀', private: false, text: 'has started AI course training' },
+        { weight: 4, icon: '✅', private: false, text: 'has completed AI course training' },
     ];
 
     const randomUser = () =>

@@ -19,6 +19,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\EpisodeProgressController;
+use App\Http\Controllers\CourseApplicationController;
 use App\Http\Controllers\PostController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
@@ -42,6 +43,9 @@ Route::get('/verify-certificate', [CertificateController::class, 'showVerifyForm
 Route::post('/verify-certificate', [CertificateController::class, 'verify'])->name('certificate.verify.post');
 // QR code link route
 Route::get('/verify/{certificate}', [CertificateController::class, 'verifyQr'])->name('certificate.verify.qr');
+
+Route::get('/courses', [PageController::class, 'courses'])->name('courses.page');
+Route::post('/course/apply', [CourseApplicationController::class, 'store'])->name('course.apply');
 
 // GET – show page or auto-generate
 Route::get('/certificate/download/{course}', 

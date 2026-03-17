@@ -129,4 +129,8 @@ class PageController extends Controller
     {
         return view('pages.faceless-shorts');
     }
+    public function courses(): View
+{
+    return view('pages.courses');
+}
 }
