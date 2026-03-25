@@ -6,30 +6,29 @@
 
 <div class="bg-gray-50">
 
-    <!-- HERO -->
-    <section class="bg-black text-white py-16 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">
-                Become a WhatsApp AI Chat Agent Builder in Kenya
-            </h1>
-            <p class="text-lg mb-6">
-                Learn how to build AI-powered WhatsApp chat agents for real businesses in just 3 weeks with Moose Loon AI.
-            </p>
-            <div class="mb-6 space-y-2 text-yellow-400 text-lg">
-                <p>🚀 Hands-on AI training</p>
-                <p>🌍 Canadian AI company now training in Kenya</p>
-                <p>🏆 Opportunity to join Moose Loon AI engineering team</p>
-            </div>
-            <p class="text-xl font-semibold mb-1">KES 6,000</p>
-            <p class="mb-4">Start Payment: KES 3,000</p>
-            <p class="text-red-400 font-bold mb-6">
-                ⚡ Only 11 seats remaining for April intake
-            </p>
-            <a href="#register" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition">
-                Register Now
-            </a>
+  <section class="bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 text-white py-16 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Become a WhatsApp AI Chat Agent Builder in Kenya
+        </h1>
+        <p class="text-lg mb-6">
+            Learn how to build AI-powered WhatsApp chat agents for real businesses in just 3 weeks with Moose Loon AI.
+        </p>
+        <div class="mb-6 space-y-2 text-yellow-300 text-lg">
+            <p>Hands-on AI training</p>
+            <p>Canadian AI company now training in Kenya</p>
+            <p>Opportunity to join Moose Loon AI engineering team</p>
         </div>
-    </section>
+        <p class="text-xl font-semibold mb-1">KES 6,000</p>
+        <p class="mb-4">Start Payment: KES 3,000</p>
+        <p class="text-red-400 font-bold mb-6">
+            ⚡ Only 11 seats remaining for April intake
+        </p>
+        <a href="#register" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-300 transition">
+            Register Now
+        </a>
+    </div>
+</section>
 
     <!-- DEMAND IN KENYA -->
 <section class="py-16 px-6 bg-gray-50">
@@ -234,7 +233,7 @@
                 <p class="text-gray-800 mt-4 mb-2">✅ Remaining KES 3,000 – Two options:</p>
                 
                 <ul class="list-disc list-inside text-gray-700 space-y-1">
-                    <li><strong>Option 1:</strong> Pay the balance after graduation</li>
+                    <li><strong>Option 1:</strong> Pay the balance after course completion</li>
                     <li><strong>Option 2:</strong> Work with Moose Loon AI engineers for 30 days (2 hours per day) helping businesses deploy AI chat agents and have the remaining balance waived</li>
                 </ul>
             </div>
@@ -288,17 +287,18 @@
 </section>
 
 <!-- FINAL CALL TO ACTION -->
-<section class="bg-yellow-400 py-20 px-6">
-    <div class="max-w-3xl mx-auto text-center">
-        <h2 class="text-4xl font-extrabold mb-6 text-black">🚀 AI skills are becoming essential worldwide.</h2>
-        <p class="text-xl text-black mb-6">
+<section class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center text-white">
+        <h2 class="text-4xl font-extrabold mb-6">AI skills are becoming essential worldwide.</h2>
+        <p class="text-xl mb-6">
             Start your journey into AI automation and business technology today.
         </p>
-        <p class="text-xl text-black mb-8">
+        <p class="text-xl mb-8">
             Join the Moose Loon AI training program and become part of the next generation of AI builders.
         </p>
-        <a href="#register" class="inline-block bg-black text-yellow-400 font-bold text-lg px-10 py-4 rounded-xl shadow-lg hover:opacity-90 transition">
-            Register Now
+        <a href="#register"
+           class="inline-block bg-white text-indigo-600 font-bold text-lg px-10 py-4 rounded-xl shadow-lg hover:bg-gray-100 transition">
+           Register Now
         </a>
     </div>
 </section>
@@ -316,52 +316,59 @@
         @endif
     </section>
 
-    <!-- FORM -->
-    <section id="register" class="bg-black text-white py-16 px-6">
-        <div class="max-w-2xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6 text-center">Register for April Intake</h2>
+  <!-- FORM -->
+<section id="register" class="bg-gray-100 py-16 px-6">
+    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-900">Register for April Intake</h2>
 
-            <form id="application-form" action="{{ route('course.apply') }}" method="POST" class="space-y-4">
-                @csrf
-                <input type="hidden" name="source" value="landing_page">
+        <form id="application-form" action="{{ route('course.apply') }}" method="POST" class="space-y-5">
+            @csrf
+            <input type="hidden" name="source" value="landing_page">
 
-                <input type="text" name="full_name" placeholder="Full Name" value="{{ old('full_name') }}" required
-                    class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none"/>
-                <input type="text" name="phone" placeholder="Phone Number" value="{{ old('phone') }}" required
-                    class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none"/>
-                <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required
-                    class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none"/>
-                <input type="text" name="city" placeholder="City / County" value="{{ old('city') }}"
-                    class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none"/>
-                <select name="education" class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                    <option value="">Education Level</option>
-                    <option {{ old('education')=='High School' ? 'selected' : '' }}>High School</option>
-                    <option {{ old('education')=='College' ? 'selected' : '' }}>College</option>
-                    <option {{ old('education')=='University' ? 'selected' : '' }}>University</option>
-                </select>
-                <select name="has_laptop" id="has_laptop" required class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                    <option value="">Do you have a laptop?</option>
-                    <option {{ old('has_laptop')=='Yes' ? 'selected' : '' }}>Yes</option>
-                    <option {{ old('has_laptop')=='No' ? 'selected' : '' }}>No</option>
-                </select>
-                <textarea name="motivation" placeholder="Why do you want to join?" class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none">{{ old('motivation') }}</textarea>
-                <select name="payment_option" class="w-full p-4 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                    <option value="">Preferred Payment Option</option>
-                    <option {{ old('payment_option')=='Pay after graduation' ? 'selected' : '' }}>Pay after graduation</option>
-                    <option {{ old('payment_option')=='Work 30 days (waive balance)' ? 'selected' : '' }}>Work 30 days (waive balance)</option>
-                </select>
+            <input type="text" name="full_name" placeholder="Full Name" value="{{ old('full_name') }}" required
+                class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm"/>
+            
+            <input type="text" name="phone" placeholder="Phone Number" value="{{ old('phone') }}" required
+                class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm"/>
+            
+            <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required
+                class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm"/>
+            
+            <input type="text" name="city" placeholder="City / County" value="{{ old('city') }}"
+                class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm"/>
+            
+            <select name="education" class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm">
+                <option value="">Education Level</option>
+                <option {{ old('education')=='High School' ? 'selected' : '' }}>High School</option>
+                <option {{ old('education')=='College' ? 'selected' : '' }}>College</option>
+                <option {{ old('education')=='University' ? 'selected' : '' }}>University</option>
+            </select>
+            
+            <select name="has_laptop" id="has_laptop" required class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm">
+                <option value="">Do you have a laptop?</option>
+                <option {{ old('has_laptop')=='Yes' ? 'selected' : '' }}>Yes</option>
+                <option {{ old('has_laptop')=='No' ? 'selected' : '' }}>No</option>
+            </select>
+            
+            <textarea name="motivation" placeholder="Why do you want to join?" rows="4"
+                class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm">{{ old('motivation') }}</textarea>
+            
+            <select name="payment_option" class="w-full p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm">
+                <option value="">Preferred Payment Option</option>
+                <option {{ old('payment_option')=='Pay after graduation' ? 'selected' : '' }}>Pay after graduation</option>
+                <option {{ old('payment_option')=='Work 30 days (waive balance)' ? 'selected' : '' }}>Work 30 days (waive balance)</option>
+            </select>
 
-                <button type="submit" class="w-full bg-yellow-400 text-black p-4 rounded-lg font-bold hover:bg-yellow-300 transition">
-                    Register Now
-                </button>
-            </form>
+            <button type="submit" class="w-full bg-indigo-600 text-white p-4 rounded-xl font-bold shadow-lg hover:bg-indigo-700 transition">
+                Register Now
+            </button>
+        </form>
 
-            <p class="text-center mt-4 text-red-400 font-bold">
-                ⚡ Only 25 learners per year • 11 seats remaining
-            </p>
-        </div>
-    </section>
-
+        <p class="text-center mt-6 text-red-500 font-semibold">
+            ⚡ Only 25 learners per year • 11 seats remaining
+        </p>
+    </div>
+</section>
 </div>
 
 <script>
