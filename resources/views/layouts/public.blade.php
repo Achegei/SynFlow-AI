@@ -110,6 +110,21 @@
     }
 }
 </style>
+<!-- Voice Modal -->
+<div id="voice-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-80 text-center">
+        <h2 class="text-xl font-bold mb-4">Talk to Moose Loon AI</h2>
+        <p id="status" class="mb-4 text-gray-600">Click Start and speak into your microphone.</p>
+        <div class="flex justify-center space-x-2">
+            <button id="start-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+                Start
+            </button>
+            <button id="stop-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-400">
+                Stop
+            </button>
+        </div>
+    </div>
+</div>
    <body class="font-sans antialiased bg-gray-50 text-gray-800">
        <div class="min-h-screen flex flex-col">
         <!-- Social Proof Toast Container -->
@@ -154,6 +169,14 @@
                                 </svg>
                             </a>
 
+                            <!-- Voice Call Button -->
+                        <button id="voice-call-btn" class="flex items-center ml-6 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 10l4.553-2.276a1 1 0 011.447.894v5.764a1 1 0 01-1.447.894L15 14M15 10v4m0-4L9 8v8l6-2v-4z"/>
+                            </svg>
+                            Talk
+                        </button>
                         </div>
 
                       
@@ -189,6 +212,15 @@
                             WhatsApp
                         </a>
                     </div>
+
+                    <!-- Mobile Voice Call -->
+                <button id="voice-call-btn-mobile" class="flex items-center mt-2 px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full w-full justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 10l4.553-2.276a1 1 0 011.447.894v5.764a1 1 0 01-1.447.894L15 14M15 10v4m0-4L9 8v8l6-2v-4z"/>
+                    </svg>
+                    Talk
+                </button>
                 </div>
             </div>
 
@@ -389,6 +421,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Repeat every 30–45s
     setInterval(showToast, Math.random() * 15000 + 30000);
+
+       const voiceBtnDesktop = document.getElementById('voice-call-btn');
+    const voiceBtnMobile = document.getElementById('voice-call-btn-mobile');
+    const modal = document.getElementById('voice-modal');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const status = document.getElementById('status');
+
+    let mediaStream;
+    let mediaRecorder;
+    let audioChunks = [];
+
+    function openModal() {
+        modal.classList.remove('hidden');
+    }
+
+    voiceBtnDesktop?.addEventListener('click', openModal);
+    voiceBtnMobile?.addEventListener('click', openModal);
+
+    startBtn.addEventListener('click', async () => {
+        status.textContent = "Listening...";
+        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(mediaStream);
+        
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            audioChunks = [];
+            await sendAudioToVAPI(audioBlob);
+        };
+        
+        mediaRecorder.start();
+    });
+
+    stopBtn.addEventListener('click', () => {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+            mediaRecorder.stop();
+            mediaStream.getTracks().forEach(track => track.stop());
+            status.textContent = "Processing...";
+        }
+    });
+
+    async function sendAudioToVAPI(audioBlob) {
+        const formData = new FormData();
+        formData.append('audio', audioBlob);
+
+        const response = await fetch('https://api.vapi.ai/assistants/cae11b05-5a6d-4c7f-bc45-79e25c216a3f/converse', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer 8b8304c9-d012-483a-8ac3-eae69132c7c6' },
+            body: formData
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        // Play voice response
+        if (data.voice_url) {
+            const audio = new Audio(data.voice_url);
+            audio.play();
+        }
+
+        status.textContent = "Click Start to speak again";
+    }
 
 });
 </script>
