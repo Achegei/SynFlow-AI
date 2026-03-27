@@ -12,7 +12,6 @@
        <link rel="preconnect" href="https://fonts.bunny.net">
        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-
        @vite(['resources/css/app.css', 'resources/js/app.js'])
    </head>
    <style>
@@ -110,22 +109,25 @@
     }
 }
 </style>
+   <body class="font-sans antialiased bg-gray-50 text-gray-800">
 <!-- Voice Modal -->
 <div id="voice-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl p-6 w-80 text-center">
+    <div class="bg-white rounded-xl p-6 w-80 text-center relative">
+        <button id="close-voice-modal" class="absolute top-3 right-3 text-gray-500 text-xl">&times;</button>
+
         <h2 class="text-xl font-bold mb-4">Talk to Moose Loon AI</h2>
-        <p id="status" class="mb-4 text-gray-600">Click Start and speak into your microphone.</p>
+        <p id="status" class="mb-4 text-gray-600">Click Start and speak.</p>
+
         <div class="flex justify-center space-x-2">
-            <button id="start-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+            <button id="start-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-xl">
                 Start
             </button>
-            <button id="stop-btn" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-xl hover:bg-gray-400">
+            <button id="stop-btn" class="bg-gray-300 px-4 py-2 rounded-xl" disabled>
                 Stop
             </button>
         </div>
     </div>
 </div>
-   <body class="font-sans antialiased bg-gray-50 text-gray-800">
        <div class="min-h-screen flex flex-col">
         <!-- Social Proof Toast Container -->
          <!-- Social Proof Toast Container -->
@@ -320,10 +322,13 @@
             </footer>
 
        </div>
-   </body>
-</html>
- <script>
+
+<script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    // =========================
+    // ✅ SOCIAL PROOF (UNCHANGED)
+    // =========================
 
     const USERS = [
         { first: 'Ahmed', full: 'Ahmed Hassan', county: 'Garissa' },
@@ -413,78 +418,87 @@ document.addEventListener('DOMContentLoaded', () => {
                 toast.remove();
                 toastActive = false;
             }, 400);
-        }, 20000); // ✅ 20 seconds
+        }, 20000);
     }
 
-    // Initial delay
     setTimeout(showToast, 4000);
-
-    // Repeat every 30–45s
     setInterval(showToast, Math.random() * 15000 + 30000);
 
-       const voiceBtnDesktop = document.getElementById('voice-call-btn');
-    const voiceBtnMobile = document.getElementById('voice-call-btn-mobile');
-    const modal = document.getElementById('voice-modal');
-    const startBtn = document.getElementById('start-btn');
-    const stopBtn = document.getElementById('stop-btn');
-    const status = document.getElementById('status');
+    // =========================
+// 🎤 VAPI VOICE (FIXED FINAL)
+// =========================
 
-    let mediaStream;
-    let mediaRecorder;
-    let audioChunks = [];
+const voiceBtnDesktop = document.getElementById('voice-call-btn');
+const voiceBtnMobile = document.getElementById('voice-call-btn-mobile');
+const modal = document.getElementById('voice-modal');
+const closeBtn = document.getElementById('close-voice-modal');
 
-    function openModal() {
-        modal.classList.remove('hidden');
-    }
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const status = document.getElementById('status');
 
-    voiceBtnDesktop?.addEventListener('click', openModal);
-    voiceBtnMobile?.addEventListener('click', openModal);
+function openModal() {
+    console.log("OPEN CLICKED");
+    modal.classList.remove('hidden');
+}
 
-    startBtn.addEventListener('click', async () => {
-        status.textContent = "Listening...";
-        mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(mediaStream);
-        
-        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-        
-        mediaRecorder.onstop = async () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            audioChunks = [];
-            await sendAudioToVAPI(audioBlob);
-        };
-        
-        mediaRecorder.start();
-    });
+function closeModal() {
+    modal.classList.add('hidden');
+}
 
-    stopBtn.addEventListener('click', () => {
-        if (mediaRecorder && mediaRecorder.state !== "inactive") {
-            mediaRecorder.stop();
-            mediaStream.getTracks().forEach(track => track.stop());
-            status.textContent = "Processing...";
-        }
-    });
+voiceBtnDesktop?.addEventListener('click', openModal);
+voiceBtnMobile?.addEventListener('click', openModal);
+closeBtn?.addEventListener('click', closeModal);
 
-    async function sendAudioToVAPI(audioBlob) {
-        const formData = new FormData();
-        formData.append('audio', audioBlob);
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
 
-        const response = await fetch('https://api.vapi.ai/assistants/cae11b05-5a6d-4c7f-bc45-79e25c216a3f/converse', {
-            method: 'POST',
-            headers: { 'Authorization': 'Bearer 8b8304c9-d012-483a-8ac3-eae69132c7c6' },
-            body: formData
-        });
+// 🚀 START CALL
+startBtn.addEventListener('click', () => {
+    status.textContent = "Connecting...";
 
-        const data = await response.json();
-        console.log(data);
+    window.vapi.start('cae11b05-5a6d-4c7f-bc45-79e25c216a3f');
 
-        // Play voice response
-        if (data.voice_url) {
-            const audio = new Audio(data.voice_url);
-            audio.play();
-        }
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+});
 
-        status.textContent = "Click Start to speak again";
-    }
+// 🛑 STOP CALL
+stopBtn.addEventListener('click', () => {
+    window.vapi.stop();
+
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+
+    status.textContent = "Call ended";
+});
+
+// 🎧 EVENTS
+window.vapi.on('call-start', () => {
+    status.textContent = "Call started. Speak now...";
+});
+
+window.vapi.on('speech-start', () => {
+    status.textContent = "Assistant speaking...";
+});
+
+window.vapi.on('speech-end', () => {
+    status.textContent = "Listening...";
+});
+
+window.vapi.on('call-end', () => {
+    status.textContent = "Call ended";
+});
+
+window.vapi.on('error', (e) => {
+    console.error(e);
+    status.textContent = "Error connecting to AI";
+});
 
 });
 </script>
+
+   </body>
+</html>
+ 
