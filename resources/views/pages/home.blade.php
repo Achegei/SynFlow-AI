@@ -36,9 +36,9 @@
                 <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
                     Explore Sales Programs
                 </a>
-                <a href="{{ route('register') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
+                <!--<a href="{{ route('register') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
                     Ready to Start Your AI Sales Training? Begin Journey
-                </a>
+                </a>-->
             </div>
         </div>
     </section>

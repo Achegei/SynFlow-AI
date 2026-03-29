@@ -190,7 +190,7 @@
                 </h2>
                 <p class="text-yellow-800 text-lg mb-4 font-semibold drop-shadow-sm">
                     Earn <span class="text-yellow-900 font-bold text-2xl">KES 116,000 – 220,000+</span> monthly.<br>
-                    No income cap. Paid per successful sale.
+                    No income cap.
                 </p>
                 <div class="bg-yellow-300 bg-opacity-80 p-4 rounded-xl text-yellow-900 font-bold text-lg shadow-md animate-pulse">
                     <a href="#apply" class="text-gray-900">Apply Now</a>
