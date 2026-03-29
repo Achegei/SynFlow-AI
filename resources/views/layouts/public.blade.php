@@ -301,10 +301,8 @@
 
                             <h3 class="text-sm leading-relaxed mt-3">🇰🇪 Moose Loon AI Solutions – Nairobi Office (Kenya HQ)</h3>
                             <p class="text-sm mt-1">
-                               Delta Corner Tower 2 – Westlands
-                                14th Floor, Delta Corner Tower 2
-                                Waiyaki Way, Westlands
-                                Nairobi, Kenya
+                               Vision Plaza – Mombasa Road, Nairobi, Kenya <br>
+                                2nd Floor
                             </p>
                         </div>
 
@@ -322,110 +320,6 @@
             </footer>
 
        </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-
-    // =========================
-    // ✅ SOCIAL PROOF (UNCHANGED)
-    // =========================
-
-    const USERS = [
-        { first: 'Ahmed', full: 'Ahmed Hassan', county: 'Garissa' },
-        { first: 'Amina', full: 'Amina Mohamed', county: 'Wajir' },
-        { first: 'Abdirahman', full: 'Abdirahman Duale', county: 'Mandera' },
-        { first: 'Kevin', full: 'Kevin Mwangi', county: 'Nairobi' },
-        { first: 'Grace', full: 'Grace Wanjiku', county: 'Kiambu' },
-        { first: 'Brian', full: 'Brian Mutua', county: 'Machakos' },
-        { first: 'Salim', full: 'Salim Omar', county: 'Mombasa' },
-        { first: 'Zainab', full: 'Zainab Ali', county: 'Kilifi' },
-        { first: 'Kelvin', full: 'Kelvin Kiptoo', county: 'Nakuru' },
-        { first: 'Sharon', full: 'Sharon Cheruiyot', county: 'Kericho' },
-        { first: 'Collins', full: 'Collins Wekesa', county: 'Kakamega' },
-        { first: 'Naomi', full: 'Naomi Barasa', county: 'Bungoma' },
-        { first: 'Evans', full: 'Evans Otieno', county: 'Kisumu' },
-        { first: 'Millicent', full: 'Millicent Ochieng', county: 'Siaya' },
-        { first: 'George', full: 'George Odhiambo', county: 'Homa Bay' },
-        { first: 'Antony', full: 'Antony Musyoka', county: 'Kitui' },
-        { first: 'Ruth', full: 'Ruth Mwende', county: 'Embu' },
-        { first: 'David', full: 'David Kathure', county: 'Meru' },
-        { first: 'James', full: 'James Kariuki', county: 'Nyeri' },
-        { first: 'Lucy', full: 'Lucy Maina', county: 'Murang’a' },
-    ];
-
-    const EVENTS = [
-        { weight: 1, icon: '📝', private: true,  text: 'has applied for the AI course' },
-        { weight: 2, icon: '🔹', private: true,  text: 'has signed up for the AI course' },
-        { weight: 3, icon: '🎓', private: false, text: 'has enrolled for the AI course' },
-        { weight: 3, icon: '🚀', private: false, text: 'has started AI course training' },
-        { weight: 4, icon: '✅', private: false, text: 'has completed AI course training' },
-    ];
-
-    const randomUser = () =>
-        USERS[Math.floor(Math.random() * USERS.length)];
-
-    const weightedEvent = () => {
-        const pool = EVENTS.flatMap(e => Array(e.weight).fill(e));
-        return pool[Math.floor(Math.random() * pool.length)];
-    };
-
-    let toastActive = false;
-
-    function showToast() {
-        if (toastActive) return;
-
-        const user = randomUser();
-        const event = weightedEvent();
-        const name = event.private ? user.first : user.full;
-
-        const toast = document.createElement('div');
-        toast.className = `
-            social-toast
-            bg-gradient-to-r from-green-500 to-emerald-600
-            text-white
-            shadow-2xl shadow-green-500/40
-            rounded-2xl
-            px-5 py-4
-            max-w-sm
-            animate-slide-in
-        `;
-
-        toast.innerHTML = `
-            <div class="flex gap-3">
-                <div class="text-xl">${event.icon}</div>
-                <div>
-                    <p class="social-toast-title">
-                        ${name}
-                        <span class="text-green-100 font-normal">
-                            from ${user.county} County
-                        </span>
-                    </p>
-                    <p class="text-green-50 mt-1">${event.text}</p>
-                    <p class="social-toast-meta mt-1">Moose Loon AI · Just now</p>
-                </div>
-            </div>
-        `;
-
-        const container = document.getElementById('social-proof-container');
-        if (!container) return;
-
-        container.appendChild(toast);
-        toastActive = true;
-
-        setTimeout(() => {
-            toast.classList.add('animate-fade-out');
-            setTimeout(() => {
-                toast.remove();
-                toastActive = false;
-            }, 400);
-        }, 20000);
-    }
-
-    setTimeout(showToast, 4000);
-    setInterval(showToast, Math.random() * 15000 + 30000);
-
-});
-</script>
 
    </body>
 </html>

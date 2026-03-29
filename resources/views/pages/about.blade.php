@@ -75,12 +75,12 @@
     <!-- NORTH AMERICAN SALES TEAM IMAGE -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-6 text-center">
-            <h3 class="text-3xl font-bold text-indigo-700 mb-6">North American Sales Team</h3>
+            <h3 class="text-3xl font-bold text-indigo-700 mb-6">Moose Loon AI Engineers</h3>
 
             <div class="flex justify-center">
                 <div class="w-full max-w-4xl">
                     <img src="{{ asset('images/north-american-sales.jpg') }}" alt="North American Sales Team" class="w-full rounded-xl shadow-lg object-cover">
-                    <p class="mt-4 text-gray-600 text-sm">Our North American Sales Team driving innovation, client engagement, and growth across the continent.</p>
+                    <p class="mt-4 text-gray-600 text-sm"> Our engineers driving innovation and growth across the continent and in Africa.</p>
                 </div>
             </div>
         </div>
@@ -106,8 +106,8 @@
                 <p class="mt-3 text-gray-600">AI Business Solutions & East Africa Sales Division
                 Serving East Africa <br>
                 📍 Moose Loon AI Solutions – Nairobi HQ <br>
-                14th Floor, Delta Corner Tower 2 <br>
-                Waiyaki Way, Westlands <br>
+                2nd Floor, Vision Plaza <br>
+                Mombasa Road<br>
                 Nairobi, Kenya <br>
                 Website: www.mooseloonai.ca</p>
             </div>

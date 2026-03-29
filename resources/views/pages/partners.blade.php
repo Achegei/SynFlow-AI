@@ -34,7 +34,7 @@
         </a>
 
         <div class="mt-4">
-            <a href="https://wa.me/25411906667"
+            <a href="https://wa.me/254119066667"
                class="inline-block mt-3 bg-white text-green-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
                Chat With Us on WhatsApp
             </a>
@@ -77,9 +77,8 @@
                 <h3 class="font-bold text-xl mb-3">Ready-Made Training Programs</h3>
                 <p>Deliver structured AI courses such as:</p>
                 <ul>
-                    <li>WhatsApp AI Chat Agents</li>
-                    <li>Business Automation Systems</li>
-                    <li>Real-world AI applications</li>
+                    <li>AI Chat Agents</li>
+                    <li>AI Voice Assistants/Agents</li>
                 </ul>
                 <p><strong>No need to build your own course</strong></p>
                             </div>
@@ -371,15 +370,181 @@
 </section>
 
 <!-- 👥 WHO SHOULD APPLY -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">WHO SHOULD APPLY</h2>
-    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6 text-center">
-        <div class="bg-white p-6 rounded-xl shadow">Training centers</div>
-        <div class="bg-white p-6 rounded-xl shadow">Computer colleges</div>
-        <div class="bg-white p-6 rounded-xl shadow">ICT trainers</div>
-        <div class="bg-white p-6 rounded-xl shadow">Coaches and consultants</div>
-        <div class="bg-white p-6 rounded-xl shadow">Entrepreneurs</div>
-        <div class="bg-white p-6 rounded-xl shadow">Institutions adding AI programs</div>
+<section class="bg-gray-100 py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">WHO SHOULD APPLY</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Moose Loon AI is building Kenya’s largest AI education distribution network.
+                We are partnering with institutions, organizations, and individuals who can train,
+                influence, or distribute AI knowledge at scale.
+            </p>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- 1 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🏫 Educational Institutions</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Universities (public & private)</li>
+                    <li>TVET institutions</li>
+                    <li>Technical & private colleges</li>
+                    <li>Computer training schools</li>
+                    <li>Coding bootcamps & academies</li>
+                </ul>
+            </div>
+
+            <!-- 2 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">👨‍🏫 Trainers & Educators</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>ICT teachers & lecturers</li>
+                    <li>Freelance & corporate trainers</li>
+                    <li>Online educators</li>
+                    <li>AI & tech trainers</li>
+                </ul>
+            </div>
+
+            <!-- 3 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🏢 Training & Consulting Firms</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Corporate training firms</li>
+                    <li>HR consulting companies</li>
+                    <li>Business coaching firms</li>
+                    <li>Capacity-building organizations</li>
+                </ul>
+            </div>
+
+            <!-- 4 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">💻 Tech & Digital Businesses</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Software companies</li>
+                    <li>Web design agencies</li>
+                    <li>IT support firms</li>
+                    <li>SaaS resellers</li>
+                </ul>
+            </div>
+
+            <!-- 5 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">📍 Physical Learning Centers</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Computer labs</li>
+                    <li>Training hubs</li>
+                    <li>Co-working spaces</li>
+                    <li>Community training venues</li>
+                </ul>
+            </div>
+
+            <!-- 6 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">📱 Influencers & Communities</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Social media influencers</li>
+                    <li>Career coaches</li>
+                    <li>Community leaders</li>
+                    <li>WhatsApp/Telegram admins</li>
+                </ul>
+            </div>
+
+            <!-- 7 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">📊 Sales & Recruitment Networks</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Sales teams & leaders</li>
+                    <li>Recruitment agents</li>
+                    <li>Network marketing groups</li>
+                </ul>
+            </div>
+
+            <!-- 8 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🌍 NGOs & Programs</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Youth & women empowerment groups</li>
+                    <li>Digital literacy programs</li>
+                    <li>County initiatives</li>
+                </ul>
+            </div>
+
+            <!-- 9 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🏢 Corporate Organizations</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Corporate training departments</li>
+                    <li>HR upskilling programs</li>
+                    <li>Call centers & BPOs</li>
+                    <li>Banks & SACCOs</li>
+                </ul>
+            </div>
+
+            <!-- 10 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🎓 Students & Campus Partners</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Campus ambassadors</li>
+                    <li>Student clubs</li>
+                    <li>Alumni networks</li>
+                </ul>
+            </div>
+
+            <!-- 11 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🕌 Community Institutions</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Churches & mosques</li>
+                    <li>Community centers</li>
+                    <li>Social associations</li>
+                </ul>
+            </div>
+
+            <!-- 12 -->
+            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                <h3 class="font-bold text-lg mb-3">🚀 Entrepreneurs</h3>
+                <ul class="text-gray-600 space-y-1 text-sm">
+                    <li>Training entrepreneurs</li>
+                    <li>Workshop organizers</li>
+                    <li>Freelancers & business owners</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Priority Section -->
+        <div class="mt-20 bg-white p-8 rounded-2xl shadow text-center">
+            <h3 class="text-2xl font-bold mb-4">🔥 Priority High-Impact Partners</h3>
+            <p class="text-gray-600 mb-4">
+                To accelerate growth, we prioritize partners with reach, influence, and scalability.
+            </p>
+            <div class="grid md:grid-cols-3 gap-4 text-sm font-medium">
+                <div>Educational Institutions</div>
+                <div>Corporate Training Firms</div>
+                <div>Influencers</div>
+                <div>Sales Network Leaders</div>
+                <div>NGOs with Funding</div>
+                <div>Digital Agencies</div>
+            </div>
+        </div>
+
+        <!-- Positioning -->
+        <div class="mt-12 text-center max-w-3xl mx-auto">
+            <p class="text-gray-700 mb-4">
+                ⚠️ We are not looking for individuals without reach.
+            </p>
+            <p class="text-gray-700 mb-4">
+                ✅ We partner with those who can consistently bring learners and scale across regions.
+            </p>
+            <h4 class="text-xl font-bold mt-6">
+                🚀 We are building Kenya’s Largest AI Education Distribution Network
+            </h4>
+        </div>
+
     </div>
 </section>
 
@@ -405,7 +570,7 @@
        Apply Now
     </a>
      <div class="mt-4">
-            <a href="https://wa.me/25411906667"
+            <a href="https://wa.me/254119066667"
                class="inline-block mt-3 bg-white text-green-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
                Chat With Us on WhatsApp
             </a>
