@@ -14,19 +14,39 @@
     </p>
 </div>
 
-<!-- PRICING -->
-<div class="bg-indigo-50 py-20">
+<!-- PRICING WITH CLICKABLE MONTHLY/YEARLY -->
+<div class="bg-indigo-50 py-20" x-data="{ billing: 'monthly' }">
     <div class="container mx-auto px-6 text-center">
         <h2 class="text-3xl font-extrabold text-gray-900">Pricing Plans</h2>
         <p class="mt-2 text-gray-600">Simple, transparent pricing — no hidden fees.</p>
 
+        <!-- Clickable Labels -->
+        <div class="mt-6 flex justify-center items-center space-x-4">
+            <span @click="billing = 'monthly'" 
+                  :class="billing === 'monthly' ? 'font-bold text-indigo-600 cursor-pointer' : 'text-gray-500 cursor-pointer'">
+                  Monthly
+            </span>
+            <span @click="billing = 'yearly'" 
+                  :class="billing === 'yearly' ? 'font-bold text-indigo-600 cursor-pointer' : 'text-gray-500 cursor-pointer'">
+                  Yearly
+            </span>
+        </div>
+
         <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
 
             <!-- STARTER -->
-            <div class="bg-white rounded-xl shadow p-8 flex flex-col">
+            <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
                 <h3 class="text-xl font-bold mb-2">Starter</h3>
                 <p class="text-gray-500 mb-4">Basic AI responder for WhatsApp.</p>
-                <p class="text-3xl font-extrabold mb-4">KES 10,500</p>
+                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
+                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
+                          x-text="billing === 'monthly' ? 'KES 10,500' : 'KES ' + Math.round(10500 * 12 * 0.8).toLocaleString()">
+                    </span>
+                    <span x-show="billing === 'yearly'" 
+                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
+                        Save 20%
+                    </span>
+                </p>
                 <ul class="text-gray-600 mb-6 space-y-1 text-left">
                     <li>• AI FAQ chatbot</li>
                     <li>• Instant replies</li>
@@ -40,13 +60,21 @@
             </div>
 
             <!-- STANDARD (Most Popular) -->
-            <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105">
+            <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105 relative">
                 <div class="absolute -mt-10 -ml-6 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase">
                     Most Popular
                 </div>
                 <h3 class="text-xl font-bold mb-2">Standard</h3>
                 <p class="text-gray-500 mb-4">AI agent with lead tracking.</p>
-                <p class="text-3xl font-extrabold mb-4">KES 14,500</p>
+                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
+                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
+                          x-text="billing === 'monthly' ? 'KES 14,500' : 'KES ' + Math.round(14500 * 12 * 0.8).toLocaleString()">
+                    </span>
+                    <span x-show="billing === 'yearly'" 
+                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
+                        Save 20%
+                    </span>
+                </p>
                 <ul class="text-gray-600 mb-6 space-y-1 text-left">
                     <li>• Starter features</li>
                     <li>• Lead logging & qualification</li>
@@ -60,10 +88,18 @@
             </div>
 
             <!-- PREMIUM -->
-            <div class="bg-white rounded-xl shadow p-8 flex flex-col">
+            <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
                 <h3 class="text-xl font-bold mb-2">Premium</h3>
                 <p class="text-gray-500 mb-4">Full AI system with voice.</p>
-                <p class="text-3xl font-extrabold mb-4">KES 44,000</p>
+                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
+                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
+                          x-text="billing === 'monthly' ? 'KES 44,000' : 'KES ' + Math.round(44000 * 12 * 0.8).toLocaleString()">
+                    </span>
+                    <span x-show="billing === 'yearly'" 
+                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
+                        Save 20%
+                    </span>
+                </p>
                 <ul class="text-gray-600 mb-6 space-y-1 text-left">
                     <li>• Standard features</li>
                     <li>• AI voice agent</li>
