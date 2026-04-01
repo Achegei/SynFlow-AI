@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PartnerResource\Pages;
+use App\Filament\Resources\PartnerResource\RelationManagers\CertificateRequestsRelationManager;
 use App\Mail\PartnerWelcomeMail;
 use App\Models\User;
 use Filament\Forms;
@@ -75,15 +76,12 @@ class PartnerResource extends Resource
                     ->label('Partnership Status')
                     ->sortable()
                     ->formatStateUsing(fn ($state) => ucfirst($state)),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Joined At')
                     ->dateTime('M d, Y H:i')
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -92,10 +90,23 @@ class PartnerResource extends Resource
             ]);
     }
 
+    public static function getRelations(): array
+    {
+        return [
+            CertificateRequestsRelationManager::class,
+        ];
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
             ->where('role', 'partner');
+    }
+
+    // Sidebar visibility
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->role === 'admin';
     }
 
     public static function canCreate(): bool
@@ -113,13 +124,6 @@ class PartnerResource extends Resource
         return auth()->user()->role === 'admin';
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
@@ -129,16 +133,11 @@ class PartnerResource extends Resource
         ];
     }
 
-    /**
-     * Handle password emails and proper saving
-     */
     public static function beforeCreate(array $data): array
     {
-        // Auto-generate password if not provided
         $plainPassword = $data['password_plain'] ?? Str::random(12);
         $data['password'] = Hash::make($plainPassword);
 
-        // Send welcome email
         Mail::to($data['email'])->send(new PartnerWelcomeMail($data['name'], $data['email'], $plainPassword));
 
         return $data;
@@ -146,15 +145,12 @@ class PartnerResource extends Resource
 
     public static function beforeSave($record, array $data): array
     {
-        // Handle password updates
         if (!empty($data['password_plain'])) {
             $data['password'] = Hash::make($data['password_plain']);
-
-            // Send email with new password
             Mail::to($record->email)->send(new PartnerWelcomeMail($record->name, $record->email, $data['password_plain']));
         }
 
-        unset($data['password_plain']); // prevent overwrite
+        unset($data['password_plain']);
 
         return $data;
     }

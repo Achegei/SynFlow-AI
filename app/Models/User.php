@@ -47,6 +47,10 @@ class User extends Authenticatable
 
         return asset('images/default-avatar.png');
     }
+    public function certificateRequests()
+    {
+        return $this->hasMany(\App\Models\CertificateRequest::class, 'partner_id');
+    }
 
     protected function casts(): array
     {
