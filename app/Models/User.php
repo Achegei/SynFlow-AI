@@ -22,6 +22,8 @@ class User extends Authenticatable
         'bio',
         'latitude',  
         'longitude',
+        'is_admin',
+        'role',
         'profile_photo_url',
         'referral_code',     // ✅ added
         'referred_by'        // ✅ added
@@ -32,9 +34,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function canAccessPanel(Panel $panel): bool
+    public function canAccessPanel(\Filament\Panel $panel): bool
     {
-        return true;
+        return $this->is_admin == 1;
     }
 
     public function getProfilePhotoUrlAttribute($value)

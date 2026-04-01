@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\PartnerDashboardController;
 use App\Http\Controllers\EpisodeProgressController;
 use App\Http\Controllers\PartnerApplicationController;
 use App\Http\Controllers\PostController;
@@ -175,6 +176,22 @@ Route::middleware(['auth', 'can:access-admin-panel'])->prefix('admin')->name('ad
     // We no longer need to define resource routes for videos here.
     // Filament handles them automatically based on the VideoResource.php file.
     // The previous `Route::resource` call here was causing a conflict.
+});
+//================================================
+// 5. Partner-Only Routes
+Route::middleware(['auth', 'role.partner'])->prefix('partner')->name('partner.')->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+    // Show the certificate request form
+    Route::get('/certificate-request', [PartnerDashboardController::class, 'showRequestForm'])->name('certificate.request.form');
+
+    // Submit a new certificate request
+    Route::post('/certificate-request', [PartnerDashboardController::class, 'storeCertificateRequest'])->name('certificate.request.store');
+
+    // View certificate status (optional, could also be part of dashboard)
+    Route::get('/certificate-status', [PartnerDashboardController::class, 'certificateStatus'])->name('certificate.status');
 });
 
 // This route is fine as it's outside the admin group and points to a public-facing controller.

@@ -30,6 +30,7 @@ class PartnerApplicationController extends Controller
             'location' => $request->location,
             'current_student_population' => $request->current_student_population,
             'additional_info' => $request->additional_info,
+            'status' => 'pending',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
