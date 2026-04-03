@@ -32,6 +32,33 @@
             </span>
         </div>
 
+        <!-- CLEAR PRICING EXPLANATION -->
+        <div class="mt-6 max-w-2xl mx-auto text-sm text-gray-600 bg-white border border-gray-200 rounded-lg p-5 shadow-sm text-left">
+    
+    <p class="mb-3">
+        💡 <strong>How Pricing Works:</strong>
+    </p>
+
+    <div class="mb-4 space-y-2">
+        <p><strong>Your Business, Fully Automated</strong></p>
+
+        <p>✔️ We build & deploy your AI Sales & Customer Support System</p>
+        <p>✔️ Works 24/7 — captures leads, responds instantly, books customers</p>
+        <p>✔️ Fully managed — you don’t lift a finger</p>
+
+        <br>
+
+        <p><strong>🌐 Website (Optional Upgrade)</strong></p>
+
+        <p>• No website yet?<br>
+        👉 We build you a conversion-focused AI website that turns visitors into customers<br>
+        One-time investment — affordable & scalable</p>
+
+        <p>• Already have one?<br>
+        👉 We transform your existing website into an AI-powered sales system — FREE</p>
+    </div>
+</div>
+
         <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
 
             <!-- STARTER -->
@@ -59,7 +86,7 @@
                 </a>
             </div>
 
-            <!-- STANDARD (Most Popular) -->
+            <!-- STANDARD -->
             <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105 relative">
                 <div class="absolute -mt-10 -ml-6 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase">
                     Most Popular

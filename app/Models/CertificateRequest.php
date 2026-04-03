@@ -15,6 +15,7 @@ class CertificateRequest extends Model
         'total_amount',
         'payment_status',
         'certificate_status',
+        'student_file',
     ];
 
     public function partner()

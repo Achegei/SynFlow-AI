@@ -138,6 +138,44 @@
             </div>
         </div>
     </div>
+    <!-- Service 4: AI-Powered Web Development (Bundle Only) -->
+<div class="group rounded-2xl p-[1px] bg-gradient-to-br from-indigo-700/40 to-indigo-400/40 hover:from-indigo-700 hover:to-indigo-500 transition">
+    <div class="h-full bg-white rounded-2xl shadow-lg p-8 transition duration-300 group-hover:-translate-y-2 group-hover:shadow-2xl">
+        <div class="mx-auto w-16 h-16 grid place-content-center rounded-2xl bg-indigo-700/10 text-indigo-700 ring-1 ring-indigo-700/20">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9.75 3a1.5 1.5 0 00-1.5 1.5v15A1.5 1.5 0 009.75 21h4.5a1.5 1.5 0 001.5-1.5v-15A1.5 1.5 0 0014.25 3h-4.5zM9 7h6M9 11h6M9 15h6" />
+            </svg>
+        </div>
+        <h3 class="mt-6 text-2xl font-bold text-gray-900 text-center">AI-Powered Web Development</h3>
+        <p class="mt-4 text-gray-500 text-center">
+            We build high-performance websites integrated with AI agents and automation systems. Our focus is not just design, but creating intelligent platforms that capture leads, engage users, and drive conversions.
+        </p>
+        <ul class="mt-6 text-left text-gray-700 space-y-3">
+            <li class="flex items-start gap-3">
+                <svg class="mt-0.5 h-5 w-5 flex-none text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>AI-Integrated Websites (Chatbots, Automation, Lead Capture)</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <svg class="mt-0.5 h-5 w-5 flex-none text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>Conversion-Focused Design & User Experience</span>
+            </li>
+            <li class="flex items-start gap-3">
+                <svg class="mt-0.5 h-5 w-5 flex-none text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span>Seamless Integration with AI Systems & Workflows</span>
+            </li>
+        </ul>
+        <p class="mt-6 text-sm text-gray-500 text-center italic">
+            Note: We do not offer standalone website development. Web projects are only delivered as part of a complete AI automation and agent solution.
+        </p>
+    </div>
+</div>
 
     <!-- AI Business Solutions Catalogue -->
 <div class="bg-white py-20">

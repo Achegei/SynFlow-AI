@@ -41,25 +41,38 @@ class PartnerDashboardController extends Controller
 
     // Store a new certificate request
     public function storeCertificateRequest(Request $request)
-    {
-        $request->validate([
-            'student_count' => 'required|integer|min:1',
-            'total_amount' => 'required|numeric|min:1',
-        ]);
+        {
+            $request->validate([
+                'student_count' => 'required|integer|min:1',
+                'total_amount' => 'required',
+                'student_file' => 'required|file|mimes:csv,xlsx,xls|max:2048',
+            ]);
 
-        $partner = Auth::user();
+            $partner = Auth::user();
 
-        CertificateRequest::create([
-            'partner_id' => $partner->id,
-            'student_count' => $request->student_count,
-            'total_amount' => $request->total_amount,
-            'payment_status' => 'pending',
-            'certificate_status' => 'pending',
-        ]);
+            // Store file
+            $filePath = $request->file('student_file')->store('student_lists', 'public');
+            // Store file (ONLY ONCE)
+            $studentFile = $request->file('student_file') 
+                ? $request->file('student_file')->store('certificate_uploads', 'public') 
+                : null;
 
-        return redirect()->route('partner.dashboard')
-                         ->with('success', 'Certificate request submitted successfully.');
-    }
+            // Clean total amount (ONLY ONCE)
+            $totalAmount = preg_replace('/[^0-9.]/', '', $request->total_amount);
+
+            CertificateRequest::create([
+                'partner_id' => $partner->id,
+                'student_count' => $request->student_count,
+                'total_amount' => $totalAmount,
+                'student_file' => $filePath, // NEW COLUMN
+                'payment_status' => 'pending',
+                'certificate_status' => 'pending',
+                'student_file' => $studentFile,
+            ]);
+
+            return redirect()->route('partner.dashboard')
+                            ->with('success', 'Certificate request submitted successfully.');
+        }
 
     // Show certificate status page
     public function certificateStatus()

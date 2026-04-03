@@ -137,6 +137,8 @@ class PartnerResource extends Resource
     {
         $plainPassword = $data['password_plain'] ?? Str::random(12);
         $data['password'] = Hash::make($plainPassword);
+        // Ensure partnership_status is set (default to pending if missing)
+        $data['partnership_status'] = 'active';
 
         Mail::to($data['email'])->send(new PartnerWelcomeMail($data['name'], $data['email'], $plainPassword));
 

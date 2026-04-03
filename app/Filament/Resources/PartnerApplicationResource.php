@@ -29,7 +29,7 @@ class PartnerApplicationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('full_name')
+                Forms\Components\TextInput::make('name')
                     ->label('Full Name')
                     ->required(),
                 Forms\Components\TextInput::make('email')
@@ -55,7 +55,7 @@ class PartnerApplicationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('full_name')->label('Full Name')->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('Full Name')->sortable(),
                 Tables\Columns\TextColumn::make('email')->label('Email')->sortable(),
                 Tables\Columns\TextColumn::make('status')->label('Status')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label('Applied On')->dateTime(),
@@ -81,7 +81,7 @@ class PartnerApplicationResource extends Resource
 
                         // Create the new partner
                         $user = User::create([
-                            'name' => $record->full_name ?: 'Partner ' . Str::upper(Str::random(4)),
+                            'name' => $record->name,
                             'email' => $record->email,
                             'phone' => $record->phone,
                             'city' => $record->city,
