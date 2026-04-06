@@ -58,10 +58,6 @@
     </p>
 
     <!-- NEW: Hot Offer -->
-    <p class="text-lg font-bold text-gray-900 mb-4">
-        🚀 7-Day AI Revenue Activation
-    </p>
-
     <p class="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
         We install your AI system in 7 days. You start capturing leads and customers immediately — then pay monthly as it works for you.
     </p>
