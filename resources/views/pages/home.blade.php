@@ -48,27 +48,71 @@
 <section class="bg-white py-20">
     <div class="container mx-auto px-4 max-w-6xl">
         <!-- Header -->
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
-                AI AUTOMATION FOR FAST BUSINESS GROWTH
-            </h2>
-            <p class="text-xl font-semibold text-indigo-600 mb-6">
-                Turn Every Inquiry Into Revenue — 24/7
-            </p>
-            <p class="text-gray-600 max-w-3xl mx-auto text-lg">
-                Stop losing customers due to slow responses.<br>
-                Our AI agents instantly respond, capture leads, book appointments, and follow up automatically across WhatsApp, website chat, voice calls, and email.
-            </p>
+<div class="text-center mb-16">
+    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
+        AI AUTOMATION FOR FAST BUSINESS GROWTH
+    </h2>
+
+    <p class="text-xl font-semibold text-indigo-600 mb-4">
+        Turn Every Inquiry Into Revenue — 24/7
+    </p>
+
+    <!-- NEW: Hot Offer -->
+    <p class="text-lg font-bold text-gray-900 mb-4">
+        🚀 7-Day AI Revenue Activation
+    </p>
+
+    <p class="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
+        We install your AI system in 7 days. You start capturing leads and customers immediately — then pay monthly as it works for you.
+    </p>
+
+    <!-- NEW: Guarantee -->
+    <p class="text-sm text-green-600 font-semibold">
+        ✅ Go Live Guarantee: If your system is not live within 7 days, your setup is refunded.
+    </p>
+</div>
+
+    <!-- Benefits -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ We handle your customer inquiries 24/7
         </div>
 
-        <!-- Benefits -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Instant customer response</div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ More leads converted into sales</div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Automated bookings & follow-ups</div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ 24/7 customer engagement</div>
-            <div class="bg-gray-50 p-6 rounded-xl shadow-sm">✔ Setup in days</div>
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ Turn conversations into paying customers
         </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ AI agents on WhatsApp, voice, email & website chat
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ Automated lead capture, bookings & follow-ups
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ No need to hire extra staff
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
+            ✔ System setup and launch within 7 days
+        </div>
+
+    </div>
+
+    <!-- OPTIONAL: Industry Hook (HIGH CONVERSION) -->
+    <div class="text-center mb-16">
+        <p class="text-gray-700 text-lg font-semibold">
+            Built for high-demand businesses:
+        </p>
+        <div class="mt-4">
+            <a href="#industries"
+            class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                Explore Industries We Serve →
+            </a>
+        </div>
+    </div>
 
         <!-- AI Agents Included -->
         <div class="mb-20">
@@ -133,7 +177,7 @@
         </div>
 
         <!-- Industries -->
-        <div class="mb-20">
+        <div id="industries" class="mb-20">
             <h3 class="text-3xl font-bold text-gray-900 mb-10 text-center">
                 INDUSTRIES ALREADY BENEFITING FROM AI AUTOMATION
             </h3>

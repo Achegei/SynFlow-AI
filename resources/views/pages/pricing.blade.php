@@ -61,85 +61,231 @@
 
         <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
 
-            <!-- STARTER -->
-            <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
-                <h3 class="text-xl font-bold mb-2">Starter</h3>
-                <p class="text-gray-500 mb-4">Basic AI responder for WhatsApp.</p>
-                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
-                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
-                          x-text="billing === 'monthly' ? 'KES 10,500' : 'KES ' + Math.round(10500 * 12 * 0.8).toLocaleString()">
-                    </span>
-                    <span x-show="billing === 'yearly'" 
-                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
-                        Save 20%
-                    </span>
-                </p>
-                <ul class="text-gray-600 mb-6 space-y-1 text-left">
-                    <li>• AI FAQ chatbot</li>
-                    <li>• Instant replies</li>
-                    <li>• Simple conversation flow</li>
-                    <li>• Fallback messages</li>
-                </ul>
-                <a href="{{route('contactus')}}"
-                   class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-                   Get Started
-                </a>
-            </div>
+    <!-- STARTER -->
+    <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
+        <h3 class="text-xl font-bold mb-2">🟢 Starter</h3>
+        <p class="text-gray-500 mb-4">For small businesses getting started</p>
 
-            <!-- STANDARD -->
-            <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105 relative">
-                <div class="absolute -mt-10 -ml-6 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase">
-                    Most Popular
-                </div>
-                <h3 class="text-xl font-bold mb-2">Standard</h3>
-                <p class="text-gray-500 mb-4">AI agent with lead tracking.</p>
-                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
-                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
-                          x-text="billing === 'monthly' ? 'KES 14,500' : 'KES ' + Math.round(14500 * 12 * 0.8).toLocaleString()">
-                    </span>
-                    <span x-show="billing === 'yearly'" 
-                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
-                        Save 20%
-                    </span>
-                </p>
-                <ul class="text-gray-600 mb-6 space-y-1 text-left">
-                    <li>• Starter features</li>
-                    <li>• Lead logging & qualification</li>
-                    <li>• Automated follow-ups</li>
-                    <li>• Basic analytics</li>
-                </ul>
-                <a href="{{route('contactus')}}"
-                   class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-                   Choose Plan
-                </a>
-            </div>
+        <div class="mb-4">
+            <p class="text-gray-400 text-sm">Typical Market Setup</p>
+            <p class="line-through text-gray-800">KES 35,000 – 60,000</p>
 
-            <!-- PREMIUM -->
-            <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
-                <h3 class="text-xl font-bold mb-2">Premium</h3>
-                <p class="text-gray-500 mb-4">Full AI system with voice.</p>
-                <p class="text-3xl font-extrabold mb-4 flex items-center justify-center space-x-2">
-                    <span :class="billing === 'yearly' ? 'text-green-600' : 'text-gray-900'" 
-                          x-text="billing === 'monthly' ? 'KES 44,000' : 'KES ' + Math.round(44000 * 12 * 0.8).toLocaleString()">
-                    </span>
-                    <span x-show="billing === 'yearly'" 
-                          class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-semibold">
-                        Save 20%
-                    </span>
-                </p>
-                <ul class="text-gray-600 mb-6 space-y-1 text-left">
-                    <li>• Standard features</li>
-                    <li>• AI voice agent</li>
-                    <li>• Call transcription & booking</li>
-                    <li>• ~1000 call minutes included</li>
-                </ul>
-                <a href="{{route('contactus')}}"
-                   class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-                   Contact Sales
-                </a>
-            </div>
-
+            <p class="text-gray-800 text-sm mt-2">Moose Loon AI Setup</p>
+            <p class="text-2xl font-extrabold text-gray-900">KES 6,250</p>
         </div>
+
+        <div class="mb-4">
+            <p class="text-gray-800 text-sm">Market Monthly(Upfront Payment)</p>
+            <p class="line-through text-gray-500">KES 20,000 – 30,000</p>
+
+            <p class="text-gray-800 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
+
+            <div class="flex items-center space-x-2">
+                <span 
+                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
+                    x-text="billing === 'monthly' 
+                        ? 'KES 12,500/month' 
+                        : 'KES ' + Math.round(12500 * 12 * 0.8).toLocaleString() + '/year'">
+                </span>
+
+                <span x-show="billing === 'yearly'"
+                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                    Save 20%
+                </span>
+            </div>
+        </div>
+
+        <ul class="text-gray-600 mb-6 space-y-1 text-left text-sm">
+            <li>💡 Pay after value — not before</li>
+            <li>💡 Less than half the cost of staff</li>
+        </ul>
+
+        <a href="{{route('contactus')}}"
+           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
+           Get Started
+        </a>
+    </div>
+
+    <!-- STANDARD -->
+    <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105 relative">
+        <div class="absolute -mt-10 -ml-6 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase">
+            Most Popular
+        </div>
+
+        <h3 class="text-xl font-bold mb-2">🔵 Standard</h3>
+        <p class="text-gray-600 mb-4">For growing businesses</p>
+
+        <div class="mb-4">
+            <p class="text-gray-400 text-sm">Typical Market Setup</p>
+            <p class="line-through text-gray-800">KES 80,000 – 120,000</p>
+
+            <p class="text-gray-400 text-sm mt-2">Moose Loon AI Setup</p>
+            <p class="text-2xl font-extrabold">KES 7,250</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-gray-400 text-sm">Market Monthly</p>
+            <p class="line-through text-gray-800">KES 30,000 – 50,000</p>
+
+            <p class="text-gray-400 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
+
+            <div class="flex items-center space-x-2">
+                <span 
+                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
+                    x-text="billing === 'monthly' 
+                        ? 'KES 14,500/month' 
+                        : 'KES ' + Math.round(14500 * 12 * 0.8).toLocaleString() + '/year'">
+                </span>
+
+                <span x-show="billing === 'yearly'"
+                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                    Save 20%
+                </span>
+            </div>
+        </div>
+
+        <ul class="text-gray-700 mb-6 space-y-1 text-left text-sm">
+            <li>💡 A fraction of hiring + tools combined</li>
+            <li>💡 Performance-driven investment</li>
+        </ul>
+
+        <a href="{{route('contactus')}}"
+           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
+           Choose Plan
+        </a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
+        <h3 class="text-xl font-bold mb-2">🟣 Premium</h3>
+        <p class="text-gray-500 mb-4">For high-volume and scaling businesses</p>
+
+        <div class="mb-4">
+            <p class="text-gray-400 text-sm">Typical Market Setup</p>
+            <p class="line-through text-gray-800">KES 180,000 – 220,000</p>
+
+            <p class="text-gray-400 text-sm mt-2">Moose Loon AI Setup</p>
+            <p class="text-2xl font-extrabold">KES 22,000</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-gray-400 text-sm">Market Monthly</p>
+            <p class="line-through text-gray-800">KES 80,000 – 150,000+</p>
+
+            <p class="text-gray-400 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
+
+            <div class="flex items-center space-x-2">
+                <span 
+                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
+                    x-text="billing === 'monthly' 
+                        ? 'KES 44,000/month' 
+                        : 'KES ' + Math.round(44000 * 12 * 0.8).toLocaleString() + '/year'">
+                </span>
+
+                <span x-show="billing === 'yearly'"
+                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                    Save 20%
+                </span>
+            </div>
+        </div>
+
+        <ul class="text-gray-600 mb-6 space-y-1 text-left text-sm">
+            <li>💡 Replaces multiple roles</li>
+            <li>💡 Enterprise system without enterprise cost</li>
+        </ul>
+
+        <a href="{{route('contactus')}}"
+           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
+           Contact Sales
+        </a>
+    </div>
+
+</div>
+
+<!-- VALUE HIGHLIGHT -->
+<div class="py-16 bg-gray-50 text-center">
+    <div class="container mx-auto px-6 max-w-4xl">
+
+        <!-- HEADLINE -->
+        <p class="text-lg font-semibold text-gray-800">
+            No monthly salaries. No missed customers. AI works 24/7.
+        </p>
+        <p class="mt-2 text-gray-600 mb-10">
+            Setup in a few days. Start seeing results immediately.
+        </p>
+
+        <img src="{{asset('images/comparison-table.png')}}" 
+             alt="Comparison Table"
+             class="mx-auto mb-12 rounded-lg shadow">
+
+        <!-- CORE VALUE -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold mb-4">🔥 CORE VALUE POSITIONING</h3>
+            <p class="font-semibold">Moose Loon AI</p>
+            <div class="mt-3 space-y-1 text-gray-700">
+                <p>✅ One-time setup</p>
+                <p>✅ Post-payment monthly investment</p>
+                <p>✅ Pay as the system delivers value</p>
+            </div>
+
+            <p class="mt-4 font-semibold text-indigo-600">
+                👉 “Others charge you to start. We charge you as you grow.”
+            </p>
+        </div>
+
+        <!-- BENEFITS -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold mb-4">⚡ TURN EVERY INQUIRY INTO REVENUE</h3>
+            <div class="space-y-1 text-gray-700">
+                <p>• No missed messages</p>
+                <p>• No missed calls</p>
+                <p>• No lost customers</p>
+            </div>
+
+            <p class="mt-4 font-semibold">
+                👉 Your AI system works 24/7 — so your business never stops
+            </p>
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="mb-12 text-left md:text-center">
+            <h3 class="text-xl font-bold mb-6 text-center">💡 HOW IT WORKS</h3>
+
+            <div class="space-y-4 text-gray-700 max-w-2xl mx-auto">
+                <p><strong>1.</strong> Start with 50% setup — lower upfront barrier</p>
+                <p><strong>2.</strong> System goes live within 7 days</p>
+                <p><strong>3.</strong> Start capturing leads immediately</p>
+                <p><strong>4.</strong> Monthly investment begins after launch</p>
+            </div>
+
+            <p class="mt-6 font-semibold text-indigo-600 text-center">
+                👉 “One-time setup. Then pay as your system works for you.”
+            </p>
+        </div>
+
+        <!-- WHY -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold mb-4">🧠 WHY MOOSE LOON AI</h3>
+            <div class="space-y-1 text-gray-700">
+                <p>• Lower upfront entry</p>
+                <p>• Monthly investment after launch</p>
+                <p>• Faster response to every inquiry</p>
+                <p>• 24/7 automated customer handling</p>
+            </div>
+        </div>
+
+        <!-- FINAL -->
+        <div>
+            <h3 class="text-xl font-bold mb-4">⚡ SIMPLE MODEL</h3>
+            <p class="text-gray-700">
+                Start with 50% setup. Scale with monthly investment.
+            </p>
+
+            <p class="mt-4 font-semibold text-indigo-600">
+                👉 Setup starts fast. Value starts immediately.
+            </p>
+        </div>
+
     </div>
 </div>
 
