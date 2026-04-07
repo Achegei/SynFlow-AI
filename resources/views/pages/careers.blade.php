@@ -11,7 +11,11 @@
             <!-- 🟦 HERO SECTION -->
             <section class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-                    Professional Sales Opportunity in Nairobi
+                    Professional Sales Opportunity in Nairobi- Hiring Business Development Strategist (AI Solutions)
+                </h1>
+                <h1 class="text-4l md:text-5l font-bold text-red-900 mb-4">
+                    Applications close on April 11, 2026 at 11:59 PM (midnight).
+                    Early applications are encouraged as submissions are reviewed on a rolling basis.
                 </h1>
                 <p class="text-lg md:text-xl text-gray-700 mb-6">
                     Sell High-Demand AI Solutions. Earn Lucrative Commission. Moose Loon AI is recruiting serious, professional sales people in Nairobi to help introduce AI-powered business solutions to companies that want to grow faster, respond to customers better, and automate operations.
@@ -41,7 +45,7 @@
         <!-- Header -->
         <div class="mb-10">
             <h2 class="text-3xl font-bold text-gray-900 mb-3">
-                Your Role as a Moose Loon AI Sales Person
+                Your Role as a Business Development Strategist (AI Solutions)
             </h2>
             <p class="text-gray-700 max-w-3xl">
                 You are responsible for driving AI adoption, building strategic partnerships,
