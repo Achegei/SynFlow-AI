@@ -51,103 +51,103 @@
 
         <!-- Core Responsibilities -->
         <div class="mb-12">
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">🎯 Core Responsibilities</h3>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Core Responsibilities</h3>
             <ul class="grid md:grid-cols-2 gap-3 text-gray-700">
-                <li>✔ Identify and approach businesses, institutions, and organizations</li>
-                <li>✔ Present AI solutions that solve real business problems</li>
-                <li>✔ Close deals and earn commission on every engagement</li>
-                <li>✔ Build and maintain long-term client relationships</li>
-                <li>✔ Expand partnerships and grow your network consistently</li>
+                <li>Identify and approach businesses, institutions, and organizations</li>
+                <li>Present AI solutions that solve real business problems</li>
+                <li>Close deals and earn commission on every engagement</li>
+                <li>Build and maintain long-term client relationships</li>
+                <li>Expand partnerships and grow your network consistently</li>
             </ul>
         </div>
 
         <!-- Target Sectors -->
         <div class="mb-12">
             <h3 class="text-xl font-semibold text-gray-900 mb-6">
-                🏢 Target Sectors & Partner Categories
+                Target Sectors & Partner Categories
             </h3>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🎓 Educational Institutions</h4>
+                    <h4 class="font-bold mb-2">Educational Institutions</h4>
                     <p class="text-sm text-gray-600">
                         Universities, TVETs, colleges, coding bootcamps, training schools.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">👨‍🏫 Trainers & Educators</h4>
+                    <h4 class="font-bold mb-2">Trainers & Educators</h4>
                     <p class="text-sm text-gray-600">
                         ICT teachers, lecturers, freelance and corporate trainers.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🏢 Training & Consulting Firms</h4>
+                    <h4 class="font-bold mb-2">Training & Consulting Firms</h4>
                     <p class="text-sm text-gray-600">
                         Corporate training, HR consulting, business coaching firms.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">💻 Tech & Digital Businesses</h4>
+                    <h4 class="font-bold mb-2">Tech & Digital Businesses</h4>
                     <p class="text-sm text-gray-600">
                         Software companies, web agencies, IT support, SaaS resellers.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">📍 Learning Centers</h4>
+                    <h4 class="font-bold mb-2">Learning Centers</h4>
                     <p class="text-sm text-gray-600">
                         Computer labs, hubs, co-working spaces, community venues.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">📱 Influencers & Communities</h4>
+                    <h4 class="font-bold mb-2">Influencers & Communities</h4>
                     <p class="text-sm text-gray-600">
                         Social media influencers, community leaders, group admins.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">📊 Sales Networks</h4>
+                    <h4 class="font-bold mb-2">Sales Networks</h4>
                     <p class="text-sm text-gray-600">
                         Sales teams, recruitment agents, network marketing groups.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🌍 NGOs & Programs</h4>
+                    <h4 class="font-bold mb-2">NGOs & Programs</h4>
                     <p class="text-sm text-gray-600">
                         Youth & women programs, digital literacy, county initiatives.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🏢 Corporate Organizations</h4>
+                    <h4 class="font-bold mb-2">Corporate Organizations</h4>
                     <p class="text-sm text-gray-600">
                         HR departments, BPOs, banks, SACCOs, corporate training units.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🎓 Campus Partners</h4>
+                    <h4 class="font-bold mb-2">Campus Partners</h4>
                     <p class="text-sm text-gray-600">
                         Students, ambassadors, clubs, alumni networks.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🕌 Community Institutions</h4>
+                    <h4 class="font-bold mb-2">Community Institutions</h4>
                     <p class="text-sm text-gray-600">
                         Churches, mosques, community centers, social groups.
                     </p>
                 </div>
 
                 <div class="bg-white p-5 rounded-xl shadow">
-                    <h4 class="font-bold mb-2">🚀 Entrepreneurs</h4>
+                    <h4 class="font-bold mb-2">Entrepreneurs</h4>
                     <p class="text-sm text-gray-600">
                         Freelancers, workshop organizers, training business owners.
                     </p>
@@ -158,15 +158,15 @@
 
     <!-- Role Meaning -->
     <div class="bg-white p-6 rounded-xl shadow text-center">
-        <h3 class="text-xl font-semibold mb-4">⚡ What This Role Means</h3>
+        <h3 class="text-xl font-semibold mb-4">What This Role Means</h3>
         <p class="text-gray-700 mb-4">
             This is not just sales.
         </p>
         <div class="space-y-2 text-gray-700">
-            <p>👉 Connecting AI solutions to real business problems</p>
-            <p>👉 Building a network of partners and clients</p>
-            <p>👉 Creating recurring income through commissions</p>
-            <p>👉 Driving AI adoption across Kenya</p>
+            <p>Connecting AI solutions to real business problems</p>
+            <p>Building a network of partners and clients</p>
+            <p>Creating recurring income through commissions</p>
+            <p>Driving AI adoption across Kenya</p>
         </div>
     </div>
 
@@ -206,7 +206,7 @@
                     <li>Self-driven individuals</li>
                     <li>Results-oriented mindset</li>
                 </ul>
-                <p class="text-red-600 font-semibold mt-4">⚠️ This is a commission-based opportunity. Only apply if you are serious about performance.</p>
+                <p class="text-red-600 font-semibold mt-4">This is a commission-based opportunity. Only apply if you are serious about performance.</p>
             </section>
 
             <!-- 🟫 WHY JOIN US -->

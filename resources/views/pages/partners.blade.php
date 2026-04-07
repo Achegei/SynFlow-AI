@@ -506,7 +506,7 @@
 
             <!-- 12 -->
             <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🚀 Entrepreneurs</h3>
+                <h3 class="font-bold text-lg mb-3">Entrepreneurs</h3>
                 <ul class="text-gray-600 space-y-1 text-sm">
                     <li>Training entrepreneurs</li>
                     <li>Workshop organizers</li>
@@ -518,7 +518,7 @@
 
         <!-- Priority Section -->
         <div class="mt-20 bg-white p-8 rounded-2xl shadow text-center">
-            <h3 class="text-2xl font-bold mb-4">🔥 Priority High-Impact Partners</h3>
+            <h3 class="text-2xl font-bold mb-4">Priority High-Impact Partners</h3>
             <p class="text-gray-600 mb-4">
                 To accelerate growth, we prioritize partners with reach, influence, and scalability.
             </p>
@@ -535,13 +535,13 @@
         <!-- Positioning -->
         <div class="mt-12 text-center max-w-3xl mx-auto">
             <p class="text-gray-700 mb-4">
-                ⚠️ We are not looking for individuals without reach.
+                We are not looking for individuals without reach.
             </p>
             <p class="text-gray-700 mb-4">
-                ✅ We partner with those who can consistently bring learners and scale across regions.
+                We partner with those who can consistently bring learners and scale across regions.
             </p>
             <h4 class="text-xl font-bold mt-6">
-                🚀 We are building Kenya’s Largest AI Education Distribution Network
+                We are building Kenya’s Largest AI Education Distribution Network
             </h4>
         </div>
 
