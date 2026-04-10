@@ -203,7 +203,7 @@
 </div>
 
 <!-- 🟦 FORM SECTION (UNCHANGED) -->
-<section class="mb-12">
+<section id="appy" class="mb-12">
     <h2 class="text-2xl font-bold text-orange-900 mb-6">
         Email Submission Send CV and cover letter to
         <span class="font-semibold text-blue-900 !text-blue-900">
