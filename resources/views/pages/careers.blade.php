@@ -15,7 +15,7 @@
                 </h1>
 
                 <p class="text-2xl font-bold text-green-600 mb-4">
-                    KES 40,000 – 120,000+ Monthly (Performance-Based)
+                    KES 150,000 – 300,000+ Monthly (Performance-Based)
                 </p>
 
                 <p class="text-lg text-gray-700 mb-2">
