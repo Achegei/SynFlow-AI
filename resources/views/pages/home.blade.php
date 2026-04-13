@@ -266,6 +266,86 @@
     </div>
 </section>
 
+<section class="bg-gray-950 py-24 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto text-center">
+
+        <!-- TOP CONTENT -->
+        <p class="text-indigo-500 font-semibold mb-4">
+            AI built on a trusted foundation
+        </p>
+
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+            Scale without adding headcount
+        </h2>
+
+        <p class="mt-4 text-gray-400 text-lg max-w-3xl mx-auto">
+            Accelerate growth on every channel with AI Agents that respond, route and perform tasks accurately and reliably.
+        </p>
+
+        <!-- 🎥 VIDEO (CENTERED BETWEEN CONTENT) -->
+        <div class="mt-14 relative">
+
+            <!-- VIDEO -->
+            <div class="aspect-video max-w-4xl mx-auto rounded-2xl overflow-hidden border border-gray-800 shadow-2xl relative z-10">
+                <video 
+                    class="w-full h-full object-cover"
+                    controls
+                >
+                    <source src="{{ asset('videos/aiagents.mp4') }}" type="video/mp4">
+                </video>
+            </div>
+
+            <!-- Glow (non-blocking) -->
+            <div class="absolute -inset-2 bg-indigo-600/20 blur-2xl rounded-2xl pointer-events-none"></div>
+
+        </div>
+
+        <!-- 🔥 FEATURE CARDS -->
+        <div class="mt-20 grid md:grid-cols-3 gap-6 text-left">
+
+            <!-- Card 1 -->
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
+                <h3 class="text-white font-semibold text-lg">
+                    Convert customers efficiently
+                </h3>
+                <p class="text-gray-400 mt-3 text-sm">
+                    Multilingual AI Agents handle enquiries, answer FAQs and route only serious buyers to your team for faster conversions and higher ROI.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
+                <h3 class="text-white font-semibold text-lg">
+                    Shorten sales cycles
+                </h3>
+                <p class="text-gray-400 mt-3 text-sm">
+                    Turn intent into purchases by removing friction. AI Agents recommend products, manage bookings and guide customers seamlessly.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
+                <h3 class="text-white font-semibold text-lg">
+                    Launch quickly and securely
+                </h3>
+                <p class="text-gray-400 mt-3 text-sm">
+                    Handle 10x more customers with high accuracy and built-in guardrails. Start fast with templates or customize fully.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12">
+            <a href="{{ route('contactus') }}" 
+               class="inline-block px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition">
+                Try AI Agent for Free
+            </a>
+        </div>
+
+    </div>
+</section>
+
     <!-- AI Automation for Fast Business Growth Section -->
 <section class="bg-white py-20">
     <div class="container mx-auto px-4 max-w-6xl">
