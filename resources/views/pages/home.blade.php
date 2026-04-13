@@ -117,7 +117,7 @@
                     <div class="absolute top-[45%] left-[40%] 
                                 -translate-x-1/2 -translate-y-1/2
                                 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl p-6 
-                                w-[90%] sm:w-[420px] animate-float">
+                                w-[90%] sm:w-[420px] animate-float hidden sm:block">
 
                         <div class="text-left">
 
