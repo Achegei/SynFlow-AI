@@ -15,34 +15,256 @@
 .accordion-content {
     transition: max-height 0.3s ease-in-out;
 }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+/* Floating card */
+@keyframes float {
+    0%,100% { transform: translateY(-50%) translateX(-50%); }
+    50% { transform: translateY(calc(-50% - 8px)) translateX(-50%); }
+}
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Dashboard zoom */
+@keyframes zoomGlow {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+.animate-zoom-glow {
+    animation: zoomGlow 6s ease-in-out infinite;
+}
+
+/* Glow pulse */
+@keyframes glow {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+.animate-glow {
+    animation: glow 4s ease-in-out infinite;
+}
+
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.animate-float-slow {
+    animation: floatSlow 6s ease-in-out infinite;
+}
 </style>
 
 @section('content')
-    <section class="relative min-h-screen bg-gray-900 flex items-center justify-center text-center px-4 sm:px-6 lg:px-8">
-        <div class="absolute inset-0">
-            <img src="{{ asset('images/aiherobg.jpg') }}" alt="AI background" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/25"></div>
-        </div>
+        <section class="relative min-h-screen bg-gray-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
 
-        <div class="relative max-w-3xl">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white">
-                <span class="block">We build intelligent AI solutions that solve real-world problems</span>
-                <span class="block text-indigo-500 mt-2">to cut costs, boost productivity, and drive measurable growth.</span>
-            </h1>
-            <p class="mt-6 text-lg sm:text-xl text-gray-300">
-                Turn repetitive workflows into smart, automated systems that save time and reduce costs.
-            </p>
-            <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                <a href="{{ route('careers') }}" class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                    Explore Sales Programs
-                </a>
-                <!--<a href="{{ route('register') }}" class="px-6 py-3 bg-indigo-100 text-indigo-700 font-medium rounded-lg hover:bg-indigo-200 transition">
-                    Ready to Start Your AI Sales Training? Begin Journey
-                </a>-->
+            <!-- Background -->
+            <div class="absolute inset-0">
+                <img src="{{ asset('images/aiherobg.jpg') }}" 
+                    class="w-full h-full object-cover opacity-40">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
             </div>
-        </div>
-    </section>
 
+            <div class="relative z-10 max-w-5xl text-center">
+
+                <!-- Headline -->
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight">
+                    Customers message. Call for details. Confirm later.
+                    <span class="block text-indigo-500 mt-2">
+                        Can your business keep up?
+                    </span>
+                </h1>
+
+                <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+                    MooseLoon AI unifies your conversations, automates responses, and captures every lead —
+                    so you never lose a customer across WhatsApp, calls, or chat.
+                </p>
+
+                <!-- CTA -->
+                <div class="mt-8 flex justify-center gap-4 flex-wrap">
+                    <a href="{{route('contactus')}}" class="px-6 py-3 bg-gray-800 text-white rounded-lg border border-gray-600 hover:bg-gray-700 transition">
+                        Talk to Sales
+                    </a>
+
+                    <a href="{{route('contactus')}}" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition">
+                        Start Free Trial
+                    </a>
+                </div>
+
+                <p class="mt-6 text-sm text-gray-400">
+                    ⭐⭐⭐⭐⭐ Helping businesses automate & increase bookings
+                </p>
+
+                <!-- PRODUCT -->
+                <div class="mt-16 relative flex justify-center">
+
+                    <!-- Animated Dashboard -->
+                    <div class="relative">
+                        <img src="{{ asset('images/dashboard.png') }}" 
+                            class="rounded-xl border border-gray-800 shadow-2xl animate-zoom-glow">
+
+                        <!-- Glow layer -->
+                        <div class="absolute inset-0 rounded-xl blur-2xl opacity-30 bg-indigo-500 animate-glow"></div>
+                    </div>
+
+                    <!-- FLOATING CARD -->
+                    <div class="absolute top-[45%] left-[40%] 
+                                -translate-x-1/2 -translate-y-1/2
+                                bg-white/95 backdrop-blur-md rounded-xl shadow-2xl p-6 
+                                w-[90%] sm:w-[420px] animate-float">
+
+                        <div class="text-left">
+
+                            <!-- 🔥 FIXED WORKFLOW ANIMATION -->
+                            <div class="flex items-center justify-center gap-4 mb-4">
+
+                                <div class="flex gap-2">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">W</div>
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">C</div>
+                                </div>
+
+                                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold animate-pulse">
+                                    AI
+                                </div>
+
+                                <div class="flex gap-2">
+                                    <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">CRM</div>
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs">B</div>
+                                </div>
+
+                            </div>
+
+                            <!-- TEXT -->
+                            <h3 class="text-lg font-bold text-gray-900">
+                                Explore MooseLoon AI
+                            </h3>
+
+                            <p class="mt-2 text-sm text-gray-600">
+                                Explore the Power of Moose Loon AI
+                            </p>
+
+                            <p class="mt-2 text-sm text-gray-600">
+                                Sell smarter, strengthen relationships, and respond faster. All from one inbox. Experience it instantly, no sign-up needed.
+                            </p>
+
+                            <button class="mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+                                <a href="{{ route('contactus') }}" class="text-white no-underline">✨ Start Interactive Demo</a>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scale Business Growth Section -->
+    <section class="py-20 bg-gray-950 text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+            <!-- LEFT CONTENT -->
+            <div>
+                <h2 class="text-3xl sm:text-4xl font-bold leading-tight">
+                    Scale business growth with every customer conversation
+                </h2>
+
+                <p class="mt-6 text-gray-300 text-lg">
+                    As chats and calls multiply, old inboxes and workflows break. MooseLoon AI helps you manage the entire customer journey across every channel in one place — even at high volume.
+                </p>
+
+                <!-- FEATURES -->
+                <div class="mt-8 space-y-6">
+
+                    <div>
+                        <h4 class="font-semibold text-indigo-400">Capture</h4>
+                        <p class="text-gray-300">Unify customer touch points to drive revenue</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-indigo-400">Convert</h4>
+                        <p class="text-gray-300">Sell more with AI and analytics</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-indigo-400">Retain</h4>
+                        <p class="text-gray-300">Build recurring revenue, not just one-time sales</p>
+                    </div>
+
+                </div>
+
+                <p class="mt-8 text-gray-400">
+                    Acquiring customers is costly — keeping them fuels sustainable growth. With full context at your fingertips, every follow-up feels personal, from targeted broadcasts and renewal reminders to in-chat CSAT surveys. Earn a reputation for reliability that turns one-time buyers into repeat customers.
+                </p>
+            </div>
+
+            <!-- RIGHT IMAGE ROTATOR -->
+            <div class="relative w-full h-[350px] sm:h-[400px] lg:h-[450px]">
+
+                <!-- Images -->
+                <img src="{{ asset('images/feature1.png') }}" 
+                     class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-2xl transition-opacity duration-1000 opacity-100 image-slide">
+
+                <img src="{{ asset('images/feature2.png') }}" 
+                     class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-2xl transition-opacity duration-1000 opacity-0 image-slide">
+
+                <img src="{{ asset('images/feature3.png') }}" 
+                     class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-2xl transition-opacity duration-1000 opacity-0 image-slide">
+
+                <!-- Glow -->
+                <div class="absolute inset-0 rounded-xl blur-2xl bg-indigo-500 opacity-20"></div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Unified Inbox Section -->
+<section class="relative py-24 bg-gray-900">
+
+    <!-- FLOATING CONTAINER -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative bg-gray-950 rounded-2xl shadow-2xl border border-gray-800 p-8 sm:p-12 
+                    -mt-32 z-10">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+                <!-- LEFT IMAGE -->
+                <div class="relative">
+                    <img src="{{ asset('images/unified-inbox.png') }}" 
+                         class="rounded-xl shadow-2xl border border-gray-800 animate-float-slow">
+
+                    <!-- subtle glow -->
+                    <div class="absolute inset-0 rounded-xl blur-2xl bg-indigo-500 opacity-20"></div>
+                </div>
+
+                <!-- RIGHT TEXT -->
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">
+                        Chats, calls and emails in one thread
+                    </h2>
+
+                    <p class="mt-6 text-gray-300 text-lg">
+                        MooseLoon AI unifies WhatsApp Business Calls, Messenger Calls and VoIP in the same thread as your messages and emails.
+                    </p>
+
+                    <p class="mt-6 text-gray-400">
+                        No more silos or juggling multiple platforms — just one reliable record for every customer, no matter the channel.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
 
     <!-- AI Automation for Fast Business Growth Section -->
 <section class="bg-white py-20">
@@ -648,5 +870,20 @@
             content.classList.toggle('hidden');
             icon.classList.toggle('rotate-45');
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const slides = document.querySelectorAll(".image-slide");
+            let index = 0;
+
+            setInterval(() => {
+                slides[index].classList.remove("opacity-100");
+                slides[index].classList.add("opacity-0");
+
+                index = (index + 1) % slides.length;
+
+                slides[index].classList.remove("opacity-0");
+                slides[index].classList.add("opacity-100");
+            }, 3000); // change every 3s
+        });
     </script>
 @endsection
