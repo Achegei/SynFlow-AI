@@ -74,7 +74,7 @@
             <div class="relative z-10 max-w-5xl text-center">
 
                 <!-- Headline -->
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mt-20">
                     Customers message. Call for details. Confirm later.
                     <span class="block text-indigo-500 mt-2">
                         Can your business keep up?
