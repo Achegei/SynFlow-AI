@@ -374,6 +374,26 @@
     </p>
 </div>
 
+<!-- 🎥 GO LIVE VIDEO -->
+<div class="mt-8 relative">
+
+    <div class="aspect-video max-w-4xl mx-auto rounded-2xl overflow-hidden border border-gray-800 shadow-2xl relative z-10">
+
+        <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/MDrVJ-IU-Dc"
+            title="Go Live AI System"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+    <!-- Glow -->
+    <div class="absolute -inset-2 bg-green-500/20 blur-2xl rounded-2xl pointer-events-none"></div>
+
+</div>
     <!-- Benefits -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
 
