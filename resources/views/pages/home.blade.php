@@ -75,9 +75,9 @@
 
                 <!-- Headline -->
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mt-20">
-                    Customers message. Call for details. Confirm later.
+                    WhatsApp AI Agent for Businesses in Kenya
                     <span class="block text-indigo-500 mt-2">
-                        Can your business keep up?
+                        Customers message. Call for details. Confirm later. Can your business keep up?
                     </span>
                 </h1>
 
@@ -101,8 +101,29 @@
                     ⭐⭐⭐⭐⭐ Helping businesses automate & increase bookings
                 </p>
 
-                <!-- PRODUCT -->
-                <div class="mt-16 relative flex justify-center">
+                <!-- 🎥 DEMO VIDEO -->
+<div class="mt-12 relative">
+
+    <div class="aspect-video max-w-3xl mx-auto rounded-xl overflow-hidden border border-gray-800 shadow-2xl relative z-10">
+
+        <iframe
+            class="w-full h-full"
+            src="https://www.youtube.com/embed/6_a3VLRkHOQ"
+            title="MooseLoon AI Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+
+    </div>
+
+    <!-- Glow -->
+    <div class="absolute -inset-2 bg-indigo-600/20 blur-2xl rounded-xl pointer-events-none"></div>
+
+</div>
+
+<!-- PRODUCT -->
+<div class="mt-16 relative flex justify-center">
 
                     <!-- Animated Dashboard -->
                     <div class="relative">
