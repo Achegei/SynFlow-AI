@@ -46,7 +46,7 @@
     <p class="text-gray-700 leading-relaxed">For any questions about these Terms, please contact us using the following information:</p>
     <ul class="list-disc list-inside mt-2 text-gray-700 leading-relaxed">
         <li>Email address: <strong>info@mooseloonai.ca</strong></li>
-        <li>Physical address: <strong>Alberta, Canada</strong></li>
+        <li>Physical address: <strong>15710 Beaumaris Rd NW, Edmonton AB T5X 5E2, Canada</strong></li>
     </ul>
 </div>
 @endsection

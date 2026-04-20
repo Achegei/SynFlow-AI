@@ -79,7 +79,7 @@
                          'a' => 'Nairobi HQ:<br>14th Floor, Delta Corner Tower 2, Westlands<br>Email: careers@mooseloonai.ca<br>Website: www.mooseloonai.ca'],
 
                         ['q' => 'Where are Moose Loon AI’s North America Headquarters located?', 
-                         'a' => 'Toronto, Canada — Executive, Technology & North American Division'],
+                         'a' => '15710 Beaumaris Rd NW, Edmonton AB T5X 5E2, Canada — Executive, Technology & North American Division'],
 
                         ['q' => 'What does the Canada Headquarters do?', 
                          'a' => '• Global AI R&D<br>• Design of enterprise AI systems<br>• Training & Certification Standards<br>All Moose Loon AI training programs are developed and quality controlled here.'],
