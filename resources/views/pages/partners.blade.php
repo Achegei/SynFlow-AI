@@ -112,7 +112,7 @@
     <h2 class="text-3xl font-bold mb-8">Simple Revenue Model</h2>
 
     <div class="bg-white p-8 rounded-2xl shadow space-y-4 text-left">
-        <p><strong>Partner License Fee:</strong> KES 50,000 (One-time)</p>
+        <p><strong>Partner License Fee:</strong> KES 15,000 (One-time)</p>
         <p><strong>Certificate Fee:</strong> KES 2,000 per learner</p>
 
         <hr>
