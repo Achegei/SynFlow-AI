@@ -146,11 +146,11 @@
 
                        <div class="hidden md:flex space-x-8">
                            <a href="{{ route('home') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Home</a>
-                           <!-- <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a> -->
+                           <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a>
                            <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
                            <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
                            <a href="{{ route('certificate.verify') }}" class="font-semibold text-green-600 hover:text-green-700 transition-colors">Verify Certificate</a>
-                           <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a>
+                           <!-- <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a> -->
                            <a href="{{ route('partners.page') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Partners</a>
                         <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>. -->
                            <a href="{{ route('contact') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Contact</a>
@@ -195,13 +195,13 @@
                 <!-- Mobile Menu -->
                 <div x-show="open" @click.away="open = false" class="absolute top-full left-0 w-full bg-white shadow-md flex flex-col space-y-2 py-4 px-4 z-40">
                     <a href="{{ route('home') }}" class="text-gray-700 hover:text-indigo-600">Home</a>
-                    <!-- <a href="{{ route('about') }}" class="text-gray-700 hover:text-indigo-600">Our Team</a> -->
+                    <a href="{{ route('about') }}" class="text-gray-700 hover:text-indigo-600">Our Team</a>
                     <a href="{{ route('services') }}" class="text-gray-700 hover:text-indigo-600">Services</a>
                     <a href="{{ route('certificate.verify') }}" class="text-green-600 font-semibold hover:text-green-700">
                         Verify Certificate
                     </a>
                     <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>
-                    <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a>
+                    <!-- <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a> -->
                     <a href="{{ route('partners.page') }}" class="text-gray-700 hover:text-indigo-600">Partners</a>
                     <a href="{{ route('contact') }}" class="text-gray-700 hover:text-indigo-600">Contact</a>
 
@@ -274,10 +274,10 @@
                             <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
                             <ul class="space-y-2">
                                 <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a></li>
-                                <!--<li><a href="{{ route('about') }}" class="hover:text-white transition-colors">Our Team</a></li>-->
+                                <li><a href="{{ route('about') }}" class="hover:text-white transition-colors">Our Team</a></li>
                                 <li><a href="{{ route('services') }}" class="hover:text-white transition-colors">Services</a></li>
                                 <li><a href="{{ route('pricing') }}" class="hover:text-white transition-colors">Pricing</a></li>
-                                <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers</a></li>
+                                <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers</a></li> -->
                                 <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors">Contact</a></li>
                                 <li><a href="{{ route('faqs') }}" class="hover:text-white transition-colors">FAQ's</a></li>
                             </ul>
