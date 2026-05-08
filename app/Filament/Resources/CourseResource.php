@@ -28,6 +28,9 @@ class CourseResource extends Resource
     {
         return $form->schema([
 
+            /**
+             * COURSE INFO
+             */
             TextInput::make('title')
                 ->required()
                 ->maxLength(255),
@@ -42,7 +45,9 @@ class CourseResource extends Resource
                 ->nullable(),
 
             /**
-             * MODULES
+             * =========================
+             * MODULES (CORE STRUCTURE)
+             * =========================
              */
             HasManyRepeater::make('modules')
                 ->relationship('modules')
@@ -63,7 +68,9 @@ class CourseResource extends Resource
                         ->default(0),
 
                     /**
+                     * =========================
                      * EPISODES (LESSONS)
+                     * =========================
                      */
                     HasManyRepeater::make('episodes')
                         ->relationship('episodes')
@@ -82,10 +89,7 @@ class CourseResource extends Resource
                             Select::make('type')
                                 ->options([
                                     'video' => 'Video',
-                                    'quiz' => 'Quiz',
-                                    'assignment' => 'Assignment',
                                     'reading' => 'Reading',
-                                    'project' => 'Project',
                                 ])
                                 ->default('video')
                                 ->required(),
@@ -108,6 +112,213 @@ class CourseResource extends Resource
 
                         ])
                         ->columns(2)
+                        ->collapsed(false),
+
+                    /**
+                     * =========================
+                     * QUIZZES (NEW)
+                     * =========================
+                     */
+                    HasManyRepeater::make('quizzes')
+    ->relationship('quizzes')
+    ->label('Module Quizzes')
+    ->createItemButtonLabel('Add Quiz')
+    ->schema([
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUIZ INFO
+        |--------------------------------------------------------------------------
+        */
+
+        TextInput::make('title')
+            ->required()
+            ->maxLength(255),
+
+        Textarea::make('description')
+            ->rows(3)
+            ->nullable(),
+
+        TextInput::make('position')
+            ->numeric()
+            ->default(0),
+
+        /*
+        |--------------------------------------------------------------------------
+        | QUIZ QUESTIONS
+        |--------------------------------------------------------------------------
+        */
+
+        HasManyRepeater::make('questions')
+            ->relationship('questions')
+            ->label('Quiz Questions')
+            ->createItemButtonLabel('Add Question')
+            ->schema([
+
+                /*
+                |--------------------------------------------------------------------------
+                | QUESTION
+                |--------------------------------------------------------------------------
+                */
+
+                Textarea::make('question')
+                    ->label('Question')
+                    ->rows(3)
+                    ->required(),
+
+                /*
+                |--------------------------------------------------------------------------
+                | OPTIONS
+                |--------------------------------------------------------------------------
+                */
+
+                TextInput::make('option_a')
+                    ->label('Option A')
+                    ->required()
+                    ->afterStateHydrated(function ($component, $state, $record) {
+
+                        if ($record && $record->options) {
+                            $options = json_decode($record->options, true);
+                            $component->state($options[0] ?? '');
+                        }
+                    }),
+
+                TextInput::make('option_b')
+                    ->label('Option B')
+                    ->required()
+                    ->afterStateHydrated(function ($component, $state, $record) {
+
+                        if ($record && $record->options) {
+                            $options = json_decode($record->options, true);
+                            $component->state($options[1] ?? '');
+                        }
+                    }),
+
+                TextInput::make('option_c')
+                    ->label('Option C')
+                    ->required()
+                    ->afterStateHydrated(function ($component, $state, $record) {
+
+                        if ($record && $record->options) {
+                            $options = json_decode($record->options, true);
+                            $component->state($options[2] ?? '');
+                        }
+                    }),
+
+                TextInput::make('option_d')
+                    ->label('Option D')
+                    ->required()
+                    ->afterStateHydrated(function ($component, $state, $record) {
+
+                        if ($record && $record->options) {
+                            $options = json_decode($record->options, true);
+                            $component->state($options[3] ?? '');
+                        }
+                    }),
+
+                /*
+                |--------------------------------------------------------------------------
+                | CORRECT ANSWER
+                |--------------------------------------------------------------------------
+                */
+
+                Select::make('correct_answer')
+                    ->options(function ($get) {
+
+                        return array_filter([
+                            $get('option_a') => 'Option A',
+                            $get('option_b') => 'Option B',
+                            $get('option_c') => 'Option C',
+                            $get('option_d') => 'Option D',
+                        ]);
+                    })
+                    ->required(),
+
+                /*
+                |--------------------------------------------------------------------------
+                | POSITION
+                |--------------------------------------------------------------------------
+                */
+
+                TextInput::make('position')
+                    ->numeric()
+                    ->default(0),
+
+            ])
+            ->mutateRelationshipDataBeforeCreateUsing(function ($data) {
+
+                $data['options'] = json_encode([
+                    $data['option_a'],
+                    $data['option_b'],
+                    $data['option_c'],
+                    $data['option_d'],
+                ]);
+
+                unset(
+                    $data['option_a'],
+                    $data['option_b'],
+                    $data['option_c'],
+                    $data['option_d']
+                );
+
+                return $data;
+            })
+            ->mutateRelationshipDataBeforeSaveUsing(function ($data) {
+
+                $data['options'] = json_encode([
+                    $data['option_a'],
+                    $data['option_b'],
+                    $data['option_c'],
+                    $data['option_d'],
+                ]);
+
+                unset(
+                    $data['option_a'],
+                    $data['option_b'],
+                    $data['option_c'],
+                    $data['option_d']
+                );
+
+                return $data;
+            })
+            ->collapsed(false)
+
+    ])
+    ->collapsed(false),
+
+                    /**
+                     * =========================
+                     * ASSIGNMENTS (NEW)
+                     * =========================
+                     */
+                    HasManyRepeater::make('assignments')
+                        ->relationship('assignments')
+                        ->label('Module Assignments')
+                        ->createItemButtonLabel('Add Assignment')
+                        ->schema([
+
+                            TextInput::make('title')
+                                ->required()
+                                ->maxLength(255),
+
+                            Textarea::make('instructions')
+                                ->rows(4)
+                                ->required(),
+
+                            Select::make('submission_type')
+                                ->options([
+                                    'file' => 'File Upload',
+                                    'text' => 'Text Answer',
+                                    'link' => 'Link Submission',
+                                ])
+                                ->default('file')
+                                ->required(),
+
+                            TextInput::make('position')
+                                ->numeric()
+                                ->default(0),
+
+                        ])
                         ->collapsed(false),
 
                 ])

@@ -76,7 +76,7 @@
     <div x-data="{ showCertificateModal: false }">
 
         <!-- Course Header -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div x-data="{ open: false }" class="bg-white rounded-2xl shadow-md mb-6 overflow-hidden">
 
             <div class="flex flex-col lg:flex-row gap-6">
 
@@ -89,9 +89,26 @@
                         {{ $course->title }}
                     </h1>
 
-                    <p class="mt-3 text-gray-600 leading-relaxed">
-                        {{ $course->description }}
-                    </p>
+                    <div x-data="{ expanded: false }" class="mt-3">
+
+    <p class="text-gray-600 leading-relaxed">
+        <span x-show="!expanded">
+            {{ \Illuminate\Support\Str::limit($course->description, 180) }}
+        </span>
+
+        <span x-show="expanded">
+            {{ $course->description }}
+        </span>
+    </p>
+
+    <button
+        @click="expanded = !expanded"
+        class="text-blue-600 text-sm mt-2 font-medium hover:underline"
+    >
+        <span x-text="expanded ? 'View less' : 'View more'"></span>
+    </button>
+
+</div>
 
                     <!-- Progress -->
                     <div class="mt-6">
@@ -202,140 +219,455 @@
     </div>
 
     <!-- Modules -->
-    <div class="mt-10">
+<div x-show="open" class="p-6 border-t">
 
-        <h2 class="text-3xl font-bold text-gray-900 mb-6">
-            Course Modules
-        </h2>
+    <h2 class="text-3xl font-bold text-gray-900 mb-6">
+        Course Modules
+    </h2>
 
-        @forelse ($course->modules as $module)
+    @forelse ($course->modules as $module)
+<div
+    x-data="{ open: false }"
+    class="bg-white rounded-2xl shadow-md mb-6 overflow-hidden">
 
-            <div class="bg-white rounded-2xl shadow-md p-6 mb-8">
+            <!-- Module Header -->
+            <div @click="open = !open" class="p-6 cursor-pointer flex items-center justify-between border-b">
 
-                <!-- Module Header -->
-                <div class="mb-6">
+                <div class="flex items-center justify-between">
 
-                    <div class="flex items-center justify-between">
+                    <h3 class="text-2xl font-bold text-gray-900">
+                        {{ $module->title }}
+                    </h3>
 
-                        <h3 class="text-2xl font-bold text-gray-900">
-                            {{ $module->title }}
-                        </h3>
+                    <div class="flex gap-2 text-xs">
 
-                        <span class="bg-blue-100 text-blue-700 text-sm px-3 py-1 rounded-full">
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
                             {{ $module->episodes->count() }} Lessons
+                        </span>
+
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+                            {{ $module->quizzes->count() }} Quizzes
+                        </span>
+
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                            {{ $module->assignments->count() }} Assignments
                         </span>
 
                     </div>
 
-                    @if($module->description)
+                </div>
 
-                        <p class="text-gray-600 mt-2">
-                            {{ $module->description }}
-                        </p>
+                @if($module->description)
+                    <div x-data="{ open: false }" class="mt-2">
 
+    <p class="text-gray-600">
+        <span x-show="!open">
+            {{ \Illuminate\Support\Str::limit($module->description, 160) }}
+        </span>
+
+        <span x-show="open">
+            {{ $module->description }}
+        </span>
+    </p>
+
+    <button
+        @click="open = !open"
+        class="text-blue-600 text-sm mt-1 hover:underline"
+    >
+        <span x-text="open ? 'View less' : 'View more'"></span>
+    </button>
+
+</div>
+                @endif
+
+            </div>
+
+            <!-- TABS -->
+            <div x-data="{ tab: 'lessons' }">
+
+                <!-- Tab Buttons -->
+                <div class="flex space-x-3 border-b mb-6">
+
+                    <button @click="tab='lessons'"
+                        class="px-4 py-2 text-sm font-medium"
+                        :class="tab==='lessons' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-gray-500'">
+                        📺 Lessons
+                    </button>
+
+                    <button @click="tab='quizzes'"
+                        class="px-4 py-2 text-sm font-medium"
+                        :class="tab==='quizzes' ? 'border-b-2 border-purple-600 text-purple-600' : 'text-gray-500'">
+                        🧠 Quizzes
+                    </button>
+
+                    <button @click="tab='assignments'"
+                        class="px-4 py-2 text-sm font-medium"
+                        :class="tab==='assignments' ? 'border-b-2 border-green-600 text-green-600' : 'text-gray-500'">
+                        📝 Assignments
+                    </button>
+
+                </div>
+
+                <!-- LESSONS -->
+                <div x-show="tab==='lessons'" class="space-y-4">
+
+                    @forelse ($module->episodes as $episode)
+
+                        <div
+    onclick="playEpisode('{{ \Illuminate\Support\Str::contains($episode->video_url, 'youtube')
+    ? \Illuminate\Support\Str::after($episode->video_url, 'v=')
+    : $episode->video_url }}', {{ $episode->id }})"
+>
+
+    <div class="flex items-center justify-between">
+
+        <div class="flex items-center gap-4">
+
+            <!-- Play Icon -->
+            <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center group-hover:bg-blue-600 transition">
+
+                <svg
+                    class="w-6 h-6 text-blue-600 group-hover:text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                >
+                    <path d="M6 4l10 6-10 6V4z"></path>
+                </svg>
+
+            </div>
+
+            <!-- Lesson Info -->
+            <div>
+
+                <h4 class="font-bold text-gray-900 text-lg group-hover:text-blue-600">
+                    {{ $episode->title }}
+                </h4>
+
+                @if($episode->description)
+                    <p class="text-sm text-gray-500 mt-1">
+                        {{ $episode->description }}
+                    </p>
+                @endif
+
+                <div class="flex items-center gap-3 mt-2">
+
+                    <span class="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                        📺 Video Lesson
+                    </span>
+
+                    @if($episode->pdf_path)
+                        <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                            📄 Notes Included
+                        </span>
                     @endif
 
                 </div>
 
-                <!-- Episodes -->
-                <div class="space-y-4">
+            </div>
 
-                    @forelse ($module->episodes as $episode)
+        </div>
 
-                        <div class="bg-gray-50 border border-gray-100 rounded-xl p-4 hover:bg-gray-100 transition">
+        <!-- Progress -->
+        <div>
 
-                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            @if(auth()->user()->watchedEpisodes->contains($episode->id))
+                <div class="text-green-600 font-semibold">
+                    ✅ Completed
+                </div>
+            @else
+                <div class="text-gray-400 text-sm">
+                    Not Started
+                </div>
+            @endif
 
-                                <!-- Left -->
-                                <div
-                                    class="flex items-start space-x-4 cursor-pointer flex-1"
-                                    onclick="playEpisode('{{ $episode->youtube_id }}', {{ $episode->id }})"
+        </div>
+
+    </div>
+
+</div>
+
+                    @empty
+                        <p class="text-gray-500">No lessons yet.</p>
+                    @endforelse
+
+                </div>
+
+              <!-- QUIZZES -->
+<div x-show="tab==='quizzes'" class="space-y-6">
+
+    @forelse ($module->quizzes as $quiz)
+
+        @php
+            $attempt = auth()->user()
+                ? auth()->user()
+                    ->quizAttempts()
+                    ->where('quiz_id', $quiz->id)
+                    ->where('passed', true)
+                    ->latest()
+                    ->first()
+                : null;
+        @endphp
+
+        <div
+            x-data="quizComponent({{ $quiz->id }})"
+            class="bg-purple-50 rounded-2xl p-6 border border-purple-100"
+        >
+
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4">
+
+                <div>
+                    <h4 class="text-xl font-bold text-purple-800">
+                        🧠 {{ $quiz->title }}
+                    </h4>
+
+                    @if($quiz->description)
+                        <p class="text-sm text-gray-600 mt-1">
+                            {{ $quiz->description }}
+                        </p>
+                    @endif
+                </div>
+
+                @if($attempt)
+
+                    <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+                        ✅ Completed
+                    </div>
+
+                @endif
+
+            </div>
+
+            <!-- Questions -->
+            <div class="space-y-6">
+
+                @foreach($quiz->questions as $question)
+
+                    <div class="bg-white rounded-xl p-4 shadow-sm">
+
+                        <h5 class="font-semibold text-gray-800 mb-4">
+                            {{ $loop->iteration }}.
+                            {{ $question->question }}
+                        </h5>
+
+                        <div class="space-y-3">
+
+                    @php
+    $options = $question->options;
+
+    if (is_string($options)) {
+        $options = json_decode($options, true);
+    }
+
+    $options = is_array($options) ? $options : [];
+@endphp
+
+@foreach($options as $option)
+
+                                <button
+                                    @click="checkAnswer(
+                                        {{ $question->id }},
+                                        '{{ addslashes($option) }}',
+                                        '{{ addslashes($question->correct_answer) }}'
+                                    )"
+                                    :disabled="answers[{{ $question->id }}]"
+                                    class="w-full text-left px-4 py-3 rounded-xl border transition"
+                                    :class="getButtonClass(
+                                        {{ $question->id }},
+                                        '{{ addslashes($option) }}',
+                                        '{{ addslashes($question->correct_answer) }}'
+                                    )"
                                 >
 
-                                    <div class="bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold">
-                                        {{ $loop->iteration }}
-                                    </div>
+                                    {{ $option }}
 
-                                    <div>
+                                </button>
 
-                                        <h4 class="text-lg font-semibold text-gray-800">
-                                            {{ $episode->title }}
-                                        </h4>
+                            @endforeach
 
-                                        @if($episode->description)
+                        </div>
 
-                                            <p class="text-sm text-gray-500 mt-1">
-                                                {{ $episode->description }}
-                                            </p>
+                        <!-- Feedback -->
+                        <div
+                            x-show="feedback[{{ $question->id }}]"
+                            class="mt-4 text-sm"
+                        >
 
-                                        @endif
+                            <template x-if="feedback[{{ $question->id }}] === 'correct'">
 
-                                    </div>
-
+                                <div class="text-blue-700 font-semibold">
+                                    ✅ Correct Answer
                                 </div>
 
-                                <!-- Right -->
-                                <div class="flex items-center gap-3">
+                            </template>
 
-                                    <!-- PDF -->
-                                    @if ($episode->pdf_path)
+                            <template x-if="feedback[{{ $question->id }}] === 'wrong'">
 
-                                        <a
-                                            href="{{ asset('storage/' . $episode->pdf_path) }}"
-                                            target="_blank"
-                                            class="text-blue-600 hover:underline font-medium"
-                                        >
-                                            📄 Notes
-                                        </a>
-
-                                    @endif
-
-                                    <!-- Completion -->
-                                    <form action="{{ route('episodes.toggle', $episode->id) }}" method="POST">
-
-                                        @csrf
-
-                                        <button
-                                            class="px-4 py-2 rounded-lg text-sm font-medium transition
-                                            {{ $episode->is_completed
-                                                ? 'bg-green-200 text-green-700 hover:bg-green-300'
-                                                : 'bg-yellow-200 text-yellow-700 hover:bg-yellow-300'
-                                            }}"
-                                        >
-
-                                            {{ $episode->is_completed ? 'Completed' : 'Mark as Watched' }}
-
-                                        </button>
-
-                                    </form>
-
+                                <div class="text-red-600 font-semibold">
+                                    ❌ Incorrect. Correct answer:
+                                    {{ $question->correct_answer }}
                                 </div>
 
-                            </div>
+                            </template>
+
+                        </div>
+
+                    </div>
+
+                @endforeach
+
+            </div>
+
+            <!-- Submit -->
+            <div class="mt-6">
+
+                <button
+                    @click="submitQuiz"
+                    class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold"
+                >
+                    Submit Quiz
+                </button>
+
+            </div>
+
+            <!-- Result -->
+            <div
+                x-show="resultVisible"
+                class="mt-4 bg-white rounded-xl p-4"
+            >
+
+                <h5 class="font-bold text-lg">
+                    Your Score:
+                    <span x-text="score + '%'"></span>
+                </h5>
+
+                <p
+                    class="mt-2 font-medium"
+                    :class="passed ? 'text-green-600' : 'text-red-600'"
+                >
+                    <span x-text="passed ? 'Quiz Completed ✅' : 'Please Retry Incorrect Answers'"></span>
+                </p>
+
+            </div>
+
+        </div>
+
+    @empty
+
+        <p class="text-gray-500">
+            No quizzes yet.
+        </p>
+
+    @endforelse
+
+</div>
+
+                <!-- ASSIGNMENTS -->
+                <div x-show="tab==='assignments'" class="space-y-4">
+
+                    @forelse ($module->assignments as $assignment)
+
+                        <div class="bg-green-50 rounded-xl p-4">
+
+                            <h4 class="font-semibold text-green-800">
+                                📝 {{ $assignment->title }}
+                            </h4>
+
+                            @if($assignment->instructions)
+                                <p class="text-sm text-gray-600 mt-1">
+                                    {{ $assignment->instructions }}
+                                </p>
+                            @endif
+
+                            <!-- Reflection Card -->
+<div class="mt-5 bg-white border border-green-100 rounded-2xl p-5">
+
+    <div class="flex items-start gap-4">
+
+        <!-- Icon -->
+        <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-green-700"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+            </svg>
+
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1">
+
+            <div class="flex items-center justify-between">
+
+                <h5 class="font-bold text-gray-900 text-lg">
+                    Module Reflection
+                </h5>
+
+                <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full">
+                    Self Practice
+                </span>
+
+            </div>
+
+            <p class="text-gray-600 mt-2 leading-relaxed">
+                Take time to reflect on this module and apply what you learned.
+                This activity is designed to strengthen your understanding
+                before moving to the next lesson.
+            </p>
+
+            @if($assignment->instructions)
+
+                <div class="mt-4 bg-green-50 border border-green-100 rounded-xl p-4">
+
+                    <h6 class="font-semibold text-green-800 mb-2">
+                        📝 Reflection Instructions
+                    </h6>
+
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        {{ $assignment->instructions }}
+                    </p>
+
+                </div>
+
+            @endif
+
+        </div>
+
+    </div>
+
+</div>
 
                         </div>
 
                     @empty
-
-                        <div class="bg-yellow-50 border border-yellow-200 text-yellow-700 p-4 rounded-xl">
-                            No lessons added to this module yet.
-                        </div>
-
+                        <p class="text-gray-500">No assignments yet.</p>
                     @endforelse
 
                 </div>
 
             </div>
 
-        @empty
+        </div>
 
-            <div class="bg-yellow-50 border border-yellow-200 text-yellow-700 p-6 rounded-2xl">
-                No modules available for this course yet.
-            </div>
+    @empty
 
-        @endforelse
+        <div class="bg-yellow-50 border border-yellow-200 text-yellow-700 p-6 rounded-2xl">
+            No modules available for this course yet.
+        </div>
 
-    </div>
+    @endforelse
+
+</div>
 
     @endif
 
@@ -383,34 +715,141 @@
         }
     }
 
-    function onPlayerStateChange(event)
+  let progressChecker = null;
+let markedCompleted = false;
+
+function onPlayerStateChange(event)
+{
+    if (event.data === YT.PlayerState.PLAYING)
     {
-        if (
-            event.data === YT.PlayerState.ENDED
-            && currentEpisodeId
-        )
+        progressChecker = setInterval(() => {
+
+            if (!player || markedCompleted) return;
+
+            const currentTime = player.getCurrentTime();
+            const duration = player.getDuration();
+
+            if (!duration) return;
+
+            const watchedPercent = (currentTime / duration) * 100;
+
+            // Auto complete at 80%
+            if (watchedPercent >= 80)
+            {
+                markedCompleted = true;
+
+                fetch(`/episodes/${currentEpisodeId}/watched`, {
+
+                    method: 'POST',
+
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+
+                })
+                .then(res => res.json())
+                .then(data => {
+
+                    if (data.status === 'success')
+                    {
+                        location.reload();
+                    }
+
+                });
+
+                clearInterval(progressChecker);
+            }
+
+        }, 5000);
+    }
+
+    if (
+        event.data === YT.PlayerState.PAUSED
+        || event.data === YT.PlayerState.ENDED
+    )
+    {
+        clearInterval(progressChecker);
+    }
+}
+
+    function quizComponent(quizId)
+{
+    return {
+
+        answers: {},
+        feedback: {},
+        score: 0,
+        passed: false,
+        resultVisible: false,
+
+        checkAnswer(questionId, selected, correct)
         {
-            fetch(`/episodes/${currentEpisodeId}/watched`, {
+            if (selected === correct)
+            {
+                this.answers[questionId] = selected;
+                this.feedback[questionId] = 'correct';
+            }
+            else
+            {
+                this.feedback[questionId] = 'wrong';
+            }
+        },
+
+        getButtonClass(questionId, option, correct)
+        {
+            if (!this.feedback[questionId]) {
+                return 'border-gray-200 hover:border-purple-400 hover:bg-purple-50';
+            }
+
+            if (
+                this.feedback[questionId] === 'correct'
+                && option === correct
+            ) {
+                return 'bg-blue-600 text-white border-blue-600';
+            }
+
+            if (
+                this.feedback[questionId] === 'wrong'
+                && option === correct
+            ) {
+                return 'bg-green-100 border-green-400 text-green-700';
+            }
+
+            return 'border-gray-200';
+        },
+
+        async submitQuiz()
+        {
+            const response = await fetch(`/quizzes/${quizId}/submit`, {
 
                 method: 'POST',
 
                 headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
 
-            })
-            .then(res => res.json())
-            .then(data => {
-
-                if (data.status === 'success')
-                {
-                    location.reload();
-                }
-
+                body: JSON.stringify({
+                    answers: this.answers
+                })
             });
+
+            const data = await response.json();
+
+            this.score = data.score;
+            this.passed = data.passed;
+            this.resultVisible = true;
+
+            if (data.passed)
+            {
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            }
         }
     }
+}
 
 </script>
 

@@ -22,6 +22,7 @@ use App\Http\Controllers\PartnerDashboardController;
 use App\Http\Controllers\EpisodeProgressController;
 use App\Http\Controllers\PartnerApplicationController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\QuizController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -163,6 +164,7 @@ Route::get('/purchase/complete/{course}', [PurchaseController::class, 'complete'
 });
 
 
+
 //================================================
 // 4. Admin-Only Routes
 //================================================
@@ -257,3 +259,13 @@ Route::get('/generate-sitemap', function () {
 Route::middleware('web')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])
      ->post('/webhook/intasend', [WebhookController::class, 'handleIntaSend']);
 
+//================================================
+//quiz routes
+Route::middleware('auth')->group(function () {
+
+    Route::get('/quizzes/{quiz}', [QuizController::class, 'show'])
+        ->name('quizzes.show');
+
+    Route::post('/quizzes/{quiz}/submit', [QuizController::class, 'submit'])
+        ->name('quizzes.submit');
+});

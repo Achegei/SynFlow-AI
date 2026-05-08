@@ -105,6 +105,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Payment::class);
     }
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class)
+            ->withPivot(['completed', 'completed_at'])
+            ->withTimestamps();
+    }
+
+            public function watchedEpisodes()
+        {
+            return $this->belongsToMany(Episode::class)
+                ->withPivot('watched')
+                ->withTimestamps();
+        }
+
+    public function quizAttempts()
+    {
+        return $this->hasMany(\App\Models\QuizAttempt::class);
+    }
 
     /* ============================
        REFERRAL RELATIONSHIPS ✅
