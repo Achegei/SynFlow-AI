@@ -14,7 +14,8 @@ class ClassroomController extends Controller
      */
  public function show($id)
 {
-    $course = Course::with('episodes')->findOrFail($id);
+    //$course = Course::with('episodes')->findOrFail($id);
+    $course = Course::with(['modules.episodes'])->findOrFail($id);
     $user = auth()->user();
 
     // ✅ 1. Ensure user is logged in

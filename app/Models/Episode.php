@@ -11,10 +11,14 @@ class Episode extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_id',
-        'title',
-        'pdf_path',
-        'video_url',
+    'course_id',
+    'module_id',
+    'title',
+    'description',
+    'video_url',
+    'pdf_path',
+    'type',
+    'position',
     ];
 
     /**
@@ -63,5 +67,10 @@ class Episode extends Model
         }
         return null;
     }
+
+    public function module()
+        {
+            return $this->belongsTo(Module::class);
+        }
 
 }

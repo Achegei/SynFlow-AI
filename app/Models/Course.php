@@ -28,4 +28,9 @@ class Course extends Model
             return $this->belongsToMany(User::class, 'course_user')->withTimestamps();
         }
 
+        public function modules()
+    {
+        return $this->hasMany(Module::class)
+            ->orderBy('position');
+    }
 }
