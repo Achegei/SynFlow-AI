@@ -1,664 +1,986 @@
 @extends('layouts.public')
 
-@section('title', 'Become a Moose Loon AI Partner')
+@section('title', 'Moose Loon AI Academy Partnership Program')
 
 @section('content')
+
 <style>
-/* Glow effect for numbered steps */
-.glow {
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.8), 0 0 20px rgba(99, 102, 241, 0.6);
-}
+    .hero-bg{
+        background:
+        radial-gradient(circle at top left, rgba(99,102,241,.35), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,.35), transparent 35%),
+        linear-gradient(135deg,#0f172a 0%,#111827 45%,#1e1b4b 100%);
+    }
+
+    .glass{
+        backdrop-filter: blur(14px);
+        background: rgba(255,255,255,.08);
+        border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .card-hover{
+        transition: all .35s ease;
+    }
+
+    .card-hover:hover{
+        transform: translateY(-8px);
+        box-shadow: 0 25px 50px rgba(0,0,0,.12);
+    }
+
+    .gradient-border{
+        position: relative;
+    }
+
+    .gradient-border::before{
+        content:'';
+        position:absolute;
+        inset:0;
+        padding:1px;
+        border-radius:24px;
+        background:linear-gradient(135deg,#6366f1,#a855f7,#ec4899);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite:xor;
+        mask-composite:exclude;
+    }
+
+    .grid-pattern{
+        background-image:
+            linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+        background-size:40px 40px;
+    }
+
+    .glow{
+        box-shadow:0 0 20px rgba(99,102,241,.45);
+    }
 </style>
 
-<div class="bg-gray-50">
+<div class="bg-[#f8fafc] overflow-hidden">
 
-<!-- 🚀 HERO SECTION -->
-<section class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white py-20 px-6 text-center">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-            Start Your Own AI Training Business With Moose Loon AI (🇨🇦)
-        </h1>
-        <p class="text-xl mb-6">
-            Run AI training programs under a globally recognized Canadian AI brand and earn from every student you train.
-        </p>
+    <!-- HERO -->
+    <section class="hero-bg grid-pattern relative overflow-hidden">
 
-        <div class="mb-8 space-y-2 text-yellow-300 text-lg">
-            <p>No need to create your own course</p>
-            <p>We handle certification & global verification</p>
-            <p>You keep your training revenue</p>
-        </div>
+        <div class="absolute inset-0 bg-black/20"></div>
 
-        <a href="#apply"
-           class="bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold text-lg hover:bg-yellow-300 transition shadow-lg">
-           Apply to Become a Partner
-        </a>
+        <div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-32">
 
-        <div class="mt-4">
-            <a href="https://wa.me/254119066667"
-               class="inline-block mt-3 bg-white text-green-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
-               Chat With Us on WhatsApp
-            </a>
-        </div>
-    </div>
-</section>
+            <div class="grid lg:grid-cols-2 gap-14 items-center">
 
-<!-- 💡 INDUSTRY -->
-<section class="py-16 px-6 max-w-5xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-6">BUILD A BUSINESS IN THE FASTEST-GROWING INDUSTRY</h2>
+                <div>
 
-    <p class="text-gray-700 mb-4">
-        AI is no longer optional — it is becoming a core skill across every industry.
-    </p>
+                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/10 text-indigo-200 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        Partnership Opportunities Open Across Kenya
+                    </div>
 
-    <p class="text-gray-700 mb-4">
-        Businesses need AI. Students want AI skills.
-    </p class="text-gray-700 mb-4">
-    <p>This is your opportunity to build a training business that connects both.</p>
+                    <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight">
+                        Build an
+                        <span class="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                            AI Training Business
+                        </span>
+                        With Moose Loon AI Academy
+                    </h1>
 
-    <p class="text-gray-700">
-        With Moose Loon AI, you don’t start from scratch — you plug into a proven system with real demand.
-    </p>
-</section>
+                    <p class="mt-8 text-xl text-gray-300 leading-relaxed max-w-2xl">
+                        Launch and scale AI training programs under an international AI education brand.
+                        Deliver high-demand AI courses, earn from every student enrolled, and become part of Kenya’s fastest-growing AI education network.
+                    </p>
 
-<!-- 🤝 WHAT YOU GET -->
-<section class="bg-gray-100 py-16 px-6">
-    <div class="max-w-6xl mx-auto">
+                    <div class="mt-10 flex flex-wrap gap-4">
 
-        <h2 class="text-3xl font-bold text-center mb-12">What You Get as a Partner</h2>
+                        <a href="#apply"
+                           class="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition shadow-2xl">
+                            Apply for Partnership
+                        </a>
 
-        <div class="grid md:grid-cols-2 gap-8">
+                        <a href="https://wa.me/254119066667"
+                           class="glass text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white/10 transition">
+                            WhatsApp Us
+                        </a>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="font-bold text-xl mb-3">Official Partner Status</h3>
-                <p>Operate under a trusted international AI brand.</p>
-            </div>
+                    </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="font-bold text-xl mb-3">Ready-Made Training Programs</h3>
-                <p>Deliver structured AI courses such as:</p>
-                <ul>
-                    <li>AI Chat Agents</li>
-                    <li>AI Voice Assistants/Agents</li>
-                </ul>
-                <p><strong>No need to build your own course</strong></p>
+                    <div class="mt-10 grid sm:grid-cols-3 gap-4">
+
+                        <div class="glass rounded-2xl p-5">
+                            <div class="text-3xl font-black text-white">AI</div>
+                            <p class="text-sm text-gray-300 mt-2">
+                                Industry-focused training programs
+                            </p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-5">
+                            <div class="text-3xl font-black text-white">100%</div>
+                            <p class="text-sm text-gray-300 mt-2">
+                                Online & scalable learning delivery
+                            </p>
+                        </div>
+
+                        <div class="glass rounded-2xl p-5">
+                            <div class="text-3xl font-black text-white">KES</div>
+                            <p class="text-sm text-gray-300 mt-2">
+                                Revenue-sharing partnership model
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="relative">
+
+                    <div class="gradient-border rounded-[30px]">
+                        <div class="bg-white rounded-[30px] p-8 lg:p-10 shadow-2xl">
+
+                            <div class="flex items-center justify-between mb-8">
+                                <div>
+                                    <p class="text-sm font-semibold text-indigo-600 uppercase tracking-widest">
+                                        Featured Program
+                                    </p>
+                                    <h3 class="text-3xl font-black text-gray-900 mt-2">
+                                        AI & Workflow Automation
+                                    </h3>
+                                </div>
+
+                                <div class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl text-sm font-bold">
+                                    19 Modules
+                                </div>
                             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="font-bold text-xl mb-3">Globally Verifiable Certificates</h3>
-                <p>Issued by Moose Loon AI with QR verification.</p>
-                  <p>Recognized globally.</p>
+                            <div class="space-y-4">
+
+                                <div class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50">
+                                    <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold">
+                                        01
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">Prompt Engineering & AI Systems</h4>
+                                        <p class="text-gray-600 text-sm mt-1">
+                                            Teach practical AI usage, workflows, automation logic, and intelligent systems.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50">
+                                    <div class="w-12 h-12 rounded-xl bg-purple-600 text-white flex items-center justify-center font-bold">
+                                        02
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">AI Chat Agents & WhatsApp Automation</h4>
+                                        <p class="text-gray-600 text-sm mt-1">
+                                            Students build real AI assistants integrated with workflows and CRM systems.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50">
+                                    <div class="w-12 h-12 rounded-xl bg-pink-600 text-white flex items-center justify-center font-bold">
+                                        03
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">Industry-Ready Practical Skills</h4>
+                                        <p class="text-gray-600 text-sm mt-1">
+                                            Real-world projects designed for freelancers, institutions, and businesses.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="mt-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white">
+                                <p class="font-bold text-lg">
+                                    “You focus on learners and growth.
+                                    Moose Loon AI handles curriculum, systems, certification, and standards.”
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow">
-                <h3 class="font-bold text-xl mb-3">Complete Business Model</h3>
-                <p> <strong>You focus on:</strong><br>
-                •	Recruiting learners <br>
-                •	Delivering training <br>
-                •	Growing your local presence 
-                <br>
+        </div>
 
-                <strong>We handle:</strong> <br>
-                    •	Certification <br>
-                    •	Brand authority <br>
-                    •	Course standards</p>
+    </section>
+
+    <!-- WHY THIS MATTERS -->
+    <section class="py-24 px-6 bg-white">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-sm">
+                    Why Institutions & Trainers Are Joining
+                </div>
+
+                <h2 class="text-5xl font-black text-gray-900 mt-6">
+                    AI Education Is Becoming Essential
+                </h2>
+
+                <p class="mt-6 text-xl text-gray-600 leading-relaxed">
+                    Businesses are rapidly adopting AI systems, automation, intelligent chat agents, and workflow tools.
+                    Students are actively looking for practical AI skills that lead to income, employment, and business opportunities.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+
+                <div class="bg-gray-50 rounded-3xl p-8 card-hover">
+                    <div class="text-5xl mb-5">🚀</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        High Demand
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        AI skills are becoming a priority across business, education, customer support, marketing, and operations.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 card-hover">
+                    <div class="text-5xl mb-5">💼</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        Revenue Opportunity
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Run cohorts, workshops, or institutional training programs while generating sustainable income.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 card-hover">
+                    <div class="text-5xl mb-5">🌍</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        International Positioning
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Operate under Moose Loon AI Academy with globally verifiable certification systems.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 card-hover">
+                    <div class="text-5xl mb-5">⚡</div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                        Fast Deployment
+                    </h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Launch quickly without creating your own curriculum, systems, or certification infrastructure.
+                    </p>
+                </div>
+
             </div>
 
         </div>
-    </div>
-</section>
 
-<!-- 💰 REVENUE -->
-<section class="py-16 px-6 max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-8">Simple Revenue Model</h2>
+    </section>
 
-    <div class="bg-white p-8 rounded-2xl shadow space-y-4 text-left">
-        <p><strong>Partner License Fee:</strong> KES 15,000 (One-time)</p>
-        <p><strong>Certificate Fee:</strong> KES 2,000 per learner</p>
+    <!-- PROGRAM -->
+    <section class="py-24 px-6 bg-[#0f172a]">
 
-        <hr>
-         <h2 class="text-3xl font-bold mb-8">Your Profit Opportunity</h2>
-         <p class="font-semibold">You set your own training price.</p>
-        <p class="font-semibold">Example:</p>
-        <p>If you Charge KES 10,000 per student</p>
-        <p>30 students = KES 300,000</p>
-        <p>Certificate cost = KES 60,000</p>
-        <p class="font-bold text-green-600">Your Earnings = KES 240,000</p>
-        <p class="font-bold text-green-600">The more students you train, the more you earn.</p>
-    </div>
-</section>
+        <div class="max-w-7xl mx-auto">
 
-<!-- 🔥 WHY IT WORKS -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">WHY THIS OPPORTUNITY WORKS</h2>
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 text-center">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-300 font-semibold text-sm">
+                    Partnership Program
+                </div>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">📈 High Demand</h3>
-            <p>AI skills are in demand across Kenya and globally.</p>
+                <h2 class="text-5xl font-black text-white mt-6">
+                    AI Agents & Workflow Automation Certification Program
+                </h2>
+
+                <p class="mt-6 text-xl text-gray-300 leading-relaxed">
+                    A practical AI training program designed for modern business environments,
+                    automation systems, intelligent workflows, AI chat agents, and digital operations.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 mt-16">
+
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                    <div class="text-indigo-300 text-5xl mb-5">🧠</div>
+
+                    <h3 class="text-2xl font-bold text-white mb-5">
+                        Core AI Foundations
+                    </h3>
+
+                    <ul class="space-y-3 text-gray-300">
+                        <li>• Introduction to Artificial Intelligence</li>
+                        <li>• AI in Business & Industry</li>
+                        <li>• Prompt Engineering</li>
+                        <li>• Markdown for AI Communication</li>
+                        <li>• Large Language Models (LLMs)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                    <div class="text-purple-300 text-5xl mb-5">⚙️</div>
+
+                    <h3 class="text-2xl font-bold text-white mb-5">
+                        Automation & Systems
+                    </h3>
+
+                    <ul class="space-y-3 text-gray-300">
+                        <li>• APIs & Integrations</li>
+                        <li>• n8n Workflow Automation</li>
+                        <li>• Webhooks & Real-Time Systems</li>
+                        <li>• Error Handling & Debugging</li>
+                        <li>• Workflow Design</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                    <div class="text-pink-300 text-5xl mb-5">🤖</div>
+
+                    <h3 class="text-2xl font-bold text-white mb-5">
+                        Advanced AI Applications
+                    </h3>
+
+                    <ul class="space-y-3 text-gray-300">
+                        <li>• AI Chat Agents</li>
+                        <li>• WhatsApp AI Systems</li>
+                        <li>• CRM Integration</li>
+                        <li>• Agentic AI Workflows</li>
+                        <li>• Real-World AI Projects</li>
+                    </ul>
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">⚡ Fast Setup</h3>
-            <p>Start your training program within days.</p>
+    </section>
+
+    <!-- WHAT WE HANDLE -->
+    <section class="py-24 px-6 bg-white">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="grid lg:grid-cols-2 gap-14">
+
+                <div class="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-[32px] p-10 text-white shadow-2xl">
+
+                    <div class="inline-flex px-4 py-2 rounded-full bg-white/10 text-white text-sm font-semibold">
+                        Moose Loon AI Academy
+                    </div>
+
+                    <h2 class="text-4xl font-black mt-6">
+                        What We Handle
+                    </h2>
+
+                    <div class="mt-10 space-y-5">
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                🎓
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Curriculum & Training Systems</h4>
+                                <p class="text-indigo-100 mt-1">
+                                    Structured AI training programs aligned with industry needs.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                📜
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Certification</h4>
+                                <p class="text-indigo-100 mt-1">
+                                    Globally verifiable certification and student credential systems.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                🧩
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Learning Platform Access</h4>
+                                <p class="text-indigo-100 mt-1">
+                                    Online learning systems, onboarding, and technical support.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                🛡️
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">Brand Standards & Quality</h4>
+                                <p class="text-indigo-100 mt-1">
+                                    Maintaining credibility, training quality, and institutional standards.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="bg-gray-50 rounded-[32px] p-10">
+
+                    <div class="inline-flex px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold">
+                        Your Role
+                    </div>
+
+                    <h2 class="text-4xl font-black mt-6 text-gray-900">
+                        What Partners Focus On
+                    </h2>
+
+                    <div class="mt-10 space-y-5">
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                                👥
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-900">Student Recruitment</h4>
+                                <p class="text-gray-600 mt-1">
+                                    Build cohorts, recruit learners, and grow your local presence.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                                🏫
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-900">Facilitate AI learning</h4>
+                                <p class="text-gray-600 mt-1">
+                                    Facilitate AI learning through creating awareness of the program.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                                📈
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-900">Business Growth</h4>
+                                <p class="text-gray-600 mt-1">
+                                    Scale AI education opportunities within your institution or network.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                                🤝
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-900">Professional Partnership</h4>
+                                <p class="text-gray-600 mt-1">
+                                    Maintain professionalism, ethics, and institutional credibility.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🧠 Proven System</h3>
-            <p>Structured courses + real-world applications.</p>
-        </div>
+    </section>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">💼 Scalable Income</h3>
-            <p>Run monthly classes and grow your revenue continuously.</p>
-        </div>
+    <!-- PARTNERSHIP DELIVERY MODEL -->
+<section class="py-24 px-6 bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white overflow-hidden">
 
-    </div>
-</section>
+    <div class="max-w-7xl mx-auto">
 
-<!-- 🧾 WHAT MOOSE LOON AI CONTROLS -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">WHAT MOOSE LOON AI CONTROLS</h2>
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 text-center">
+        <!-- HEADER -->
+        <div class="text-center max-w-4xl mx-auto">
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🧾 Course Ownership</h3>
-            <p>To maintain quality and trust, we control course ownership.</p>
-        </div>
+            <div class="inline-flex items-center px-5 py-2 rounded-full bg-white/10 border border-white/10 text-indigo-200 text-sm font-semibold tracking-wide">
+                Institutional Partnership Framework
+            </div>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">📚 Course Structure & Standards</h3>
-            <p>Ensuring all courses follow proper structure and standards.</p>
-        </div>
+            <h2 class="mt-8 text-4xl md:text-6xl font-black leading-tight">
+                How The Partnership Works
+            </h2>
 
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🎓 Certificate Issuance</h3>
-            <p>We manage certificate issuance for all learners.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">✅ Certificate Verification</h3>
-            <p>Partners and employers can verify certificates reliably.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🏷️ Brand Usage</h3>
-            <p>Controlled brand usage protects our reputation and your credibility.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🛡️ Partner Approval</h3>
-            <p>We approve partners to ensure long-term credibility and value.</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- 📋 PARTNER REQUIREMENTS -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">PARTNER REQUIREMENTS</h2>
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 text-center">
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">👥 Recruit & Manage Learners</h3>
-            <p>Be able to recruit and manage learners effectively.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🏫 Training Setup</h3>
-            <p>Have a training setup (physical or online).</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🗣️ Deliver Training in English</h3>
-            <p>Be able to deliver training in English.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">📏 Follow Standards</h3>
-            <p>Follow Moose Loon AI standards.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">💼 Professionalism & Quality</h3>
-            <p>Maintain professionalism and quality in all training.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🛡️ Ethical Practices</h3>
-            <p>Commit to ethical training practices.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🎓 Certificate Control</h3>
-            <p>Accept Moose Loon AI certificate control.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">💳 Partner License Fee</h3>
-            <p>Be ready to pay the Partner License Fee upon approval.</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- 🎓 WHAT YOUR LEARNERS WILL GAIN -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">WHAT YOUR LEARNERS WILL GAIN</h2>
-    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8 text-center">
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🛠️ Practical AI Training</h3>
-            <p>Your students will gain hands-on AI skills they can apply immediately.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">💼 Real-World Business Skills</h3>
-            <p>Learn how AI integrates with real business processes and projects.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🎯 Hands-On Experience</h3>
-            <p>Practical exercises and projects for immersive learning.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">📜 Moose Loon AI Certificate</h3>
-            <p>Students earn a verified Moose Loon AI Certificate upon completion.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow">
-            <h3 class="font-bold text-xl mb-2">🌐 Globally Verifiable Credentials</h3>
-            <p>Certificates that are verifiable anywhere in the world.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow md:col-span-2">
-            <p class="font-semibold mt-4">👉 This makes your training highly attractive and competitive.</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- 🔄 HOW THE PARTNERSHIP WORKS (Horizontal Steps) -->
-<section class="bg-gray-100 py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">HOW THE PARTNERSHIP WORKS</h2>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 text-center">
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">1</div>
-            <h3 class="font-semibold text-xl mb-1">Apply</h3>
-            <p>Submit your partner application.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">2</div>
-            <h3 class="font-semibold text-xl mb-1">Review</h3>
-            <p>We evaluate your readiness and suitability.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">3</div>
-            <h3 class="font-semibold text-xl mb-1">Approval</h3>
-            <p>Successful applicants receive approval.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">4</div>
-            <h3 class="font-semibold text-xl mb-1">Partner License Payment</h3>
-            <p>Complete the one-time Partner License Fee.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">5</div>
-            <h3 class="font-semibold text-xl mb-1">Onboarding</h3>
-            <p>Receive training guidelines and setup support.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">6</div>
-            <h3 class="font-semibold text-xl mb-1">Recruit Learners</h3>
-            <p>Start marketing and enrolling students.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">7</div>
-            <h3 class="font-semibold text-xl mb-1">Deliver Training</h3>
-            <p>Use Moose Loon AI structure to teach.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">8</div>
-            <h3 class="font-semibold text-xl mb-1">Submit Completion Records</h3>
-            <p>Send learner completion details.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow flex flex-col items-center">
-            <div class="text-white bg-indigo-600 rounded-full w-12 h-12 flex items-center justify-center text-lg font-bold shadow-lg glow mb-3">9</div>
-            <h3 class="font-semibold text-xl mb-1">Certification</h3>
-            <p>We issue globally verifiable certificates.</p>
-        </div>
-
-    </div>
-</section>
-
-<!-- ✅ COMPLETION REQUIREMENTS -->
-<section class="bg-white py-16 px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">COMPLETION REQUIREMENTS (IMPORTANT)</h2>
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
-
-        <div>
-            <h3 class="font-semibold text-xl mb-4">For certification:</h3>
-            <ul class="list-disc list-inside space-y-2">
-                <li>Learner must complete required training</li>
-                <li>Practical work must be completed</li>
-                <li>Attendance requirements must be met</li>
-                <li>Accurate records must be submitted</li>
-                <li>Certificate fee must be paid</li>
-            </ul>
-        </div>
-
-        <div>
-            <h3 class="font-semibold text-xl mb-4">For partners:</h3>
-            <ul class="list-disc list-inside space-y-2">
-                <li>Maintain quality delivery</li>
-                <li>Follow all guidelines</li>
-                <li>Protect brand integrity</li>
-                <li>Submit correct learner data</li>
-            </ul>
-        </div>
-
-    </div>
-</section>
-
-<!-- 👥 WHO SHOULD APPLY -->
-<section class="bg-gray-100 py-20 px-6">
-    <div class="max-w-6xl mx-auto">
-
-        <!-- Header -->
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold mb-4">WHO SHOULD APPLY</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                Moose Loon AI is building Kenya’s largest AI education distribution network.
-                We are partnering with institutions, organizations, and individuals who can train,
-                influence, or distribute AI knowledge at scale.
+            <p class="mt-6 text-xl text-gray-300 leading-relaxed">
+                Moose Loon AI Academy works closely with institutions to help students
+                access practical AI training, structured learning systems,
+                and globally aligned digital skills programs.
             </p>
-        </div>
-
-        <!-- Categories Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <!-- 1 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🏫 Educational Institutions</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Universities (public & private)</li>
-                    <li>TVET institutions</li>
-                    <li>Technical & private colleges</li>
-                    <li>Computer training schools</li>
-                    <li>Coding bootcamps & academies</li>
-                </ul>
-            </div>
-
-            <!-- 2 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">👨‍🏫 Trainers & Educators</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>ICT teachers & lecturers</li>
-                    <li>Freelance & corporate trainers</li>
-                    <li>Online educators</li>
-                    <li>AI & tech trainers</li>
-                </ul>
-            </div>
-
-            <!-- 3 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🏢 Training & Consulting Firms</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Corporate training firms</li>
-                    <li>HR consulting companies</li>
-                    <li>Business coaching firms</li>
-                    <li>Capacity-building organizations</li>
-                </ul>
-            </div>
-
-            <!-- 4 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">💻 Tech & Digital Businesses</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Software companies</li>
-                    <li>Web design agencies</li>
-                    <li>IT support firms</li>
-                    <li>SaaS resellers</li>
-                </ul>
-            </div>
-
-            <!-- 5 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">📍 Physical Learning Centers</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Computer labs</li>
-                    <li>Training hubs</li>
-                    <li>Co-working spaces</li>
-                    <li>Community training venues</li>
-                </ul>
-            </div>
-
-            <!-- 6 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">📱 Influencers & Communities</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Social media influencers</li>
-                    <li>Career coaches</li>
-                    <li>Community leaders</li>
-                    <li>WhatsApp/Telegram admins</li>
-                </ul>
-            </div>
-
-            <!-- 7 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">📊 Sales & Recruitment Networks</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Sales teams & leaders</li>
-                    <li>Recruitment agents</li>
-                    <li>Network marketing groups</li>
-                </ul>
-            </div>
-
-            <!-- 8 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🌍 NGOs & Programs</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Youth & women empowerment groups</li>
-                    <li>Digital literacy programs</li>
-                    <li>County initiatives</li>
-                </ul>
-            </div>
-
-            <!-- 9 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🏢 Corporate Organizations</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Corporate training departments</li>
-                    <li>HR upskilling programs</li>
-                    <li>Call centers & BPOs</li>
-                    <li>Banks & SACCOs</li>
-                </ul>
-            </div>
-
-            <!-- 10 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🎓 Students & Campus Partners</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Campus ambassadors</li>
-                    <li>Student clubs</li>
-                    <li>Alumni networks</li>
-                </ul>
-            </div>
-
-            <!-- 11 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">🕌 Community Institutions</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Churches & mosques</li>
-                    <li>Community centers</li>
-                    <li>Social associations</li>
-                </ul>
-            </div>
-
-            <!-- 12 -->
-            <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
-                <h3 class="font-bold text-lg mb-3">Entrepreneurs</h3>
-                <ul class="text-gray-600 space-y-1 text-sm">
-                    <li>Training entrepreneurs</li>
-                    <li>Workshop organizers</li>
-                    <li>Freelancers & business owners</li>
-                </ul>
-            </div>
 
         </div>
 
-        <!-- Priority Section -->
-        <div class="mt-20 bg-white p-8 rounded-2xl shadow text-center">
-            <h3 class="text-2xl font-bold mb-4">Priority High-Impact Partners</h3>
-            <p class="text-gray-600 mb-4">
-                To accelerate growth, we prioritize partners with reach, influence, and scalability.
+        <!-- FLOW -->
+        <div class="mt-20 grid lg:grid-cols-3 gap-8">
+
+            <!-- STEP 1 -->
+            <div class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 hover:border-indigo-400/40 transition duration-300">
+
+                <div class="absolute top-6 right-6 text-6xl font-black text-white/5">
+                    01
+                </div>
+
+                <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-3xl mb-8">
+                    📢
+                </div>
+
+                <h3 class="text-3xl font-black mb-5">
+                    Institution Awareness & Student Mobilization
+                </h3>
+
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    Partner institutions introduce students to the AI training opportunity
+                    through internal communication channels, workshops, orientations,
+                    digital campaigns, and academic announcements.
+                </p>
+
+                <div class="space-y-4">
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-indigo-400 mt-2"></div>
+                        <p class="text-gray-300">Student awareness campaigns</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-indigo-400 mt-2"></div>
+                        <p class="text-gray-300">Campus and online information sessions</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-indigo-400 mt-2"></div>
+                        <p class="text-gray-300">Guidance on AI career opportunities</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-indigo-400 mt-2"></div>
+                        <p class="text-gray-300">Student onboarding coordination</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="relative bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-10 shadow-2xl">
+
+                <div class="absolute top-6 right-6 text-6xl font-black text-white/10">
+                    02
+                </div>
+
+                <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mb-8">
+                    🎓
+                </div>
+
+                <h3 class="text-3xl font-black mb-5">
+                    Student Enrollment & Platform Access
+                </h3>
+
+                <p class="text-indigo-100 leading-relaxed mb-6">
+                    Once learners are organized and enrolled through the institution,
+                    Moose Loon AI Academy facilitates onboarding into the learning ecosystem.
+                </p>
+
+                <div class="space-y-4">
+
+                    <div class="bg-white/10 rounded-2xl p-4">
+                        Student records and enrollment information are submitted
+                        for onboarding and verification.
+                    </div>
+
+                    <div class="bg-white/10 rounded-2xl p-4">
+                        Learners receive access credentials, communication instructions,
+                        and platform guidance.
+                    </div>
+
+                    <div class="bg-white/10 rounded-2xl p-4">
+                        Students access structured modules, guided learning,
+                        and practical AI training resources.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-10 hover:border-purple-400/40 transition duration-300">
+
+                <div class="absolute top-6 right-6 text-6xl font-black text-white/5">
+                    03
+                </div>
+
+                <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl mb-8">
+                    🤝
+                </div>
+
+                <h3 class="text-3xl font-black mb-5">
+                    Continuous Academic Collaboration
+                </h3>
+
+                <p class="text-gray-300 leading-relaxed mb-6">
+                    The partnership creates a continuous relationship between
+                    the institution, enrolled learners, and Moose Loon AI Academy
+                    throughout the learning process.
+                </p>
+
+                <div class="space-y-4">
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-purple-400 mt-2"></div>
+                        <p class="text-gray-300">Student support and coordination</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-purple-400 mt-2"></div>
+                        <p class="text-gray-300">Academic communication channels</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-purple-400 mt-2"></div>
+                        <p class="text-gray-300">Progress monitoring and completion support</p>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 rounded-full bg-purple-400 mt-2"></div>
+                        <p class="text-gray-300">Certification and learning verification</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- BOTTOM STRATEGIC SECTION -->
+        <div class="mt-20 bg-white/5 border border-white/10 rounded-[2rem] p-10 md:p-14">
+
+            <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+                <div>
+
+                    <div class="inline-flex px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-200 text-sm font-semibold mb-6">
+                        Partnership Structure
+                    </div>
+
+                    <h3 class="text-4xl font-black leading-tight">
+                        A Structured Collaboration Between Institutions & Moose Loon AI Academy
+                    </h3>
+
+                    <p class="mt-6 text-gray-300 text-lg leading-relaxed">
+                        Institutions play a key role in learner mobilization,
+                        organization, and communication while Moose Loon AI Academy
+                        manages the digital learning infrastructure,
+                        curriculum systems, onboarding processes,
+                        and certification pathways.
+                    </p>
+
+                </div>
+
+                <div class="space-y-5">
+
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6">
+                        <h4 class="font-bold text-xl mb-2 text-indigo-300">
+                            Institution Role
+                        </h4>
+
+                        <p class="text-gray-300 leading-relaxed">
+                            Student engagement, awareness creation, learner coordination,
+                            communication support, and institutional facilitation.
+                        </p>
+                    </div>
+
+                    <div class="bg-black/30 border border-white/10 rounded-2xl p-6">
+                        <h4 class="font-bold text-xl mb-2 text-purple-300">
+                            Moose Loon AI Academy Role
+                        </h4>
+
+                        <p class="text-gray-300 leading-relaxed">
+                            Platform access, curriculum delivery, onboarding systems,
+                            technical support, learning structure,
+                            and certification management.
+                        </p>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-700 rounded-2xl p-6">
+                        <h4 class="font-bold text-xl mb-2">
+                            Shared Mission
+                        </h4>
+
+                        <p class="text-indigo-100 leading-relaxed">
+                            Expanding practical AI education access and preparing learners
+                            with modern, industry-relevant digital skills.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+    <!-- WHO SHOULD APPLY -->
+    <section class="py-24 px-6 bg-white">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold">
+                    Ideal Partners
+                </div>
+
+                <h2 class="text-5xl font-black text-gray-900 mt-6">
+                    Who Should Apply
+                </h2>
+
+                <p class="mt-6 text-xl text-gray-600">
+                    We are building partnerships with organizations and individuals
+                    capable of scaling AI education across Kenya and beyond.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+
+                @php
+                    $partners = [
+                        ['🏫','Educational Institutions'],
+                        ['👨‍🏫','Trainers & Educators'],
+                        ['🏢','Corporate Training Firms'],
+                        ['🌍','NGOs & Community Programs'],
+                    ];
+                @endphp
+
+                @foreach($partners as $partner)
+                    <div class="bg-gray-50 rounded-3xl p-8 card-hover">
+                        <div class="text-5xl mb-5">{{ $partner[0] }}</div>
+                        <h3 class="text-2xl font-bold text-gray-900">
+                            {{ $partner[1] }}
+                        </h3>
+                    </div>
+                @endforeach
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- PROCESS -->
+    <section class="py-24 px-6 bg-[#0f172a]">
+
+        <div class="max-w-7xl mx-auto">
+
+            <div class="text-center">
+                <div class="inline-flex px-4 py-2 rounded-full bg-indigo-500/20 text-indigo-300 text-sm font-semibold">
+                    Partnership Process
+                </div>
+
+                <h2 class="text-5xl font-black text-white mt-6">
+                    How The Partnership Works
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mt-16">
+
+                @php
+                    $steps = [
+                        'Submit Application',
+                        'Application Review',
+                        'Partner Approval',
+                        'Onboarding & Setup',
+                        'Launch Student Enrollment'
+                    ];
+                @endphp
+
+                @foreach($steps as $index => $step)
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center relative overflow-hidden">
+
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl"></div>
+
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white mx-auto flex items-center justify-center text-2xl font-black glow">
+                                {{ $index + 1 }}
+                            </div>
+
+                            <h3 class="text-xl font-bold text-white mt-6">
+                                {{ $step }}
+                            </h3>
+                        </div>
+
+                    </div>
+                @endforeach
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-center">
+
+        <div class="max-w-4xl mx-auto">
+
+            <h2 class="text-5xl font-black leading-tight">
+                Become Part of Kenya’s AI Education Future
+            </h2>
+
+            <p class="mt-8 text-xl text-indigo-100 leading-relaxed">
+                Build a sustainable training business, empower learners with practical AI skills,
+                and scale under a globally positioned AI education brand.
             </p>
-            <div class="grid md:grid-cols-3 gap-4 text-sm font-medium">
-                <div>Educational Institutions</div>
-                <div>Corporate Training Firms</div>
-                <div>Influencers</div>
-                <div>Sales Network Leaders</div>
-                <div>NGOs with Funding</div>
-                <div>Digital Agencies</div>
+
+            <div class="mt-10 flex flex-wrap justify-center gap-5">
+
+                <a href="#apply"
+                   class="bg-white text-gray-900 px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition">
+                    Apply for Partnership
+                </a>
+
+                <a href="https://wa.me/254119066667"
+                   class="border border-white/30 bg-white/10 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition">
+                    WhatsApp Us
+                </a>
+
             </div>
+
         </div>
 
-        <!-- Positioning -->
-        <div class="mt-12 text-center max-w-3xl mx-auto">
-            <p class="text-gray-700 mb-4">
-                We are not looking for individuals without reach.
-            </p>
-            <p class="text-gray-700 mb-4">
-                We partner with those who can consistently bring learners and scale across regions.
-            </p>
-            <h4 class="text-xl font-bold mt-6">
-                We are building Kenya’s Largest AI Education Distribution Network
-            </h4>
-        </div>
+    </section>
 
-    </div>
-</section>
+    <!-- FORM -->
+    <section id="apply" class="py-24 px-6 bg-[#f8fafc]">
 
-<!-- ⚠️ LIMITED -->
-<section class="py-16 px-6 text-center">
-    <h2 class="text-3xl font-bold mb-4">LIMITED PARTNER INTAKE</h2>
-    <p class="text-red-500 font-bold text-xl">We are selecting serious partners only.</p>
-    <p class="text-red-500 font-bold text-xl">Not all applications will be approved.</p>
-</section>
+        <div class="max-w-3xl mx-auto">
 
-<!-- 🎯 CTA -->
-<section class="bg-gradient-to-r from-indigo-600 to-purple-700 py-20 px-6 text-center text-white">
-    <h2 class="text-4xl font-extrabold mb-6">
-        Become an Official Moose Loon AI Partner Today
-    </h2>
+            <div class="bg-white rounded-[32px] shadow-2xl overflow-hidden">
 
-    <p class="text-xl mb-6">
-        Launch or scale your training business with a proven AI education model.
-    </p>
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-700 p-10 text-white text-center">
+                    <h2 class="text-4xl font-black">
+                        Partner Application
+                    </h2>
 
-    <a href="#apply"
-       class="bg-yellow-400 text-black px-10 py-4 rounded-xl font-bold text-lg shadow hover:bg-yellow-300">
-       Apply Now
-    </a>
-     <div class="mt-4">
-            <a href="https://wa.me/254119066667"
-               class="inline-block mt-3 bg-white text-green-600 px-6 py-3 rounded-lg font-semibold shadow hover:bg-gray-100">
-               Chat With Us on WhatsApp
-            </a>
-    </div>
-</section>
+                    <p class="mt-4 text-indigo-100 text-lg">
+                        Submit your application and our team will review your partnership suitability.
+                    </p>
+                </div>
 
+                <div class="p-10">
 
-<!-- FORM -->
-<section id="apply" class="bg-gray-100 py-16 px-6">
-    <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl p-10">
-        <h2 class="text-3xl font-bold mb-6 text-center">Partner Application</h2>
+                    @if(session('success'))
+                        <div class="bg-green-100 text-green-800 p-4 rounded-2xl mb-6">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-         <!-- Success / Error Messages -->
-        @if(session('success'))
-            <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
-                {{ session('success') }}
+                    @if(session('error'))
+                        <div class="bg-red-100 text-red-800 p-4 rounded-2xl mb-6">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('partner.apply') }}" method="POST" class="space-y-6">
+                        @csrf
+
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    Full Name / Institution Name
+                                </label>
+
+                                <input type="text"
+                                       name="name"
+                                       required
+                                       placeholder="Enter name"
+                                       class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    Email Address
+                                </label>
+
+                                <input type="email"
+                                       name="email"
+                                       required
+                                       placeholder="Enter email"
+                                       class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    Phone Number
+                                </label>
+
+                                <input type="text"
+                                       name="phone"
+                                       required
+                                       placeholder="Phone number"
+                                       class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                    Location
+                                </label>
+
+                                <input type="text"
+                                       name="location"
+                                       placeholder="City / County"
+                                       class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                Current Student Population / Audience Reach
+                            </label>
+
+                            <input type="text"
+                                   name="current_student_population"
+                                   placeholder="Approximate reach"
+                                   class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">
+                                Additional Information
+                            </label>
+
+                            <textarea name="additional_info"
+                                      rows="6"
+                                      placeholder="Tell us about your institution, audience, training experience, or partnership goals..."
+                                      class="w-full border border-gray-200 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-5 rounded-2xl font-black text-lg hover:scale-[1.01] transition shadow-xl">
+                            Submit Partnership Application
+                        </button>
+
+                    </form>
+
+                </div>
+
             </div>
-        @endif
 
-        @if(session('error'))
-            <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
-                {{ session('error') }}
-            </div>
-        @endif
-    <form action="{{ route('partner.apply') }}" method="POST" class="space-y-5">
-        @csrf
-
-        <input type="text" name="name" placeholder="Full Name / Institution Name" required class="w-full p-4 rounded-xl border"/>
-        <input type="email" name="email" placeholder="Email" required class="w-full p-4 rounded-xl border"/>
-        <input type="text" name="phone" placeholder="Phone Number" required class="w-full p-4 rounded-xl border"/>
-        <input type="text" name="location" placeholder="City / County / Location" class="w-full p-4 rounded-xl border"/>
-        <input type="text" name="current_student_population" placeholder="Current Student Population" class="w-full p-4 rounded-xl border"/>
-
-        <textarea name="additional_info" placeholder="Any relevant information you want to submit" rows="4"
-            class="w-full p-4 rounded-xl border"></textarea>
-
-        <button type="submit"
-            class="w-full bg-indigo-600 text-white p-4 rounded-xl font-bold hover:bg-indigo-700">
-            Submit Application
-        </button>
-    </form>
-    
-    </div>
-</section>
-
-<!-- 💡 PARTNER INSIGHTS -->
-<section class="bg-gray-50 py-16 px-6">
-    <div class="max-w-4xl mx-auto space-y-12 text-left">
-
-        <!-- Quote -->
-        <div class="bg-white p-8 rounded-3xl shadow text-center">
-            <p class="text-2xl font-semibold">“Don’t just learn AI — build a business around it and teach others to succeed.”</p>
         </div>
 
-        <!-- Frequently Asked Questions -->
-        <div class="bg-white p-8 rounded-3xl shadow">
-            <h2 class="text-3xl font-bold mb-6 text-center">FREQUENTLY ASKED QUESTIONS</h2>
-            <ul class="space-y-4">
-                <li>
-                    <strong>Do I need to create my own course?</strong><br>
-                    No. Moose Loon AI provides the course structure.
-                </li>
-                <li>
-                    <strong>Who issues certificates?</strong><br>
-                    All certificates are issued by Moose Loon AI.
-                </li>
-                <li>
-                    <strong>Can I set my own pricing?</strong><br>
-                    Yes. You control your training fees.
-                </li>
-                <li>
-                    <strong>Is the fee refundable?</strong><br>
-                    The Partner License Fee is non-refundable after approval.
-                </li>
-                <li>
-                    <strong>Can individuals apply?</strong><br>
-                    Yes, if they meet the requirements.
-                </li>
-            </ul>
-        </div>
-
-        <!-- CEO Positioning -->
-        <div class="bg-white p-8 rounded-3xl shadow text-center">
-            <p>We are not just recruiting partners.<br>We are building the largest AI training network in Kenya.</p>
-        </div>
-
-    </div>
-</section>
+    </section>
 
 </div>
 

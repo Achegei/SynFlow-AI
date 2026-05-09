@@ -62,173 +62,131 @@
 </style>
 
 @section('content')
-        <section class="relative min-h-screen bg-gray-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+  <!-- HERO SECTION (REPOSITIONED FOR ACADEMY) -->
+<section class="relative min-h-screen bg-[#050816] flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
 
-            <!-- Background -->
-            <div class="absolute inset-0">
-                <img src="{{ asset('images/aiherobg.jpg') }}" 
-                    class="w-full h-full object-cover opacity-40">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
-            </div>
-
-            <div class="relative z-10 max-w-5xl text-center">
-
-                <!-- Headline -->
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mt-20">
-                    WhatsApp AI Agent for Businesses in Kenya
-                    <span class="block text-indigo-500 mt-2">
-                        Customers message. Call for details. Confirm later. Can your business keep up?
-                    </span>
-                </h1>
-
-                <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
-                    MooseLoon AI unifies your conversations, automates responses, and captures every lead —
-                    so you never lose a customer across WhatsApp, calls, or chat.
-                </p>
-
-                <!-- CTA -->
-                <div class="mt-8 flex justify-center gap-4 flex-wrap">
-                    <a href="{{route('contactus')}}" class="px-6 py-3 bg-gray-800 text-white rounded-lg border border-gray-600 hover:bg-gray-700 transition">
-                        Talk to Sales
-                    </a>
-
-                    <a href="{{route('contactus')}}" class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                        Start Free Trial
-                    </a>
-                </div>
-
-                <p class="mt-6 text-sm text-gray-400">
-                    ⭐⭐⭐⭐⭐ Helping businesses automate & increase bookings
-                </p>
-
-                <!-- 🎥 DEMO VIDEO -->
-<div class="mt-12 relative">
-
-    <div class="aspect-video max-w-3xl mx-auto rounded-xl overflow-hidden border border-gray-800 shadow-2xl relative z-10">
-
-        <iframe
-            class="w-full h-full"
-            src="https://www.youtube.com/embed/6_a3VLRkHOQ"
-            title="MooseLoon AI Demo"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
-
+    <!-- Background -->
+    <div class="absolute inset-0">
+        <img src="{{ asset('images/aiherobg.jpg') }}" 
+            class="w-full h-full object-cover opacity-40">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black"></div>
+    </div>
+        <!-- HERO GLOW EFFECTS -->
+    <div class="absolute top-[-250px] left-1/2 -translate-x-1/2 
+                w-[900px] h-[900px] 
+                bg-indigo-600/20 blur-[180px] rounded-full">
     </div>
 
-    <!-- Glow -->
-    <div class="absolute -inset-2 bg-indigo-600/20 blur-2xl rounded-xl pointer-events-none"></div>
+    <div class="absolute bottom-[-300px] right-[-100px]
+                w-[500px] h-[500px]
+                bg-purple-600/10 blur-[160px] rounded-full">
+    </div>
 
-</div>
+    <div class="relative z-10 max-w-5xl text-center">
 
-<!-- PRODUCT -->
-<div class="mt-16 relative flex justify-center">
+        <!-- HEADLINE -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mt-20">
+            Artificial Intelligence & Automation Certification Program
+            <span class="block text-indigo-500 mt-2">
+                Delivered by Moose Loon AI Academy (Canada)
+            </span>
+        </h1>
 
-                    <!-- Animated Dashboard -->
-                    <div class="relative">
-                        <img src="{{ asset('images/dashboard.png') }}" 
-                            class="rounded-xl border border-gray-800 shadow-2xl animate-zoom-glow">
+        <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+            A structured, self-paced training program in AI Agents & Workflow Automation designed for 
+            schools, colleges, and training institutions ready to equip students with future-ready digital skills.
+        </p>
 
-                        <!-- Glow layer -->
-                        <div class="absolute inset-0 rounded-xl blur-2xl opacity-30 bg-indigo-500 animate-glow"></div>
-                    </div>
+        <!-- KEY VALUE -->
+        <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
+            Based on a 19-module curriculum covering AI fundamentals, prompt engineering, APIs, automation systems, 
+            n8n workflows, AI agents, CRM integration, and real-world deployment.
+        </p>
 
-                    <!-- FLOATING CARD -->
-                    <div class="absolute top-[45%] left-[40%] 
-                                -translate-x-1/2 -translate-y-1/2
-                                bg-white/95 backdrop-blur-md rounded-xl shadow-2xl p-6 
-                                w-[90%] sm:w-[420px] animate-float hidden sm:block">
+        <!-- CTA -->
+        <div class="mt-8 flex justify-center gap-4 flex-wrap">
+            <a href="{{route('contactus')}}" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 
+            text-white font-semibold rounded-2xl 
+            shadow-[0_0_40px_rgba(99,102,241,0.35)]
+            hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(99,102,241,0.45)]
+            transition-all duration-300">
+                Become an Academic Partner
+            </a>
 
-                        <div class="text-left">
+            <a href="{{route('contactus')}}" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.35)]hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(99,102,241,0.45)]
+            transition-all duration-300">
+                Request Program Proposal
+            </a>
+        </div>
 
-                            <!-- 🔥 FIXED WORKFLOW ANIMATION -->
-                            <div class="flex items-center justify-center gap-4 mb-4">
+        <p class="mt-6 text-sm text-gray-400">
+            ⭐ Accredited-ready curriculum • Built for institutional delivery • Industry aligned AI training
+        </p>
 
-                                <div class="flex gap-2">
-                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">W</div>
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs">C</div>
-                                </div>
+    </div>
+</section>
 
-                                <div class="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold animate-pulse">
-                                    AI
-                                </div>
-
-                                <div class="flex gap-2">
-                                    <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs">CRM</div>
-                                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white text-xs">B</div>
-                                </div>
-
-                            </div>
-
-                            <!-- TEXT -->
-                            <h3 class="text-lg font-bold text-gray-900">
-                                Explore MooseLoon AI
-                            </h3>
-
-                            <p class="mt-2 text-sm text-gray-600">
-                                Explore the Power of Moose Loon AI
-                            </p>
-
-                            <p class="mt-2 text-sm text-gray-600">
-                                Sell smarter, strengthen relationships, and respond faster. All from one inbox. Experience it instantly, no sign-up needed.
-                            </p>
-
-                            <button class="mt-4 w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
-                                <a href="{{ route('contactus') }}" class="text-white no-underline">✨ Start Interactive Demo</a>
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Scale Business Growth Section -->
-    <section class="py-20 bg-gray-950 text-white">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- WHY INSTITUTIONS NEED AI TRAINING -->
+<section class="py-20 bg-[#050816] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
             <!-- LEFT CONTENT -->
             <div>
+
+                <p class="text-indigo-400 font-semibold mb-4 uppercase tracking-wider">
+                    Future-Ready Education
+                </p>
+
                 <h2 class="text-3xl sm:text-4xl font-bold leading-tight">
-                    Scale business growth with every customer conversation
+                    Prepare students for the AI-powered workforce
                 </h2>
 
                 <p class="mt-6 text-gray-300 text-lg">
-                    As chats and calls multiply, old inboxes and workflows break. MooseLoon AI helps you manage the entire customer journey across every channel in one place — even at high volume.
+                    Artificial Intelligence is rapidly transforming business, communication, customer service, operations, and digital work. Institutions that integrate AI training today position their students for tomorrow’s opportunities.
                 </p>
 
                 <!-- FEATURES -->
                 <div class="mt-8 space-y-6">
 
                     <div>
-                        <h4 class="font-semibold text-indigo-400">Capture</h4>
-                        <p class="text-gray-300">Unify customer touch points to drive revenue</p>
+                        <h4 class="font-semibold text-indigo-400">
+                            Industry-Relevant Skills
+                        </h4>
+                        <p class="text-gray-300">
+                            Students learn practical AI automation, workflows, APIs, AI agents, and business systems.
+                        </p>
                     </div>
 
                     <div>
-                        <h4 class="font-semibold text-indigo-400">Convert</h4>
-                        <p class="text-gray-300">Sell more with AI and analytics</p>
+                        <h4 class="font-semibold text-indigo-400">
+                            Self-Paced Online Delivery
+                        </h4>
+                        <p class="text-gray-300">
+                            Flexible learning structure designed for schools, colleges, and training centers.
+                        </p>
                     </div>
 
                     <div>
-                        <h4 class="font-semibold text-indigo-400">Retain</h4>
-                        <p class="text-gray-300">Build recurring revenue, not just one-time sales</p>
+                        <h4 class="font-semibold text-indigo-400">
+                            Real-World Implementation
+                        </h4>
+                        <p class="text-gray-300">
+                            Learners build AI workflows, automation systems, WhatsApp AI agents, and CRM-integrated solutions.
+                        </p>
                     </div>
 
                 </div>
 
                 <p class="mt-8 text-gray-400">
-                    Acquiring customers is costly — keeping them fuels sustainable growth. With full context at your fingertips, every follow-up feels personal, from targeted broadcasts and renewal reminders to in-chat CSAT surveys. Earn a reputation for reliability that turns one-time buyers into repeat customers.
+                    Moose Loon AI Academy helps institutions introduce modern AI education without requiring deep technical infrastructure or software engineering departments.
                 </p>
             </div>
 
-            <!-- RIGHT IMAGE ROTATOR -->
+            <!-- RIGHT IMAGE ROTATOR (UNCHANGED) -->
             <div class="relative w-full h-[350px] sm:h-[400px] lg:h-[450px]">
 
-                <!-- Images -->
                 <img src="{{ asset('images/feature1.png') }}" 
                      class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-2xl transition-opacity duration-1000 opacity-100 image-slide">
 
@@ -238,7 +196,6 @@
                 <img src="{{ asset('images/feature3.png') }}" 
                      class="absolute inset-0 w-full h-full object-cover rounded-xl shadow-2xl transition-opacity duration-1000 opacity-0 image-slide">
 
-                <!-- Glow -->
                 <div class="absolute inset-0 rounded-xl blur-2xl bg-indigo-500 opacity-20"></div>
 
             </div>
@@ -248,11 +205,11 @@
 </section>
 
 <!-- Unified Inbox Section -->
-<section class="relative py-24 bg-gray-900">
+<section class="relative py-24 bg-[#0B1120]">
 
     <!-- FLOATING CONTAINER -->
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative bg-gray-950 rounded-2xl shadow-2xl border border-gray-800 p-8 sm:p-12 
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative bg-[#050816] rounded-2xl shadow-2xl border border-gray-800 p-8 sm:p-12 
                     -mt-32 z-10">
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -269,15 +226,15 @@
                 <!-- RIGHT TEXT -->
                 <div>
                     <h2 class="text-3xl sm:text-4xl font-bold text-white leading-tight">
-                        Chats, calls and emails in one thread
+                        Structured AI learning built for modern institutions
                     </h2>
 
                     <p class="mt-6 text-gray-300 text-lg">
-                        MooseLoon AI unifies WhatsApp Business Calls, Messenger Calls and VoIP in the same thread as your messages and emails.
+                       Moose Loon AI Academy delivers a guided learning experience that combines AI theory, workflow automation, practical implementation, and real-world deployment projects.
                     </p>
 
                     <p class="mt-6 text-gray-400">
-                        No more silos or juggling multiple platforms — just one reliable record for every customer, no matter the channel.
+                    The program is designed for flexible institutional delivery through self-paced online learning, guided instruction, hybrid workshops, and project-based practical training.
                     </p>
                 </div>
 
@@ -287,7 +244,7 @@
     </div>
 </section>
 
-<section class="bg-gray-950 py-24 px-4 sm:px-6 lg:px-8">
+<section class="bg-[#050816] py-24 px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto text-center">
 
         <!-- TOP CONTENT -->
@@ -296,11 +253,11 @@
         </p>
 
         <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-            Scale without adding headcount
+           What students learn in the program
         </h2>
 
         <p class="mt-4 text-gray-400 text-lg max-w-3xl mx-auto">
-            Accelerate growth on every channel with AI Agents that respond, route and perform tasks accurately and reliably.
+            Students gain practical skills in AI systems, automation workflows, prompt engineering, APIs, AI chat agents, CRM integration, and intelligent business automation.
         </p>
 
         <!-- 🎥 VIDEO (CENTERED BETWEEN CONTENT) -->
@@ -326,613 +283,753 @@
         </div>
 
         <!-- 🔥 FEATURE CARDS -->
-        <div class="mt-20 grid md:grid-cols-3 gap-6 text-left">
+        <!-- PREMIUM FEATURE CARDS -->
+<div class="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
 
-            <!-- Card 1 -->
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
-                <h3 class="text-white font-semibold text-lg">
-                    Convert customers efficiently
-                </h3>
-                <p class="text-gray-400 mt-3 text-sm">
-                    Multilingual AI Agents handle enquiries, answer FAQs and route only serious buyers to your team for faster conversions and higher ROI.
-                </p>
-            </div>
+    <!-- CARD -->
+    <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 
+                backdrop-blur-sm hover:border-indigo-500/40 
+                hover:bg-white/[0.07] transition duration-300">
 
-            <!-- Card 2 -->
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
-                <h3 class="text-white font-semibold text-lg">
-                    Shorten sales cycles
-                </h3>
-                <p class="text-gray-400 mt-3 text-sm">
-                    Turn intent into purchases by removing friction. AI Agents recommend products, manage bookings and guide customers seamlessly.
-                </p>
-            </div>
+        <div class="w-14 h-14 rounded-xl bg-indigo-600/20 
+                    flex items-center justify-center mb-6
+                    group-hover:scale-110 transition">
 
-            <!-- Card 3 -->
-            <div class="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-indigo-500 transition">
-                <h3 class="text-white font-semibold text-lg">
-                    Launch quickly and securely
-                </h3>
-                <p class="text-gray-400 mt-3 text-sm">
-                    Handle 10x more customers with high accuracy and built-in guardrails. Start fast with templates or customize fully.
-                </p>
-            </div>
+            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9.75 3v4.5m4.5-4.5V6m-9 12.75h13.5A2.25 2.25 0 0021 16.5V7.5A2.25 2.25 0 0018.75 5.25H5.25A2.25 2.25 0 003 7.5v9a2.25 2.25 0 002.25 2.25z"/>
+            </svg>
 
         </div>
+
+        <h3 class="text-white font-semibold text-xl">
+            AI Agents & Workflow Automation
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+            Learn how to design intelligent AI workflows, automation systems, 
+            and customer interaction agents using modern no-code platforms.
+        </p>
+
+    </div>
+
+    <!-- CARD -->
+    <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 
+                backdrop-blur-sm hover:border-indigo-500/40 
+                hover:bg-white/[0.07] transition duration-300">
+
+        <div class="w-14 h-14 rounded-xl bg-indigo-600/20 
+                    flex items-center justify-center mb-6
+                    group-hover:scale-110 transition">
+
+            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M7.5 12h9m-9 4.5h5.25m-5.25-9h9m3 4.5A9 9 0 1112 3a9 9 0 019 9z"/>
+            </svg>
+
+        </div>
+
+        <h3 class="text-white font-semibold text-xl">
+            APIs, Integrations & Real-Time Systems
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+            Students learn how systems communicate through APIs, webhooks, 
+            automation pipelines, and integrated AI workflows.
+        </p>
+
+    </div>
+
+    <!-- CARD -->
+    <div class="group bg-white/5 border border-white/10 rounded-2xl p-8 
+                backdrop-blur-sm hover:border-indigo-500/40 
+                hover:bg-white/[0.07] transition duration-300">
+
+        <div class="w-14 h-14 rounded-xl bg-indigo-600/20 
+                    flex items-center justify-center mb-6
+                    group-hover:scale-110 transition">
+
+            <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                 viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M12 6v6l4 2m6-2A9 9 0 1112 3a9 9 0 0110 9z"/>
+            </svg>
+
+        </div>
+
+        <h3 class="text-white font-semibold text-xl">
+            Career & Business Application
+        </h3>
+
+        <p class="text-gray-400 mt-4 leading-relaxed">
+            The curriculum prepares learners for freelancing, AI consulting, 
+            automation services, and real-world implementation opportunities.
+        </p>
+
+    </div>
+
+</div>
 
         <!-- CTA -->
         <div class="mt-12">
             <a href="{{ route('contactus') }}" 
                class="inline-block px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition">
-                Try AI Agent for Free
+                View Partnership Opportunities
             </a>
         </div>
 
     </div>
 </section>
 
-    <!-- AI Automation for Fast Business Growth Section -->
-<section class="bg-white py-20">
-    <div class="container mx-auto px-4 max-w-6xl">
-        <!-- Header -->
-<div class="text-center mb-16">
-    <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
-        AI AUTOMATION FOR FAST BUSINESS GROWTH
-    </h2>
+<!-- PREMIUM INSTITUTIONAL PARTNERSHIP SECTION -->
+<section class="relative py-28 bg-gray-950 overflow-hidden">
 
-    <p class="text-xl font-semibold text-indigo-600 mb-4">
-        Turn Every Inquiry Into Revenue — 24/7
-    </p>
+    <!-- BACKGROUND GLOW -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-indigo-600/20 blur-[140px] rounded-full"></div>
 
-    <!-- NEW: Hot Offer -->
-    <p class="text-gray-600 max-w-3xl mx-auto text-lg mb-4">
-        We install your AI system in 7 days. You start capturing leads and customers immediately — then pay monthly as it works for you.
-    </p>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <!-- NEW: Guarantee -->
-    <p class="text-sm text-green-600 font-semibold">
-        ✅ Go Live Guarantee: If your system is not live within 7 days, your setup is refunded.
-    </p>
-</div>
-
-<!-- 🎥 GO LIVE VIDEO -->
-<div class="mt-8 relative">
-
-    <div class="aspect-video max-w-4xl mx-auto rounded-2xl overflow-hidden border border-gray-800 shadow-2xl relative z-10">
-
-        <iframe
-            class="w-full h-full"
-            src="https://www.youtube.com/embed/MDrVJ-IU-Dc"
-            title="Go Live AI System"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-        </iframe>
-
-    </div>
-
-    <!-- Glow -->
-    <div class="absolute -inset-2 bg-green-500/20 blur-2xl rounded-2xl pointer-events-none"></div>
-
-</div>
-    <!-- Benefits -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ We handle your customer inquiries 24/7
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ Turn conversations into paying customers
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ AI agents on WhatsApp, voice, email & website chat
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ Automated lead capture, bookings & follow-ups
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ No need to hire extra staff
-        </div>
-
-        <div class="bg-gray-50 p-6 rounded-xl shadow-sm">
-            ✔ System setup and launch within 7 days
-        </div>
-
-    </div>
-
-    <!-- OPTIONAL: Industry Hook (HIGH CONVERSION) -->
-    <div class="text-center mb-16">
-        <p class="text-gray-700 text-lg font-semibold">
-            Built for high-demand businesses:
-        </p>
-        <div class="mt-4">
-            <a href="#industries"
-            class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                Explore Industries We Serve →
-            </a>
-        </div>
-    </div>
-
-        <!-- AI Agents Included -->
-        <div class="mb-20">
-            <h3 class="text-3xl font-bold text-gray-900 mb-10 text-center">
-                AI AGENTS INCLUDED
-            </h3>
-
-            <div class="space-y-6">
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>WhatsApp AI Agent</strong><br>
-                    Handles customer inquiries, captures leads, schedules bookings, and sends automated follow-ups on WhatsApp.
-                </div>
-
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>Website Chat Agent</strong><br>
-                    Instantly responds to website visitors and converts traffic into qualified leads.
-                </div>
-
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>Voice Call AI Agent</strong><br>
-                    Answers incoming calls, handles FAQs, captures customer details, and schedules appointments automatically.
-                </div>
-
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>Email AI Agent</strong><br>
-                    Manages inbox responses, professional replies, and automated customer follow-ups.
-                </div>
-
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>Booking & Scheduling Automation</strong><br>
-                    Manages appointment bookings and calendar scheduling automatically.
-                </div>
-
-                <div class="bg-indigo-500 border rounded-xl p-6 shadow-sm text-white">
-                    <strong>AI Sales & Support Assistants</strong><br>
-                    Automate customer engagement, ensuring every inquiry receives an instant professional response while helping businesses convert more leads into paying customers.
-                </div>
-            </div>
-        </div>
-
-        <!-- Why Businesses Lose Customers -->
-        <div class="mb-20">
-            <h3 class="text-3xl font-bold text-gray-900 mb-6 text-center">
-                WHY BUSINESSES LOSE CUSTOMERS
-            </h3>
-
-            <p class="text-center text-gray-600 mb-8">
-                Every day, businesses lose opportunities because:
-            </p>
-
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-gray-700">
-                <li>• Customers wait too long for responses</li>
-                <li>• Inquiries are missed after working hours</li>
-                <li>• Follow-ups are inconsistent</li>
-                <li>• Sales opportunities slip away</li>
-                <li>• Staff become overwhelmed handling repetitive inquiries</li>
-            </ul>
-
-            <p class="text-center font-semibold text-indigo-600 mt-8">
-                In today’s market, speed wins customers.
-            </p>
-        </div>
-
-        <!-- Industries -->
-        <div id="industries" class="mb-20">
-            <h3 class="text-3xl font-bold text-gray-900 mb-10 text-center">
-                INDUSTRIES ALREADY BENEFITING FROM AI AUTOMATION
-            </h3>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-indigo-700">
-                <div>🏘️ Real estate agencies & property developers</div>
-                <div>🚗  Car dealerships & auto service centers</div>
-                <div>🏨 Hotels, resorts & travel agencies</div>
-                <div>🏥 Clinics, hospitals & medical centers</div>
-                <div>🛍️ Retail stores & e-commerce businesses</div>
-                <div>🚚 Logistics, courier & delivery companies</div>
-                <div>🏦  Banks, SACCOs & financial services</div>
-                <div>🛡️ Insurance companies & brokers</div>
-                <div>🎓 Schools, colleges & training institutions</div>
-                <div>👥 Recruitment agencies & HR firms</div>
-                <div>🍽️ Restaurants, cafés & food delivery businesses</div>
-                <div>🏗️ Construction & contracting companies</div>
-                <div>⚖️ Law firms & professional service providers</div>
-                <div>💆 Beauty salons, spas & wellness centers</div>
-                <div>🏋️ Gyms & fitness centers</div>
-                <div>🎉 Event planners & entertainment businesses</div>
-                <div>🦁  Tour operators & safari companies</div>
-                <div>📡  Telecommunications & internet providers</div>
-                <div>🤝 NGOs & customer-facing organizations</div>
-                <div>🏛️ Government-facing service providers & agencies</div>
-                <div>🏪  SMEs & growing local businesses</div>
-                <div>🏪  Any business that deals with customers or client inquiries</div>
-            </div>
-        </div>
-
-        <!-- Quote -->
-        <div class="bg-indigo-50 p-10 rounded-2xl text-center mb-16">
-            <p class="text-2xl font-semibold text-gray-900 mb-4">
-                “Your best salesperson and support agent working 24/7 without salary or breaks.”
-            </p>
-            <p class="text-gray-700 max-w-4xl mx-auto">
-                Studies consistently show that many businesses struggle or fail due to poor customer engagement and slow response times. Customers often leave not because of price or product quality, but because they choose companies that respond faster and engage them better.
-            </p>
-        </div>
-
-        <!-- CTA -->
+        <!-- TOP LABEL -->
         <div class="text-center">
-            <p class="text-xl font-semibold mb-6">
-                Book your FREE AI demo today and see how automation grows your revenue.
-            </p>
-            <a href="{{route('contactus')}}" class="inline-block px-8 py-4 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition">
-                👉 BOOK FREE AI DEMO TODAY
-            </a>
-        </div>
-    </div>
-</section>
 
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm font-medium backdrop-blur-xl">
+                <span class="w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
+                Institutional Partnership Program
+            </div>
 
-    <!-- New Section: Impact & Results -->
-    
-                <!-- Collaborating Brands Slider -->
-        <div class="container mx-auto px-4 text-center py-12">
-            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl mb-6">
-                Trusted by Leading Platforms and Partners
+            <!-- HEADING -->
+            <h2 class="mt-8 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight max-w-5xl mx-auto">
+                Bring AI Certification Into Your Institution
             </h2>
-            <div class="relative overflow-hidden h-20">
-                <div class="absolute inset-0 flex items-center justify-start space-x-12">
-                    <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
-                        <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
-                        <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
-                        <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
-                        <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
-                        <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
-                        <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
-                    </div>
-                    <div class="flex-shrink-0 flex items-center space-x-12 animate-slide">
-                        <img class="h-16 w-auto" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
-                        <img class="h-16 w-auto" src="{{asset('images/Make-Logo.png')}}" alt="Make.com">
-                        <img class="h-16 w-auto" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
-                        <img class="h-16 w-auto" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
-                        <img class="h-16 w-auto" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
-                        <img class="h-16 w-auto" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
-                    </div>
+
+            <p class="mt-8 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Moose Loon AI Academy partners with schools, colleges, and training institutions to deliver a modern
+                <span class="text-white font-semibold">Artificial Intelligence & Automation Systems Certification Program</span>
+                built for practical skills, employability, and future-ready education.
+            </p>
+
+            <!-- STATS -->
+            <div class="mt-12 flex flex-wrap justify-center gap-4">
+
+                <div class="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                    <p class="text-3xl font-black text-white">19</p>
+                    <p class="text-sm text-gray-400 mt-1">Structured Modules</p>
                 </div>
+
+                <div class="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                    <p class="text-3xl font-black text-white">12–16</p>
+                    <p class="text-sm text-gray-400 mt-1">Weeks Duration</p>
+                </div>
+
+                <div class="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+                    <p class="text-3xl font-black text-white">100%</p>
+                    <p class="text-sm text-gray-400 mt-1">Self-Paced Delivery</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- VIDEO -->
+        <div class="mt-20 relative">
+
+            <!-- glow -->
+            <div class="absolute -inset-6 bg-indigo-600/20 blur-3xl rounded-[40px]"></div>
+
+            <div class="relative aspect-video max-w-5xl mx-auto rounded-[28px] overflow-hidden border border-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.6)]">
+
+                <iframe
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/MDrVJ-IU-Dc"
+                    title="Institutional AI Program"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+
             </div>
         </div>
 
-        <!-- Kenyan Partners Section -->
-        <div class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <h3 class="text-center text-2xl font-extrabold text-gray-900 mb-8">
-                    Trusted by Companies We Work With in Kenya
+        <!-- VALUE GRID -->
+        <div class="mt-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <!-- CARD -->
+            <div class="group p-8 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:bg-white/[0.07] transition duration-300">
+
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-2xl mb-6">
+                    📘
+                </div>
+
+                <h3 class="text-xl font-bold text-white">
+                    Structured Curriculum
                 </h3>
 
-                <div class="flex flex-wrap items-center justify-center gap-10">
-                    <!-- Company 1 -->
-                    <a href="https://www.briwnet.co.ke/" target="_blank" rel="noopener noreferrer">
-                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
-                            src="{{ asset('images/Briwnet.png') }}"
-                            alt="Company 1">
-                    </a>
+                <p class="mt-4 text-gray-400 leading-relaxed">
+                    A complete 19-module AI certification framework covering automation systems, AI agents, APIs, workflows, integrations, and deployment.
+                </p>
 
-                    <!-- Company 2 -->
-                    <a href="https://izzyitdigital.co.ke/" target="_blank" rel="noopener noreferrer">
-                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
-                            src="{{ asset('images/izzyt.png') }}"
-                            alt="Company 2">
-                    </a>
+            </div>
 
-                    <!-- Company 3 -->
-                    <a href="https://spacetaxi.ca/" target="_blank" rel="noopener noreferrer">
-                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
-                            src="{{ asset('images/spacetaxi.png') }}"
-                            alt="Company 3">
-                    </a>
+            <!-- CARD -->
+            <div class="group p-8 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:bg-white/[0.07] transition duration-300">
 
-                    <!-- Company 4 -->
-                    <a href="https://iqracanadatestprep.ca/" target="_blank" rel="noopener noreferrer">
-                        <img class="h-16 w-auto hover:scale-105 transition-transform duration-300"
-                            src="{{ asset('images/IQRA.png') }}"
-                            alt="Company 4">
-                    </a>
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-2xl mb-6">
+                    ⚡
                 </div>
+
+                <h3 class="text-xl font-bold text-white">
+                    Practical AI Training
+                </h3>
+
+                <p class="mt-4 text-gray-400 leading-relaxed">
+                    Students build real AI workflows, automation systems, WhatsApp AI agents, and business-ready implementations.
+                </p>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="group p-8 rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-xl hover:bg-white/[0.07] transition duration-300">
+
+                <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-2xl mb-6">
+                    🎓
+                </div>
+
+                <h3 class="text-xl font-bold text-white">
+                    Institution-Ready Delivery
+                </h3>
+
+                <p class="mt-4 text-gray-400 leading-relaxed">
+                    Flexible self-paced implementation designed for colleges, universities, technical institutions, and training centers.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- HOW IT WORKS -->
+        <div class="mt-28">
+
+            <div class="text-center mb-14">
+
+                <p class="text-indigo-400 font-semibold uppercase tracking-widest">
+                    Partnership Workflow
+                </p>
+
+                <h3 class="mt-4 text-4xl font-black text-white">
+                    How Institutions Partner With Us
+                </h3>
+
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- STEP -->
+                <div class="relative p-8 rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] border border-white/10">
+
+                    <div class="absolute top-6 right-6 text-5xl font-black text-white/10">
+                        01
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-2xl mb-6">
+                        🏫
+                    </div>
+
+                    <h4 class="text-2xl font-bold text-white">
+                        Institution Onboarding
+                    </h4>
+
+                    <p class="mt-4 text-gray-400 leading-relaxed">
+                        We align the certification program with your academic structure, intake model, and institutional delivery framework.
+                    </p>
+
+                </div>
+
+                <!-- STEP -->
+                <div class="relative p-8 rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] border border-white/10">
+
+                    <div class="absolute top-6 right-6 text-5xl font-black text-white/10">
+                        02
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-2xl mb-6">
+                        💻
+                    </div>
+
+                    <h4 class="text-2xl font-bold text-white">
+                        Student Learning
+                    </h4>
+
+                    <p class="mt-4 text-gray-400 leading-relaxed">
+                        Learners access guided modules, AI projects, automation systems, assessments, and practical implementation training.
+                    </p>
+
+                </div>
+
+                <!-- STEP -->
+                <div class="relative p-8 rounded-3xl bg-gradient-to-b from-white/[0.08] to-white/[0.03] border border-white/10">
+
+                    <div class="absolute top-6 right-6 text-5xl font-black text-white/10">
+                        03
+                    </div>
+
+                    <div class="w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-2xl mb-6">
+                        🚀
+                    </div>
+
+                    <h4 class="text-2xl font-bold text-white">
+                        Certification Outcomes
+                    </h4>
+
+                    <p class="mt-4 text-gray-400 leading-relaxed">
+                        Students complete practical projects and earn the Certificate in Artificial Intelligence & Automation Systems.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- FINAL CTA -->
+        <div class="mt-28">
+
+            <div class="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 p-10 sm:p-16 text-center">
+
+                <!-- overlay -->
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_40%)]"></div>
+
+                <div class="relative">
+
+                    <p class="text-indigo-100 font-semibold uppercase tracking-[0.3em]">
+                        Start Your Partnership
+                    </p>
+
+                    <h3 class="mt-6 text-4xl sm:text-5xl font-black text-white leading-tight">
+                        Launch AI Certification For Your Students
+                    </h3>
+
+                    <p class="mt-6 text-lg text-indigo-100 max-w-2xl mx-auto">
+                        Introduce future-ready AI education into your institution with a structured curriculum, practical learning framework, and modern automation training.
+                    </p>
+
+                    <div class="mt-10 flex flex-wrap justify-center gap-4">
+
+                        <a href="{{route('contactus')}}"
+                           class="px-8 py-4 rounded-2xl bg-white text-gray-900 font-bold hover:scale-105 transition duration-300 shadow-2xl">
+                            Request Partnership Proposal
+                        </a>
+
+                        <a href="#industries"
+                           class="px-8 py-4 rounded-2xl border border-white/30 text-white font-semibold hover:bg-white/10 transition">
+                            Explore Program Areas
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+    <!-- ============================= -->
+<!-- INDUSTRY TOOLS + ECOSYSTEM -->
+<!-- ============================= -->
+
+<section class="relative bg-gray-950 overflow-hidden py-28">
+
+    <!-- Background Glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-indigo-600/20 blur-3xl rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- HEADER -->
+        <div class="text-center max-w-4xl mx-auto">
+
+            <span class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-semibold">
+                AI Tools Used Across Modern Industry
+            </span>
+
+            <h2 class="mt-8 text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+                Students train using real-world AI platforms
+            </h2>
+
+            <p class="mt-6 text-xl text-gray-400 leading-relaxed">
+                Learn automation, AI workflows, integrations, and intelligent systems using the same platforms powering modern businesses and digital operations.
+            </p>
+
+        </div>
+
+        <!-- LOGO CLOUD -->
+        <div class="mt-20 relative overflow-hidden">
+
+            <!-- Fade Edges -->
+            <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-950 to-transparent z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-950 to-transparent z-10"></div>
+
+            <div class="flex items-center gap-20 animate-slide whitespace-nowrap">
+
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Make-Logo.png')}}" alt="Make">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
+
+                <!-- duplicate -->
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/N8n-logo-new.png')}}" alt="n8n">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Make-Logo.png')}}" alt="Make">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Zapier_Logo.png')}}" alt="Zapier">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Canva_Logo.png')}}" alt="Canva">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Amazon_Web_Services_Logo.png')}}" alt="AWS">
+                <img class="h-14 w-auto opacity-70 hover:opacity-100 transition duration-300" src="{{asset('images/Relevance_AI_Logo.png')}}" alt="Relevance AI">
+
             </div>
         </div>
 
-
-    <div class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="md:grid md:grid-cols-2 md:gap-12 md:items-center">
-                    <!-- Left Text & Features -->
-                    <div class="md:text-left">
-                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                            All-in-One AI & Automation Hub
-                        </h2>
-                        <p class="mt-4 text-xl text-gray-500">
-                            Tools and features designed to simplify, automate, and scale your business operations
-                        </p>
-
-                        <div class="mt-8 space-y-6">
-                            <!-- Feature Item -->
-                            <div class="flex items-start gap-4 group">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
-                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Tailored AI Agents for Your Business
-                                    </h3>
-                                    <p class="mt-1 text-gray-600">
-                                        We design and maintain AI agents that directly support your growth goals—cutting costs, improving speed, and driving results.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4 group">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
-                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16M4 12h16M4 17h16" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Fully Managed automation pipelines
-                                    </h3>
-                                    <p class="mt-1 text-gray-600">
-                                        Robust data infrastructure and ingestion processes are a critical component in how we build out our systems.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4 group">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
-                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v.01M16 12v.01M16 16v.01M12 8v.01M12 12v.01M12 16v.01M8 8v.01M8 12v.01M8 16v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Performance analytic dashboard
-                                    </h3>
-                                    <p class="mt-1 text-gray-600">
-                                        Easily track ROI and efficiency gains with custom metrics on your AI agent's performance.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4 group">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
-                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Intelligent access control
-                                    </h3>
-                                    <p class="mt-1 text-gray-600">
-                                        Manage agent permissions with your teams to ensure secure operations across your organization.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start gap-4 group">
-                                <div class="flex-shrink-0">
-                                    <div class="h-12 w-12 flex items-center justify-center bg-indigo-100 rounded-full group-hover:bg-indigo-600 transition">
-                                        <svg class="h-6 w-6 text-indigo-600 group-hover:text-white transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition">
-                                        Secure and compliant protocols
-                                    </h3>
-                                    <p class="mt-1 text-gray-600">
-                                        Technology architecture that is fully hosted in the cloud, ensuring compliance with SOC-2, ISO, and other industry standards.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Image -->
-                    <div class="mt-12 md:mt-0">
-                        <img class="rounded-lg shadow-xl hover:scale-105 transition-transform duration-500" src="{{asset('images/AI-Solutions.png')}}" alt="A visual representation of an all-in-one platform with various icons.">
-                    </div>
-                </div>
-            </div>
     </div>
+</section>
 
 
-                <div class="py-16">
-                    <div class="container mx-auto px-4">
-                        <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 text-center sm:text-4xl">
-                            How We Build AI That Works
-                        </h2>
 
-                        <div class="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-12 md:items-center">
-                            <div class="md:text-left">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-indigo-500 text-white text-xl font-bold">1</span>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-bold text-gray-900">Discovery</h3>
-                                        <p class="mt-1 text-gray-600">
-                                            We begin by understanding your vision, goals, and requirements. Through collaborative discussions and research, we lay the foundation for your project's success.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <img class="w-full rounded-lg shadow-xl" src="{{asset('images/Discovery-Phase.png')}}" alt="A team collaborating and brainstorming during the discovery phase.">
-                            </div>
+
+
+<!-- ============================= -->
+<!-- ECOSYSTEM SECTION -->
+<!-- ============================= -->
+
+<section class="relative bg-white py-28 overflow-hidden">
+
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-100 blur-3xl rounded-full opacity-40"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+            <!-- LEFT -->
+            <div>
+
+                <span class="text-indigo-600 font-semibold tracking-wide uppercase text-sm">
+                    Complete AI Learning Ecosystem
+                </span>
+
+                <h2 class="mt-4 text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">
+                    A premium learning experience designed for modern AI education
+                </h2>
+
+                <p class="mt-6 text-xl text-gray-600 leading-relaxed">
+                    Structured learning, guided implementation, workflow automation, AI systems, and practical deployment — all integrated into one institutional-ready platform.
+                </p>
+
+                <!-- FEATURES -->
+                <div class="mt-12 space-y-5">
+
+                    <div class="flex items-start gap-5 bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:shadow-xl transition duration-300">
+
+                        <div class="w-12 h-12 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-lg font-bold">
+                            AI
                         </div>
 
-                        <div class="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-12 md:items-center">
-                            <div class="md:text-left">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-indigo-500 text-white text-xl font-bold">2</span>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-bold text-gray-900">Development</h3>
-                                        <p class="mt-1 text-gray-600">
-                                            Our team transforms ideas into reality through agile development. We build, test, and iterate, ensuring your solution meets the highest standards of quality and performance.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <img class="w-full rounded-lg shadow-xl" src="{{asset('images/Development-Process.png')}}" alt="A team of developers working on code and building a solution.">
-                            </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">
+                                AI Learning & Practical Implementation
+                            </h3>
+
+                            <p class="mt-2 text-gray-600">
+                                Students learn how to build and deploy real AI-powered systems through guided projects and hands-on implementation.
+                            </p>
                         </div>
 
-                        <div class="mt-12 md:mt-16 md:grid md:grid-cols-2 md:gap-12 md:items-center">
-                            <div class="md:text-left">
-                                <div class="flex items-start">
-                                    <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-indigo-500 text-white text-xl font-bold">3</span>
-                                    </div>
-                                    <div class="ml-4">
-                                        <h3 class="text-lg font-bold text-gray-900">Deployment</h3>
-                                        <p class="mt-1 text-gray-600">
-                                            We carefully launch your solution, ensuring a smooth transition to production. Our team provides ongoing support and optimization to keep your system running at its best.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-12 md:mt-0">
-                                <img class="w-full rounded-lg shadow-xl" src="{{asset('images/Deployment.png')}}" alt="A visual representation of a successful software deployment.">
-                            </div>
-                        </div>
                     </div>
+
+                    <div class="flex items-start gap-5 bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:shadow-xl transition duration-300">
+
+                        <div class="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center text-lg font-bold">
+                            API
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">
+                                Automation & Workflow Systems
+                            </h3>
+
+                            <p class="mt-2 text-gray-600">
+                                Learners connect tools, APIs, CRMs, and automation engines to create scalable AI workflows.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-start gap-5 bg-gray-50 border border-gray-100 rounded-2xl p-6 hover:shadow-xl transition duration-300">
+
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+                            ✓
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">
+                                Industry-Aligned Certification
+                            </h3>
+
+                            <p class="mt-2 text-gray-600">
+                                Built around modern AI skill requirements, automation systems, and real-world digital business implementation.
+                            </p>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <!-- AI Agent Components Section -->
-                <div class="py-16 bg-gray-50">
-                    <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-                        <!-- Text Content -->
+            </div>
+
+            <!-- RIGHT -->
+            <div class="relative">
+
+                <!-- Main Image -->
+                <div class="relative z-10">
+                    <img class="rounded-3xl shadow-2xl border border-gray-200"
+                         src="{{asset('images/AI-Solutions.png')}}"
+                         alt="AI Learning Platform">
+                </div>
+
+                <!-- Floating Card -->
+                <div class="absolute -bottom-10 -left-10 bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-72 z-20 hidden lg:block">
+
+                    <div class="flex items-center justify-between">
+
                         <div>
-                            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                                What Makes an AI Agent Work
-                            </h2>
-                            <p class="mt-4 text-lg text-gray-600">
-                                Behind every AI agent are three building blocks working together
+                            <p class="text-sm text-gray-500">
+                                Student Learning Progress
                             </p>
 
-                            <div class="mt-8 space-y-6">
-                                <!-- Brain -->
-                                <div class="flex items-start space-x-4">
-                                    <div class="w-10 h-10 flex items-center justify-center bg-indigo-100 text-indigo-600 rounded-xl">
-                                        🧠
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-semibold text-gray-800">Brain</h3>
-                                        <p class="text-gray-600">The decision-making core—powered by AI models that understand, analyze, and reason.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Memory -->
-                                <div class="flex items-start space-x-4">
-                                    <div class="w-10 h-10 flex items-center justify-center bg-green-100 text-green-600 rounded-xl">
-                                        💾
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-semibold text-gray-800">Memory</h3>
-                                        <p class="text-gray-600">Stores past interactions and knowledge, enabling context-aware and consistent responses.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Tools -->
-                                <div class="flex items-start space-x-4">
-                                    <div class="w-10 h-10 flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-xl">
-                                        🛠️
-                                    </div>
-                                    <div>
-                                        <h3 class="text-xl font-semibold text-gray-800">Tools</h3>
-                                        <p class="text-gray-600">External APIs, databases, and integrations that extend the agent’s real-world capabilities.</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4 class="text-3xl font-extrabold text-gray-900 mt-1">
+                                94%
+                            </h4>
                         </div>
 
-                        <!-- Image -->
-                        <div class="flex justify-center">
-                            <img src="{{asset('images/agent.jpg')}}" alt="AI Agent Components" class="rounded-xl shadow-lg max-h-120 object-contain">
+                        <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-green-600 text-2xl">
+                            ↑
                         </div>
+
                     </div>
-                </div>
 
-                <!-- Good Prompt Section -->
-                    <div class="py-16 bg-gray-50">
-                        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
-                            
-                            <!-- Left Content -->
-                            <div class="md:w-1/2 text-center md:text-left">
-                                <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                                    Great AI Starts with the Right Instruction
-                                </h2>
-                                <p class="mt-4 text-lg text-gray-600">
-                                    Clear instructions make AI smarter. The better the prompt, the better the outcomes.
-                                </p>
-                            </div>
-
-                            <!-- Right Image -->
-                            <div class="md:w-1/2">
-                                <img src="{{asset('images/prompt.jpg')}}" alt="Good Prompt Illustration" class="rounded-lg shadow-lg w-full">
-                            </div>
-                        </div>
+                    <div class="mt-4 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div class="h-full w-[94%] bg-indigo-600 rounded-full"></div>
                     </div>
-                    <!-- End Good Prompt Section -->
 
-
-
-                
-            <!-- <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                Metric 1
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    The data-target attribute holds the final number to count to.
-                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="17000">0</p>
-                    <p class="mt-2 text-lg font-medium text-gray-500">
-                        Professionals upskilled in AI via our platforms
-                    </p>
                 </div>
 
-                Metric 2 
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="435">0</p>
-                    <p class="mt-2 text-lg font-medium text-gray-500">
-                        AI Opportunities identified for businesses
-                    </p>
-                </div>
+            </div>
 
-                 Metric 3 
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-5xl font-extrabold text-indigo-600 data-counter" data-target="15">0</p>
-                    <p class="mt-2 text-lg font-medium text-gray-500">
-                        Bespoke AI solutions developed
-                    </p>
-                </div>
-            </div> -->
         </div>
-    </div> 
 
+    </div>
+</section>
+
+
+
+
+
+
+<!-- ============================= -->
+<!-- DELIVERY PROCESS -->
+<!-- ============================= -->
+
+<section class="bg-gray-50 py-28">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- HEADER -->
+        <div class="text-center max-w-3xl mx-auto">
+
+            <span class="text-indigo-600 font-semibold uppercase tracking-wider text-sm">
+                Program Delivery Framework
+            </span>
+
+            <h2 class="mt-4 text-4xl sm:text-5xl font-extrabold text-gray-900">
+                How institutions deliver the certification program
+            </h2>
+
+            <p class="mt-6 text-xl text-gray-600">
+                A structured educational workflow designed for scalable institutional deployment.
+            </p>
+
+        </div>
+
+        <!-- STEPS -->
+        <div class="mt-20 grid lg:grid-cols-3 gap-8">
+
+            <!-- STEP -->
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-gray-100 hover:shadow-2xl transition duration-500">
+
+                <div class="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold">
+                    1
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Enrollment & Setup
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Institutions onboard students into a guided AI certification pathway with structured curriculum access.
+                </p>
+
+                <img class="mt-8 rounded-2xl shadow-lg"
+                     src="{{asset('images/Discovery-Phase.png')}}">
+
+            </div>
+
+            <!-- STEP -->
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-gray-100 hover:shadow-2xl transition duration-500">
+
+                <div class="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center text-2xl font-bold">
+                    2
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Learning & Development
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Students progress through AI fundamentals, APIs, automation systems, workflows, and agentic AI implementation.
+                </p>
+
+                <img class="mt-8 rounded-2xl shadow-lg"
+                     src="{{asset('images/Development-Process.png')}}">
+
+            </div>
+
+            <!-- STEP -->
+            <div class="bg-white rounded-3xl p-10 shadow-sm border border-gray-100 hover:shadow-2xl transition duration-500">
+
+                <div class="w-16 h-16 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl font-bold">
+                    3
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Certification & Outcomes
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Learners complete practical assessments and real-world projects to earn certification.
+                </p>
+
+                <img class="mt-8 rounded-2xl shadow-lg"
+                     src="{{asset('images/Deployment.png')}}">
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!-- AI COMPONENTS -->
+<!-- ============================= -->
+
+<section class="bg-gray-950 py-28 overflow-hidden relative">
+
+    <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-indigo-600/20 blur-3xl rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+            <!-- LEFT -->
+            <div>
+
+                <span class="text-indigo-400 uppercase tracking-wider font-semibold text-sm">
+                    AI System Foundations
+                </span>
+
+                <h2 class="mt-4 text-4xl sm:text-5xl font-extrabold text-white leading-tight">
+                    Core components students learn to build with AI
+                </h2>
+
+                <p class="mt-6 text-xl text-gray-400">
+                    Understanding how intelligent systems operate, connect, remember, and automate real-world workflows.
+                </p>
+
+                <div class="mt-12 space-y-6">
+
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold text-white">
+                            🧠 Decision Systems
+                        </h3>
+
+                        <p class="mt-3 text-gray-400">
+                            Learn how AI models interpret prompts, process information, and generate intelligent outputs.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold text-white">
+                            💾 Context Systems
+                        </h3>
+
+                        <p class="mt-3 text-gray-400">
+                            Understand memory, context retention, and how AI systems maintain continuity across workflows.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                        <h3 class="text-xl font-bold text-white">
+                            🛠️ Integration Systems
+                        </h3>
+
+                        <p class="mt-3 text-gray-400">
+                            Connect APIs, CRMs, databases, automation engines, and external tools into AI ecosystems.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div class="relative">
+
+                <img src="{{asset('images/agent.jpg')}}"
+                     class="rounded-3xl shadow-2xl border border-white/10">
+
+                <div class="absolute -bottom-8 -right-8 bg-white rounded-2xl shadow-2xl p-6 hidden lg:block">
+
+                    <p class="text-sm text-gray-500">
+                        AI Workflow Systems
+                    </p>
+
+                    <h4 class="mt-2 text-2xl font-extrabold text-gray-900">
+                        Live Integrations
+                    </h4>
+
+                    <div class="mt-4 flex gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-green-500"></div>
+                        <div class="w-10 h-10 rounded-xl bg-indigo-600"></div>
+                        <div class="w-10 h-10 rounded-xl bg-yellow-500"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Select all elements with the 'data-counter' class.

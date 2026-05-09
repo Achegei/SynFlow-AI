@@ -1,468 +1,491 @@
 @extends('layouts.public')
 
-@section('Pricing', 'Moose Loon AI Pricing')
+@section('title', 'AI & Automation Curriculum - Moose Loon AI Academy')
 
 @section('content')
 
 <!-- HERO -->
-<div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl sm:text-5xl font-extrabold">
-        Scale Your Business with AI
-    </h1>
-    <p class="mt-4 text-gray-600 max-w-xl mx-auto">
-        Automate chats, capture leads, and never miss a customer.
-    </p>
-</div>
+<section class="relative overflow-hidden bg-white">
 
-<!-- PRICING WITH CLICKABLE MONTHLY/YEARLY -->
-<div class="bg-indigo-50 py-20" x-data="{ billing: 'monthly' }">
-    <div class="container mx-auto px-6 text-center">
-        <h2 class="text-3xl font-extrabold text-gray-900">Pricing Plans</h2>
-        <p class="mt-2 text-gray-600">Simple, transparent pricing — no hidden fees.</p>
-
-        <!-- Clickable Labels -->
-        <div class="mt-6 flex justify-center items-center space-x-4">
-            <span @click="billing = 'monthly'" 
-                  :class="billing === 'monthly' ? 'font-bold text-indigo-600 cursor-pointer' : 'text-gray-500 cursor-pointer'">
-                  Monthly
-            </span>
-            <span @click="billing = 'yearly'" 
-                  :class="billing === 'yearly' ? 'font-bold text-indigo-600 cursor-pointer' : 'text-gray-500 cursor-pointer'">
-                  Yearly
-            </span>
-        </div>
-
-        <!-- CLEAR PRICING EXPLANATION -->
-        <div class="mt-6 max-w-2xl mx-auto text-sm text-gray-600 bg-white border border-gray-200 rounded-lg p-5 shadow-sm text-left">
-    
-    <p class="mb-3">
-        💡 <strong>How Pricing Works:</strong>
-    </p>
-
-    <div class="mb-4 space-y-2">
-        <p><strong>Your Business, Fully Automated</strong></p>
-
-        <p>✔️ We build & deploy your AI Sales & Customer Support System</p>
-        <p>✔️ Works 24/7 — captures leads, responds instantly, books customers</p>
-        <p>✔️ Fully managed — you don’t lift a finger</p>
-
-        <br>
-
-        <p><strong>🌐 Website (Optional Upgrade)</strong></p>
-
-        <p>• No website yet?<br>
-        👉 We build you a conversion-focused AI website that turns visitors into customers<br>
-        One-time investment — affordable & scalable</p>
-
-        <p>• Already have one?<br>
-        👉 We transform your existing website into an AI-powered sales system — FREE</p>
-    </div>
-</div>
-
-        <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
-
-    <!-- STARTER -->
-    <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
-        <h3 class="text-xl font-bold mb-2">🟢 Starter</h3>
-        <p class="text-gray-500 mb-4">For small businesses getting started</p>
-
-        <div class="mb-4">
-            <p class="text-gray-400 text-sm">Typical Market Setup</p>
-            <p class="line-through text-gray-800">KES 35,000 – 60,000</p>
-
-            <p class="text-gray-800 text-sm mt-2">Moose Loon AI Setup</p>
-            <p class="text-2xl font-extrabold text-gray-900">KES 6,250</p>
-        </div>
-
-        <div class="mb-4">
-            <p class="text-gray-800 text-sm">Market Monthly(Upfront Payment)</p>
-            <p class="line-through text-gray-500">KES 20,000 – 30,000</p>
-
-            <p class="text-gray-800 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
-
-            <div class="flex items-center space-x-2">
-                <span 
-                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
-                    x-text="billing === 'monthly' 
-                        ? 'KES 12,500/month' 
-                        : 'KES ' + Math.round(12500 * 12 * 0.8).toLocaleString() + '/year'">
-                </span>
-
-                <span x-show="billing === 'yearly'"
-                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
-                    Save 20%
-                </span>
-            </div>
-        </div>
-
-        <ul class="text-gray-600 mb-6 space-y-1 text-left text-sm">
-            <li>💡 Pay after value — not before</li>
-            <li>💡 Less than half the cost of staff</li>
-        </ul>
-
-        <a href="{{route('contactus')}}"
-           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-           Get Started
-        </a>
+    <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-cyan-100 rounded-full blur-3xl opacity-40"></div>
     </div>
 
-    <!-- STANDARD -->
-    <div class="bg-indigo-100 rounded-xl shadow p-8 flex flex-col border-4 border-indigo-500 transform scale-105 relative">
-        <div class="absolute -mt-10 -ml-6 bg-indigo-600 text-white px-4 py-1 rounded-full text-sm font-semibold uppercase">
-            Most Popular
-        </div>
+    <div class="relative container mx-auto px-6 py-24">
 
-        <h3 class="text-xl font-bold mb-2">🔵 Standard</h3>
-        <p class="text-gray-600 mb-4">For growing businesses</p>
+        <div class="max-w-4xl mx-auto text-center">
 
-        <div class="mb-4">
-            <p class="text-gray-400 text-sm">Typical Market Setup</p>
-            <p class="line-through text-gray-800">KES 80,000 – 120,000</p>
-
-            <p class="text-gray-400 text-sm mt-2">Moose Loon AI Setup</p>
-            <p class="text-2xl font-extrabold">KES 7,250</p>
-        </div>
-
-        <div class="mb-4">
-            <p class="text-gray-400 text-sm">Market Monthly</p>
-            <p class="line-through text-gray-800">KES 30,000 – 50,000</p>
-
-            <p class="text-gray-400 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
-
-            <div class="flex items-center space-x-2">
-                <span 
-                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
-                    x-text="billing === 'monthly' 
-                        ? 'KES 14,500/month' 
-                        : 'KES ' + Math.round(14500 * 12 * 0.8).toLocaleString() + '/year'">
-                </span>
-
-                <span x-show="billing === 'yearly'"
-                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
-                    Save 20%
-                </span>
-            </div>
-        </div>
-
-        <ul class="text-gray-700 mb-6 space-y-1 text-left text-sm">
-            <li>💡 A fraction of hiring + tools combined</li>
-            <li>💡 Performance-driven investment</li>
-        </ul>
-
-        <a href="{{route('contactus')}}"
-           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-           Choose Plan
-        </a>
-    </div>
-
-    <!-- PREMIUM -->
-    <div class="bg-white rounded-xl shadow p-8 flex flex-col relative">
-        <h3 class="text-xl font-bold mb-2">🟣 Premium</h3>
-        <p class="text-gray-500 mb-4">For high-volume and scaling businesses</p>
-
-        <div class="mb-4">
-            <p class="text-gray-400 text-sm">Typical Market Setup</p>
-            <p class="line-through text-gray-800">KES 180,000 – 220,000</p>
-
-            <p class="text-gray-400 text-sm mt-2">Moose Loon AI Setup</p>
-            <p class="text-2xl font-extrabold">KES 22,000</p>
-        </div>
-
-        <div class="mb-4">
-            <p class="text-gray-400 text-sm">Market Monthly</p>
-            <p class="line-through text-gray-800">KES 80,000 – 150,000+</p>
-
-            <p class="text-gray-400 text-sm mt-2">Moose Loon AI (Post-Payment Investment)</p>
-
-            <div class="flex items-center space-x-2">
-                <span 
-                    :class="billing === 'yearly' ? 'text-green-600 font-bold' : 'text-indigo-600 font-bold'"
-                    x-text="billing === 'monthly' 
-                        ? 'KES 44,000/month' 
-                        : 'KES ' + Math.round(44000 * 12 * 0.8).toLocaleString() + '/year'">
-                </span>
-
-                <span x-show="billing === 'yearly'"
-                    class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
-                    Save 20%
-                </span>
-            </div>
-        </div>
-
-        <ul class="text-gray-600 mb-6 space-y-1 text-left text-sm">
-            <li>💡 Replaces multiple roles</li>
-            <li>💡 Enterprise system without enterprise cost</li>
-        </ul>
-
-        <a href="{{route('contactus')}}"
-           class="mt-auto inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700">
-           Contact Sales
-        </a>
-    </div>
-
-</div>
-
-<!-- VALUE HIGHLIGHT -->
-<div class="py-16 bg-gray-50 text-center">
-    <div class="container mx-auto px-6 max-w-4xl">
-
-        <!-- HEADLINE -->
-        <p class="text-lg font-semibold text-gray-800">
-            No monthly salaries. No missed customers. AI works 24/7.
-        </p>
-        <p class="mt-2 text-gray-600 mb-10">
-            Setup in a few days. Start seeing results immediately.
-        </p>
-
-        <img src="{{asset('images/comparison-table.png')}}" 
-             alt="Comparison Table"
-             class="mx-auto mb-12 rounded-lg shadow">
-
-        <!-- CORE VALUE -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold mb-4">🔥 CORE VALUE POSITIONING</h3>
-            <p class="font-semibold">Moose Loon AI</p>
-            <div class="mt-3 space-y-1 text-gray-700">
-                <p>✅ One-time setup</p>
-                <p>✅ Post-payment monthly investment</p>
-                <p>✅ Pay as the system delivers value</p>
+            <div class="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-sm">
+                FUTURE-READY AI EDUCATION
             </div>
 
-            <p class="mt-4 font-semibold text-indigo-600">
-                👉 “Others charge you to start. We charge you as you grow.”
-            </p>
-        </div>
+            <h1 class="mt-8 text-5xl sm:text-6xl font-black tracking-tight text-gray-900 leading-tight">
+                Artificial Intelligence <br>
+                & Automation Systems
+            </h1>
 
-        <!-- BENEFITS -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold mb-4">⚡ TURN EVERY INQUIRY INTO REVENUE</h3>
-            <div class="space-y-1 text-gray-700">
-                <p>• No missed messages</p>
-                <p>• No missed calls</p>
-                <p>• No lost customers</p>
-            </div>
-
-            <p class="mt-4 font-semibold">
-                👉 Your AI system works 24/7 — so your business never stops
-            </p>
-        </div>
-
-        <!-- HOW IT WORKS -->
-        <div class="mb-12 text-left md:text-center">
-            <h3 class="text-xl font-bold mb-6 text-center">💡 HOW IT WORKS</h3>
-
-            <div class="space-y-4 text-gray-700 max-w-2xl mx-auto">
-                <p><strong>1.</strong> Start with 50% setup — lower upfront barrier</p>
-                <p><strong>2.</strong> System goes live within 7 days</p>
-                <p><strong>3.</strong> Start capturing leads immediately</p>
-                <p><strong>4.</strong> Monthly investment begins after launch</p>
-            </div>
-
-            <p class="mt-6 font-semibold text-indigo-600 text-center">
-                👉 “One-time setup. Then pay as your system works for you.”
-            </p>
-        </div>
-
-        <!-- WHY -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold mb-4">🧠 WHY MOOSE LOON AI</h3>
-            <div class="space-y-1 text-gray-700">
-                <p>• Lower upfront entry</p>
-                <p>• Monthly investment after launch</p>
-                <p>• Faster response to every inquiry</p>
-                <p>• 24/7 automated customer handling</p>
-            </div>
-        </div>
-
-        <!-- FINAL -->
-        <div>
-            <h3 class="text-xl font-bold mb-4">⚡ SIMPLE MODEL</h3>
-            <p class="text-gray-700">
-                Start with 50% setup. Scale with monthly investment.
+            <p class="mt-8 text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                Learn practical Artificial Intelligence, AI Agents, automation systems, workflow design, APIs, and real-world AI deployment through a flexible online learning experience designed for modern learners.
             </p>
 
-            <p class="mt-4 font-semibold text-indigo-600">
-                👉 Setup starts fast. Value starts immediately.
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+
+                <div class="px-5 py-3 rounded-2xl bg-gray-100 text-gray-700 font-medium">
+                    100% Online
+                </div>
+
+                <div class="px-5 py-3 rounded-2xl bg-gray-100 text-gray-700 font-medium">
+                    Self-Paced Learning
+                </div>
+
+                <div class="px-5 py-3 rounded-2xl bg-gray-100 text-gray-700 font-medium">
+                    Beginner Friendly
+                </div>
+
+                <div class="px-5 py-3 rounded-2xl bg-gray-100 text-gray-700 font-medium">
+                    Real-World Projects
+                </div>
+
+                <div class="px-5 py-3 rounded-2xl bg-gray-100 text-gray-700 font-medium">
+                    Practical AI Skills
+                </div>
+
+            </div>
+
+            <div class="mt-12 flex flex-col sm:flex-row justify-center gap-4">
+
+                <a href="{{route('contactus')}}"
+                   class="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition shadow-xl shadow-indigo-200">
+                    Make an Enquiry
+                </a>
+
+                <a href="#curriculum"
+                   class="inline-flex items-center justify-center px-8 py-4 rounded-2xl border border-gray-300 bg-white text-gray-800 font-semibold hover:bg-gray-50 transition">
+                    Explore Curriculum
+                </a>
+
+            </div>
+
+            <p class="mt-6 text-sm text-gray-500">
+                Want to know the program investment or enrollment process?
+                <a href="{{route('contactus')}}" class="text-indigo-600 font-semibold hover:underline">
+                    Send us an enquiry
+                </a>
             </p>
+
         </div>
 
     </div>
-</div>
 
-<!-- SOCIAL PROOF -->
-<div class="py-20 text-center">
+</section>
+
+<!-- WHY SECTION -->
+<section class="py-24 bg-gray-50">
+
     <div class="container mx-auto px-6">
-        <h2 class="text-3xl font-extrabold">Businesses Are Automating</h2>
-        <p class="mt-2 text-gray-600 max-w-xl mx-auto">
-            Respond faster, convert more leads, and run 24/7.
-        </p>
 
-        <div class="mt-8 grid md:grid-cols-3 gap-6">
-            <div class="bg-white shadow rounded-xl p-6">
-                <h3 class="font-bold text-xl">+40%</h3>
-                <p class="text-gray-600 mt-1">Faster lead response</p>
-            </div>
-            <div class="bg-white shadow rounded-xl p-6">
-                <h3 class="font-bold text-xl">24/7</h3>
-                <p class="text-gray-600 mt-1">Customer engagement</p>
-            </div>
-            <div class="bg-white shadow rounded-xl p-6">
-                <h3 class="font-bold text-xl">0</h3>
-                <p class="text-gray-600 mt-1">Missed leads</p>
-            </div>
-        </div>
-    </div>
-</div>
+        <div class="max-w-3xl mx-auto text-center">
 
-<!--Other AI Services-->
-<!-- HERO + AI Agents Accordion -->
-<div class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-4xl sm:text-5xl font-extrabold">
-        Additional ways to Scale Your Business with AI
-    </h1>
-    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">
-        Automate chats, capture leads, and never miss a customer.
-    </p>
-    <!-- Accordion Section -->
-    <div class="mt-10 max-w-3xl mx-auto text-left space-y-2" x-data="{ openItem: null }">
+            <h2 class="text-4xl font-black text-gray-900">
+                Built for Modern Learners
+            </h2>
 
-        <!-- AI Email Assistant -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 1 ? openItem = null : openItem = 1"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>AI Email Assistant – Standard</span>
-                <svg :class="{'rotate-180': openItem === 1}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 1" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Handles email queries with tracking & simple logic. Logs responses or lead data to Sheets and applies qualification rules.
-            </div>
+            <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+                Our learning experience is designed to be flexible, affordable, practical, and career-focused — allowing students to build real AI skills without traditional learning limitations.
+            </p>
+
         </div>
 
-        <!-- Booking & Scheduling Agent -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 2 ? openItem = null : openItem = 2"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>Booking & Scheduling Agent – Standard</span>
-                <svg :class="{'rotate-180': openItem === 2}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 2" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Manages appointments via chat/email. Integrates with calendars/Sheets and confirms times.
-            </div>
-        </div>
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
 
-        <!-- Lead Scraping & Enrichment -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 3 ? openItem = null : openItem = 3"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>Lead Scraping & Enrichment – Standard</span>
-                <svg :class="{'rotate-180': openItem === 3}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 3" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Pulls contacts from sites into CRM/Sheets. Goes beyond simple FAQ bots.
-            </div>
-        </div>
+            <!-- CARD -->
+            <div class="group bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300">
 
-        <!-- Cold Email Outreach -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 4 ? openItem = null : openItem = 4"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>Cold Email Outreach System – Standard</span>
-                <svg :class="{'rotate-180': openItem === 4}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 4" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Automates outreach with logging of opens/replies. Integrates lead data and sequencing logic.
-            </div>
-        </div>
+                <div class="w-16 h-16 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl shadow-lg">
+                    🌍
+                </div>
 
-        <!-- E-commerce Automation -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 5 ? openItem = null : openItem = 5"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>E-commerce Automation Package – Standard</span>
-                <svg :class="{'rotate-180': openItem === 5}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 5" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Integrates with online stores for FAQs, order status, and basic automations & Data retrieval.
-            </div>
-        </div>
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Learn From Anywhere
+                </h3>
 
-        <!-- RAG-Based Chatbot -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 6 ? openItem = null : openItem = 6"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>RAG-Based Chatbot (FAQ & Knowledge Assistant) – Starter</span>
-                <svg :class="{'rotate-180': openItem === 6}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 6" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Answers from a knowledge base, no external logging. Matches Starter tier WhatsApp FAQ use case.
-            </div>
-        </div>
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Study online from anywhere at your own pace using structured lessons and guided practical learning.
+                </p>
 
-        <!-- Virtual Assistant / Premium -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 7 ? openItem = null : openItem = 7"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>Virtual Assistant / Booking Agent – Premium</span>
-                <svg :class="{'rotate-180': openItem === 7}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 7" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Provides live assistance including voice, advanced interactions.
             </div>
-        </div>
 
-        <!-- AI Content & Marketing Assistant -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 8 ? openItem = null : openItem = 8"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>AI Content & Marketing Assistant – Starter</span>
-                <svg :class="{'rotate-180': openItem === 8}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 8" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Generates social posts, ad copy, etc., no back-end integration.
-            </div>
-        </div>
+            <!-- CARD -->
+            <div class="group bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300">
 
-        <!-- Customer Feedback & Sentiment Analysis -->
-        <div class="border rounded-lg">
-            <button @click="openItem === 9 ? openItem = null : openItem = 9"
-                    class="w-full text-left px-4 py-3 bg-indigo-50 font-semibold flex justify-between items-center hover:bg-indigo-100">
-                <span>Customer Feedback & Sentiment Analysis – Standard</span>
-                <svg :class="{'rotate-180': openItem === 9}" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-            <div x-show="openItem === 9" x-transition class="px-4 py-3 text-gray-700 bg-white">
-                Collects and analyzes feedback across channels. Logs results to analytics or Sheets.
+                <div class="w-16 h-16 rounded-2xl bg-cyan-600 text-white flex items-center justify-center text-2xl shadow-lg">
+                    💡
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Practical Skills
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Build AI workflows, automation systems, AI chat agents, integrations, and portfolio-ready projects.
+                </p>
+
             </div>
+
+            <!-- CARD -->
+            <div class="group bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300">
+
+                <div class="w-16 h-16 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-2xl shadow-lg">
+                    🚀
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Career Focused
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    Learn modern AI skills relevant to freelancing, remote work, consulting, entrepreneurship, and digital careers.
+                </p>
+
+            </div>
+
+            <!-- CARD -->
+            <div class="group bg-white border border-gray-100 rounded-3xl p-8 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300">
+
+                <div class="w-16 h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl shadow-lg">
+                    ⏱️
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold text-gray-900">
+                    Flexible Learning
+                </h3>
+
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    No rigid schedules. Learn progressively through guided modules designed for busy students and professionals.
+                </p>
+
+            </div>
+
         </div>
 
     </div>
-</div>
+
+</section>
+
+<!-- PROGRAM OVERVIEW -->
+<section class="py-24 bg-white">
+
+    <div class="container mx-auto px-6">
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <div>
+
+                <div class="inline-flex px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-sm">
+                    PROGRAM OVERVIEW
+                </div>
+
+                <h2 class="mt-6 text-4xl font-black text-gray-900 leading-tight">
+                    Learn AI Beyond Theory
+                </h2>
+
+                <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+                    This program is designed to equip learners with practical and industry-relevant skills in Artificial Intelligence, workflow automation, AI systems, APIs, integrations, and intelligent business automation.
+                </p>
+
+                <p class="mt-6 text-lg text-gray-600 leading-relaxed">
+                    Students progress from foundational AI concepts to advanced automation workflows and real-world deployment projects.
+                </p>
+
+                <div class="mt-10 space-y-4">
+
+                    <div class="flex items-start gap-4">
+                        <div class="text-indigo-600 font-bold text-xl">✓</div>
+                        <p class="text-gray-700">Build AI-powered workflows and intelligent systems</p>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="text-indigo-600 font-bold text-xl">✓</div>
+                        <p class="text-gray-700">Learn APIs, integrations, automation logic, and AI tools</p>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="text-indigo-600 font-bold text-xl">✓</div>
+                        <p class="text-gray-700">Develop portfolio-ready practical projects</p>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="text-indigo-600 font-bold text-xl">✓</div>
+                        <p class="text-gray-700">Gain skills relevant to modern AI careers and business automation</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SIDE STATS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+                <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                    <h3 class="text-5xl font-black text-indigo-600">
+                        19
+                    </h3>
+                    <p class="mt-3 text-gray-700 font-medium">
+                        Structured Learning Modules
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                    <h3 class="text-5xl font-black text-cyan-600">
+                        8
+                    </h3>
+                    <p class="mt-3 text-gray-700 font-medium">
+                        Weeks Duration
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                    <h3 class="text-5xl font-black text-purple-600">
+                        100%
+                    </h3>
+                    <p class="mt-3 text-gray-700 font-medium">
+                        Practical & Hands-On
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                    <h3 class="text-5xl font-black text-emerald-600">
+                        Online
+                    </h3>
+                    <p class="mt-3 text-gray-700 font-medium">
+                        Flexible Learning Experience
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum" class="py-24 bg-gray-50">
+
+    <div class="container mx-auto px-6">
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <h2 class="text-4xl font-black text-gray-900">
+                Curriculum Breakdown
+            </h2>
+
+            <p class="mt-6 text-lg text-gray-600">
+                Structured modules designed to progressively build practical AI and automation competency.
+            </p>
+
+        </div>
+
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition">
+                <div class="text-indigo-600 font-bold text-sm">MODULES 1 – 4</div>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">
+                    AI Foundations
+                </h3>
+
+                <ul class="mt-6 space-y-3 text-gray-700">
+                    <li>✓ Introduction to Artificial Intelligence</li>
+                    <li>✓ AI in Business & Industry</li>
+                    <li>✓ Prompt Engineering Fundamentals</li>
+                    <li>✓ Markdown for AI Communication</li>
+                </ul>
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition">
+                <div class="text-cyan-600 font-bold text-sm">MODULES 5 – 8</div>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">
+                    Automation & APIs
+                </h3>
+
+                <ul class="mt-6 space-y-3 text-gray-700">
+                    <li>✓ No-Code Automation Tools</li>
+                    <li>✓ APIs & System Integrations</li>
+                    <li>✓ Working with External Tools</li>
+                    <li>✓ Large Language Models (LLMs)</li>
+                </ul>
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition">
+                <div class="text-purple-600 font-bold text-sm">MODULES 9 – 12</div>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">
+                    Workflow Systems
+                </h3>
+
+                <ul class="mt-6 space-y-3 text-gray-700">
+                    <li>✓ Error Handling & Debugging</li>
+                    <li>✓ Automation with n8n</li>
+                    <li>✓ Building AI Workflows</li>
+                    <li>✓ Webhooks & Real-Time Automation</li>
+                </ul>
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition">
+                <div class="text-pink-600 font-bold text-sm">MODULES 13 – 16</div>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">
+                    AI Agents & Integrations
+                </h3>
+
+                <ul class="mt-6 space-y-3 text-gray-700">
+                    <li>✓ Agentic AI Workflows</li>
+                    <li>✓ AI Chat Agents</li>
+                    <li>✓ WhatsApp AI Agents</li>
+                    <li>✓ CRM Integration & Data Logging</li>
+                </ul>
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition">
+                <div class="text-emerald-600 font-bold text-sm">MODULES 17 – 19</div>
+                <h3 class="mt-4 text-2xl font-bold text-gray-900">
+                    Projects & Career Skills
+                </h3>
+
+                <ul class="mt-6 space-y-3 text-gray-700">
+                    <li>✓ Final AI System Project</li>
+                    <li>✓ Client Delivery Skills</li>
+                    <li>✓ Freelancing & Consulting</li>
+                    <li>✓ Real-World AI Applications</li>
+                </ul>
+            </div>
+
+            <!-- CARD -->
+            <div class="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-3xl p-8 text-white shadow-xl">
+
+                <div class="text-sm font-bold text-indigo-100">
+                    CERTIFICATION
+                </div>
+
+                <h3 class="mt-4 text-3xl font-black">
+                    Certificate Awarded
+                </h3>
+
+                <p class="mt-6 text-indigo-100 leading-relaxed">
+                    Students who successfully complete all modules and the final project receive:
+                </p>
+
+                <div class="mt-6 text-xl font-bold">
+                    Certificate in Artificial Intelligence & Automation Systems
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- LEARNING OUTCOMES -->
+<section class="py-24 bg-white">
+
+    <div class="container mx-auto px-6">
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <h2 class="text-4xl font-black text-gray-900">
+                What Students Will Be Able To Do
+            </h2>
+
+            <p class="mt-6 text-lg text-gray-600">
+                Graduates develop practical skills applicable to real business environments and modern digital work.
+            </p>
+
+        </div>
+
+        <div class="mt-16 grid md:grid-cols-2 gap-8">
+
+            <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-900">
+                    Technical Skills
+                </h3>
+
+                <ul class="mt-6 space-y-4 text-gray-700">
+                    <li>✓ Build AI-powered automation systems</li>
+                    <li>✓ Design AI chat agents and workflows</li>
+                    <li>✓ Integrate APIs and external tools</li>
+                    <li>✓ Deploy intelligent automation systems</li>
+                    <li>✓ Build WhatsApp AI workflows</li>
+                    <li>✓ Create production-ready AI systems</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-900">
+                    Career & Business Skills
+                </h3>
+
+                <ul class="mt-6 space-y-4 text-gray-700">
+                    <li>✓ Deliver AI solutions for businesses</li>
+                    <li>✓ Conduct client discovery sessions</li>
+                    <li>✓ Package AI automation services</li>
+                    <li>✓ Build freelance-ready portfolios</li>
+                    <li>✓ Understand modern AI business systems</li>
+                    <li>✓ Apply AI to real-world business problems</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 <!-- FINAL CTA -->
-<div class="bg-indigo-600 text-white py-20 text-center">
-    <h2 class="text-3xl font-extrabold">Ready to Automate?</h2>
-    <p class="mt-2">Start today and see results fast.</p>
-    <a href="{{route('contactus')}}"
-       class="mt-4 inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100">
-       Get Started Now
-    </a>
-</div>
+<section class="relative overflow-hidden bg-gray-900 py-24 text-white">
+
+    <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-600 rounded-full blur-3xl opacity-20"></div>
+
+    <div class="relative container mx-auto px-6 text-center">
+
+        <h2 class="text-5xl font-black leading-tight">
+            Start Your AI Journey
+        </h2>
+
+        <p class="mt-8 text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Flexible online learning designed to help you build practical AI skills, real-world automation systems, and future-ready digital capabilities.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+
+            <a href="{{route('contactus')}}"
+               class="inline-flex items-center justify-center px-10 py-4 rounded-2xl bg-white text-gray-900 font-bold hover:bg-gray-100 transition">
+                Make an Enquiry
+            </a>
+
+            <a href="#curriculum"
+               class="inline-flex items-center justify-center px-10 py-4 rounded-2xl border border-white/20 bg-white/10 backdrop-blur text-white font-semibold hover:bg-white/20 transition">
+                View Curriculum
+            </a>
+
+        </div>
+
+        <p class="mt-8 text-sm text-gray-400">
+            Want to know the program investment, enrollment process, or certification details?
+        </p>
+
+        <p class="mt-2 text-indigo-300 font-semibold">
+            Send us an enquiry through the contact form and our team will guide you.
+        </p>
+
+    </div>
+
+</section>
 
 @endsection

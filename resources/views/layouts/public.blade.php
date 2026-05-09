@@ -148,7 +148,7 @@
                            <a href="{{ route('home') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Home</a>
                            <a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a>
                            <a href="{{ route('services') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Services</a>
-                           <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Pricing</a>
+                           <a href="{{ route('pricing') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Curriculum</a>
                            <a href="{{ route('certificate.verify') }}" class="font-semibold text-green-600 hover:text-green-700 transition-colors">Verify Certificate</a>
                            <!-- <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a> -->
                            <a href="{{ route('partners.page') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Partners</a>
@@ -200,7 +200,7 @@
                     <a href="{{ route('certificate.verify') }}" class="text-green-600 font-semibold hover:text-green-700">
                         Verify Certificate
                     </a>
-                    <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Pricing</a>
+                    <a href="{{ route('pricing') }}" class="text-gray-700 hover:text-indigo-600">Curriculum</a>
                     <!-- <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a> -->
                     <a href="{{ route('partners.page') }}" class="text-gray-700 hover:text-indigo-600">Partners</a>
                     <a href="{{ route('contact') }}" class="text-gray-700 hover:text-indigo-600">Contact</a>
