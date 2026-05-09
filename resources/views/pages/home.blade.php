@@ -419,7 +419,7 @@
                 </div>
 
                 <div class="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                    <p class="text-3xl font-black text-white">12–16</p>
+                    <p class="text-3xl font-black text-white">8</p>
                     <p class="text-sm text-gray-400 mt-1">Weeks Duration</p>
                 </div>
 
