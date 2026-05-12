@@ -9,7 +9,8 @@ class Assignment extends Model
     protected $fillable = [
         'module_id',
         'title',
-        'description',
+        'instructions',
+        'submission_type',
         'position',
     ];
 

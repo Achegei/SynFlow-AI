@@ -11,66 +11,67 @@ class Episode extends Model
     use HasFactory;
 
     protected $fillable = [
-    'course_id',
-    'module_id',
-    'title',
-    'description',
-    'video_url',
-    'pdf_path',
-    'type',
-    'position',
+        'module_id',
+        'title',
+        'description',
+        'video_url',
+        'pdf_path',
+        'type',
+        'position',
     ];
 
-    /**
-     * Relationship: Episode belongs to a Course.
-     */
-    public function course()
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
+    // Episode belongs to a Module
+    public function module()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Module::class);
     }
 
-    /**
-     * Relationship: Episode belongs to many Users (progress tracking).
-     */
+    // Episode progress tracking (many-to-many with users)
     public function users()
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'episode_user')
                     ->withPivot('watched')
                     ->withTimestamps();
     }
 
-    /**
-     * Accessor: Convert normal YouTube links into embeddable URLs.
-     *
-     * Example:
-     *  - https://www.youtube.com/watch?v=abcd123 → https://www.youtube.com/embed/abcd123
-     *  - https://youtu.be/abcd123 → https://www.youtube.com/embed/abcd123
-     */
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    // Check if episode is completed by logged-in user
     public function getIsCompletedAttribute()
-        {
-            $user = Auth::user();
-
-            if (!$user) {
-                return false;
-            }
-
-            return $this->users()
-                        ->where('user_id', $user->id)
-                        ->wherePivot('watched', true)
-                        ->exists();
-        }
-
-    public function getYoutubeIdAttribute()
     {
-        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $this->video_url, $matches)) {
-            return $matches[1]; // return just the video ID
+        $user = Auth::user();
+
+        if (!$user) {
+            return false;
         }
-        return null;
+
+        return $this->users()
+            ->where('user_id', $user->id)
+            ->wherePivot('watched', true)
+            ->exists();
     }
 
-    public function module()
-        {
-            return $this->belongsTo(Module::class);
+    // Extract YouTube video ID
+    public function getYoutubeIdAttribute()
+    {
+        if (!$this->video_url) {
+            return null;
         }
 
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/', $this->video_url, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
+    }
 }

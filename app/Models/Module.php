@@ -19,29 +19,27 @@ class Module extends Model
     |--------------------------------------------------------------------------
     */
 
+    // Module belongs to a Course
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
+    // Module has many Episodes
     public function episodes()
     {
         return $this->hasMany(Episode::class)
             ->orderBy('position');
     }
 
-    /**
-     * NEW: Module → Quizzes
-     */
+    // Module has many Quizzes
     public function quizzes()
     {
         return $this->hasMany(Quiz::class)
             ->orderBy('position');
     }
 
-    /**
-     * NEW: Module → Assignments
-     */
+    // Module has many Assignments
     public function assignments()
     {
         return $this->hasMany(Assignment::class)
@@ -55,63 +53,56 @@ class Module extends Model
     */
 
     public function isCompletedBy($user)
-{
-    /*
-    |--------------------------------------------------------------------------
-    | LESSON COMPLETION
-    |--------------------------------------------------------------------------
-    */
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | EPISODES COMPLETION
+        |--------------------------------------------------------------------------
+        */
 
-    $totalEpisodes = $this->episodes()->count();
+        $totalEpisodes = $this->episodes()->count();
 
-    $completedEpisodes = $user->episodes()
-        ->wherePivot('watched', true)
-        ->whereIn('episode_id', $this->episodes()->pluck('id'))
-        ->count();
+        $completedEpisodes = $user->episodes()
+            ->wherePivot('watched', true)
+            ->whereIn('episode_id', $this->episodes()->pluck('id'))
+            ->count();
 
-    $episodesComplete =
-        $totalEpisodes === 0
-        ? true
-        : $completedEpisodes >= $totalEpisodes;
+        $episodesComplete = $totalEpisodes === 0
+            ? true
+            : $completedEpisodes >= $totalEpisodes;
 
-    /*
-    |--------------------------------------------------------------------------
-    | QUIZ COMPLETION
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | QUIZ COMPLETION
+        |--------------------------------------------------------------------------
+        */
 
-    $totalQuizzes = $this->quizzes()->count();
+        $totalQuizzes = $this->quizzes()->count();
 
-    $completedQuizzes = \App\Models\QuizAttempt::where('user_id', $user->id)
-        ->whereIn('quiz_id', $this->quizzes()->pluck('id'))
-        ->where('passed', true)
-        ->distinct('quiz_id')
-        ->count();
+        $completedQuizzes = \App\Models\QuizAttempt::where('user_id', $user->id)
+            ->whereIn('quiz_id', $this->quizzes()->pluck('id'))
+            ->where('passed', true)
+            ->distinct('quiz_id')
+            ->count();
 
-    $quizzesComplete =
-        $totalQuizzes === 0
-        ? true
-        : $completedQuizzes >= $totalQuizzes;
+        $quizzesComplete = $totalQuizzes === 0
+            ? true
+            : $completedQuizzes >= $totalQuizzes;
 
-    /*
-    |--------------------------------------------------------------------------
-    | ASSIGNMENT COMPLETION
-    |--------------------------------------------------------------------------
-    | Future-ready placeholder
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | ASSIGNMENTS (PLACEHOLDER)
+        |--------------------------------------------------------------------------
+        */
 
-    $assignmentsComplete = true;
+        $assignmentsComplete = true;
 
-    /*
-    |--------------------------------------------------------------------------
-    | FINAL MODULE COMPLETION
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | FINAL RESULT
+        |--------------------------------------------------------------------------
+        */
 
-    return
-        $episodesComplete &&
-        $quizzesComplete &&
-        $assignmentsComplete;
-}
+        return $episodesComplete && $quizzesComplete && $assignmentsComplete;
+    }
 }
