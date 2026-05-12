@@ -117,7 +117,7 @@
                 @if ($isFreeCourse)
                     <a href="{{ route('classroom.show', $course->id) }}"
                        class="inline-block w-full text-center bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mt-4">
-                        Start Free Course
+                        Start Course
                     </a>
 
                 @elseif ($hasAccess)
