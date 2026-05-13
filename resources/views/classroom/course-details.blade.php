@@ -753,15 +753,27 @@
 
 <script>
 
-    let player;
+let player;
 let currentEpisodeId = null;
 let youtubeReady = false;
+let progressChecker = null;
+let markedCompleted = false;
 
+/*
+|--------------------------------------------------------------------------
+| YouTube API Ready
+|--------------------------------------------------------------------------
+*/
 function onYouTubeIframeAPIReady()
 {
     youtubeReady = true;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Play Episode
+|--------------------------------------------------------------------------
+*/
 function playEpisode(videoId, episodeId)
 {
     currentEpisodeId = episodeId;
@@ -769,54 +781,66 @@ function playEpisode(videoId, episodeId)
 
     const playerContainer = document.getElementById('video-player');
 
-   playerContainer.classList.remove('hidden');
+    // Show player container first
+    playerContainer.classList.remove('hidden');
 
-window.scrollTo({
-    top: playerContainer.offsetTop - 100,
-    behavior: 'smooth'
-});
+    // Small delay helps production render iframe correctly
+    setTimeout(() => {
 
-    // Wait until YouTube API is fully loaded
-    if (!youtubeReady)
-    {
-        setTimeout(() => {
-            playEpisode(videoId, episodeId);
-        }, 500);
-
-        return;
-    }
-
-    if (player)
-    {
-        player.loadVideoById(videoId);
-    }
-    else
-    {
-        player = new YT.Player('youtube-player', {
-
-            height: '450',
-            width: '100%',
-            videoId: videoId,
-
-            playerVars: {
-                autoplay: 1
-            },
-
-            events: {
-                'onStateChange': onPlayerStateChange
-            }
-
+        window.scrollTo({
+            top: playerContainer.offsetTop - 100,
+            behavior: 'smooth'
         });
-    }
+
+        // Wait until YouTube API is ready
+        if (!youtubeReady)
+        {
+            setTimeout(() => {
+                playEpisode(videoId, episodeId);
+            }, 500);
+
+            return;
+        }
+
+        // Load existing player
+        if (player)
+        {
+            player.loadVideoById(videoId);
+        }
+        else
+        {
+            // Create new player
+            player = new YT.Player('youtube-player', {
+
+                height: '450',
+                width: '100%',
+                videoId: videoId,
+
+                playerVars: {
+                    autoplay: 1
+                },
+
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+
+            });
+        }
+
+    }, 200);
 }
 
-  let progressChecker = null;
-let markedCompleted = false;
-
+/*
+|--------------------------------------------------------------------------
+| Track Video Progress
+|--------------------------------------------------------------------------
+*/
 function onPlayerStateChange(event)
 {
     if (event.data === YT.PlayerState.PLAYING)
     {
+        clearInterval(progressChecker);
+
         progressChecker = setInterval(() => {
 
             if (!player || markedCompleted) return;
@@ -851,6 +875,9 @@ function onPlayerStateChange(event)
                         location.reload();
                     }
 
+                })
+                .catch(error => {
+                    console.error('Episode completion error:', error);
                 });
 
                 clearInterval(progressChecker);
@@ -859,16 +886,22 @@ function onPlayerStateChange(event)
         }, 5000);
     }
 
+    // Stop checking when paused or ended
     if (
-        event.data === YT.PlayerState.PAUSED
-        || event.data === YT.PlayerState.ENDED
+        event.data === YT.PlayerState.PAUSED ||
+        event.data === YT.PlayerState.ENDED
     )
     {
         clearInterval(progressChecker);
     }
 }
 
-    function quizComponent(quizId)
+/*
+|--------------------------------------------------------------------------
+| Quiz Component
+|--------------------------------------------------------------------------
+*/
+function quizComponent(quizId)
 {
     return {
 
@@ -878,6 +911,11 @@ function onPlayerStateChange(event)
         passed: false,
         resultVisible: false,
 
+        /*
+        |--------------------------------------------------------------------------
+        | Check Answer
+        |--------------------------------------------------------------------------
+        */
         checkAnswer(questionId, selected, correct)
         {
             if (selected === correct)
@@ -891,67 +929,92 @@ function onPlayerStateChange(event)
             }
         },
 
+        /*
+        |--------------------------------------------------------------------------
+        | Button Styling
+        |--------------------------------------------------------------------------
+        */
         getButtonClass(questionId, option, correct)
         {
-            if (!this.feedback[questionId]) {
+            if (!this.feedback[questionId])
+            {
                 return 'border-gray-200 hover:border-purple-400 hover:bg-purple-50';
             }
 
             if (
-                this.feedback[questionId] === 'correct'
-                && option === correct
-            ) {
+                this.feedback[questionId] === 'correct' &&
+                option === correct
+            )
+            {
                 return 'bg-blue-600 text-white border-blue-600';
             }
 
             if (
-                this.feedback[questionId] === 'wrong'
-                && option === correct
-            ) {
+                this.feedback[questionId] === 'wrong' &&
+                option === correct
+            )
+            {
                 return 'bg-green-100 border-green-400 text-green-700';
             }
 
             return 'border-gray-200';
         },
 
+        /*
+        |--------------------------------------------------------------------------
+        | Submit Quiz
+        |--------------------------------------------------------------------------
+        */
         async submitQuiz()
-{
-    try {
+        {
+            try {
 
-        const response = await fetch(`/quizzes/${quizId}/submit`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                answers: this.answers || {}
-            })
-        });
+                const response = await fetch(`/quizzes/${quizId}/submit`, {
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Server Error:', errorText);
-            alert('Server error. Check console.');
-            return;
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+
+                    body: JSON.stringify({
+                        answers: this.answers || {}
+                    })
+                });
+
+                if (!response.ok)
+                {
+                    const errorText = await response.text();
+
+                    console.error('Server Error:', errorText);
+
+                    alert('Server error. Check console.');
+
+                    return;
+                }
+
+                const data = await response.json();
+
+                this.score = data.score;
+                this.passed = data.passed;
+                this.resultVisible = true;
+
+                if (data.passed)
+                {
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+
+            } catch (err) {
+
+                console.error('Fetch Error:', err);
+
+                alert('Quiz submission failed');
+            }
         }
-
-        const data = await response.json();
-
-        this.score = data.score;
-        this.passed = data.passed;
-        this.resultVisible = true;
-
-        if (data.passed) {
-            setTimeout(() => location.reload(), 1500);
-        }
-
-    } catch (err) {
-        console.error('Fetch Error:', err);
-        alert('Quiz submission failed');
-    }
-}
     }
 }
 
