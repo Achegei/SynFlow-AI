@@ -769,12 +769,12 @@ function playEpisode(videoId, episodeId)
 
     const playerContainer = document.getElementById('video-player');
 
-    playerContainer.classList.remove('hidden');
+   playerContainer.classList.remove('hidden');
 
-    window.scrollTo({
-        top: playerContainer.offsetTop - 100,
-        behavior: 'smooth'
-    });
+window.scrollTo({
+    top: playerContainer.offsetTop - 100,
+    behavior: 'smooth'
+});
 
     // Wait until YouTube API is fully loaded
     if (!youtubeReady)
