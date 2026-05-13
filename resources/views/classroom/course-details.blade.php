@@ -384,12 +384,15 @@
 
                 @forelse ($module->episodes as $episode)
 
-                <div
-                    onclick="playEpisode('{{ \Illuminate\Support\Str::contains($episode->video_url, 'youtube')
-                        ? \Illuminate\Support\Str::after($episode->video_url, 'v=')
-                        : $episode->video_url }}', {{ $episode->id }})"
-                    class="border rounded-2xl p-5 hover:border-blue-300 hover:shadow-md transition cursor-pointer group"
-                >
+                @php
+                        parse_str(parse_url($episode->video_url, PHP_URL_QUERY), $youtubeParams);
+                        $videoId = $youtubeParams['v'] ?? $episode->video_url;
+                    @endphp
+
+                    <div
+                        onclick="playEpisode('{{ $videoId }}', {{ $episode->id }})"
+                        class="border rounded-2xl p-5 hover:border-blue-300 hover:shadow-md transition cursor-pointer group"
+                    >
 
                     <div class="flex items-start justify-between gap-4">
 
