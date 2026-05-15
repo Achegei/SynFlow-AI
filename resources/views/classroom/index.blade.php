@@ -4,7 +4,7 @@
 <div class="min-h-screen bg-gray-50">
 <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
     <h1 class="text-3xl font-bold text-gray-900 mb-6">
-        Moose Loon AI Solutions
+        Moose Loon AI Academy - Practical AI Skills for the Modern Workforce
     </h1>
 
     <!--@auth
