@@ -7,14 +7,15 @@
 <style>
     .hero-bg{
         background:
-        radial-gradient(circle at top left, rgba(99,102,241,.35), transparent 35%),
+        radial-gradient(circle at top left, rgba(11, 11, 11, 0.87), transparent 35%),
         radial-gradient(circle at bottom right, rgba(168,85,247,.35), transparent 35%),
-        linear-gradient(135deg,#0f172a 0%,#111827 45%,#1e1b4b 100%);
+        linear-gradient(135deg,#0f172a 0%, #111827 45%, #1e1b4b 100%);
     }
 
     .glass{
-        backdrop-filter: blur(14px);
-        background: rgba(255,255,255,.08);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        background: rgba(15, 14, 14, 0.88);
         border: 1px solid rgba(255,255,255,.12);
     }
 
@@ -29,61 +30,72 @@
 
     .gradient-border{
         position: relative;
+        isolation: isolate;
+        border-radius: 30px;
     }
 
     .gradient-border::before{
         content:'';
         position:absolute;
-        inset:0;
+        inset:-1px;
         padding:1px;
-        border-radius:24px;
-        background:linear-gradient(135deg,#6366f1,#a855f7,#ec4899);
+        border-radius:30px;
+        background: linear-gradient(135deg,#6366f1,#a855f7,#ec4899);
+        pointer-events:none;
+        z-index:-1;
+
         -webkit-mask:
             linear-gradient(#fff 0 0) content-box,
             linear-gradient(#fff 0 0);
-        -webkit-mask-composite:xor;
-        mask-composite:exclude;
+
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+    }
+
+    .gradient-border > div{
+        position: relative;
+        z-index: 1;
     }
 
     .grid-pattern{
         background-image:
             linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-        background-size:40px 40px;
+
+        background-size: 40px 40px;
     }
 
     .glow{
-        box-shadow:0 0 20px rgba(99,102,241,.45);
+        box-shadow: 0 0 40px rgba(99,102,241,.25);
     }
 </style>
 
-<div class="bg-[#f8fafc] overflow-hidden">
+<div class="bg-[#f8fafc] overflow-x-hidden">
 
     <!-- HERO -->
-    <section class="hero-bg grid-pattern relative overflow-hidden">
-
-        <div class="absolute inset-0 bg-black/20"></div>
+   <section class="hero-bg grid-pattern relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/5"></div>
 
         <div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-32">
 
-            <div class="grid lg:grid-cols-2 gap-14 items-center">
+            <div class="grid lg:grid-cols-2 gap-14 items-center lg:pr-8">
 
                 <div>
 
-                    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/10 text-indigo-200 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-md border border-gray-200 text-black px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-lg">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                         Partnership Opportunities Open Across Kenya
                     </div>
 
-                    <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-black leading-tight">
                         Build an
-                        <span class="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent">
+                        <span class="bg-gradient-to-r from-black via-gray-800 to-gray-600 bg-clip-text text-transparent">
                             AI Training Business
                         </span>
                         With Moose Loon AI Academy
                     </h1>
 
-                    <p class="mt-8 text-xl text-gray-300 leading-relaxed max-w-2xl">
+                    <p class="mt-8 text-xl text-gray-900 leading-relaxed max-w-2xl">
                         Launch and scale AI training programs under an international AI education brand.
                         Deliver high-demand AI courses, earn from every student enrolled, and become part of Kenya’s fastest-growing AI education network.
                     </p>
@@ -146,7 +158,7 @@
                                 </div>
 
                                 <div class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl text-sm font-bold">
-                                    19 Modules
+                                    15 Modules
                                 </div>
                             </div>
 

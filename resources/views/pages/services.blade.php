@@ -289,7 +289,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
 
             <div>
-                <h3 class="text-5xl font-extrabold text-white">19+</h3>
+                <h3 class="text-5xl font-extrabold text-white">15</h3>
                 <p class="mt-3 text-indigo-200 text-lg">
                     Practical AI Learning Modules
                 </p>

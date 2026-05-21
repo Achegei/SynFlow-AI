@@ -99,7 +99,7 @@
 
         <!-- KEY VALUE -->
         <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
-            Based on a 19-module curriculum covering AI fundamentals, prompt engineering, APIs, automation systems, 
+            Based on a 15-module curriculum covering AI fundamentals, prompt engineering, APIs, automation systems, 
             n8n workflows, AI agents, CRM integration, and real-world deployment.
         </p>
 
@@ -414,7 +414,7 @@
             <div class="mt-12 flex flex-wrap justify-center gap-4">
 
                 <div class="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
-                    <p class="text-3xl font-black text-white">19</p>
+                    <p class="text-3xl font-black text-white">15</p>
                     <p class="text-sm text-gray-400 mt-1">Structured Modules</p>
                 </div>
 
@@ -467,7 +467,7 @@
                 </h3>
 
                 <p class="mt-4 text-gray-400 leading-relaxed">
-                    A complete 19-module AI certification framework covering automation systems, AI agents, APIs, workflows, integrations, and deployment.
+                    A complete 15-module AI certification framework covering automation systems, AI agents, APIs, workflows, integrations, and deployment.
                 </p>
 
             </div>

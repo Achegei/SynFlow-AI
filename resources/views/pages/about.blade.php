@@ -98,7 +98,7 @@
                 <p class="mt-3 text-gray-600">Executive, Technology & North American Division
                 Serving Canada & the United States <br>
                 📍 Moose Loon AI Solutions – Canada HQ
-                15710 Beaumaris Rd NW, Edmonton AB T5X 5E2, Canada<br>
+                Toronto, Canada<br>
                 Website: www.mooseloonai.ca</p>
             </div>
             <div class="bg-white p-8 rounded-xl shadow-lg">
