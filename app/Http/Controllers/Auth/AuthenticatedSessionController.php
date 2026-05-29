@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Show login page
      */
     public function create(): View
     {
@@ -20,28 +20,64 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-        $request->session()->regenerate();
+ * Handle login request
+ */
+public function store(LoginRequest $request): RedirectResponse
+{
+    $request->authenticate();
 
-        $user = auth()->user();
+    $request->session()->regenerate();
+    $request->session()->regenerateToken();
 
-        // Role-based redirection
-        if ($user->role === 'partner') {
-            return redirect()->route('partner.dashboard');
-        } elseif ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard'); // make sure this route exists
-        } else {
-            // Regular user
-            return redirect()->route('classroom');
-        }
+    $user = Auth::user();
+
+    /*
+    |--------------------------------------------------------------------------
+    | FORCE PASSWORD CHANGE
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        in_array($user->role, ['institution_admin', 'sales_executive']) &&
+        $user->must_change_password == 1
+    ) {
+
+        // Store intended redirect
+        session([
+            'password_redirect' => match ($user->role) {
+                'institution_admin' => '/institution/dashboard',
+                'sales_executive' => '/sales/dashboard',
+                default => '/dashboard',
+            }
+        ]);
+
+        return redirect()->route('profile.edit')
+            ->with('warning', 'You must change your password before continuing.');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | NORMAL ROLE REDIRECTS
+    |--------------------------------------------------------------------------
+    */
+
+    return match ($user->role) {
+
+        'admin' => redirect('/admin'),
+
+        'sales_executive' => redirect('/sales/dashboard'),
+
+        'institution_admin' => redirect('/institution/dashboard'),
+
+        'student' => redirect('/classroom'),
+
+        default => tap(Auth::logout(), function () {
+            abort(403, 'Invalid role');
+        }),
+    };
+}
     /**
-     * Destroy an authenticated session.
+     * Logout user
      */
     public function destroy(Request $request): RedirectResponse
     {

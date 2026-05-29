@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Services\GeocodingService;
 use Illuminate\Support\Str;
+use App\Models\Institution;
 
 class User extends Authenticatable
 {
@@ -24,9 +25,11 @@ class User extends Authenticatable
         'longitude',
         'is_admin',
         'role',
+        'must_change_password',
         'profile_photo_url',
         'referral_code',     // ✅ added
-        'referred_by'        // ✅ added
+        'referred_by',        // ✅ added
+        'institution_id',
     ];
 
     protected $hidden = [
@@ -63,6 +66,14 @@ class User extends Authenticatable
     /* ============================
        RELATIONSHIPS
     ============================ */
+
+        /**
+         * Institution the user belongs to
+         */
+        public function institution()
+        {
+            return $this->belongsTo(Institution::class);
+        }
 
     public function episodes()
     {

@@ -23,13 +23,17 @@ use App\Http\Controllers\EpisodeProgressController;
 use App\Http\Controllers\PartnerApplicationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\UniversitySelectionController;
+use App\Http\Controllers\SalesDashboardController;
+use App\Http\Controllers\InstitutionDashboardController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Post;
 use App\Models\Career;
 use App\Models\User;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -61,6 +65,19 @@ Route::post('/certificate/download/{courseId}',
     ->middleware('auth')
     ->name('certificate.download');
 
+
+//================================================
+// University Selection Routes
+//================================================
+Route::get('/choose-university', [
+    UniversitySelectionController::class,
+    'index'
+])->name('choose.university');
+
+Route::post('/choose-university', [
+    UniversitySelectionController::class,
+    'store'
+])->name('choose.university.store');
 
 //================================================
 // 1. Public-Facing Site Routes
@@ -195,6 +212,27 @@ Route::middleware(['auth', 'role.partner'])->prefix('partner')->name('partner.')
     // View certificate status (optional, could also be part of dashboard)
     Route::get('/certificate-status', [PartnerDashboardController::class, 'certificateStatus'])->name('certificate.status');
 });
+
+//================================================
+// 6. Role-Based Dashboards 
+// (Institution Admins & Sales Executives)
+Route::middleware(['auth',
+    'force.password',
+    'role:sales_executive'
+])->get(
+    '/sales/dashboard',
+    [SalesDashboardController::class, 'index']
+)->name('sales.dashboard');
+
+// Institution admin dashboard route
+Route::middleware([
+    'auth',
+    'force.password',
+    'role:institution_admin'
+])->get(
+    '/institution/dashboard',
+    [InstitutionDashboardController::class, 'index']
+)->name('institution.dashboard');
 
 // This route is fine as it's outside the admin group and points to a public-facing controller.
 Route::get('/videos', [VideoController::class, 'indexPublic'])->name('videos.index');

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -15,15 +15,62 @@ class PasswordController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+        $validated = $request->validate([
+            'current_password' => [
+                'required',
+                'current_password',
+            ],
+
+            'password' => [
+                'required',
+                'confirmed',
+                Password::defaults(),
+            ],
         ]);
 
-        $request->user()->update([
-            'password' => Hash::make($validated['password']),
-        ]);
+        $user = $request->user();
 
-        return back()->with('status', 'password-updated');
+        /*
+        |--------------------------------------------------------------------------
+        | Update password + disable force password change
+        |--------------------------------------------------------------------------
+        */
+
+        $user->password = Hash::make($validated['password']);
+
+        $user->must_change_password = 0;
+
+        $user->save();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect user by role
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'institution_admin') {
+
+            return redirect()
+                ->route('institution.dashboard')
+                ->with('status', 'Password updated successfully.');
+        }
+
+        if ($user->role === 'sales_executive') {
+
+            return redirect()
+                ->route('sales.dashboard')
+                ->with('status', 'Password updated successfully.');
+        }
+
+        if ($user->role === 'student') {
+
+            return redirect()
+                ->route('classroom')
+                ->with('status', 'Password updated successfully.');
+        }
+
+        return redirect()
+            ->route('dashboard')
+            ->with('status', 'Password updated successfully.');
     }
 }

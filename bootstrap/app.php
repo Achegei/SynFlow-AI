@@ -19,6 +19,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role.partner' => \App\Http\Middleware\PartnerMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'force.password' => \App\Http\Middleware\ForcePasswordChange::class,
         ]);
     })
     ->withExceptions(function ($exceptions) {
