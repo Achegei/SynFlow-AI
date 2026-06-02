@@ -5,60 +5,66 @@ namespace App\Services;
 use App\Models\Payment;
 use App\Models\CommissionTransaction;
 use Illuminate\Support\Facades\DB;
-use App\Models\Institution;
-use App\Models\SalesExecutive;
 
 class CommissionService
 {
     public function process(Payment $payment): void
     {
-
-            $alreadyProcessed = CommissionTransaction::where(
-            'payment_id',
-            $payment->id
-        )->exists();
+        $alreadyProcessed = CommissionTransaction::where('payment_id', $payment->id)->exists();
 
         if ($alreadyProcessed) {
             return;
         }
+
         DB::transaction(function () use ($payment) {
 
             $student = $payment->user;
 
-            if (!$student) {
+            if (!$student || !$student->institution) {
                 return;
             }
 
             $institution = $student->institution;
-
-            if (!$institution) {
-                return;
-            }
-
             $salesExecutive = $institution->salesExecutive;
 
             if (!$salesExecutive) {
                 return;
             }
 
-            $amount = $payment->amount;
+            /*
+            |--------------------------------------------------------------------------
+            | FIX: Correct amount source
+            |--------------------------------------------------------------------------
+            | IntaSend stores real value in payload->value or net_amount
+            */
 
-            $institutionPercentage =
-                config('commission.institution_percentage', 40);
+            $payload = json_decode($payment->payload, true);
 
-            $salesPercentage =
-                config('commission.sales_percentage', 10);
+            $amount =
+                (float) ($payload['value']
+                ?? $payload['net_amount']
+                ?? $payment->amount
+                ?? 0);
 
-            $institutionAmount =
-                ($amount * $institutionPercentage) / 100;
+            if ($amount <= 0) {
+                return;
+            }
 
-            $salesAmount =
-                ($amount * $salesPercentage) / 100;
+            /*
+            |--------------------------------------------------------------------------
+            | Commission rules
+            |--------------------------------------------------------------------------
+            | Institution = 40%
+            | Sales Exec = 10%
+            | Company = 50%
+            */
 
-            $companyAmount =
-                $amount -
-                $institutionAmount -
-                $salesAmount;
+            $institutionPercentage = config('commission.institution_percentage', 40);
+            $salesPercentage = config('commission.sales_percentage', 10);
+
+            $institutionAmount = ($amount * $institutionPercentage) / 100;
+            $salesAmount = ($amount * $salesPercentage) / 100;
+            $companyAmount = $amount - $institutionAmount - $salesAmount;
 
             /*
             |--------------------------------------------------------------------------
@@ -66,15 +72,8 @@ class CommissionService
             |--------------------------------------------------------------------------
             */
 
-            $institution->increment(
-                'wallet_balance',
-                $institutionAmount
-            );
-
-            $salesExecutive->increment(
-                'wallet_balance',
-                $salesAmount
-            );
+            $institution->increment('wallet_balance', $institutionAmount);
+            $salesExecutive->increment('wallet_balance', $salesAmount);
 
             /*
             |--------------------------------------------------------------------------
@@ -83,23 +82,14 @@ class CommissionService
             */
 
             CommissionTransaction::create([
-
                 'payment_id' => $payment->id,
-
                 'student_id' => $student->id,
-
                 'institution_id' => $institution->id,
-
                 'sales_executive_id' => $salesExecutive->id,
-
                 'course_id' => $payment->course_id,
-
                 'total_amount' => $amount,
-
                 'institution_amount' => $institutionAmount,
-
                 'sales_amount' => $salesAmount,
-
                 'company_amount' => $companyAmount,
             ]);
         });
