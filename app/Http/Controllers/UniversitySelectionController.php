@@ -12,17 +12,11 @@ class UniversitySelectionController extends Controller
      */
     public function index()
     {
-        $institutions = Institution::where(
-            'status',
-            'active'
-        )
-        ->orderBy('name')
-        ->get();
+        $institutions = Institution::where('status', 'active')
+            ->orderBy('name')
+            ->get();
 
-        return view(
-            'auth.choose-university',
-            compact('institutions')
-        );
+        return view('auth.choose-university', compact('institutions'));
     }
 
     /**
@@ -39,12 +33,10 @@ class UniversitySelectionController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Save Institution In Session
+        | Save Institution In Session (FOR SAFETY)
         |--------------------------------------------------------------------------
         */
-        session([
-            'selected_institution_id' => $request->institution_id
-        ]);
+        session()->put('selected_institution_id', $request->institution_id);
 
         return redirect()->route('register');
     }
