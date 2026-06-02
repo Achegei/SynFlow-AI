@@ -276,7 +276,7 @@
                                 <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a></li>
                                 <li><a href="{{ route('about') }}" class="hover:text-white transition-colors">Our Team</a></li>
                                 <li><a href="{{ route('services') }}" class="hover:text-white transition-colors">Services</a></li>
-                                <li><a href="{{ route('pricing') }}" class="hover:text-white transition-colors">Pricing</a></li>
+                                <li><a href="{{ route('pricing') }}" class="hover:text-white transition-colors">Curriculum</a></li>
                                 <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers</a></li> -->
                                 <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors">Contact</a></li>
                                 <li><a href="{{ route('faqs') }}" class="hover:text-white transition-colors">FAQ's</a></li>
@@ -290,7 +290,7 @@
                                 <li><a href="{{ route('terms') }}" class="hover:text-white transition-colors">Terms of Service</a></li>
                                 <li><a href="{{ route('policy') }}" class="hover:text-white transition-colors">Privacy Policy</a></li>
                                 <li><a href="{{ route('contactus') }}" class="hover:text-white transition-colors">Get in Touch&#8599;</a></li>
-                                <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers&#8599;</a></li>
+                                <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers&#8599;</a></li> -->
                                 <li><a href="https://www.youtube.com/@MooseLoonAI" class="hover:text-white transition-colors">Watch our Content&#8599;</a></li>
                             </ul>
                         </div>

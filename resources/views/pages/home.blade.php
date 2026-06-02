@@ -113,7 +113,7 @@
                 Become an Academic Partner
             </a>
 
-            <a href="{{route('classroom')}}" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.35)]hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(99,102,241,0.45)]
+            <a href="{{route('choose.university')}}" class="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-2xl shadow-[0_0_40px_rgba(99,102,241,0.35)]hover:scale-[1.03] hover:shadow-[0_0_60px_rgba(99,102,241,0.45)]
             transition-all duration-300">
                 Enroll Now
             </a>
@@ -616,7 +616,7 @@
 
                     <div class="mt-10 flex flex-wrap justify-center gap-4">
 
-                        <a href="{{route('classroom')}}"
+                        <a href="{{route('choose.university')}}"
                            class="px-8 py-4 rounded-2xl bg-white text-gray-900 font-bold hover:scale-105 transition duration-300 shadow-2xl">
                             Student? Enroll Now
                         </a>
