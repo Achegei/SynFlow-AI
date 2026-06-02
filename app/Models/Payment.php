@@ -13,6 +13,7 @@ class Payment extends Model
         'payment_id',
         'status',
         'amount',
+        'api_ref',
         'payload',
     ];
 

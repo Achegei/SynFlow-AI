@@ -27,11 +27,10 @@
    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
     @foreach ($courses as $course)
         @php
-            $isFreeCourse = (int) $course->id === 1;
+            $isFreeCourse = false;
 
-            $hasAccess = $isFreeCourse
-                ? true
-                : ($user && $user->courses->contains($course->id));
+            $hasAccess = $user
+                && $user->courses->contains($course->id);
 
             $pendingPayment = (!$isFreeCourse && $user)
                 ? \App\Models\Payment::where('user_id', $user->id)
@@ -54,7 +53,7 @@
 
     <div class="absolute top-4 left-4">
 
-        @if($isFreeCourse)
+        @if ($hasAccess)
 
             <span class="bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
                 Self Paced

@@ -75,6 +75,15 @@ class User extends Authenticatable
             return $this->belongsTo(Institution::class);
         }
 
+
+        public function commissionTransactions()
+        {
+            return $this->hasMany(
+                CommissionTransaction::class,
+                'student_id'
+            );
+        }
+
     public function episodes()
     {
         return $this->belongsToMany(Episode::class)

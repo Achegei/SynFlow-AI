@@ -38,4 +38,11 @@ class Institution extends Model
 {
     return $this->belongsTo(User::class, 'institution_admin_id');
 }
+
+public function commissionTransactions()
+{
+    return $this->hasMany(
+        CommissionTransaction::class
+    );
+}
 }

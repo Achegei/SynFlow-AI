@@ -35,4 +35,11 @@ class SalesExecutive extends Model
     {
         return $this->hasMany(Institution::class);
     }
+
+    public function commissionTransactions()
+    {
+        return $this->hasMany(
+            CommissionTransaction::class
+        );
+    }
 }
