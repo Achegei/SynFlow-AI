@@ -13,24 +13,51 @@ class InstitutionDashboardController extends Controller
     {
         $user = auth()->user();
 
-        // Find institution linked to this user
-        $institution = Institution::where('id', $user->institution_id ?? null)
-            ->with(['salesExecutive'])
-            ->first();
+        if (!$user) {
+            abort(403, 'Unauthorized');
+        }
 
-        // Students belonging to this institution
-        $students = User::where('institution_id', $institution?->id)
+        /*
+        |--------------------------------------------------------------------------
+        | FIX 1: Safely load institution
+        |--------------------------------------------------------------------------
+        */
+
+        $institution = Institution::with(['salesExecutive'])
+            ->find($user->institution_id);
+
+        if (!$institution) {
+            abort(403, 'No institution linked to this account');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Students
+        |--------------------------------------------------------------------------
+        */
+
+        $students = User::where('institution_id', $institution->id)
             ->where('role', 'student')
             ->get();
 
-        // Payments from those students
+        /*
+        |--------------------------------------------------------------------------
+        | FIX 2: Correct payment status
+        |--------------------------------------------------------------------------
+        */
+
         $payments = Payment::whereIn('user_id', $students->pluck('id'))
-            ->where('status', 'success')
+            ->where('status', 'paid') // FIXED (was "success")
             ->get();
 
-        // Revenue calculations
+        /*
+        |--------------------------------------------------------------------------
+        | Revenue
+        |--------------------------------------------------------------------------
+        */
+
         $totalRevenue = $payments->sum('amount');
-        $institutionShare = $totalRevenue * 0.40;
+        $institutionShare = $institution->wallet_balance ?? ($totalRevenue * 0.40);
 
         return view('dashboards.institution', [
             'institution' => $institution,
