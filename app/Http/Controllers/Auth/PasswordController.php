@@ -37,40 +37,45 @@ class PasswordController extends Controller
         */
 
         $user->password = Hash::make($validated['password']);
-
         $user->must_change_password = 0;
-
         $user->save();
 
         /*
         |--------------------------------------------------------------------------
-        | Redirect user by role
+        | SMART REDIRECT (SESSION-FIRST, ROLE FALLBACK)
         |--------------------------------------------------------------------------
         */
 
-        if ($user->role === 'institution_admin') {
+        $redirect = session()->pull('post_password_redirect');
 
-            return redirect()
+        if ($redirect) {
+            return redirect($redirect)
+                ->with('status', 'Password updated successfully.');
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | ROLE FALLBACK (SAFETY NET)
+        |--------------------------------------------------------------------------
+        */
+
+        return match ($user->role) {
+
+            'institution_admin' => redirect()
                 ->route('institution.dashboard')
-                ->with('status', 'Password updated successfully.');
-        }
+                ->with('status', 'Password updated successfully.'),
 
-        if ($user->role === 'sales_executive') {
-
-            return redirect()
+            'sales_executive' => redirect()
                 ->route('sales.dashboard')
-                ->with('status', 'Password updated successfully.');
-        }
+                ->with('status', 'Password updated successfully.'),
 
-        if ($user->role === 'student') {
-
-            return redirect()
+            'student' => redirect()
                 ->route('classroom')
-                ->with('status', 'Password updated successfully.');
-        }
+                ->with('status', 'Password updated successfully.'),
 
-        return redirect()
-            ->route('dashboard')
-            ->with('status', 'Password updated successfully.');
+            default => redirect()
+                ->route('dashboard')
+                ->with('status', 'Password updated successfully.'),
+        };
     }
 }

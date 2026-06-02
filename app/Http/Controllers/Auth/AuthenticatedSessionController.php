@@ -37,21 +37,17 @@ public function store(LoginRequest $request): RedirectResponse
     |--------------------------------------------------------------------------
     */
 
-    if (
-        in_array($user->role, ['institution_admin', 'sales_executive']) &&
-        $user->must_change_password == 1
-    ) {
+    if ($user->must_change_password == 1) {
 
-        // Store intended redirect
-        session([
-            'password_redirect' => match ($user->role) {
-                'institution_admin' => '/institution/dashboard',
-                'sales_executive' => '/sales/dashboard',
-                default => '/dashboard',
-            }
-        ]);
+    session([
+        'post_password_redirect' => match ($user->role) {
+            'institution_admin' => route('institution.dashboard'),
+            'sales_executive' => route('sales.dashboard'),
+            default => route('dashboard'),
+        }
+    ]);
 
-        return redirect()->route('profile.edit')
+    return redirect()->route('profile.edit')
             ->with('warning', 'You must change your password before continuing.');
     }
 
