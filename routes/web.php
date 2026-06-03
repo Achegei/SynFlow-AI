@@ -26,6 +26,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UniversitySelectionController;
 use App\Http\Controllers\SalesDashboardController;
 use App\Http\Controllers\InstitutionDashboardController;
+use App\Http\Controllers\PayoutRequestController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -64,6 +65,17 @@ Route::post('/certificate/download/{courseId}',
     [CertificateController::class, 'download'])
     ->middleware('auth')
     ->name('certificate.download');
+
+// Payout request route
+Route::post(
+    '/institution/request-payout',
+    [PayoutRequestController::class, 'institution']
+)->name('institution.request-payout');
+
+Route::post(
+    '/sales/request-payout',
+    [PayoutRequestController::class, 'sales']
+)->name('sales.request-payout');
 
 
 //================================================

@@ -83,7 +83,7 @@
         <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
             <p class="text-sm text-gray-500">Total Revenue</p>
             <h2 class="text-3xl font-semibold mt-2">
-                KES {{ number_format($totalRevenue) }}
+                KES {{ number_format($institutionShare) }}
             </h2>
             <p class="text-xs text-gray-400 mt-2">All-time earnings</p>
         </div>
@@ -96,6 +96,17 @@
             </h2>
             <p class="text-xs text-gray-400 mt-2">Your revenue share</p>
         </div>
+
+        <form method="POST"
+            action="{{ route('institution.request-payout') }}"
+            class="mt-4">
+            @csrf
+
+            <button
+                class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700">
+                Request Payout
+            </button>
+        </form>
 
     </div>
 

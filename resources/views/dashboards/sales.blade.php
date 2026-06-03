@@ -59,6 +59,18 @@
                 </p>
             </div>
 
+
+            <form method="POST"
+                action="{{ route('sales.request-payout') }}"
+                class="mt-4">
+                @csrf
+
+                <button
+                    class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700">
+                    Request Withdrawal
+                </button>
+            </form>
+
         </div>
 
     <!-- INSTITUTIONS LIST -->
