@@ -37,8 +37,9 @@ class InstitutionDashboardController extends Controller
         */
 
         $students = User::where('institution_id', $institution->id)
-            ->where('role', 'student')
-            ->get();
+        ->where('role', 'student')
+        ->latest()
+        ->paginate(10);
 
         /*
         |--------------------------------------------------------------------------
@@ -57,13 +58,15 @@ class InstitutionDashboardController extends Controller
         */
 
         $totalRevenue = $payments->sum('amount');
-        $institutionShare = $institution->wallet_balance ?? ($totalRevenue * 0.40);
+        $institutionShare = $totalRevenue * 0.40;
+        $platformShare = $totalRevenue * 0.60;
 
         return view('dashboards.institution', [
             'institution' => $institution,
             'students' => $students,
             'totalRevenue' => $totalRevenue,
             'institutionShare' => $institutionShare,
+            'platformShare' => $platformShare,
         ]);
     }
 }

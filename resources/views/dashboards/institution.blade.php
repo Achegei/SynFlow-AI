@@ -97,6 +97,21 @@
             <p class="text-xs text-gray-400 mt-2">Your revenue share</p>
         </div>
 
+        @if (session('success'))
+                <div class="max-w-7xl mx-auto mt-4 px-6">
+                    <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-xl">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="max-w-7xl mx-auto mt-4 px-6">
+                    <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-xl">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
         <form method="POST"
             action="{{ route('institution.request-payout') }}"
             class="mt-4">
@@ -174,7 +189,9 @@
                 </tbody>
 
             </table>
-
+            <div class="px-6 py-4">
+                {{ $students->links() }}
+            </div>
         </div>
 
     </div>
