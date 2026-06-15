@@ -301,8 +301,7 @@
 
                             <h3 class="text-sm leading-relaxed mt-3">🇰🇪 Moose Loon AI Solutions – Nairobi Office (Kenya HQ)</h3>
                             <p class="text-sm mt-1">
-                               Vision Plaza – Mombasa Road, Nairobi, Kenya <br>
-                                2nd Floor
+                               Kipro Centre – WestLands, Nairobi, Kenya <br>
                             </p>
                         </div>
 

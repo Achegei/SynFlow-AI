@@ -106,8 +106,8 @@
                 <p class="mt-3 text-gray-600">AI Business Solutions & East Africa Sales Division
                 Serving East Africa <br>
                 📍 Moose Loon AI Solutions – Nairobi HQ <br>
-                2nd Floor, Vision Plaza <br>
-                Mombasa Road<br>
+                Kipro Centre <br>
+                WestLands<br>
                 Nairobi, Kenya <br>
                 Website: www.mooseloonai.ca</p>
             </div>
