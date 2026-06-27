@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
             <!-- 🔥 Referral Box -->
-            <div class="p-4 sm:p-8 bg-green-50 shadow sm:rounded-lg">
+            <!--<div class="p-4 sm:p-8 bg-green-50 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <p class="text-green-800 font-semibold mb-2">🎯 Your Referral Link</p>
 
@@ -32,7 +32,7 @@
                         Share this link to invite friends and earn rewards for every signup!
                     </p>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Profile Information Form -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
