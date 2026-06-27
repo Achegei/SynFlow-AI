@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\InstitutionResource\Pages;
 
 use App\Filament\Resources\InstitutionResource;
+use App\Models\Institution;
 use App\Models\User;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -14,44 +16,41 @@ class CreateInstitution extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Extract admin fields safely
-        $data['admin_name'] = $data['admin_name'] ?? null;
-        $data['admin_email'] = $data['admin_email'] ?? null;
-        $data['admin_password'] = $data['admin_password'] ?? null;
-
         return $data;
     }
 
-    protected function afterCreate(): void
+    protected function handleRecordCreation(array $data): Model
     {
-        $data = $this->form->getState(); // ✅ THIS is the reliable source
+        // Capture admin details
+        $adminName = $data['admin_name'];
+        $adminEmail = $data['admin_email'];
+        $adminPassword = $data['admin_password'];
 
-        $name = $data['admin_name'] ?? null;
-        $email = $data['admin_email'] ?? null;
-        $password = $data['admin_password'] ?? null;
+        // Remove fields that don't exist in institutions table
+        unset(
+            $data['admin_name'],
+            $data['admin_email'],
+            $data['admin_password']
+        );
 
-        // 🚨 HARD CHECK
-        if (!$name || !$email) {
-            logger()->error('ADMIN DATA MISSING', $data);
-            return;
-        }
+        // Create Institution first
+        $institution = Institution::create($data);
 
-        // default password if empty
-        $password = $password ?: Str::random(10);
-
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'username' => Str::slug($name) . rand(100, 999),
-            'password' => Hash::make($password),
-
+        // Create Institution Admin
+        $admin = User::create([
+            'name' => $adminName,
+            'email' => $adminEmail,
+            'username' => Str::slug($adminName) . rand(100,999),
+            'password' => Hash::make($adminPassword),
             'role' => 'institution_admin',
-            'institution_id' => $this->record->id,
+            'institution_id' => $institution->id,
             'must_change_password' => 1,
         ]);
 
-        $this->record->update([
-            'institution_admin_id' => $user->id,
-        ]);
+        // Link admin back to institution
+        $institution->institution_admin_id = $admin->id;
+        $institution->save();
+
+        return $institution;
     }
 }

@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Validation\Rule;
+use App\Models\User;
 
 class InstitutionResource extends Resource
 {
@@ -45,24 +46,34 @@ class InstitutionResource extends Resource
                 ])->columns(3),
 
             // ===================== ADMIN =====================
-            Forms\Components\Section::make('Institution Admin Account')
-                ->schema([
-                    Forms\Components\TextInput::make('admin_name')
-                        ->label('Admin Name')
-                        ->required()
-                        ->live(),
+Forms\Components\TextInput::make('admin_name')
+    ->label('Admin Name')
+    ->required()
+    ->dehydrated(fn ($livewire) => $livewire instanceof \App\Filament\Resources\InstitutionResource\Pages\CreateInstitution)
+    ->afterStateHydrated(function ($component, $record) {
+        if ($record?->admin) {
+            $component->state($record->admin->name);
+        }
+    }),
 
-                    Forms\Components\TextInput::make('admin_email')
-                        ->label('Admin Email')
-                        ->email()
-                        ->required()
-                        ->live(),
+Forms\Components\TextInput::make('admin_email')
+    ->label('Admin Email')
+    ->email()
+    ->required()
+    ->dehydrated(fn ($livewire) => $livewire instanceof \App\Filament\Resources\InstitutionResource\Pages\CreateInstitution)
+    ->afterStateHydrated(function ($component, $record) {
+        if ($record?->admin) {
+            $component->state($record->admin->email);
+        }
+    }),
 
-                    Forms\Components\TextInput::make('admin_password')
-                        ->label('Admin Password')
-                        ->password()
-                        ->required(),
-                ]),
+Forms\Components\TextInput::make('admin_password')
+    ->label('Admin Password')
+    ->password()
+    ->revealable()
+    ->required(fn ($livewire) => $livewire instanceof \App\Filament\Resources\InstitutionResource\Pages\CreateInstitution)
+    ->dehydrated(fn ($livewire) => $livewire instanceof \App\Filament\Resources\InstitutionResource\Pages\CreateInstitution)
+    ->placeholder('Leave blank to keep current password'),
 
             // ===================== CONTACT =====================
             Forms\Components\Section::make('Contact Information')
@@ -138,7 +149,20 @@ class InstitutionResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
+
                 Tables\Actions\EditAction::make(),
+
+                Tables\Actions\DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->modalHeading('Delete Institution')
+                    ->modalDescription('This will permanently delete this institution.')
+                    ->modalSubmitActionLabel('Delete'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
