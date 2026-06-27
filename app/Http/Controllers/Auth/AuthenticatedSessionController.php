@@ -30,6 +30,13 @@ public function store(LoginRequest $request): RedirectResponse
     $request->session()->regenerateToken();
 
     $user = Auth::user();
+    $user->update([
+
+        'last_login_at' => now(),
+
+        'last_activity_at' => now(),
+
+    ]);
 
     /*
     |--------------------------------------------------------------------------

@@ -21,6 +21,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'force.password' => \App\Http\Middleware\ForcePasswordChange::class,
+            'update.user.activity' => \App\Http\Middleware\UpdateUserActivity::class,
         ]);
     })
     ->withExceptions(function ($exceptions) {

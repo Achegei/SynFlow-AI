@@ -125,6 +125,144 @@
 
     </div>
 
+    <!-- =======================================================
+     STUDENT ACTIVITY OVERVIEW
+======================================================= -->
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
+    <!-- Active Today -->
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
+
+        <div class="flex items-center justify-between">
+
+            <div>
+
+                <p class="text-sm text-gray-500 uppercase tracking-wide">
+                    Active Today
+                </p>
+
+                <h2 class="text-4xl font-bold text-green-600 mt-2">
+                    {{ number_format($activeToday) }}
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-3">
+                    Students who logged in today.
+                </p>
+
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-7 h-7 text-green-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Active This Week -->
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
+
+        <div class="flex items-center justify-between">
+
+            <div>
+
+                <p class="text-sm text-gray-500 uppercase tracking-wide">
+                    Active This Week
+                </p>
+
+                <h2 class="text-4xl font-bold text-blue-600 mt-2">
+                    {{ number_format($activeThisWeek) }}
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-3">
+                    Learners active within the last 7 days.
+                </p>
+
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-7 h-7 text-blue-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 8v4l3 3"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Inactive Students -->
+
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
+
+        <div class="flex items-center justify-between">
+
+            <div>
+
+                <p class="text-sm text-gray-500 uppercase tracking-wide">
+                    Inactive (14+ Days)
+                </p>
+
+                <h2 class="text-4xl font-bold text-red-600 mt-2">
+                    {{ number_format($inactiveStudents) }}
+                </h2>
+
+                <p class="text-sm text-gray-500 mt-3">
+                    Students requiring follow-up.
+                </p>
+
+            </div>
+
+            <div class="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-7 h-7 text-red-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 9v3m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
     <!-- STUDENTS SECTION -->
     <div class="bg-white border border-gray-100 rounded-2xl shadow-sm">
