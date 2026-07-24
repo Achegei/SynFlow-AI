@@ -94,11 +94,11 @@
 
         <div class="mt-12 grid md:grid-cols-2 gap-10">
             <div class="bg-white p-8 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-gray-900">🇨🇦 Toronto Headquarters</h3>
+                <h3 class="text-2xl font-bold text-gray-900">🇨🇦 Edmonton Headquarters</h3>
                 <p class="mt-3 text-gray-600">Executive, Technology & North American Division
                 Serving Canada & the United States <br>
                 📍 Moose Loon AI Solutions – Canada HQ
-                Toronto, Canada<br>
+                Edmonton, Canada<br>
                 Website: www.mooseloonai.ca</p>
             </div>
             <div class="bg-white p-8 rounded-xl shadow-lg">
