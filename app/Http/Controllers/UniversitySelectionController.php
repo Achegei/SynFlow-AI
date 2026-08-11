@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UniversitySelectionController extends Controller
 {
     /**
-     * Show university selection page
+     * Show university selection page.
      */
     public function index()
     {
@@ -16,27 +16,51 @@ class UniversitySelectionController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('auth.choose-university', compact('institutions'));
+        return view(
+            'auth.choose-university',
+            compact('institutions')
+        );
     }
 
     /**
-     * Store selected university
+     * Store selected university.
      */
     public function store(Request $request)
     {
         $request->validate([
             'institution_id' => [
                 'required',
-                'exists:institutions,id'
+                'exists:institutions,id',
             ],
         ]);
 
         /*
         |--------------------------------------------------------------------------
-        | Save Institution In Session (FOR SAFETY)
+        | Institution Registration Context
         |--------------------------------------------------------------------------
         */
-        session()->put('selected_institution_id', $request->institution_id);
+
+        session()->put(
+            'registration_context',
+            'institution'
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Preserve Selected Institution
+        |--------------------------------------------------------------------------
+        */
+
+        session()->put(
+            'selected_institution_id',
+            $request->institution_id
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Continue to Existing Registration
+        |--------------------------------------------------------------------------
+        */
 
         return redirect()->route('register');
     }

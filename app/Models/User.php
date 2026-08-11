@@ -144,6 +144,39 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\QuizAttempt::class);
     }
 
+
+        public function onboardingProfile()
+    {
+        return $this->hasOne(OnboardingProfile::class);
+    }
+
+    public function learningAccess()
+    {
+        return $this->hasMany(LearningAccess::class);
+    }
+
+    //Helpers
+
+    public function hasActiveLearningAccess($courseId): bool
+    {
+        return $this->learningAccess()
+            ->where('course_id', $courseId)
+            ->where('status', 'active')
+            ->where('starts_at', '<=', now())
+            ->where('expires_at', '>', now())
+            ->exists();
+    }
+
+    public function activeLearningAccess($courseId)
+    {
+        return $this->learningAccess()
+            ->where('course_id', $courseId)
+            ->where('status', 'active')
+            ->where('starts_at', '<=', now())
+            ->where('expires_at', '>', now())
+            ->latest('expires_at')
+            ->first();
+    }
     /* ============================
        REFERRAL RELATIONSHIPS ✅
     ============================ */

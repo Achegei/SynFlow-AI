@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\LearningAccess;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,75 +13,285 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Show login page
+     * Show login page.
      */
     public function create(): View
     {
         return view('auth.login');
     }
 
+
     /**
- * Handle login request
- */
-public function store(LoginRequest $request): RedirectResponse
-{
-    $request->authenticate();
+     * Handle login request.
+     */
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        /*
+        |--------------------------------------------------------------------------
+        | Authenticate user
+        |--------------------------------------------------------------------------
+        */
 
-    $request->session()->regenerate();
-    $request->session()->regenerateToken();
+        $request->authenticate();
 
-    $user = Auth::user();
-    $user->update([
+        $request->session()->regenerate();
+        $request->session()->regenerateToken();
 
-        'last_login_at' => now(),
 
-        'last_activity_at' => now(),
+        /*
+        |--------------------------------------------------------------------------
+        | Get authenticated user
+        |--------------------------------------------------------------------------
+        */
 
-    ]);
+        $user = Auth::user();
 
-    /*
-    |--------------------------------------------------------------------------
-    | FORCE PASSWORD CHANGE
-    |--------------------------------------------------------------------------
-    */
 
-    if ($user->must_change_password == 1) {
+        /*
+        |--------------------------------------------------------------------------
+        | Update login information
+        |--------------------------------------------------------------------------
+        */
 
-    session([
-        'post_password_redirect' => match ($user->role) {
-            'institution_admin' => route('institution.dashboard'),
-            'sales_executive' => route('sales.dashboard'),
-            default => route('dashboard'),
+        $user->update([
+            'last_login_at'     => now(),
+            'last_activity_at'  => now(),
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | FORCE PASSWORD CHANGE
+        |--------------------------------------------------------------------------
+        */
+
+        if ((int) $user->must_change_password === 1) {
+
+            session([
+                'post_password_redirect' => match ($user->role) {
+
+                    'institution_admin' =>
+                        route('institution.dashboard'),
+
+                    'sales_executive' =>
+                        route('sales.dashboard'),
+
+                    default =>
+                        route('dashboard'),
+                }
+            ]);
+
+            return redirect()
+                ->route('profile.edit')
+                ->with(
+                    'warning',
+                    'You must change your password before continuing.'
+                );
         }
-    ]);
 
-    return redirect()->route('profile.edit')
-            ->with('warning', 'You must change your password before continuing.');
+
+        /*
+        |--------------------------------------------------------------------------
+        | ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'admin') {
+
+            return redirect('/admin');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SALES EXECUTIVE
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'sales_executive') {
+
+            return redirect('/sales/dashboard');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | INSTITUTION ADMIN
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'institution_admin') {
+
+            return redirect('/institution/dashboard');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | STUDENT / LEARNER
+        |--------------------------------------------------------------------------
+        |
+        | From this point we deal with normal learners.
+        |
+        | The system determines whether the learner is:
+        |
+        | 1. An active AI learner
+        | 2. An institution learner
+        | 3. An expired AI learner
+        | 4. A learner with no active access
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        if ($user->role === 'student') {
+
+            /*
+            |--------------------------------------------------------------------------
+            | 1. CHECK ACTIVE AI LEARNING ACCESS
+            |--------------------------------------------------------------------------
+            |
+            | AI access is controlled by LearningAccess.
+            |
+            | We do NOT check course_user here because AI subscriptions
+            | are temporary and expire according to the selected package.
+            |
+            */
+
+            $activeAiAccess = LearningAccess::where(
+                    'user_id',
+                    $user->id
+                )
+                ->where('status', 'active')
+                ->where(function ($query) {
+
+                    $query
+                        ->whereNull('expires_at')
+                        ->orWhere(
+                            'expires_at',
+                            '>',
+                            now()
+                        );
+                })
+                ->latest('expires_at')
+                ->first();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | ACTIVE AI LEARNER
+            |--------------------------------------------------------------------------
+            |
+            | If the learner has an active package, take them directly
+            | to the classroom.
+            |
+            */
+
+            if ($activeAiAccess) {
+
+                return redirect()
+                    ->route(
+                        'classroom.show',
+                        $activeAiAccess->course_id
+                    );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | 2. CHECK INSTITUTION COURSE ACCESS
+            |--------------------------------------------------------------------------
+            |
+            | Institution learners have permanent course access through
+            | course_user.
+            |
+            */
+
+            $institutionCourse = $user->courses()
+                ->wherePivot(
+                    'user_id',
+                    $user->id
+                )
+                ->first();
+
+
+            if ($institutionCourse) {
+
+                return redirect()
+                    ->route(
+                        'classroom.show',
+                        $institutionCourse->id
+                    );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | 3. NO ACTIVE ACCESS
+            |--------------------------------------------------------------------------
+            |
+            | At this point the learner does not have:
+            |
+            | - an active AI package
+            | - institution course access
+            |
+            | If they previously had AI access but it expired, they must
+            | choose a new package.
+            |
+            */
+
+            $hasPreviousAiAccess = LearningAccess::where(
+                    'user_id',
+                    $user->id
+                )
+                ->exists();
+
+
+            if ($hasPreviousAiAccess) {
+
+                return redirect()
+                    ->route('ai.packages')
+                    ->with(
+                        'info',
+                        'Your AI learning package has expired. Please choose a new package to continue learning.'
+                    );
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | 4. BRAND NEW LEARNER WITH NO ACCESS
+            |--------------------------------------------------------------------------
+            |
+            | This learner has no active AI access and no institution
+            | enrollment.
+            |
+            | Send them to the classroom, where the appropriate paywall
+            | can be displayed.
+            |
+            */
+
+            return redirect()
+                ->route('classroom.index');
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | INVALID ROLE
+        |--------------------------------------------------------------------------
+        */
+
+        Auth::logout();
+
+        abort(
+            403,
+            'Invalid role'
+        );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | NORMAL ROLE REDIRECTS
-    |--------------------------------------------------------------------------
-    */
 
-    return match ($user->role) {
-
-        'admin' => redirect('/admin'),
-
-        'sales_executive' => redirect('/sales/dashboard'),
-
-        'institution_admin' => redirect('/institution/dashboard'),
-
-        'student' => redirect('/classroom'),
-
-        default => tap(Auth::logout(), function () {
-            abort(403, 'Invalid role');
-        }),
-    };
-}
     /**
-     * Logout user
+     * Logout user.
      */
     public function destroy(Request $request): RedirectResponse
     {

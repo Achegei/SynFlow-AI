@@ -1,47 +1,490 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+    <div class="w-full max-w-md mx-auto">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        {{-- ============================================================
+             BRAND / HEADER
+        ============================================================= --}}
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="text-center mb-8">
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            {{-- Academy Logo --}}
+            <div class="flex justify-center mb-5">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+                <a href="/" class="inline-flex items-center justify-center">
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+                    <img
+                        src="{{ asset('images/synflowlogo2.jpeg') }}"
+                        alt="Moose Loon AI Academy"
+                        class="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-2xl shadow-sm"
+                    >
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
                 </a>
+
+            </div>
+
+
+            {{-- Brand Name --}}
+            <div
+                class="text-xs sm:text-sm
+                       font-bold
+                       uppercase
+                       tracking-[0.22em]
+                       text-blue-600"
+            >
+                Moose Loon AI Academy
+            </div>
+
+
+            {{-- Heading --}}
+            <h1
+                class="mt-3
+                       text-3xl
+                       sm:text-4xl
+                       font-bold
+                       tracking-tight
+                       text-[#07163D]"
+            >
+                Welcome back
+            </h1>
+
+
+            {{-- Supporting Text --}}
+            <p
+                class="mt-3
+                       text-sm
+                       sm:text-base
+                       leading-relaxed
+                       text-gray-500"
+            >
+                Sign in to continue your AI learning journey.
+            </p>
+
+        </div>
+
+
+        {{-- ============================================================
+             LOGIN CARD
+        ============================================================= --}}
+
+        <div
+            class="w-full
+                   bg-white
+                   rounded-2xl
+                   sm:rounded-3xl
+                   border
+                   border-gray-100
+                   shadow-xl
+                   p-5
+                   sm:p-7"
+        >
+
+            {{-- Session Status --}}
+            @if (session('status'))
+
+                <div
+                    class="mb-6
+                           rounded-xl
+                           border border-blue-100
+                           bg-blue-50
+                           px-4 py-3
+                           text-sm
+                           text-blue-700"
+                >
+                    {{ session('status') }}
+                </div>
+
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+
+            {{-- Validation Errors --}}
+            @if ($errors->any())
+
+                <div
+                    class="mb-6
+                           rounded-xl
+                           border border-red-100
+                           bg-red-50
+                           px-4 py-3"
+                >
+
+                    <div class="text-sm font-semibold text-red-700">
+                        Please check the following:
+                    </div>
+
+                    <ul class="mt-2 space-y-1 text-sm text-red-600">
+
+                        @foreach ($errors->all() as $error)
+
+                            <li>
+                                {{ $error }}
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+            @endif
+
+
+            {{-- ========================================================
+                 LOGIN FORM
+            ========================================================= --}}
+
+            <form method="POST" action="{{ route('login') }}">
+
+                @csrf
+
+
+                {{-- Email --}}
+                <div>
+
+                    <label
+                        for="email"
+                        class="block
+                               text-sm
+                               font-semibold
+                               text-[#07163D]
+                               mb-2"
+                    >
+                        Email Address
+                    </label>
+
+
+                    <div class="relative">
+
+                        {{-- Email Icon --}}
+                        <div
+                            class="pointer-events-none
+                                   absolute
+                                   inset-y-0
+                                   left-0
+                                   flex
+                                   items-center
+                                   pl-4
+                                   text-gray-400"
+                        >
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                />
+                            </svg>
+
+                        </div>
+
+
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            required
+                            autofocus
+                            autocomplete="username"
+                            placeholder="you@example.com"
+                            class="block
+                                   w-full
+                                   rounded-xl
+                                   border
+                                   border-gray-200
+                                   bg-gray-50
+                                   py-3.5
+                                   pl-12
+                                   pr-4
+                                   text-sm
+                                   text-gray-900
+                                   placeholder-gray-400
+                                   shadow-sm
+                                   outline-none
+                                   transition
+                                   duration-200
+                                   focus:border-blue-600
+                                   focus:bg-white
+                                   focus:ring-4
+                                   focus:ring-blue-100"
+                        >
+
+                    </div>
+
+
+                    @if ($errors->get('email'))
+
+                        <p class="mt-2 text-sm text-red-600">
+                            {{ $errors->first('email') }}
+                        </p>
+
+                    @endif
+
+                </div>
+
+
+                {{-- Password --}}
+                <div class="mt-5">
+
+                    <div class="flex items-center justify-between mb-2">
+
+                        <label
+                            for="password"
+                            class="block
+                                   text-sm
+                                   font-semibold
+                                   text-[#07163D]"
+                        >
+                            Password
+                        </label>
+
+
+                        @if (Route::has('password.request'))
+
+                            <a
+                                href="{{ route('password.request') }}"
+                                class="text-sm
+                                       font-semibold
+                                       text-blue-600
+                                       hover:text-blue-700
+                                       transition"
+                            >
+                                Forgot password?
+                            </a>
+
+                        @endif
+
+                    </div>
+
+
+                    <div class="relative">
+
+                        {{-- Lock Icon --}}
+                        <div
+                            class="pointer-events-none
+                                   absolute
+                                   inset-y-0
+                                   left-0
+                                   flex
+                                   items-center
+                                   pl-4
+                                   text-gray-400"
+                        >
+
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 15v2m-6 4h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V5a3 3 0 00-6 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                />
+                            </svg>
+
+                        </div>
+
+
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            class="block
+                                   w-full
+                                   rounded-xl
+                                   border
+                                   border-gray-200
+                                   bg-gray-50
+                                   py-3.5
+                                   pl-12
+                                   pr-4
+                                   text-sm
+                                   text-gray-900
+                                   placeholder-gray-400
+                                   shadow-sm
+                                   outline-none
+                                   transition
+                                   duration-200
+                                   focus:border-blue-600
+                                   focus:bg-white
+                                   focus:ring-4
+                                   focus:ring-blue-100"
+                        >
+
+                    </div>
+
+
+                    @if ($errors->get('password'))
+
+                        <p class="mt-2 text-sm text-red-600">
+                            {{ $errors->first('password') }}
+                        </p>
+
+                    @endif
+
+                </div>
+
+
+                {{-- Remember Me --}}
+                <div class="mt-5">
+
+                    <label
+                        for="remember_me"
+                        class="inline-flex
+                               items-center
+                               cursor-pointer
+                               select-none"
+                    >
+
+                        <input
+                            id="remember_me"
+                            type="checkbox"
+                            name="remember"
+                            class="w-4 h-4
+                                   rounded
+                                   border-gray-300
+                                   text-blue-600
+                                   focus:ring-blue-500"
+                        >
+
+                        <span
+                            class="ms-2
+                                   text-sm
+                                   text-gray-600"
+                        >
+                            Remember me
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                {{-- Login Button --}}
+                <div class="mt-7">
+
+                    <button
+                        type="submit"
+                        class="w-full
+                               inline-flex
+                               items-center
+                               justify-center
+                               gap-2
+                               rounded-xl
+                               bg-[#07163D]
+                               px-5
+                               py-3.5
+                               text-sm
+                               font-bold
+                               text-white
+                               shadow-lg
+                               shadow-blue-900/10
+                               transition
+                               duration-200
+                               hover:bg-blue-700
+                               focus:outline-none
+                               focus:ring-4
+                               focus:ring-blue-100
+                               active:scale-[0.99]"
+                    >
+
+                        <span>
+                            Log in
+                        </span>
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linecap="round"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                        </svg>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            {{-- ========================================================
+                 REGISTER
+            ========================================================= --}}
+
+            @if (Route::has('register'))
+
+                <div class="mt-6 text-center">
+
+                    <p class="text-sm text-gray-500">
+
+                        Don't have an account?
+
+                        <a
+                            href="{{ route('register') }}"
+                            class="font-bold
+                                   text-blue-600
+                                   hover:text-blue-700
+                                   transition"
+                        >
+                            Create an account
+                        </a>
+
+                    </p>
+
+                </div>
+
+            @endif
+
         </div>
-    </form>
+
+
+        {{-- ============================================================
+             TRUST / BRAND MESSAGE
+        ============================================================= --}}
+
+        <div class="mt-6 text-center">
+
+            <div
+                class="inline-flex
+                       items-center
+                       gap-2
+                       text-xs
+                       text-gray-400"
+            >
+
+                <span
+                    class="w-2 h-2
+                           rounded-full
+                           bg-[#E31B23]"
+                ></span>
+
+                Canadian Practical AI Skills for Modern Work
+
+            </div>
+
+        </div>
+
+    </div>
+
 </x-guest-layout>

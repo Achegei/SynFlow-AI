@@ -34,6 +34,11 @@ class ForcePasswordChange
 
                 // Logout
                 'logout',
+
+                // AI payment flow
+                'ai.payment.create',
+                'ai.payment.store',
+                'ai.payment.complete',
             ];
 
             if (!in_array(

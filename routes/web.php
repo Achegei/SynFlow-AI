@@ -27,6 +27,10 @@ use App\Http\Controllers\UniversitySelectionController;
 use App\Http\Controllers\SalesDashboardController;
 use App\Http\Controllers\InstitutionDashboardController;
 use App\Http\Controllers\PayoutRequestController;
+use App\Http\Controllers\AI\AIOnboardingController;
+use App\Http\Controllers\AI\AIPathController;
+use App\Http\Controllers\AI\AIPackageController;
+use App\Http\Controllers\AI\AIPaymentController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -91,6 +95,98 @@ Route::post('/choose-university', [
     'store'
 ])->name('choose.university.store');
 
+
+//================================================
+// AI LEARNING & PAYMENT ROUTES
+//================================================
+
+Route::prefix('ai')->name('ai.')->group(function () {
+
+    //================================================
+    // AI LEARNING ONBOARDING
+    //================================================
+
+    // Show onboarding step
+    Route::get('/onboarding/{step}', [
+        AIOnboardingController::class,
+        'step'
+    ])->name('onboarding.step');
+
+    // Save onboarding step
+    Route::post('/onboarding/{step}', [
+        AIOnboardingController::class,
+        'store'
+    ])->name('onboarding.store');
+
+
+    //================================================
+    // AI LEARNING PATH
+    //================================================
+
+    Route::get('/path', [
+        AIPathController::class,
+        'index'
+    ])->name('path');
+
+
+    //================================================
+    // AI LEARNING PACKAGES
+    //================================================
+
+    Route::get('/packages', [
+        AIPackageController::class,
+        'index'
+    ])->name('packages');
+
+    Route::post('/packages/{package}/select', [
+        AIPackageController::class,
+        'select'
+    ])->name('packages.select');
+
+
+    //================================================
+    // AI PAYMENT
+    //================================================
+
+    Route::middleware('auth')->group(function () {
+
+        // Show AI payment page
+        Route::get('/payment/{package}', [
+            AIPaymentController::class,
+            'create'
+        ])->name('payment.create');
+
+
+        // Start IntaSend payment
+        Route::post('/payment/{package}', [
+            AIPaymentController::class,
+            'store'
+        ])->name('payment.store');
+
+
+        // Payment pending page
+        Route::get('/payment/pending/{payment}', [
+            AIPaymentController::class,
+            'pending'
+        ])->name('payment.pending');
+
+
+        // AJAX payment status polling
+        Route::get('/payment/status/{payment}', [
+            AIPaymentController::class,
+            'status'
+        ])->name('payment.status');
+
+
+        // IntaSend return URL
+        Route::get('/payment/{package}/complete', [
+            AIPaymentController::class,
+            'complete'
+        ])->name('payment.complete');
+
+    });
+
+});
 //================================================
 // 1. Public-Facing Site Routes
 //================================================
