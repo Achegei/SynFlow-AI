@@ -261,16 +261,47 @@ Route::middleware('auth')->group(function () {
     Route::post('/episodes/{episode}/toggle', [EpisodeProgressController::class, 'toggle'])
     ->name('episodes.toggle');
 
-    //==============================
-// Course Payment Routes
-//==============================
+ //================================================
+// COURSE / INSTITUTION PAYMENT
+//================================================
 
-// 1️⃣ POST route for actual purchase
-Route::post('/purchase/{course}', [PurchaseController::class, 'purchase'])
-    ->name('purchase.course');
+Route::middleware('auth')->group(function () {
 
-// 3️⃣ GET route for successful completion redirect from IntaSend
-Route::get('/purchase/complete/{course}', [PurchaseController::class, 'complete'])->name('purchase.complete');
+    // Show course purchase/payment page
+    Route::get('/purchase/{course}', [
+        PurchaseController::class,
+        'show'
+    ])->name('purchase.show');
+
+
+    // Start M-Pesa STK payment
+    Route::post('/purchase/{course}', [
+        PurchaseController::class,
+        'purchase'
+    ])->name('purchase.course');
+
+
+    // Payment pending page
+    Route::get('/payment/pending/{payment}', [
+        PurchaseController::class,
+        'pending'
+    ])->name('payment.pending');
+
+
+    // AJAX payment status polling
+    Route::get('/payment/status/{payment}', [
+        PurchaseController::class,
+        'status'
+    ])->name('payment.status');
+
+
+    // Payment completion / fallback
+    Route::get('/purchase/complete/{course}', [
+        PurchaseController::class,
+        'complete'
+    ])->name('purchase.complete');
+
+});
 
 
 

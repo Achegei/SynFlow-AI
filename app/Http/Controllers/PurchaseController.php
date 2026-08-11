@@ -2,148 +2,887 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Payment;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use IntaSend\IntaSendPHP\Checkout;
-use IntaSend\IntaSendPHP\Customer;
+use Illuminate\View\View;
+use IntaSend\IntaSendPHP\Wallet;
+use App\Services\IntaSendPaymentService;
 
 class PurchaseController extends Controller
 {
     /**
-     * Start a purchase and create an IntaSend checkout session
+     * Show institution purchase/payment page.
      */
-    public function purchase(Request $request, $courseId)
+    public function show(string $courseId): View|RedirectResponse
     {
         $user = Auth::user();
+
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Please log in first.');
+            return redirect()
+                ->route('login')
+                ->with('error', 'Please log in to continue.');
         }
 
-        $course = Course::find($courseId);
-        if (!$course) {
-            return back()->with('error', 'Course not found.');
+        $course = Course::findOrFail($courseId);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verify course is active
+        |--------------------------------------------------------------------------
+        */
+
+        if (isset($course->active) && !$course->active) {
+            abort(404);
         }
 
-        // If user already owns course
-        if ($user->courses->contains($courseId)) {
-            return redirect()->route('classroom.show', $courseId)
-                ->with('info', 'You already own this course.');
+        /*
+        |--------------------------------------------------------------------------
+        | Course price
+        |--------------------------------------------------------------------------
+        */
+
+        $amount = (float) $course->price;
+
+        if ($amount < 0.10) {
+            Log::error('[Institution Payment] Invalid course price', [
+                'user_id' => $user->id,
+                'course_id' => $course->id,
+                'course_title' => $course->title ?? null,
+                'price' => $course->price,
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('error', 'This course does not have a valid price.');
         }
 
-        // IntaSend customer data
-        $customer = new Customer();
-        $customer->first_name = $user->name;
-        $customer->last_name  = $user->name;
-        $customer->email      = $user->email;
-        $customer->country    = "KE";
-
-        $amount   = $course->price;
-        $currency = "KES";
-
-        /**
-         * API REF FORMAT (very important for webhook matching)
-         * order-user{userId}-course{courseId}-{timestamp}
-         */
-        $apiRef = "order-user{$user->id}-course{$courseId}-" . time();
-
-        // Initialize IntaSend Checkout
-        $checkout = new Checkout();
-        $checkout->init([
-            'token'           => config('intasend.secret_key'),
-            'publishable_key' => config('intasend.publishable_key'),
-            'test'            => config('intasend.test_mode', false),
+        return view('purchase', [
+            'course' => $course,
+            'amount' => $amount,
         ]);
-
-        try {
-
-            $response = $checkout->create(
-                $amount,
-                $currency,
-                $customer,
-                $host = "https://mooseloonai.ca",     // host
-                $redirect_url = $host . route('purchase.complete', $courseId, false), // redirect_url
-                $apiRef,                               // api_ref
-                null,                                  // comment
-                "M-PESA"                               // method
-            );
-
-            Log::info("[IntaSend Checkout] Session created", (array) $response);
-
-        } catch (\Throwable $e) {
-            Log::error("[IntaSend Checkout] Error: {$e->getMessage()}");
-            return back()->with('error', 'Could not initialize payment. Please try again.');
-        }
-
-        // IntaSend response has invoice->invoice_id
-        $invoiceId = $response->invoice->invoice_id ?? $response->id ?? null;
-
-        if (!$invoiceId) {
-            Log::error("[IntaSend Checkout] Missing invoice_id in response", (array) $response);
-            return back()->with('error', 'Payment could not be started.');
-        }
-
-        // Store payment record (updateOrCreate prevents duplicates)
-        Payment::updateOrCreate(
-            [
-                'user_id'   => $user->id,
-                'course_id' => $courseId,
-            ],
-            [
-                'provider'   => 'intasend',
-                'status'     => 'pending',
-                'payment_id' => $invoiceId,
-                'api_ref'    => $apiRef,
-                'amount'     => $amount,
-                'payload'    => json_encode($response),
-            ]
-        );
-
-        // Redirect user to the IntaSend payment page
-        if (!isset($response->url)) {
-            Log::error("[IntaSend Checkout] Missing payment URL", (array)$response);
-            return back()->with('error', 'Payment URL missing. Contact support.');
-        }
-
-        return redirect($response->url);
     }
 
 
     /**
-     * Redirect after payment (NOT webhook)
+     * Start Institution M-Pesa STK Push.
+     *
+     * IMPORTANT:
+     *
+     * Institution payments are sent directly into the configured
+     * IntaSend WORKING wallet.
+     *
+     * We therefore use:
+     *
+     *     IntaSend\IntaSendPHP\Wallet
+     *
+     * and:
+     *
+     *     fund_mpesa_stk_push()
+     *
+     * instead of Collection::create().
      */
-    public function complete($courseId)
-{
-    $user = Auth::user();
-    if (!$user) {
-        return redirect()->route('login')->with('error', 'Please log in first.');
-    }
+    public function purchase(
+        Request $request,
+        string $courseId
+    ): RedirectResponse {
+        $user = Auth::user();
 
-    $payment = Payment::where('user_id', $user->id)
-        ->where('course_id', $courseId)
-        ->latest()
-        ->first();
+        /*
+        |--------------------------------------------------------------------------
+        | Authentication
+        |--------------------------------------------------------------------------
+        */
 
-            if ($payment && $payment->status === 'paid') {
-
-            // Unlock courses logic
-            if ($courseId == 2) {
-                // Buying Course 2 unlocks Course 1 and Course 2
-                $user->courses()->syncWithoutDetaching([1, 2]);
-            } else {
-                // Buying Course 1 unlocks only Course 1
-                $user->courses()->syncWithoutDetaching([$courseId]);
-            }
-
-            return redirect()->route('classroom.show', $courseId)
-                ->with('success', '🎉 Payment confirmed! Course unlocked.');
+        if (!$user) {
+            return redirect()
+                ->route('login')
+                ->with('error', 'Please log in first.');
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Find course
+        |--------------------------------------------------------------------------
+        */
 
-    // If payment not complete yet
-    return view('purchase.complete', compact('payment'))
-        ->with('info', 'Your payment is still being processed. The course will unlock automatically.');
+        $course = Course::findOrFail($courseId);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verify course is active
+        |--------------------------------------------------------------------------
+        */
+
+        if (isset($course->active) && !$course->active) {
+            abort(404);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Course ID
+        |--------------------------------------------------------------------------
+        */
+
+        $courseId = $course->id;
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate course price
+        |--------------------------------------------------------------------------
+        */
+
+        $amount = (float) $course->price;
+        $currency = 'KES';
+
+        if ($amount < 0.10) {
+            Log::error('[Institution STK] Invalid course price', [
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+                'course_title' => $course->title ?? null,
+                'database_price' => $course->price,
+                'amount' => $amount,
+            ]);
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'This course does not have a valid payment amount.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate M-Pesa phone number
+        |--------------------------------------------------------------------------
+        */
+
+        $request->validate([
+            'phone_number' => [
+                'required',
+                'string',
+                'max:20',
+            ],
+        ], [
+            'phone_number.required' =>
+                'Please enter your M-Pesa phone number.',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Normalize Kenyan phone number
+        |--------------------------------------------------------------------------
+        */
+
+        $phone = $this->normalizeKenyanPhone(
+            $request->phone_number
+        );
+
+        if (!$phone) {
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Please enter a valid Kenyan M-Pesa number, for example 254768282146.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | IntaSend credentials
+        |--------------------------------------------------------------------------
+        */
+
+        $secretKey = config('intasend.secret_key');
+        $publishableKey = config('intasend.publishable_key');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Environment
+        |--------------------------------------------------------------------------
+        |
+        | IMPORTANT:
+        |
+        | The wallet MUST belong to the same IntaSend environment as
+        | the API credentials.
+        |
+        | If test_mode = true:
+        |     use SANDBOX keys + SANDBOX wallet
+        |
+        | If test_mode = false:
+        |     use LIVE keys + LIVE wallet
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        $testMode = (bool) config(
+            'intasend.test_mode',
+            false
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Wallet ID
+        |--------------------------------------------------------------------------
+        */
+
+        $walletId = trim(
+            (string) config('intasend.wallet_id')
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Verify configuration
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            empty($secretKey) ||
+            empty($publishableKey)
+        ) {
+            Log::error(
+                '[Institution STK] IntaSend credentials missing',
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'test_mode' => $testMode,
+                    'wallet_id_configured' => !empty($walletId),
+                ]
+            );
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Payment service is temporarily unavailable. Please try again later.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Wallet is mandatory for Institution payments
+        |--------------------------------------------------------------------------
+        */
+
+        if (empty($walletId)) {
+            Log::error(
+                '[Institution STK] Wallet ID missing',
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'test_mode' => $testMode,
+                ]
+            );
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Payment wallet is not configured. Please contact support.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Unique API reference
+        |--------------------------------------------------------------------------
+        */
+
+        $apiRef =
+            'order-user' .
+            $user->id .
+            '-course' .
+            $courseId .
+            '-' .
+            now()->format('YmdHis') .
+            '-' .
+            uniqid();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Log payment preparation
+        |--------------------------------------------------------------------------
+        */
+
+        Log::info(
+            '[Institution STK] Preparing M-Pesa STK Push',
+            [
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+                'course_title' => $course->title ?? null,
+                'database_price' => $course->price,
+                'amount' => number_format($amount, 2, '.', ''),
+                'currency' => $currency,
+                'phone' => $phone,
+                'api_ref' => $apiRef,
+                'wallet_id_configured' => true,
+
+                /*
+                 * Do not log the complete wallet ID unnecessarily
+                 * in production.
+                 */
+                'wallet_id' => $walletId,
+
+                'test_mode' => $testMode,
+
+                /*
+                 * Helpful when diagnosing sandbox/live mismatch.
+                 */
+                'intasend_environment' => $testMode
+                    ? 'SANDBOX'
+                    : 'LIVE',
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Initialize IntaSend Wallet
+        |--------------------------------------------------------------------------
+        */
+
+        $wallet = new Wallet();
+
+        $credentials = [
+            'token' => $secretKey,
+            'publishable_key' => $publishableKey,
+            'test' => $testMode,
+        ];
+
+        $wallet->init($credentials);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Send M-Pesa STK Push directly to the working wallet
+        |--------------------------------------------------------------------------
+        |
+        | This is the critical change.
+        |
+        | DO NOT use:
+        |
+        |     $collection->create(..., $walletId)
+        |
+        | for this institution-wallet flow.
+        |
+        | Instead use IntaSend's documented:
+        |
+        |     $wallet->fund_mpesa_stk_push()
+        |
+        |--------------------------------------------------------------------------
+        */
+
+        try {
+            $response = $wallet->fund_mpesa_stk_push(
+                $walletId,
+                $phone,
+                $user->email,
+                $amount,
+                $apiRef
+            );
+        } catch (\Throwable $e) {
+            Log::error(
+                '[Institution STK] IntaSend STK Push failed',
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'phone' => $phone,
+                    'amount' => $amount,
+                    'currency' => $currency,
+                    'api_ref' => $apiRef,
+                    'wallet_id' => $walletId,
+                    'test_mode' => $testMode,
+                    'intasend_environment' => $testMode
+                        ? 'SANDBOX'
+                        : 'LIVE',
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
+                ]
+            );
+
+            /*
+            |--------------------------------------------------------------------------
+            | Detect wallet/environment mismatch
+            |--------------------------------------------------------------------------
+            */
+
+            $errorMessage = $e->getMessage();
+
+            if (
+                str_contains(
+                    strtolower($errorMessage),
+                    'invalid wallet id'
+                )
+            ) {
+                return back()
+                    ->withInput()
+                    ->with(
+                        'error',
+                        $testMode
+                            ? 'The configured wallet does not belong to the IntaSend sandbox account being used. Please use the sandbox wallet ID.'
+                            : 'The configured wallet does not belong to the IntaSend live account being used. Please verify the live wallet ID.'
+                    );
+            }
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'We could not start the M-Pesa payment. Please check the number and try again.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Convert response to array for logging/storage
+        |--------------------------------------------------------------------------
+        */
+
+        $responseArray = [];
+
+        try {
+            $responseArray = json_decode(
+                json_encode($response),
+                true
+            ) ?? [];
+        } catch (\Throwable $e) {
+            $responseArray = [];
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Extract invoice ID
+        |--------------------------------------------------------------------------
+        */
+
+        $invoiceId =
+            $response->invoice->invoice_id
+            ?? $response->invoice->id
+            ?? $response->invoice_id
+            ?? $response->id
+            ?? ($responseArray['invoice']['invoice_id'] ?? null)
+            ?? ($responseArray['invoice']['id'] ?? null)
+            ?? ($responseArray['invoice_id'] ?? null)
+            ?? ($responseArray['id'] ?? null);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Log IntaSend response
+        |--------------------------------------------------------------------------
+        */
+
+        Log::info(
+            '[Institution STK] IntaSend response received',
+            [
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+                'api_ref' => $apiRef,
+                'invoice_id' => $invoiceId,
+                'wallet_id' => $walletId,
+                'test_mode' => $testMode,
+                'response' => $responseArray,
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Make sure IntaSend returned an invoice/payment reference
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$invoiceId) {
+            Log::error(
+                '[Institution STK] IntaSend response missing invoice ID',
+                [
+                    'user_id' => $user->id,
+                    'course_id' => $courseId,
+                    'api_ref' => $apiRef,
+                    'wallet_id' => $walletId,
+                    'response' => $responseArray,
+                ]
+            );
+
+            return back()
+                ->withInput()
+                ->with(
+                    'error',
+                    'Payment could not be started. Please try again.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create local payment record
+        |--------------------------------------------------------------------------
+        */
+
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'course_id' => $courseId,
+
+            /*
+             * Institution flow does not necessarily use a package.
+             * Keep package_id null.
+             */
+            'package_id' => null,
+
+            'provider' => 'intasend',
+            'payment_type' => 'course',
+            'status' => 'pending',
+
+            /*
+             * IntaSend invoice/payment identifier.
+             */
+            'payment_id' => $invoiceId,
+
+            /*
+             * Our internal reference.
+             */
+            'api_ref' => $apiRef,
+
+            'amount' => $amount,
+            'currency' => $currency,
+
+            /*
+             * Save complete IntaSend response.
+             */
+            'payload' => json_encode(
+                $responseArray
+            ),
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Log local payment
+        |--------------------------------------------------------------------------
+        */
+
+        Log::info(
+            '[Institution STK] Payment attempt created',
+            [
+                'payment_id' => $payment->id,
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+                'invoice_id' => $invoiceId,
+                'amount' => $amount,
+                'phone' => $phone,
+                'api_ref' => $apiRef,
+                'wallet_id' => $walletId,
+            ]
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Save pending payment in session
+        |--------------------------------------------------------------------------
+        */
+
+        session([
+            'institution_pending_payment_id' => $payment->id,
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Redirect to pending page
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route(
+                'payment.pending',
+                $payment->id
+            )
+            ->with(
+                'success',
+                'M-Pesa payment request sent. Please check your phone and enter your M-Pesa PIN.'
+            );
+    }
+
+
+    /**
+ * Show payment pending page.
+ */
+public function pending(Payment $payment): View|RedirectResponse
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return redirect()
+            ->route('login')
+            ->with('error', 'Please log in to continue.');
+    }
+
+    // Make sure the payment belongs to the logged-in user
+    if ((int) $payment->user_id !== (int) $user->id) {
+        abort(403);
+    }
+
+    // Payment already completed
+    if ($payment->status === 'paid') {
+        return redirect()
+            ->route('purchase.complete', $payment->course_id)
+            ->with(
+                'success',
+                '🎉 Payment confirmed! Your course access has been activated.'
+            );
+    }
+
+    return view('payment.pending', [
+        'payment' => $payment,
+    ]);
 }
+
+    /**
+     * Check payment status.
+     *
+     * The IntaSendPaymentService should query IntaSend and synchronize
+     * the local Payment record.
+     */
+    public function status(
+        Payment $payment,
+        IntaSendPaymentService $paymentService
+    ) {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'unauthenticated',
+                'redirect' => route('login'),
+            ], 401);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Security
+        |--------------------------------------------------------------------------
+        */
+
+        if ($payment->user_id !== $user->id) {
+            return response()->json([
+                'status' => 'forbidden',
+                'redirect' => null,
+            ], 403);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Synchronize with IntaSend
+        |--------------------------------------------------------------------------
+        */
+
+        try {
+            $payment = $paymentService->synchronize(
+                $payment
+            );
+        } catch (\Throwable $e) {
+            Log::error(
+                '[Institution PAYMENT STATUS] Synchronization failed',
+                [
+                    'payment_id' => $payment->id,
+                    'user_id' => $user->id,
+                    'error' => $e->getMessage(),
+                ]
+            );
+
+            return response()->json([
+                'status' => 'pending',
+                'redirect' => null,
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Payment successful
+        |--------------------------------------------------------------------------
+        */
+
+        if ($payment->status === 'paid') {
+            return response()->json([
+                'status' => 'paid',
+                'redirect' => route(
+                    'classroom.show',
+                    $payment->course_id
+                ),
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Payment failed
+        |--------------------------------------------------------------------------
+        */
+
+        if ($payment->status === 'failed') {
+            return response()->json([
+                'status' => 'failed',
+                'redirect' => null,
+            ]);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Still pending
+        |--------------------------------------------------------------------------
+        */
+
+        return response()->json([
+            'status' => 'pending',
+            'redirect' => null,
+        ]);
+    }
+
+
+    /**
+     * Complete payment / fallback return route.
+     */
+    public function complete(
+        string $courseId
+    ): RedirectResponse|View {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()
+                ->route('login');
+        }
+
+        $course = Course::findOrFail($courseId);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Find latest payment
+        |--------------------------------------------------------------------------
+        */
+
+        $payment = Payment::query()
+            ->where('user_id', $user->id)
+            ->where('course_id', $course->id)
+            ->where('provider', 'intasend')
+            ->where('payment_type', 'course')
+            ->latest('id')
+            ->first();
+
+        if (!$payment) {
+            return redirect()
+                ->back()
+                ->with(
+                    'error',
+                    'No payment attempt was found.'
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Payment not complete
+        |--------------------------------------------------------------------------
+        */
+
+        if ($payment->status !== 'paid') {
+            return redirect()
+                ->route(
+                    'payment.pending',
+                    $payment->id
+                );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Clear payment session
+        |--------------------------------------------------------------------------
+        */
+
+        session()->forget([
+            'institution_pending_payment_id',
+        ]);
+
+        /*
+        |--------------------------------------------------------------------------
+        | Give access
+        |--------------------------------------------------------------------------
+        */
+
+        return redirect()
+            ->route(
+                'classroom.show',
+                $course->id
+            )
+            ->with(
+                'success',
+                '🎉 Payment confirmed! Your course access has been activated.'
+            );
+    }
+
+
+    /**
+     * Normalize Kenyan phone number.
+     */
+    private function normalizeKenyanPhone(
+        string $phone
+    ): ?string {
+        /*
+        |--------------------------------------------------------------------------
+        | Remove spaces, hyphens and brackets
+        |--------------------------------------------------------------------------
+        */
+
+        $phone = preg_replace(
+            '/[\s\-\(\)]/',
+            '',
+            trim($phone)
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | +254...
+        |--------------------------------------------------------------------------
+        */
+
+        if (str_starts_with($phone, '+254')) {
+            $phone = substr($phone, 1);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 07XXXXXXXX / 01XXXXXXXX
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            str_starts_with($phone, '07') ||
+            str_starts_with($phone, '01')
+        ) {
+            $phone = '254' . substr($phone, 1);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | 7XXXXXXXX / 1XXXXXXXX
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            preg_match('/^[17]\d{8}$/', $phone)
+        ) {
+            $phone = '254' . $phone;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Final validation
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !preg_match(
+                '/^254[17]\d{8}$/',
+                $phone
+            )
+        ) {
+            return null;
+        }
+
+        return $phone;
+    }
 }
