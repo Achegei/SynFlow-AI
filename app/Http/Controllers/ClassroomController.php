@@ -15,10 +15,10 @@ class ClassroomController extends Controller
      * It only determines that the learner came through
      * the institution/revenue-sharing pathway.
      *
-     * The learner must still pay for Course 5.
+     * The learner must still pay for Course 1.
      */
-    private const CURRENT_COURSE_ID = 5;
 
+    private const CURRENT_COURSE_ID = 1;
 
     /**
      * Display the classroom course listing.
@@ -103,7 +103,7 @@ class ClassroomController extends Controller
         |
         | It does NOT grant access.
         |
-        | For the current production setup, Course 5 is
+        | For the current production setup, Course 1 is
         | the course learners see.
         |--------------------------------------------------------------------------
         */
@@ -111,9 +111,9 @@ class ClassroomController extends Controller
         $institutionCourseIds = collect();
 
         if ($user->institution_id) {
-            $institutionCourseIds = collect([
-                self::CURRENT_COURSE_ID
-            ]);
+            $institutionCourseIds = Package::where('active', true)
+                ->whereNotNull('course_id')
+                ->pluck('course_id');
         }
 
 
