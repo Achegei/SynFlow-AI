@@ -39,7 +39,7 @@
             <div class="mt-8 grid grid-cols-3 gap-4">
 
                 <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-                    <p class="text-3xl font-black text-gray-900">15</p>
+                    <p class="text-3xl font-black text-gray-900">17</p>
                     <p class="text-sm text-gray-500 mt-1">
                         AI Training Modules
                     </p>

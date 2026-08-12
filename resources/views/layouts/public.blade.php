@@ -359,6 +359,31 @@
                                     Curriculum
                                 </a>
 
+                                <a
+                                    href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                                    class="relative
+                                           text-sm
+                                           font-semibold
+                                           text-[#0B1F3A]
+                                           hover:text-[#1E73BE]
+                                           transition-colors
+                                           duration-200
+                                           py-2
+                                           after:absolute
+                                           after:left-0
+                                           after:right-0
+                                           after:-bottom-1
+                                           after:h-0.5
+                                           after:scale-x-0
+                                           hover:after:scale-x-100
+                                           after:bg-[#E31837]
+                                           after:transition-transform
+                                           after:duration-200"
+                                >
+                                    Enroll Now
+                                </a>
+
+
 
                                 <a
                                     href="{{ route('certificate.verify') }}"
@@ -673,6 +698,19 @@
                                transition"
                     >
                         Curriculum
+                    </a>
+
+                    <a
+                        href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                        class="px-4 py-3
+                               rounded-xl
+                               text-[#0B1F3A]
+                               font-semibold
+                               hover:bg-[#F4FAFE]
+                               hover:text-[#1E73BE]
+                               transition"
+                    >
+                        Enroll Now
                     </a>
 
 
@@ -1049,6 +1087,21 @@
                                 Curriculum
                             </a>
                         </li>
+
+                        <li>
+                            <a
+                                href="{{ route('pricing') }}"
+                                class="hover:text-white
+                                       hover:translate-x-1
+                                       inline-block
+                                       transition-all
+                                       duration-200"
+                            >
+                                Curriculum
+                            </a>
+                        </li>
+
+                        
 
 
                         <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers</a></li> -->
