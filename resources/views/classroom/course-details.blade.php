@@ -9,21 +9,21 @@
     | COURSE ACCESS RULE
     |--------------------------------------------------------------------------
     |
-    | ONLY COURSE ID 5 IS PAID.
+    | ONLY COURSE ID 1 IS PAID.
     | EVERY OTHER COURSE IS OPEN.
     |
     */
 
     $isPaidCourse = (int) $course->id === 1;
 
+
     /*
     |--------------------------------------------------------------------------
     | REFRESH AUTHENTICATED USER
     |--------------------------------------------------------------------------
     |
-    | This is important after payment.
-    | If the payment process has attached course #5 to the user,
-    | we want the latest relationship from the database.
+    | Refresh the user after payment so that the latest course relationship
+    | is available for institution/course purchases.
     |
     */
 
@@ -34,37 +34,74 @@
         ])
         : null;
 
+
     /*
     |--------------------------------------------------------------------------
-    | COURSE ACCESS
+    | AI LEARNING ACCESS
     |--------------------------------------------------------------------------
     |
-    | Courses 1-4 and every course other than #5 are open.
+    | The AI pathway does NOT use the courses relationship.
     |
-    | Course #5 requires the user to have the course in their
-    | courses relationship.
+    | AI package payments create an active LearningAccess record.
+    |
+    | ClassroomController already passes the active record as
+    | $learningAccess.
+    |
+    */
+
+    $hasAiAccess = !is_null($learningAccess);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PERMANENT / INSTITUTION COURSE ACCESS
+    |--------------------------------------------------------------------------
+    |
+    | Institution learners who pay through the institution pathway
+    | receive permanent course access through the courses relationship.
+    |
+    */
+
+    $hasCourseAccess = $user
+        ? $user->courses->contains('id', (int) $course->id)
+        : false;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | OVERALL COURSE ACCESS
+    |--------------------------------------------------------------------------
+    |
+    | A paid course can be opened when:
+    |
+    | 1. The course is open access
+    | 2. The learner has permanent course access
+    | 3. The learner has active AI learning access
+    |
+    | This is the important fix for the AI pathway.
     |
     */
 
     $hasAccess = !$isPaidCourse
         ? true
         : (
-            $user &&
-            $user->courses->contains('id', (int) $course->id)
+            $hasCourseAccess ||
+            $hasAiAccess
         );
+
 
     /*
     |--------------------------------------------------------------------------
     | PENDING PAYMENT
     |--------------------------------------------------------------------------
     |
-    | Pending-payment logic applies ONLY to Course #5.
+    | Pending-payment logic applies ONLY to the paid course.
     |
     */
 
     $pendingPayment = false;
 
-    if ($isPaidCourse && $user) {
+    if ($isPaidCourse && $user && !$hasAccess) {
 
         $pendingPayment = \App\Models\Payment::query()
             ->where('user_id', $user->id)
@@ -84,6 +121,7 @@
 ================================================================ --}}
 
 <div class="min-h-screen bg-slate-50">
+
 
     {{-- ============================================================
          BRAND HERO
