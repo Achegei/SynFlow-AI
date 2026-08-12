@@ -19,7 +19,7 @@ class AIPackageSeeder extends Seeder
         |
         */
 
-        $course = Course::findOrFail(8);
+        $course = Course::findOrFail(1);
 
         Package::updateOrCreate(
             ['slug' => 'daily-ai-access'],
@@ -27,7 +27,7 @@ class AIPackageSeeder extends Seeder
                 'course_id' => $course->id,
                 'name' => 'Daily',
                 'duration_days' => 1,
-                'price' => 0,
+                'price' => 195,
                 'description' => '24-hour access to the AI learning programme.',
                 'active' => true,
                 'sort_order' => 1,
@@ -40,7 +40,7 @@ class AIPackageSeeder extends Seeder
                 'course_id' => $course->id,
                 'name' => 'Weekly',
                 'duration_days' => 7,
-                'price' => 0,
+                'price' => 1375,
                 'description' => '7-day access to the AI learning programme.',
                 'active' => true,
                 'sort_order' => 2,
@@ -53,7 +53,7 @@ class AIPackageSeeder extends Seeder
                 'course_id' => $course->id,
                 'name' => 'Monthly',
                 'duration_days' => 30,
-                'price' => 0,
+                'price' => 5500,
                 'description' => '30-day access to the AI learning programme.',
                 'active' => true,
                 'sort_order' => 3,
