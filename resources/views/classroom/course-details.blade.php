@@ -1332,47 +1332,321 @@
 |--------------------------------------------------------------------------
 | YOUTUBE PLAYER
 |--------------------------------------------------------------------------
+| Robust YouTube player initialization.
+| This section should NOT interfere with the quiz component.
+|--------------------------------------------------------------------------
 */
 
 let player = null;
 let currentEpisodeId = null;
-let youtubeReady = false;
 let progressChecker = null;
 let markedCompleted = false;
+let youtubeApiPromise = null;
 
 
 /*
 |--------------------------------------------------------------------------
-| YouTube API Ready
+| LOAD YOUTUBE API
+|--------------------------------------------------------------------------
+|
+| Instead of depending only on onYouTubeIframeAPIReady(),
+| we explicitly detect whether the API already exists.
+|
 |--------------------------------------------------------------------------
 */
 
-function onYouTubeIframeAPIReady()
+function loadYouTubeAPI()
 {
-    youtubeReady = true;
+    /*
+    |--------------------------------------------------------------------------
+    | API already available
+    |--------------------------------------------------------------------------
+    */
 
-    console.log('YouTube API ready.');
+    if (
+        window.YT &&
+        typeof window.YT.Player === 'function'
+    )
+    {
+        console.log('YouTube API already available.');
+
+        return Promise.resolve();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | API is already being loaded
+    |--------------------------------------------------------------------------
+    */
+
+    if (youtubeApiPromise)
+    {
+        return youtubeApiPromise;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Create API loading promise
+    |--------------------------------------------------------------------------
+    */
+
+    youtubeApiPromise = new Promise(function(resolve, reject)
+    {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Preserve any existing callback
+        |--------------------------------------------------------------------------
+        */
+
+        const previousCallback =
+            window.onYouTubeIframeAPIReady;
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | YouTube callback
+        |--------------------------------------------------------------------------
+        */
+
+        window.onYouTubeIframeAPIReady =
+            function()
+            {
+
+                console.log(
+                    'YouTube iframe API is ready.'
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Call previous callback if one existed
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    typeof previousCallback ===
+                    'function'
+                )
+                {
+                    try
+                    {
+                        previousCallback();
+                    }
+                    catch (error)
+                    {
+                        console.warn(
+                            'Previous YouTube callback failed:',
+                            error
+                        );
+                    }
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Confirm API
+                |--------------------------------------------------------------------------
+                */
+
+                if (
+                    window.YT &&
+                    typeof window.YT.Player ===
+                    'function'
+                )
+                {
+                    resolve();
+                }
+                else
+                {
+                    reject(
+                        new Error(
+                            'YouTube API loaded but YT.Player is unavailable.'
+                        )
+                    );
+                }
+
+            };
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Check whether script already exists
+        |--------------------------------------------------------------------------
+        */
+
+        const existingScript =
+            document.querySelector(
+                'script[src*="youtube.com/iframe_api"]'
+            );
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Script already exists
+        |--------------------------------------------------------------------------
+        */
+
+        if (existingScript)
+        {
+            console.log(
+                'YouTube API script already exists.'
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | IMPORTANT
+            |--------------------------------------------------------------------------
+            | The API may already have loaded before our callback was registered.
+            |--------------------------------------------------------------------------
+            */
+
+            let attempts = 0;
+
+            const checkExistingAPI =
+                setInterval(function()
+                {
+
+                    attempts++;
+
+
+                    if (
+                        window.YT &&
+                        typeof window.YT.Player ===
+                        'function'
+                    )
+                    {
+                        clearInterval(
+                            checkExistingAPI
+                        );
+
+                        console.log(
+                            'Detected already-loaded YouTube API.'
+                        );
+
+                        resolve();
+                    }
+
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Stop after approximately 10 seconds
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (attempts >= 50)
+                    {
+                        clearInterval(
+                            checkExistingAPI
+                        );
+
+                        reject(
+                            new Error(
+                                'YouTube API did not become available.'
+                            )
+                        );
+                    }
+
+                }, 200);
+
+
+            return;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Create YouTube API script
+        |--------------------------------------------------------------------------
+        */
+
+        const script =
+            document.createElement('script');
+
+
+        script.src =
+            'https://www.youtube.com/iframe_api';
+
+
+        script.async = true;
+
+
+        script.onerror =
+            function()
+            {
+                reject(
+                    new Error(
+                        'Unable to load YouTube iframe API.'
+                    )
+                );
+            };
+
+
+        document.head.appendChild(
+            script
+        );
+
+    });
+
+
+    return youtubeApiPromise;
 }
 
 
 /*
 |--------------------------------------------------------------------------
-| Play Episode
+| PLAY EPISODE
 |--------------------------------------------------------------------------
 */
 
-function playEpisode(videoId, episodeId)
+window.playEpisode =
+    async function(videoId, episodeId)
 {
-    currentEpisodeId = episodeId;
-    markedCompleted = false;
+
+    console.log(
+        'playEpisode() called:',
+        {
+            videoId: videoId,
+            episodeId: episodeId
+        }
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Find containers
+    |--------------------------------------------------------------------------
+    */
 
     const playerContainer =
-        document.getElementById('video-player');
+        document.getElementById(
+            'video-player'
+        );
+
+
+    const youtubeContainer =
+        document.getElementById(
+            'youtube-player'
+        );
+
 
     if (!playerContainer)
     {
         console.error(
-            'Video player container not found.'
+            'ERROR: #video-player was not found.'
+        );
+
+        return;
+    }
+
+
+    if (!youtubeContainer)
+    {
+        console.error(
+            'ERROR: #youtube-player was not found.'
         );
 
         return;
@@ -1381,11 +1655,58 @@ function playEpisode(videoId, episodeId)
 
     /*
     |--------------------------------------------------------------------------
-    | Show player immediately
+    | Store current episode
     |--------------------------------------------------------------------------
     */
 
-    playerContainer.classList.remove('hidden');
+    currentEpisodeId =
+        episodeId;
+
+
+    markedCompleted =
+        false;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Stop old progress checker
+    |--------------------------------------------------------------------------
+    */
+
+    if (progressChecker)
+    {
+        clearInterval(
+            progressChecker
+        );
+
+        progressChecker =
+            null;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW VIDEO CONTAINER
+    |--------------------------------------------------------------------------
+    */
+
+    playerContainer.classList.remove(
+        'hidden'
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Make sure player has dimensions
+    |--------------------------------------------------------------------------
+    */
+
+    youtubeContainer.style.width =
+        '100%';
+
+
+    youtubeContainer.style.minHeight =
+        '450px';
 
 
     /*
@@ -1394,11 +1715,12 @@ function playEpisode(videoId, episodeId)
     |--------------------------------------------------------------------------
     */
 
-    setTimeout(function () {
+    setTimeout(function()
+    {
 
-        window.scrollTo({
-            top: playerContainer.offsetTop - 100,
-            behavior: 'smooth'
+        playerContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
         });
 
     }, 100);
@@ -1406,24 +1728,48 @@ function playEpisode(videoId, episodeId)
 
     /*
     |--------------------------------------------------------------------------
-    | Wait for YouTube API
+    | LOAD YOUTUBE API
     |--------------------------------------------------------------------------
     */
 
-    if (!youtubeReady)
+    try
     {
+
         console.log(
-            'YouTube API not ready. Waiting...'
+            'Loading/checking YouTube API...'
         );
 
-        setTimeout(function () {
 
-            playEpisode(
-                videoId,
-                episodeId
-            );
+        await loadYouTubeAPI();
 
-        }, 300);
+
+        console.log(
+            'YouTube API confirmed ready.'
+        );
+
+    }
+    catch (error)
+    {
+
+        console.error(
+            'YouTube API failed:',
+            error
+        );
+
+
+        youtubeContainer.innerHTML = `
+            <div class="flex items-center justify-center w-full min-h-[450px] bg-gray-100 rounded-xl">
+                <div class="text-center p-6">
+                    <p class="text-red-600 font-semibold">
+                        Unable to load the video.
+                    </p>
+                    <p class="text-gray-500 text-sm mt-2">
+                        Please refresh the page and try again.
+                    </p>
+                </div>
+            </div>
+        `;
+
 
         return;
     }
@@ -1431,28 +1777,25 @@ function playEpisode(videoId, episodeId)
 
     /*
     |--------------------------------------------------------------------------
-    | Stop previous progress checker
-    |--------------------------------------------------------------------------
-    */
-
-    clearInterval(
-        progressChecker
-    );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Reuse existing YouTube player
+    | REUSE EXISTING PLAYER
     |--------------------------------------------------------------------------
     */
 
     if (player)
     {
+
         try
         {
-            player.loadVideoById(
-                videoId
+
+            console.log(
+                'Reusing existing YouTube player.'
             );
+
+
+            player.loadVideoById({
+                videoId: videoId
+            });
+
 
             return;
 
@@ -1461,79 +1804,126 @@ function playEpisode(videoId, episodeId)
         {
 
             console.warn(
-                'Could not reuse YouTube player.',
+                'Existing YouTube player could not be reused.',
                 error
             );
 
+
             player = null;
         }
+
     }
 
 
     /*
     |--------------------------------------------------------------------------
-    | Create YouTube player
+    | CLEAR CONTAINER
     |--------------------------------------------------------------------------
     */
 
-    player = new YT.Player(
-        'youtube-player',
-        {
+    youtubeContainer.innerHTML =
+        '';
 
-            height: '450',
 
-            width: '100%',
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE YOUTUBE PLAYER
+    |--------------------------------------------------------------------------
+    */
 
-            videoId: videoId,
+    try
+    {
 
-            playerVars: {
+        console.log(
+            'Creating YouTube player...'
+        );
 
-                autoplay: 1,
 
-                rel: 0,
-
-                modestbranding: 1,
-
-                playsinline: 1
-
-            },
-
-            events: {
-
-                onReady: function (event)
+        player =
+            new YT.Player(
+                'youtube-player',
                 {
 
-                    console.log(
-                        'YouTube player ready.'
-                    );
+                    width: '100%',
 
-                    event.target.playVideo();
+                    height: '450',
 
-                },
+                    videoId: videoId,
 
-                onStateChange:
-                    onPlayerStateChange,
 
-                onError: function (event)
-                {
+                    playerVars:
+                    {
+                        autoplay: 1,
 
-                    console.error(
-                        'YouTube player error:',
-                        event.data
-                    );
+                        rel: 0,
+
+                        modestbranding: 1,
+
+                        playsinline: 1
+                    },
+
+
+                    events:
+                    {
+
+                        onReady:
+                            function(event)
+                        {
+
+                            console.log(
+                                'YouTube player created successfully.'
+                            );
+
+
+                            event.target.playVideo();
+
+                        },
+
+
+                        onStateChange:
+                            function(event)
+                        {
+
+                            onPlayerStateChange(
+                                event
+                            );
+
+                        },
+
+
+                        onError:
+                            function(event)
+                        {
+
+                            console.error(
+                                'YouTube player error:',
+                                event.data
+                            );
+
+                        }
+
+                    }
 
                 }
+            );
 
-            }
+    }
+    catch (error)
+    {
 
-        }
-    );
-}
+        console.error(
+            'Failed to create YouTube player:',
+            error
+        );
+
+    }
+
+};
 
 
 /*
 |--------------------------------------------------------------------------
-| Track Video Progress
+| YOUTUBE PLAYER STATE CHANGE
 |--------------------------------------------------------------------------
 */
 
@@ -1552,193 +1942,125 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(
-            progressChecker
+        console.log(
+            'Video playing.'
         );
 
 
+        /*
+        |--------------------------------------------------------------------------
+        | Stop previous checker
+        |--------------------------------------------------------------------------
+        */
+
+        if (progressChecker)
+        {
+            clearInterval(
+                progressChecker
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Start progress checker
+        |--------------------------------------------------------------------------
+        */
+
         progressChecker =
-            setInterval(function ()
-            {
-
-                if (
-                    !player ||
-                    markedCompleted ||
-                    !currentEpisodeId
-                )
-                {
-                    return;
-                }
-
-
-                let currentTime =
-                    player.getCurrentTime();
-
-                let duration =
-                    player.getDuration();
-
-
-                if (!duration)
-                {
-                    return;
-                }
-
-
-                let watchedPercent =
-                    (currentTime / duration) * 100;
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | Complete at 80%
-                |--------------------------------------------------------------------------
-                */
-
-                if (
-                    watchedPercent >= 80
-                )
+            setInterval(
+                function()
                 {
 
-                    markedCompleted = true;
-
-
-                    fetch(
-                        `/episodes/${currentEpisodeId}/watched`,
-                        {
-
-                            method: 'POST',
-
-                            headers: {
-
-                                'X-CSRF-TOKEN':
-                                    '{{ csrf_token() }}',
-
-                                'Content-Type':
-                                    'application/json',
-
-                                'Accept':
-                                    'application/json'
-
-                            },
-
-                            credentials:
-                                'same-origin',
-
-                            body:
-                                JSON.stringify({})
-
-                        }
+                    if (
+                        !player ||
+                        markedCompleted ||
+                        !currentEpisodeId
                     )
-                    .then(function (response)
+                    {
+                        return;
+                    }
+
+
+                    let currentTime = 0;
+                    let duration = 0;
+
+
+                    try
                     {
 
-                        if (!response.ok)
-                        {
-                            throw new Error(
-                                'Episode completion failed.'
-                            );
-                        }
+                        currentTime =
+                            player.getCurrentTime();
 
-                        return response.json();
 
-                    })
-                    .then(function (data)
+                        duration =
+                            player.getDuration();
+
+                    }
+                    catch (error)
                     {
 
-                        console.log(
-                            'Episode completion:',
-                            data
-                        );
-
-
-                        if (
-                            data.status ===
-                            'success'
-                        )
-                        {
-
-                            /*
-                            |--------------------------------------------------------------------------
-                            | Update episode status
-                            |--------------------------------------------------------------------------
-                            */
-
-                            const episodeCards =
-                                document.querySelectorAll(
-                                    `[onclick*="${currentEpisodeId}"]`
-                                );
-
-
-                            episodeCards.forEach(
-                                function (card)
-                                {
-
-                                    const statuses =
-                                        card.querySelectorAll(
-                                            '.text-gray-400'
-                                        );
-
-
-                                    statuses.forEach(
-                                        function (element)
-                                        {
-
-                                            if (
-                                                element.textContent
-                                                    .includes(
-                                                        'Not Started'
-                                                    )
-                                            )
-                                            {
-
-                                                element.textContent =
-                                                    '✅ Completed';
-
-
-                                                element.classList.remove(
-                                                    'text-gray-400'
-                                                );
-
-
-                                                element.classList.add(
-                                                    'bg-green-100',
-                                                    'text-green-700',
-                                                    'px-3',
-                                                    'py-1',
-                                                    'rounded-full',
-                                                    'text-sm',
-                                                    'font-semibold'
-                                                );
-
-                                            }
-
-                                        }
-                                    );
-
-                                }
-                            );
-
-                        }
-
-                    })
-                    .catch(function (error)
-                    {
-
-                        console.error(
-                            'Episode completion error:',
+                        console.warn(
+                            'Unable to read video progress.',
                             error
                         );
 
-                    });
+                        return;
+                    }
 
 
-                    clearInterval(
-                        progressChecker
+                    if (!duration)
+                    {
+                        return;
+                    }
+
+
+                    const watchedPercent =
+                        (
+                            currentTime /
+                            duration
+                        ) * 100;
+
+
+                    console.log(
+                        'Video progress:',
+                        watchedPercent.toFixed(1) + '%'
                     );
 
-                }
 
-            }, 5000);
+                    /*
+                    |--------------------------------------------------------------------------
+                    | COMPLETE AT 80%
+                    |--------------------------------------------------------------------------
+                    */
+
+                    if (
+                        watchedPercent >= 80
+                    )
+                    {
+
+                        markedCompleted =
+                            true;
+
+
+                        markEpisodeWatched(
+                            currentEpisodeId
+                        );
+
+
+                        clearInterval(
+                            progressChecker
+                        );
+
+
+                        progressChecker =
+                            null;
+
+                    }
+
+                },
+                5000
+            );
 
     }
 
@@ -1755,9 +2077,20 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(
-            progressChecker
+        console.log(
+            'Video paused.'
         );
+
+
+        if (progressChecker)
+        {
+            clearInterval(
+                progressChecker
+            );
+
+            progressChecker =
+                null;
+        }
 
     }
 
@@ -1774,10 +2107,27 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(
-            progressChecker
+        console.log(
+            'Video ended.'
         );
 
+
+        if (progressChecker)
+        {
+            clearInterval(
+                progressChecker
+            );
+
+            progressChecker =
+                null;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Mark complete if not already completed
+        |--------------------------------------------------------------------------
+        */
 
         if (
             !markedCompleted &&
@@ -1785,7 +2135,9 @@ function onPlayerStateChange(event)
         )
         {
 
-            markedCompleted = true;
+            markedCompleted =
+                true;
+
 
             markEpisodeWatched(
                 currentEpisodeId
@@ -1800,7 +2152,7 @@ function onPlayerStateChange(event)
 
 /*
 |--------------------------------------------------------------------------
-| Mark Episode Watched
+| MARK EPISODE WATCHED
 |--------------------------------------------------------------------------
 */
 
@@ -1813,23 +2165,33 @@ function markEpisodeWatched(episodeId)
     }
 
 
+    console.log(
+        'Marking episode watched:',
+        episodeId
+    );
+
+
     fetch(
-        `/episodes/${episodeId}/watched`,
+        "{{ url('/episodes') }}/" +
+        episodeId +
+        "/watched",
         {
 
             method: 'POST',
 
-            headers: {
-
+            headers:
+            {
                 'X-CSRF-TOKEN':
-                    '{{ csrf_token() }}',
+                    "{{ csrf_token() }}",
 
                 'Content-Type':
                     'application/json',
 
                 'Accept':
-                    'application/json'
+                    'application/json',
 
+                'X-Requested-With':
+                    'XMLHttpRequest'
             },
 
             credentials:
@@ -1837,42 +2199,168 @@ function markEpisodeWatched(episodeId)
 
             body:
                 JSON.stringify({})
+        }
+    )
+    .then(
+        function(response)
+        {
+
+            if (!response.ok)
+            {
+                throw new Error(
+                    'Episode completion request failed.'
+                );
+            }
+
+
+            return response.json();
 
         }
     )
-    .then(function (response)
-    {
-
-        if (!response.ok)
+    .then(
+        function(data)
         {
-            throw new Error(
-                'Failed to mark episode watched.'
+
+            console.log(
+                'Episode completion response:',
+                data
             );
+
+
+            if (
+                data &&
+                data.status ===
+                'success'
+            )
+            {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Update visible episode status
+                |--------------------------------------------------------------------------
+                */
+
+                const episodeCards =
+                    document.querySelectorAll(
+                        '[onclick*="' +
+                        episodeId +
+                        '"]'
+                    );
+
+
+                episodeCards.forEach(
+                    function(card)
+                    {
+
+                        const statuses =
+                            card.querySelectorAll(
+                                '.text-gray-400'
+                            );
+
+
+                        statuses.forEach(
+                            function(element)
+                            {
+
+                                if (
+                                    element.textContent
+                                        .includes(
+                                            'Not Started'
+                                        )
+                                )
+                                {
+
+                                    element.textContent =
+                                        '✅ Completed';
+
+
+                                    element.classList.remove(
+                                        'text-gray-400'
+                                    );
+
+
+                                    element.classList.add(
+                                        'bg-green-100',
+                                        'text-green-700',
+                                        'px-3',
+                                        'py-1',
+                                        'rounded-full',
+                                        'text-sm',
+                                        'font-semibold'
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+
         }
+    )
+    .catch(
+        function(error)
+        {
 
-        return response.json();
+            console.error(
+                'Episode completion error:',
+                error
+            );
 
-    })
-    .then(function (data)
-    {
-
-        console.log(
-            'Episode watched:',
-            data
-        );
-
-    })
-    .catch(function (error)
-    {
-
-        console.error(
-            'Episode progress error:',
-            error
-        );
-
-    });
+        }
+    );
 
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| INITIALIZATION DEBUG
+|--------------------------------------------------------------------------
+*/
+
+console.log(
+    'Classroom video JavaScript loaded.'
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| CHECK YOUTUBE STATUS
+|--------------------------------------------------------------------------
+*/
+
+setTimeout(
+    function()
+    {
+
+        if (
+            window.YT &&
+            typeof window.YT.Player ===
+            'function'
+        )
+        {
+
+            console.log(
+                'YouTube API detected on page load.'
+            );
+
+        }
+        else
+        {
+
+            console.log(
+                'YouTube API not yet detected. It will be loaded when needed.'
+            );
+
+        }
+
+    },
+    500
+);
 
 /*
 |--------------------------------------------------------------------------
