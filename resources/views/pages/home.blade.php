@@ -99,7 +99,7 @@
 
         <!-- KEY VALUE -->
         <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
-            Based on a 15-module curriculum covering AI fundamentals, prompt engineering, APIs, automation systems, 
+            Based on a 17-module curriculum covering AI fundamentals, prompt engineering, APIs, automation systems, 
             n8n workflows, AI agents, CRM integration, and real-world deployment.
         </p>
 
