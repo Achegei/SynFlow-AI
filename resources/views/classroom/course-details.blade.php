@@ -1327,340 +1327,635 @@
 ================================================================ --}}
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+
+/*
+|--------------------------------------------------------------------------
+| YOUTUBE PLAYER
+|--------------------------------------------------------------------------
+*/
+
+let player = null;
+let currentEpisodeId = null;
+let youtubeReady = false;
+let progressChecker = null;
+let markedCompleted = false;
+
+
+/*
+|--------------------------------------------------------------------------
+| YouTube API Ready
+|--------------------------------------------------------------------------
+*/
+
+function onYouTubeIframeAPIReady()
+{
+    youtubeReady = true;
+
+    console.log('YouTube API ready.');
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Play Episode
+|--------------------------------------------------------------------------
+*/
+
+function playEpisode(videoId, episodeId)
+{
+    currentEpisodeId = episodeId;
+    markedCompleted = false;
+
+    const playerContainer =
+        document.getElementById('video-player');
+
+    if (!playerContainer)
+    {
+        console.error('Video player container not found.');
+        return;
+    }
 
     /*
     |--------------------------------------------------------------------------
-    | YOUTUBE PLAYER
+    | Show player
     |--------------------------------------------------------------------------
     */
 
-    let youtubePlayer = null;
-    let currentEpisodeId = null;
+    playerContainer.classList.remove('hidden');
+
 
     /*
     |--------------------------------------------------------------------------
-    | Load YouTube IFrame API
+    | Scroll to player
     |--------------------------------------------------------------------------
     */
 
-    function loadYouTubeAPI() {
+    setTimeout(function () {
 
-        if (window.YT && window.YT.Player) {
-            return Promise.resolve();
-        }
-
-        return new Promise(function (resolve) {
-
-            const existingScript = document.querySelector(
-                'script[src="https://www.youtube.com/iframe_api"]'
-            );
-
-            if (existingScript) {
-
-                const previousCallback = window.onYouTubeIframeAPIReady;
-
-                window.onYouTubeIframeAPIReady = function () {
-
-                    if (typeof previousCallback === 'function') {
-                        previousCallback();
-                    }
-
-                    resolve();
-                };
-
-                return;
-            }
-
-            const script = document.createElement('script');
-
-            script.src =
-                'https://www.youtube.com/iframe_api';
-
-            script.async = true;
-
-            window.onYouTubeIframeAPIReady = function () {
-                resolve();
-            };
-
-            document.head.appendChild(script);
+        window.scrollTo({
+            top: playerContainer.offsetTop - 100,
+            behavior: 'smooth'
         });
+
+    }, 100);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Wait for YouTube API
+    |--------------------------------------------------------------------------
+    */
+
+    if (!youtubeReady)
+    {
+        console.log('Waiting for YouTube API...');
+
+        setTimeout(function () {
+
+            playEpisode(videoId, episodeId);
+
+        }, 500);
+
+        return;
     }
 
 
     /*
     |--------------------------------------------------------------------------
-    | Play Episode
+    | Stop previous progress checker
     |--------------------------------------------------------------------------
     */
 
-    window.playEpisode = async function (videoId, episodeId) {
-
-        const playerContainer =
-            document.getElementById('video-player');
-
-        const youtubeContainer =
-            document.getElementById('youtube-player');
-
-        if (!playerContainer || !youtubeContainer) {
-            console.error(
-                'YouTube player container not found.'
-            );
-
-            return;
-        }
-
-        currentEpisodeId = episodeId;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Show player
-        |--------------------------------------------------------------------------
-        */
-
-        playerContainer.classList.remove('hidden');
-
-        /*
-        |--------------------------------------------------------------------------
-        | Scroll to player
-        |--------------------------------------------------------------------------
-        */
-
-        playerContainer.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
-
-        /*
-        |--------------------------------------------------------------------------
-        | Load YouTube API
-        |--------------------------------------------------------------------------
-        */
-
-        try {
-
-            await loadYouTubeAPI();
-
-        } catch (error) {
-
-            console.error(
-                'Failed to load YouTube API:',
-                error
-            );
-
-            return;
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Create / replace player
-        |--------------------------------------------------------------------------
-        */
-
-        if (youtubePlayer) {
-
-            try {
-                youtubePlayer.destroy();
-            } catch (e) {
-                console.warn(
-                    'Unable to destroy previous YouTube player.',
-                    e
-                );
-            }
-
-            youtubePlayer = null;
-        }
-
-
-        youtubeContainer.innerHTML = '';
-
-
-        youtubePlayer = new YT.Player(
-            'youtube-player',
-            {
-                videoId: videoId,
-
-                playerVars: {
-                    autoplay: 1,
-                    rel: 0,
-                    modestbranding: 1,
-                    playsinline: 1
-                },
-
-                events: {
-
-                    onReady: function (event) {
-
-                        event.target.playVideo();
-
-                    },
-
-                    onStateChange: function (event) {
-
-                        /*
-                        |--------------------------------------------------------------------------
-                        | YouTube ENDED = 0
-                        |--------------------------------------------------------------------------
-                        */
-
-                        if (
-                            event.data ===
-                            YT.PlayerState.ENDED
-                        ) {
-
-                            markEpisodeWatched(
-                                currentEpisodeId
-                            );
-                        }
-                    },
-
-                    onError: function (event) {
-
-                        console.error(
-                            'YouTube player error:',
-                            event.data
-                        );
-                    }
-                }
-            }
-        );
-    };
+    clearInterval(progressChecker);
 
 
     /*
     |--------------------------------------------------------------------------
-    | Mark Episode Watched
+    | Reuse existing player
     |--------------------------------------------------------------------------
     */
 
-    window.markEpisodeWatched = function (episodeId) {
-
-        if (!episodeId) {
+    if (player)
+    {
+        try
+        {
+            player.loadVideoById(videoId);
             return;
         }
+        catch (error)
+        {
+            console.warn(
+                'Existing YouTube player could not be reused.',
+                error
+            );
 
-        fetch(
-            "{{ url('/episodes') }}/" +
-            episodeId +
-            "/watched",
-            {
-                method: 'POST',
+            player = null;
+        }
+    }
 
-                headers: {
-                    'X-CSRF-TOKEN':
-                        "{{ csrf_token() }}",
 
-                    'Accept':
-                        'application/json',
+    /*
+    |--------------------------------------------------------------------------
+    | Create YouTube player
+    |--------------------------------------------------------------------------
+    */
 
-                    'Content-Type':
-                        'application/json'
+    player = new YT.Player(
+        'youtube-player',
+        {
+
+            height: '450',
+
+            width: '100%',
+
+            videoId: videoId,
+
+            playerVars: {
+                autoplay: 1,
+                rel: 0,
+                modestbranding: 1,
+                playsinline: 1
+            },
+
+            events: {
+
+                onReady: function (event)
+                {
+                    console.log('YouTube player ready.');
+
+                    event.target.playVideo();
                 },
 
-                credentials: 'same-origin',
+                onStateChange: function (event)
+                {
+                    onPlayerStateChange(event);
+                },
 
-                body: JSON.stringify({})
+                onError: function (event)
+                {
+                    console.error(
+                        'YouTube player error:',
+                        event.data
+                    );
+                }
+
             }
-        )
-        .then(function (response) {
 
-            if (!response.ok) {
-                throw new Error(
-                    'Failed to mark episode as watched.'
-                );
-            }
+        }
+    );
+}
 
-            return response.json();
 
-        })
-        .then(function (data) {
+/*
+|--------------------------------------------------------------------------
+| Track Video Progress
+|--------------------------------------------------------------------------
+*/
 
-            if (
-                data &&
-                data.status === 'success'
-            ) {
+function onPlayerStateChange(event)
+{
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Playing
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        event.data ===
+        YT.PlayerState.PLAYING
+    )
+    {
+
+        clearInterval(progressChecker);
+
+
+        progressChecker =
+            setInterval(function () {
+
+                if (
+                    !player ||
+                    markedCompleted ||
+                    !currentEpisodeId
+                )
+                {
+                    return;
+                }
+
+
+                let currentTime;
+
+                let duration;
+
+
+                try
+                {
+                    currentTime =
+                        player.getCurrentTime();
+
+                    duration =
+                        player.getDuration();
+                }
+                catch (error)
+                {
+                    console.warn(
+                        'Unable to read YouTube progress.',
+                        error
+                    );
+
+                    return;
+                }
+
+
+                if (!duration)
+                {
+                    return;
+                }
+
+
+                const watchedPercent =
+                    (currentTime / duration) * 100;
+
 
                 /*
                 |--------------------------------------------------------------------------
-                | Update visible status
+                | Complete at 80%
                 |--------------------------------------------------------------------------
                 */
 
-                const episodeCards =
-                    document.querySelectorAll(
-                        '[onclick*="' +
-                        episodeId +
-                        '"]'
-                    );
+                if (watchedPercent >= 80)
+                {
 
-                episodeCards.forEach(function (card) {
+                    markedCompleted = true;
+
+
+                    fetch(
+                        "{{ url('/episodes') }}/" +
+                        currentEpisodeId +
+                        "/watched",
+                        {
+
+                            method: 'POST',
+
+                            headers: {
+
+                                'X-CSRF-TOKEN':
+                                    "{{ csrf_token() }}",
+
+                                'Content-Type':
+                                    'application/json',
+
+                                'Accept':
+                                    'application/json',
+
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+
+                            },
+
+                            credentials:
+                                'same-origin',
+
+                            body:
+                                JSON.stringify({})
+
+                        }
+                    )
+                    .then(function (response) {
+
+                        if (!response.ok)
+                        {
+                            throw new Error(
+                                'Failed to mark episode as watched.'
+                            );
+                        }
+
+                        return response.json();
+
+                    })
+                    .then(function (data) {
+
+                        console.log(
+                            'Episode completion response:',
+                            data
+                        );
+
+
+                        if (
+                            data &&
+                            data.status === 'success'
+                        )
+                        {
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Update visible episode status
+                            |--------------------------------------------------------------------------
+                            */
+
+                            const episodeCards =
+                                document.querySelectorAll(
+                                    '[onclick*="' +
+                                    currentEpisodeId +
+                                    '"]'
+                                );
+
+
+                            episodeCards.forEach(
+                                function (card)
+                                {
+
+                                    const statusElements =
+                                        card.querySelectorAll(
+                                            '.text-gray-400'
+                                        );
+
+
+                                    statusElements.forEach(
+                                        function (element)
+                                        {
+
+                                            if (
+                                                element.textContent
+                                                    .includes(
+                                                        'Not Started'
+                                                    )
+                                            )
+                                            {
+
+                                                element.textContent =
+                                                    '✅ Completed';
+
+
+                                                element.classList.remove(
+                                                    'text-gray-400'
+                                                );
+
+
+                                                element.classList.add(
+                                                    'bg-green-100',
+                                                    'text-green-700',
+                                                    'px-3',
+                                                    'py-1',
+                                                    'rounded-full',
+                                                    'text-sm',
+                                                    'font-semibold'
+                                                );
+
+                                            }
+
+                                        }
+                                    );
+
+                                }
+                            );
+
+                        }
+
+                    })
+                    .catch(function (error) {
+
+                        console.error(
+                            'Episode completion error:',
+                            error
+                        );
+
+                    });
+
+
+                    clearInterval(progressChecker);
+
+                }
+
+            }, 5000);
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Paused
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        event.data ===
+        YT.PlayerState.PAUSED
+    )
+    {
+
+        clearInterval(progressChecker);
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Video Ended
+    |--------------------------------------------------------------------------
+    */
+
+    if (
+        event.data ===
+        YT.PlayerState.ENDED
+    )
+    {
+
+        clearInterval(progressChecker);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | If video reaches the end, make sure it is marked completed
+        |--------------------------------------------------------------------------
+        */
+
+        if (
+            !markedCompleted &&
+            currentEpisodeId
+        )
+        {
+
+            markedCompleted = true;
+
+            markEpisodeWatched(
+                currentEpisodeId
+            );
+
+        }
+
+    }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Mark Episode Watched
+|--------------------------------------------------------------------------
+*/
+
+function markEpisodeWatched(episodeId)
+{
+
+    if (!episodeId)
+    {
+        return;
+    }
+
+
+    fetch(
+        "{{ url('/episodes') }}/" +
+        episodeId +
+        "/watched",
+        {
+
+            method: 'POST',
+
+            headers: {
+
+                'X-CSRF-TOKEN':
+                    "{{ csrf_token() }}",
+
+                'Accept':
+                    'application/json',
+
+                'Content-Type':
+                    'application/json',
+
+                'X-Requested-With':
+                    'XMLHttpRequest'
+
+            },
+
+            credentials:
+                'same-origin',
+
+            body:
+                JSON.stringify({})
+
+        }
+    )
+    .then(function (response) {
+
+        if (!response.ok)
+        {
+            throw new Error(
+                'Failed to mark episode as watched.'
+            );
+        }
+
+        return response.json();
+
+    })
+    .then(function (data) {
+
+        console.log(
+            'Episode watched response:',
+            data
+        );
+
+
+        if (
+            data &&
+            data.status === 'success'
+        )
+        {
+
+            const episodeCards =
+                document.querySelectorAll(
+                    '[onclick*="' +
+                    episodeId +
+                    '"]'
+                );
+
+
+            episodeCards.forEach(
+                function (card)
+                {
 
                     const statusElements =
                         card.querySelectorAll(
                             '.text-gray-400'
                         );
 
-                    statusElements.forEach(function (element) {
 
-                        if (
-                            element.textContent
-                                .includes('Not Started')
-                        ) {
+                    statusElements.forEach(
+                        function (element)
+                        {
 
-                            element.textContent =
-                                '✅ Completed';
+                            if (
+                                element.textContent
+                                    .includes(
+                                        'Not Started'
+                                    )
+                            )
+                            {
 
-                            element.classList.remove(
-                                'text-gray-400'
-                            );
+                                element.textContent =
+                                    '✅ Completed';
 
-                            element.classList.add(
-                                'bg-green-100',
-                                'text-green-700',
-                                'px-3',
-                                'py-1',
-                                'rounded-full',
-                                'text-sm',
-                                'font-semibold'
-                            );
+
+                                element.classList.remove(
+                                    'text-gray-400'
+                                );
+
+
+                                element.classList.add(
+                                    'bg-green-100',
+                                    'text-green-700',
+                                    'px-3',
+                                    'py-1',
+                                    'rounded-full',
+                                    'text-sm',
+                                    'font-semibold'
+                                );
+
+                            }
+
                         }
-                    });
-                });
+                    );
 
-            }
-
-        })
-        .catch(function (error) {
-
-            console.error(
-                'Episode progress error:',
-                error
+                }
             );
 
-        });
-    };
+        }
+
+    })
+    .catch(function (error) {
+
+        console.error(
+            'Episode progress error:',
+            error
+        );
+
+    });
+
+}
 
 
-    {{-- ================================================================
-     QUIZ COMPONENT
-================================================================ --}}
-
-<script>
 /*
 |--------------------------------------------------------------------------
 | QUIZ COMPONENT
 |--------------------------------------------------------------------------
 |
 | IMPORTANT:
-| This function is registered globally OUTSIDE any DOMContentLoaded
-| callback so Alpine can find it when x-data initializes.
-|
+| This function is global so Alpine can find it when
+| x-data="quizComponent(...)"
+| initializes.
+|--------------------------------------------------------------------------
 */
 
-window.quizComponent = function (quizId) {
+window.quizComponent = function (quizId)
+{
 
     return {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Quiz State
+        |--------------------------------------------------------------------------
+        */
 
         quizId: quizId,
 
@@ -1679,7 +1974,7 @@ window.quizComponent = function (quizId) {
 
         /*
         |--------------------------------------------------------------------------
-        | SELECT ANSWER
+        | Select Answer
         |--------------------------------------------------------------------------
         */
 
@@ -1687,12 +1982,14 @@ window.quizComponent = function (quizId) {
             questionId,
             selectedAnswer,
             correctAnswer
-        ) {
+        )
+        {
 
             const selected =
                 String(selectedAnswer)
                     .trim()
                     .toUpperCase();
+
 
             const correct =
                 String(correctAnswer)
@@ -1702,26 +1999,34 @@ window.quizComponent = function (quizId) {
 
             /*
             |--------------------------------------------------------------------------
-            | ALWAYS SAVE THE SELECTED ANSWER
+            | ALWAYS save the selected answer
             |--------------------------------------------------------------------------
             */
 
-            this.answers[questionId] = selected;
+            this.answers[questionId] =
+                selected;
 
 
             /*
             |--------------------------------------------------------------------------
-            | IMMEDIATE FEEDBACK
+            | Immediate feedback
             |--------------------------------------------------------------------------
             */
 
-            if (selected === correct) {
+            if (
+                selected === correct
+            )
+            {
 
-                this.feedback[questionId] = 'correct';
+                this.feedback[questionId] =
+                    'correct';
 
-            } else {
+            }
+            else
+            {
 
-                this.feedback[questionId] = 'wrong';
+                this.feedback[questionId] =
+                    'wrong';
 
             }
 
@@ -1729,42 +2034,55 @@ window.quizComponent = function (quizId) {
             console.log(
                 'Quiz answer selected:',
                 {
-                    questionId: questionId,
-                    selected: selected,
-                    correct: correct
+                    questionId:
+                        questionId,
+
+                    selected:
+                        selected,
+
+                    correct:
+                        correct
                 }
             );
+
         },
 
 
         /*
         |--------------------------------------------------------------------------
-        | CHECK SELECTED ANSWER
+        | Check Selected Answer
         |--------------------------------------------------------------------------
         */
 
         isSelected: function (
             questionId,
             answer
-        ) {
+        )
+        {
 
             const selected =
                 this.answers[questionId];
 
-            if (!selected) {
+
+            if (!selected)
+            {
                 return false;
             }
 
-            return selected ===
+
+            return (
+                selected ===
                 String(answer)
                     .trim()
-                    .toUpperCase();
+                    .toUpperCase()
+            );
+
         },
 
 
         /*
         |--------------------------------------------------------------------------
-        | ANSWER BUTTON STYLE
+        | Answer Button Styling
         |--------------------------------------------------------------------------
         */
 
@@ -1772,15 +2090,18 @@ window.quizComponent = function (quizId) {
             questionId,
             option,
             correctAnswer
-        ) {
+        )
+        {
 
             const selected =
                 this.answers[questionId];
+
 
             const current =
                 String(option)
                     .trim()
                     .toUpperCase();
+
 
             const correct =
                 String(correctAnswer)
@@ -1790,11 +2111,12 @@ window.quizComponent = function (quizId) {
 
             /*
             |--------------------------------------------------------------------------
-            | NOTHING SELECTED
+            | Nothing selected
             |--------------------------------------------------------------------------
             */
 
-            if (!selected) {
+            if (!selected)
+            {
 
                 return [
                     'border-gray-200',
@@ -1802,114 +2124,136 @@ window.quizComponent = function (quizId) {
                     'hover:bg-purple-50',
                     'cursor-pointer'
                 ].join(' ');
+
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | USER SELECTED CORRECT ANSWER
+            | Selected correct answer
             |--------------------------------------------------------------------------
             */
 
             if (
                 selected === current &&
                 current === correct
-            ) {
+            )
+            {
 
                 return [
                     'border-blue-600',
                     'bg-blue-600',
                     'text-white'
                 ].join(' ');
+
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | USER SELECTED WRONG ANSWER
+            | Selected wrong answer
             |--------------------------------------------------------------------------
             */
 
             if (
                 selected === current &&
                 current !== correct
-            ) {
+            )
+            {
 
                 return [
                     'border-red-500',
                     'bg-red-50',
                     'text-red-700'
                 ].join(' ');
+
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | SHOW CORRECT ANSWER AFTER WRONG SELECTION
+            | Correct answer after wrong selection
             |--------------------------------------------------------------------------
             */
 
             if (
                 current === correct &&
                 selected !== correct
-            ) {
+            )
+            {
 
                 return [
                     'border-green-400',
                     'bg-green-50',
                     'text-green-700'
                 ].join(' ');
+
             }
 
 
             return [
                 'border-gray-200'
             ].join(' ');
+
         },
 
 
         /*
         |--------------------------------------------------------------------------
-        | SUBMIT QUIZ
+        | Submit Quiz
         |--------------------------------------------------------------------------
         */
 
-        submitQuiz: async function () {
+        submitQuiz: async function ()
+        {
 
-            if (this.submitting) {
+            /*
+            |--------------------------------------------------------------------------
+            | Prevent double submission
+            |--------------------------------------------------------------------------
+            */
+
+            if (this.submitting)
+            {
                 return;
             }
 
 
             /*
             |--------------------------------------------------------------------------
-            | CHECK THAT ANSWERS EXIST
+            | Check answers
             |--------------------------------------------------------------------------
             */
 
             const answerCount =
-                Object.keys(this.answers).length;
+                Object.keys(
+                    this.answers
+                ).length;
 
 
-            if (answerCount === 0) {
+            if (answerCount === 0)
+            {
 
                 alert(
                     'Please answer at least one question before submitting the quiz.'
                 );
 
                 return;
+
             }
 
 
             this.submitting = true;
 
 
-            try {
+            try
+            {
 
                 console.log(
                     'Submitting quiz:',
                     this.quizId
                 );
+
 
                 console.log(
                     'Answers:',
@@ -1919,7 +2263,7 @@ window.quizComponent = function (quizId) {
 
                 /*
                 |--------------------------------------------------------------------------
-                | SUBMIT TO LARAVEL
+                | Submit to Laravel
                 |--------------------------------------------------------------------------
                 */
 
@@ -1958,59 +2302,100 @@ window.quizComponent = function (quizId) {
                                         this.answers
 
                                 })
+
                         }
                     );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | READ RESPONSE
+                | Read server response
                 |--------------------------------------------------------------------------
                 */
 
-                const data =
-                    await response.json();
+                const responseText =
+                    await response.text();
 
 
                 console.log(
-                    'Quiz submission response:',
-                    data
+                    'Quiz HTTP status:',
+                    response.status
                 );
+
+
+                console.log(
+                    'Quiz raw response:',
+                    responseText
+                );
+
+
+                let data;
+
+
+                try
+                {
+
+                    data =
+                        JSON.parse(
+                            responseText
+                        );
+
+                }
+                catch (parseError)
+                {
+
+                    console.error(
+                        'Quiz response is not valid JSON:',
+                        responseText
+                    );
+
+
+                    throw new Error(
+                        'The server returned an invalid response.'
+                    );
+
+                }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | SERVER ERROR
+                | HTTP error
                 |--------------------------------------------------------------------------
                 */
 
-                if (!response.ok) {
+                if (!response.ok)
+                {
 
                     throw new Error(
                         data.message ||
                         'Quiz submission failed.'
                     );
+
                 }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | APPLICATION ERROR
+                | Application error
                 |--------------------------------------------------------------------------
                 */
 
-                if (data.success === false) {
+                if (
+                    data.success === false
+                )
+                {
 
                     throw new Error(
                         data.message ||
                         'Quiz could not be submitted.'
                     );
+
                 }
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | STORE RESULT
+                | Store score
                 |--------------------------------------------------------------------------
                 */
 
@@ -2019,10 +2404,24 @@ window.quizComponent = function (quizId) {
                         data.score ?? 0
                     );
 
+
+                /*
+                |--------------------------------------------------------------------------
+                | Store pass status
+                |--------------------------------------------------------------------------
+                */
+
                 this.passed =
                     Boolean(
                         data.passed
                     );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | Show result
+                |--------------------------------------------------------------------------
+                */
 
                 this.resultVisible =
                     true;
@@ -2031,62 +2430,75 @@ window.quizComponent = function (quizId) {
                 console.log(
                     'Quiz result:',
                     {
-                        score: this.score,
-                        passed: this.passed
+                        score:
+                            this.score,
+
+                        passed:
+                            this.passed
                     }
                 );
 
 
                 /*
                 |--------------------------------------------------------------------------
-                | SCROLL TO RESULT
+                | Scroll to result
                 |--------------------------------------------------------------------------
                 */
 
-                this.$nextTick(() => {
+                if (
+                    this.$nextTick
+                )
+                {
 
-                    const result =
-                        document.getElementById(
-                            'quiz-result'
-                        );
+                    this.$nextTick(
+                        function ()
+                        {
 
-                    if (result) {
-
-                        result.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-
-                    }
-
-                });
+                            const result =
+                                document.getElementById(
+                                    'quiz-result'
+                                );
 
 
-                /*
-                |--------------------------------------------------------------------------
-                | IF PASSED
-                |--------------------------------------------------------------------------
-                |
-                | We don't reload immediately.
-                | The student needs to see their score/result.
-                |
-                */
+                            if (result)
+                            {
 
-            } catch (error) {
+                                result.scrollIntoView({
+                                    behavior:
+                                        'smooth',
+
+                                    block:
+                                        'center'
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+
+            }
+            catch (error)
+            {
 
                 console.error(
                     'Quiz submission error:',
                     error
                 );
 
+
                 alert(
                     error.message ||
                     'Unable to submit quiz. Please try again.'
                 );
 
-            } finally {
+            }
+            finally
+            {
 
-                this.submitting = false;
+                this.submitting =
+                    false;
 
             }
 
@@ -2095,7 +2507,18 @@ window.quizComponent = function (quizId) {
     };
 
 };
-</script>
 
+
+/*
+|--------------------------------------------------------------------------
+| DEBUG
+|--------------------------------------------------------------------------
+*/
+
+console.log(
+    'Classroom JavaScript loaded successfully.'
+);
+
+</script>
 
 @endsection
