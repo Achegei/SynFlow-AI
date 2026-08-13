@@ -1371,13 +1371,17 @@ function playEpisode(videoId, episodeId)
 
     if (!playerContainer)
     {
-        console.error('Video player container not found.');
+        console.error(
+            'Video player container not found.'
+        );
+
         return;
     }
 
+
     /*
     |--------------------------------------------------------------------------
-    | Show player
+    | Show player immediately
     |--------------------------------------------------------------------------
     */
 
@@ -1408,13 +1412,18 @@ function playEpisode(videoId, episodeId)
 
     if (!youtubeReady)
     {
-        console.log('Waiting for YouTube API...');
+        console.log(
+            'YouTube API not ready. Waiting...'
+        );
 
         setTimeout(function () {
 
-            playEpisode(videoId, episodeId);
+            playEpisode(
+                videoId,
+                episodeId
+            );
 
-        }, 500);
+        }, 300);
 
         return;
     }
@@ -1426,12 +1435,14 @@ function playEpisode(videoId, episodeId)
     |--------------------------------------------------------------------------
     */
 
-    clearInterval(progressChecker);
+    clearInterval(
+        progressChecker
+    );
 
 
     /*
     |--------------------------------------------------------------------------
-    | Reuse existing player
+    | Reuse existing YouTube player
     |--------------------------------------------------------------------------
     */
 
@@ -1439,13 +1450,18 @@ function playEpisode(videoId, episodeId)
     {
         try
         {
-            player.loadVideoById(videoId);
+            player.loadVideoById(
+                videoId
+            );
+
             return;
+
         }
         catch (error)
         {
+
             console.warn(
-                'Existing YouTube player could not be reused.',
+                'Could not reuse YouTube player.',
                 error
             );
 
@@ -1471,32 +1487,41 @@ function playEpisode(videoId, episodeId)
             videoId: videoId,
 
             playerVars: {
+
                 autoplay: 1,
+
                 rel: 0,
+
                 modestbranding: 1,
+
                 playsinline: 1
+
             },
 
             events: {
 
                 onReady: function (event)
                 {
-                    console.log('YouTube player ready.');
+
+                    console.log(
+                        'YouTube player ready.'
+                    );
 
                     event.target.playVideo();
+
                 },
 
-                onStateChange: function (event)
-                {
-                    onPlayerStateChange(event);
-                },
+                onStateChange:
+                    onPlayerStateChange,
 
                 onError: function (event)
                 {
+
                     console.error(
                         'YouTube player error:',
                         event.data
                     );
+
                 }
 
             }
@@ -1517,7 +1542,7 @@ function onPlayerStateChange(event)
 
     /*
     |--------------------------------------------------------------------------
-    | Video Playing
+    | PLAYING
     |--------------------------------------------------------------------------
     */
 
@@ -1527,11 +1552,14 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(progressChecker);
+        clearInterval(
+            progressChecker
+        );
 
 
         progressChecker =
-            setInterval(function () {
+            setInterval(function ()
+            {
 
                 if (
                     !player ||
@@ -1543,28 +1571,11 @@ function onPlayerStateChange(event)
                 }
 
 
-                let currentTime;
+                let currentTime =
+                    player.getCurrentTime();
 
-                let duration;
-
-
-                try
-                {
-                    currentTime =
-                        player.getCurrentTime();
-
-                    duration =
-                        player.getDuration();
-                }
-                catch (error)
-                {
-                    console.warn(
-                        'Unable to read YouTube progress.',
-                        error
-                    );
-
-                    return;
-                }
+                let duration =
+                    player.getDuration();
 
 
                 if (!duration)
@@ -1573,7 +1584,7 @@ function onPlayerStateChange(event)
                 }
 
 
-                const watchedPercent =
+                let watchedPercent =
                     (currentTime / duration) * 100;
 
 
@@ -1583,16 +1594,16 @@ function onPlayerStateChange(event)
                 |--------------------------------------------------------------------------
                 */
 
-                if (watchedPercent >= 80)
+                if (
+                    watchedPercent >= 80
+                )
                 {
 
                     markedCompleted = true;
 
 
                     fetch(
-                        "{{ url('/episodes') }}/" +
-                        currentEpisodeId +
-                        "/watched",
+                        `/episodes/${currentEpisodeId}/watched`,
                         {
 
                             method: 'POST',
@@ -1600,16 +1611,13 @@ function onPlayerStateChange(event)
                             headers: {
 
                                 'X-CSRF-TOKEN':
-                                    "{{ csrf_token() }}",
+                                    '{{ csrf_token() }}',
 
                                 'Content-Type':
                                     'application/json',
 
                                 'Accept':
-                                    'application/json',
-
-                                'X-Requested-With':
-                                    'XMLHttpRequest'
+                                    'application/json'
 
                             },
 
@@ -1621,43 +1629,43 @@ function onPlayerStateChange(event)
 
                         }
                     )
-                    .then(function (response) {
+                    .then(function (response)
+                    {
 
                         if (!response.ok)
                         {
                             throw new Error(
-                                'Failed to mark episode as watched.'
+                                'Episode completion failed.'
                             );
                         }
 
                         return response.json();
 
                     })
-                    .then(function (data) {
+                    .then(function (data)
+                    {
 
                         console.log(
-                            'Episode completion response:',
+                            'Episode completion:',
                             data
                         );
 
 
                         if (
-                            data &&
-                            data.status === 'success'
+                            data.status ===
+                            'success'
                         )
                         {
 
                             /*
                             |--------------------------------------------------------------------------
-                            | Update visible episode status
+                            | Update episode status
                             |--------------------------------------------------------------------------
                             */
 
                             const episodeCards =
                                 document.querySelectorAll(
-                                    '[onclick*="' +
-                                    currentEpisodeId +
-                                    '"]'
+                                    `[onclick*="${currentEpisodeId}"]`
                                 );
 
 
@@ -1665,13 +1673,13 @@ function onPlayerStateChange(event)
                                 function (card)
                                 {
 
-                                    const statusElements =
+                                    const statuses =
                                         card.querySelectorAll(
                                             '.text-gray-400'
                                         );
 
 
-                                    statusElements.forEach(
+                                    statuses.forEach(
                                         function (element)
                                         {
 
@@ -1713,7 +1721,8 @@ function onPlayerStateChange(event)
                         }
 
                     })
-                    .catch(function (error) {
+                    .catch(function (error)
+                    {
 
                         console.error(
                             'Episode completion error:',
@@ -1723,7 +1732,9 @@ function onPlayerStateChange(event)
                     });
 
 
-                    clearInterval(progressChecker);
+                    clearInterval(
+                        progressChecker
+                    );
 
                 }
 
@@ -1734,7 +1745,7 @@ function onPlayerStateChange(event)
 
     /*
     |--------------------------------------------------------------------------
-    | Video Paused
+    | PAUSED
     |--------------------------------------------------------------------------
     */
 
@@ -1744,14 +1755,16 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(progressChecker);
+        clearInterval(
+            progressChecker
+        );
 
     }
 
 
     /*
     |--------------------------------------------------------------------------
-    | Video Ended
+    | ENDED
     |--------------------------------------------------------------------------
     */
 
@@ -1761,14 +1774,10 @@ function onPlayerStateChange(event)
     )
     {
 
-        clearInterval(progressChecker);
+        clearInterval(
+            progressChecker
+        );
 
-
-        /*
-        |--------------------------------------------------------------------------
-        | If video reaches the end, make sure it is marked completed
-        |--------------------------------------------------------------------------
-        */
 
         if (
             !markedCompleted &&
@@ -1805,9 +1814,7 @@ function markEpisodeWatched(episodeId)
 
 
     fetch(
-        "{{ url('/episodes') }}/" +
-        episodeId +
-        "/watched",
+        `/episodes/${episodeId}/watched`,
         {
 
             method: 'POST',
@@ -1815,16 +1822,13 @@ function markEpisodeWatched(episodeId)
             headers: {
 
                 'X-CSRF-TOKEN':
-                    "{{ csrf_token() }}",
-
-                'Accept':
-                    'application/json',
+                    '{{ csrf_token() }}',
 
                 'Content-Type':
                     'application/json',
 
-                'X-Requested-With':
-                    'XMLHttpRequest'
+                'Accept':
+                    'application/json'
 
             },
 
@@ -1836,93 +1840,30 @@ function markEpisodeWatched(episodeId)
 
         }
     )
-    .then(function (response) {
+    .then(function (response)
+    {
 
         if (!response.ok)
         {
             throw new Error(
-                'Failed to mark episode as watched.'
+                'Failed to mark episode watched.'
             );
         }
 
         return response.json();
 
     })
-    .then(function (data) {
+    .then(function (data)
+    {
 
         console.log(
-            'Episode watched response:',
+            'Episode watched:',
             data
         );
 
-
-        if (
-            data &&
-            data.status === 'success'
-        )
-        {
-
-            const episodeCards =
-                document.querySelectorAll(
-                    '[onclick*="' +
-                    episodeId +
-                    '"]'
-                );
-
-
-            episodeCards.forEach(
-                function (card)
-                {
-
-                    const statusElements =
-                        card.querySelectorAll(
-                            '.text-gray-400'
-                        );
-
-
-                    statusElements.forEach(
-                        function (element)
-                        {
-
-                            if (
-                                element.textContent
-                                    .includes(
-                                        'Not Started'
-                                    )
-                            )
-                            {
-
-                                element.textContent =
-                                    '✅ Completed';
-
-
-                                element.classList.remove(
-                                    'text-gray-400'
-                                );
-
-
-                                element.classList.add(
-                                    'bg-green-100',
-                                    'text-green-700',
-                                    'px-3',
-                                    'py-1',
-                                    'rounded-full',
-                                    'text-sm',
-                                    'font-semibold'
-                                );
-
-                            }
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-
     })
-    .catch(function (error) {
+    .catch(function (error)
+    {
 
         console.error(
             'Episode progress error:',
@@ -1932,7 +1873,6 @@ function markEpisodeWatched(episodeId)
     });
 
 }
-
 
 /*
 |--------------------------------------------------------------------------
