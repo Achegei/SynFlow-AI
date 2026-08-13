@@ -1642,325 +1642,459 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | QUIZ COMPONENT
-    |--------------------------------------------------------------------------
-    */
+    {{-- ================================================================
+     QUIZ COMPONENT
+================================================================ --}}
 
-    window.quizComponent = function (quizId) {
+<script>
+/*
+|--------------------------------------------------------------------------
+| QUIZ COMPONENT
+|--------------------------------------------------------------------------
+|
+| IMPORTANT:
+| This function is registered globally OUTSIDE any DOMContentLoaded
+| callback so Alpine can find it when x-data initializes.
+|
+*/
 
-        return {
+window.quizComponent = function (quizId) {
 
-            quizId: quizId,
+    return {
 
-            answers: {},
+        quizId: quizId,
 
-            feedback: {},
+        answers: {},
 
-            score: 0,
+        feedback: {},
 
-            passed: false,
+        score: 0,
 
-            resultVisible: false,
+        passed: false,
 
-            submitting: false,
+        resultVisible: false,
+
+        submitting: false,
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | SELECT ANSWER
-            |--------------------------------------------------------------------------
-            */
+        /*
+        |--------------------------------------------------------------------------
+        | SELECT ANSWER
+        |--------------------------------------------------------------------------
+        */
 
-            checkAnswer: function (
-                questionId,
-                selectedAnswer,
-                correctAnswer
-            ) {
+        checkAnswer: function (
+            questionId,
+            selectedAnswer,
+            correctAnswer
+        ) {
 
-                const selected =
-                    String(selectedAnswer)
-                        .trim()
-                        .toUpperCase();
+            const selected =
+                String(selectedAnswer)
+                    .trim()
+                    .toUpperCase();
 
-                const correct =
-                    String(correctAnswer)
-                        .trim()
-                        .toUpperCase();
-
-                this.answers[questionId] = selected;
-
-                this.feedback[questionId] =
-                    selected === correct
-                        ? 'correct'
-                        : 'wrong';
-
-                console.log(
-                    'Answer selected:',
-                    questionId,
-                    selected
-                );
-            },
+            const correct =
+                String(correctAnswer)
+                    .trim()
+                    .toUpperCase();
 
 
             /*
             |--------------------------------------------------------------------------
-            | IS SELECTED
+            | ALWAYS SAVE THE SELECTED ANSWER
             |--------------------------------------------------------------------------
             */
 
-            isSelected: function (
-                questionId,
-                answer
-            ) {
-
-                return (
-                    this.answers[questionId] ===
-                    String(answer)
-                        .trim()
-                        .toUpperCase()
-                );
-            },
+            this.answers[questionId] = selected;
 
 
             /*
             |--------------------------------------------------------------------------
-            | ANSWER BUTTON CLASS
+            | IMMEDIATE FEEDBACK
             |--------------------------------------------------------------------------
             */
 
-            getButtonClass: function (
-                questionId,
-                answer,
-                correctAnswer
-            ) {
+            if (selected === correct) {
 
-                const selected =
-                    this.answers[questionId];
+                this.feedback[questionId] = 'correct';
 
-                const current =
-                    String(answer)
-                        .trim()
-                        .toUpperCase();
+            } else {
 
-                const correct =
-                    String(correctAnswer)
-                        .trim()
-                        .toUpperCase();
+                this.feedback[questionId] = 'wrong';
 
-                if (!selected) {
-
-                    return [
-                        'border-gray-200',
-                        'hover:border-purple-400',
-                        'hover:bg-purple-50'
-                    ].join(' ');
-                }
-
-                if (
-                    selected === current &&
-                    current === correct
-                ) {
-
-                    return [
-                        'border-green-500',
-                        'bg-green-50',
-                        'text-green-800'
-                    ].join(' ');
-                }
-
-                if (
-                    selected === current &&
-                    current !== correct
-                ) {
-
-                    return [
-                        'border-red-500',
-                        'bg-red-50',
-                        'text-red-800'
-                    ].join(' ');
-                }
-
-                if (current === correct) {
-
-                    return [
-                        'border-green-400',
-                        'bg-green-50'
-                    ].join(' ');
-                }
-
-                return 'border-gray-200';
-            },
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | SUBMIT QUIZ
-            |--------------------------------------------------------------------------
-            */
-
-            submitQuiz: async function () {
-
-                if (this.submitting) {
-                    return;
-                }
-
-                this.submitting = true;
-
-                try {
-
-                    console.log(
-                        'Submitting quiz:',
-                        this.quizId
-                    );
-
-                    console.log(
-                        'Answers:',
-                        this.answers
-                    );
-
-
-                    const response =
-                        await fetch(
-                            "{{ url('/quizzes') }}/" +
-                            this.quizId +
-                            "/submit",
-                            {
-
-                                method: 'POST',
-
-                                headers: {
-
-                                    'Content-Type':
-                                        'application/json',
-
-                                    'Accept':
-                                        'application/json',
-
-                                    'X-CSRF-TOKEN':
-                                        "{{ csrf_token() }}",
-
-                                    'X-Requested-With':
-                                        'XMLHttpRequest'
-
-                                },
-
-                                credentials:
-                                    'same-origin',
-
-                                body:
-                                    JSON.stringify({
-                                        answers:
-                                            this.answers
-                                    })
-                            }
-                        );
-
-
-                    const data =
-                        await response.json();
-
-
-                    console.log(
-                        'Quiz response:',
-                        data
-                    );
-
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.message ||
-                            'Quiz submission failed.'
-                        );
-                    }
-
-
-                    if (!data.success) {
-
-                        throw new Error(
-                            data.message ||
-                            'Quiz could not be submitted.'
-                        );
-                    }
-
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | DISPLAY RESULT
-                    |--------------------------------------------------------------------------
-                    */
-
-                    this.score =
-                        Number(data.score ?? 0);
-
-                    this.passed =
-                        Boolean(data.passed);
-
-                    this.resultVisible =
-                        true;
-
-
-                    console.log(
-                        'Quiz completed:',
-                        {
-                            score: this.score,
-                            passed: this.passed
-                        }
-                    );
-
-
-                    /*
-                    |--------------------------------------------------------------------------
-                    | SCROLL TO RESULT
-                    |--------------------------------------------------------------------------
-                    */
-
-                    this.$nextTick(function () {
-
-                        const result =
-                            document.getElementById(
-                                'quiz-result'
-                            );
-
-                        if (result) {
-
-                            result.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center'
-                            });
-                        }
-
-                    });
-
-                } catch (error) {
-
-                    console.error(
-                        'Quiz submission error:',
-                        error
-                    );
-
-                    alert(
-                        error.message ||
-                        'Unable to submit quiz. Please try again.'
-                    );
-
-                } finally {
-
-                    this.submitting = false;
-                }
             }
 
-        };
+
+            console.log(
+                'Quiz answer selected:',
+                {
+                    questionId: questionId,
+                    selected: selected,
+                    correct: correct
+                }
+            );
+        },
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | CHECK SELECTED ANSWER
+        |--------------------------------------------------------------------------
+        */
+
+        isSelected: function (
+            questionId,
+            answer
+        ) {
+
+            const selected =
+                this.answers[questionId];
+
+            if (!selected) {
+                return false;
+            }
+
+            return selected ===
+                String(answer)
+                    .trim()
+                    .toUpperCase();
+        },
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | ANSWER BUTTON STYLE
+        |--------------------------------------------------------------------------
+        */
+
+        getButtonClass: function (
+            questionId,
+            option,
+            correctAnswer
+        ) {
+
+            const selected =
+                this.answers[questionId];
+
+            const current =
+                String(option)
+                    .trim()
+                    .toUpperCase();
+
+            const correct =
+                String(correctAnswer)
+                    .trim()
+                    .toUpperCase();
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | NOTHING SELECTED
+            |--------------------------------------------------------------------------
+            */
+
+            if (!selected) {
+
+                return [
+                    'border-gray-200',
+                    'hover:border-purple-400',
+                    'hover:bg-purple-50',
+                    'cursor-pointer'
+                ].join(' ');
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | USER SELECTED CORRECT ANSWER
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                selected === current &&
+                current === correct
+            ) {
+
+                return [
+                    'border-blue-600',
+                    'bg-blue-600',
+                    'text-white'
+                ].join(' ');
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | USER SELECTED WRONG ANSWER
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                selected === current &&
+                current !== correct
+            ) {
+
+                return [
+                    'border-red-500',
+                    'bg-red-50',
+                    'text-red-700'
+                ].join(' ');
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | SHOW CORRECT ANSWER AFTER WRONG SELECTION
+            |--------------------------------------------------------------------------
+            */
+
+            if (
+                current === correct &&
+                selected !== correct
+            ) {
+
+                return [
+                    'border-green-400',
+                    'bg-green-50',
+                    'text-green-700'
+                ].join(' ');
+            }
+
+
+            return [
+                'border-gray-200'
+            ].join(' ');
+        },
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | SUBMIT QUIZ
+        |--------------------------------------------------------------------------
+        */
+
+        submitQuiz: async function () {
+
+            if (this.submitting) {
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | CHECK THAT ANSWERS EXIST
+            |--------------------------------------------------------------------------
+            */
+
+            const answerCount =
+                Object.keys(this.answers).length;
+
+
+            if (answerCount === 0) {
+
+                alert(
+                    'Please answer at least one question before submitting the quiz.'
+                );
+
+                return;
+            }
+
+
+            this.submitting = true;
+
+
+            try {
+
+                console.log(
+                    'Submitting quiz:',
+                    this.quizId
+                );
+
+                console.log(
+                    'Answers:',
+                    this.answers
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | SUBMIT TO LARAVEL
+                |--------------------------------------------------------------------------
+                */
+
+                const response =
+                    await fetch(
+                        "{{ url('/quizzes') }}/" +
+                        this.quizId +
+                        "/submit",
+                        {
+
+                            method: 'POST',
+
+                            headers: {
+
+                                'Content-Type':
+                                    'application/json',
+
+                                'Accept':
+                                    'application/json',
+
+                                'X-CSRF-TOKEN':
+                                    "{{ csrf_token() }}",
+
+                                'X-Requested-With':
+                                    'XMLHttpRequest'
+
+                            },
+
+                            credentials:
+                                'same-origin',
+
+                            body:
+                                JSON.stringify({
+
+                                    answers:
+                                        this.answers
+
+                                })
+                        }
+                    );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | READ RESPONSE
+                |--------------------------------------------------------------------------
+                */
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    'Quiz submission response:',
+                    data
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | SERVER ERROR
+                |--------------------------------------------------------------------------
+                */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        'Quiz submission failed.'
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | APPLICATION ERROR
+                |--------------------------------------------------------------------------
+                */
+
+                if (data.success === false) {
+
+                    throw new Error(
+                        data.message ||
+                        'Quiz could not be submitted.'
+                    );
+                }
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | STORE RESULT
+                |--------------------------------------------------------------------------
+                */
+
+                this.score =
+                    Number(
+                        data.score ?? 0
+                    );
+
+                this.passed =
+                    Boolean(
+                        data.passed
+                    );
+
+                this.resultVisible =
+                    true;
+
+
+                console.log(
+                    'Quiz result:',
+                    {
+                        score: this.score,
+                        passed: this.passed
+                    }
+                );
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | SCROLL TO RESULT
+                |--------------------------------------------------------------------------
+                */
+
+                this.$nextTick(() => {
+
+                    const result =
+                        document.getElementById(
+                            'quiz-result'
+                        );
+
+                    if (result) {
+
+                        result.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+
+                    }
+
+                });
+
+
+                /*
+                |--------------------------------------------------------------------------
+                | IF PASSED
+                |--------------------------------------------------------------------------
+                |
+                | We don't reload immediately.
+                | The student needs to see their score/result.
+                |
+                */
+
+            } catch (error) {
+
+                console.error(
+                    'Quiz submission error:',
+                    error
+                );
+
+                alert(
+                    error.message ||
+                    'Unable to submit quiz. Please try again.'
+                );
+
+            } finally {
+
+                this.submitting = false;
+
+            }
+
+        }
+
     };
 
-
-    console.log(
-        'Classroom JavaScript loaded.'
-    );
-
-});
+};
 </script>
 
 
