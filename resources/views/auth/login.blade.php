@@ -487,4 +487,201 @@
 
     </div>
 
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lead Tracking Helper
+    |--------------------------------------------------------------------------
+    */
+
+    function trackLeadEvent(event, metadata = {}) {
+
+        try {
+
+            fetch('{{ route('lead.track') }}', {
+                method: 'POST',
+                credentials: 'same-origin',
+                keepalive: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    event: event,
+                    metadata: {
+                        ...metadata,
+
+                        page_url: window.location.href,
+                        landing_page: window.location.href,
+                        referrer: document.referrer || null,
+                        timestamp: new Date().toISOString()
+                    }
+                })
+            }).catch(function (error) {
+                console.debug('Lead tracking failed:', error);
+            });
+
+        } catch (error) {
+            console.debug('Lead tracking error:', error);
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. Existing User Reached Login Page
+    |--------------------------------------------------------------------------
+    */
+
+    trackLeadEvent('login_viewed', {
+        stage: 'login'
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login Form
+    |--------------------------------------------------------------------------
+    */
+
+    const loginForm = document.querySelector(
+        'form[action="{{ route('login') }}"]'
+    );
+
+
+    if (!loginForm) {
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. User Started Login
+    |--------------------------------------------------------------------------
+    */
+
+    let loginStarted = false;
+
+    loginForm.addEventListener('focusin', function (event) {
+
+        if (!loginStarted) {
+
+            loginStarted = true;
+
+            trackLeadEvent('login_started', {
+                stage: 'login',
+                field: event.target.name || event.target.id || null
+            });
+
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 3. Email Entered
+    |--------------------------------------------------------------------------
+    */
+
+    const emailInput = document.getElementById('email');
+
+    if (emailInput) {
+
+        let emailTracked = false;
+
+        emailInput.addEventListener('blur', function () {
+
+            if (
+                !emailTracked &&
+                this.value.trim().length > 0
+            ) {
+
+                emailTracked = true;
+
+                trackLeadEvent('login_email_entered', {
+                    stage: 'login'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 4. Password Entered
+    |--------------------------------------------------------------------------
+    */
+
+    const passwordInput = document.getElementById('password');
+
+    if (passwordInput) {
+
+        let passwordTracked = false;
+
+        passwordInput.addEventListener('input', function () {
+
+            if (
+                !passwordTracked &&
+                this.value.length > 0
+            ) {
+
+                passwordTracked = true;
+
+                trackLeadEvent('login_password_started', {
+                    stage: 'login'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 5. Remember Me
+    |--------------------------------------------------------------------------
+    */
+
+    const rememberMe = document.getElementById('remember_me');
+
+    if (rememberMe) {
+
+        rememberMe.addEventListener('change', function () {
+
+            trackLeadEvent('login_remember_me_changed', {
+                stage: 'login',
+                remember: this.checked
+            });
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 6. Login Submitted
+    |--------------------------------------------------------------------------
+    */
+
+    loginForm.addEventListener('submit', function () {
+
+        trackLeadEvent('login_submitted', {
+            stage: 'login'
+        });
+
+    });
+
+});
+</script>
 </x-guest-layout>

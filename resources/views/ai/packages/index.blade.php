@@ -969,4 +969,162 @@
 
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    function trackLeadEvent(eventName, metadata = {}) {
+        return fetch('{{ route('lead.track') }}', {
+            method: 'POST',
+            credentials: 'same-origin',
+            keepalive: true,
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+
+            body: JSON.stringify({
+                event: eventName,
+                metadata: {
+                    ...metadata,
+                    page_url: window.location.href
+                }
+            })
+        }).catch(function (error) {
+            console.debug('Lead tracking failed:', error);
+        });
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. PACKAGE PAGE VIEWED
+    |--------------------------------------------------------------------------
+    */
+
+    trackLeadEvent('ai_packages_viewed', {
+        stage: 'ai_packages',
+        page_url: window.location.href,
+        page_path: window.location.pathname,
+        referrer: document.referrer,
+        package_count: {{ (int) $packages->count() }}
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. PACKAGE SELECTED
+    |
+    | IMPORTANT:
+    | Wait for tracking before submitting the payment-selection form.
+    |--------------------------------------------------------------------------
+    */
+
+    const packageForms = document.querySelectorAll(
+        'form[action*="/ai/packages"]'
+    );
+
+
+    packageForms.forEach(function (form) {
+
+        form.addEventListener('submit', async function (event) {
+
+            event.preventDefault();
+
+
+            const card = form.closest('.group');
+
+            let packageName = null;
+            let packageId = null;
+            let packagePrice = null;
+            let packageDuration = null;
+
+
+            if (card) {
+
+                const heading = card.querySelector('h3');
+
+                if (heading) {
+                    packageName = heading.textContent.trim();
+                }
+
+
+                const priceElement = card.querySelector(
+                    '.text-3xl, .sm\\:text-4xl'
+                );
+
+                if (priceElement) {
+                    packagePrice = priceElement.textContent.trim();
+                }
+
+
+                const durationElement = card.querySelector(
+                    'p.text-xs.font-bold.uppercase'
+                );
+
+                if (durationElement) {
+                    packageDuration =
+                        durationElement.textContent.trim();
+                }
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Extract package ID
+            |--------------------------------------------------------------------------
+            */
+
+            const action = form.getAttribute('action');
+
+            if (action) {
+
+                const match = action.match(
+                    /\/(\d+)(?:\/?$)/
+                );
+
+                if (match) {
+                    packageId = match[1];
+                }
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Track package selection BEFORE navigation
+            |--------------------------------------------------------------------------
+            */
+
+            await trackLeadEvent(
+                'ai_package_selected',
+                {
+                    stage: 'ai_packages',
+                    package_id: packageId,
+                    package_name: packageName,
+                    package_price: packagePrice,
+                    package_duration: packageDuration,
+                    page_url: window.location.href
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Tracking completed.
+            | Now perform the original form submission.
+            |--------------------------------------------------------------------------
+            */
+
+            form.submit();
+
+        });
+
+    });
+
+});
+</script>
 @endsection

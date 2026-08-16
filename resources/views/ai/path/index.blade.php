@@ -781,4 +781,383 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </script>
 
+{{-- =============================================================
+    INTERACTION
+============================================================= --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const cards = document.querySelectorAll('.path-card');
+
+    const selectedPathInput =
+        document.getElementById('selectedPath');
+
+    const selectionSummary =
+        document.getElementById('selectionSummary');
+
+    const selectedPathTitle =
+        document.getElementById('selectedPathTitle');
+
+    const continueButton =
+        document.getElementById('continueButton');
+
+    const continueButtonText =
+        document.getElementById('continueButtonText');
+
+
+    cards.forEach(function (card) {
+
+        card.addEventListener('click', function () {
+
+            /*
+            |--------------------------------------------------------------------------
+            | Remove selected state from all cards
+            |--------------------------------------------------------------------------
+            */
+
+            cards.forEach(function (item) {
+
+                item.classList.remove(
+                    'border-[#D71920]',
+                    'bg-[#061B49]/[0.02]',
+                    'shadow-xl',
+                    'ring-2',
+                    'ring-[#D71920]/20'
+                );
+
+                item.classList.add(
+                    'border-slate-200',
+                    'bg-white'
+                );
+
+
+                const badge =
+                    item.querySelector('.selected-badge');
+
+                if (badge) {
+                    badge.classList.add('hidden');
+                }
+
+
+                const icon =
+                    item.querySelector('.path-icon');
+
+                if (icon) {
+
+                    icon.classList.remove(
+                        'bg-[#D71920]'
+                    );
+
+                    icon.classList.add(
+                        'bg-slate-100'
+                    );
+
+                    const svg =
+                        icon.querySelector('svg');
+
+                    if (svg) {
+
+                        svg.classList.remove(
+                            'text-white'
+                        );
+
+                        svg.classList.add(
+                            'text-[#061B49]'
+                        );
+
+                    }
+                }
+
+
+                const arrow =
+                    item.querySelector('.path-arrow');
+
+                if (arrow) {
+
+                    arrow.classList.remove(
+                        'translate-x-1',
+                        'text-[#D71920]'
+                    );
+
+                }
+
+            });
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Apply selected state
+            |--------------------------------------------------------------------------
+            */
+
+            card.classList.remove(
+                'border-slate-200',
+                'bg-white'
+            );
+
+            card.classList.add(
+                'border-[#D71920]',
+                'bg-[#061B49]/[0.02]',
+                'shadow-xl',
+                'ring-2',
+                'ring-[#D71920]/20'
+            );
+
+
+            const badge =
+                card.querySelector('.selected-badge');
+
+            if (badge) {
+                badge.classList.remove('hidden');
+            }
+
+
+            const icon =
+                card.querySelector('.path-icon');
+
+            if (icon) {
+
+                icon.classList.remove(
+                    'bg-slate-100'
+                );
+
+                icon.classList.add(
+                    'bg-[#D71920]'
+                );
+
+
+                const svg =
+                    icon.querySelector('svg');
+
+                if (svg) {
+
+                    svg.classList.remove(
+                        'text-[#061B49]'
+                    );
+
+                    svg.classList.add(
+                        'text-white'
+                    );
+
+                }
+
+            }
+
+
+            const arrow =
+                card.querySelector('.path-arrow');
+
+            if (arrow) {
+
+                arrow.classList.add(
+                    'translate-x-1',
+                    'text-[#D71920]'
+                );
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Store selected path
+            |--------------------------------------------------------------------------
+            */
+
+            const path =
+                card.dataset.path;
+
+            const title =
+                card.dataset.title;
+
+            selectedPathInput.value =
+                path;
+
+            selectedPathTitle.textContent =
+                title;
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Show summary
+            |--------------------------------------------------------------------------
+            */
+
+            selectionSummary.classList.remove(
+                'hidden'
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Enable CTA
+            |--------------------------------------------------------------------------
+            */
+
+            continueButton.disabled =
+                false;
+
+            continueButton.classList.remove(
+                'bg-slate-200',
+                'text-slate-400',
+                'cursor-not-allowed'
+            );
+
+            continueButton.classList.add(
+                'bg-[#D71920]',
+                'hover:bg-[#B9151B]',
+                'text-white',
+                'shadow-lg',
+                'hover:shadow-xl',
+                'hover:-translate-y-0.5'
+            );
+
+            continueButtonText.textContent =
+                'Continue with ' + title + ' →';
+
+        });
+
+    });
+
+});
+</script>
+
+
+{{-- =============================================================
+    LEAD TRACKING
+    PLACE THIS AFTER THE INTERACTION SCRIPT
+    ============================================================= --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    function trackLeadEvent(eventName, metadata = {}) {
+        return fetch('{{ route('lead.track') }}', {
+            method: 'POST',
+            credentials: 'same-origin',
+            keepalive: true,
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+
+            body: JSON.stringify({
+                event: eventName,
+                metadata: {
+                    ...metadata,
+                    page_url: window.location.href
+                }
+            })
+        }).catch(function (error) {
+            console.debug('Lead tracking failed:', error);
+        });
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. LEARNING PATH VIEWED
+    |--------------------------------------------------------------------------
+    */
+
+    trackLeadEvent('ai_learning_path_viewed', {
+        step: 8,
+        stage: 'ai_learning_path',
+        onboarding_completed: true
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. LEARNING PATH SELECTED
+    |--------------------------------------------------------------------------
+    */
+
+    const cards = document.querySelectorAll('.path-card');
+
+    cards.forEach(function (card) {
+
+        card.addEventListener('click', function () {
+
+            const path = card.dataset.path;
+            const title = card.dataset.title;
+
+            trackLeadEvent('ai_learning_path_selected', {
+                stage: 'ai_learning_path',
+                path: path,
+                path_title: title,
+                step: 8
+            });
+
+        });
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 3. CONTINUE TO PACKAGES
+    |
+    | IMPORTANT:
+    | Wait for tracking to finish BEFORE navigation.
+    |--------------------------------------------------------------------------
+    */
+
+    const pathForm = document.getElementById('pathSelectionForm');
+
+    const selectedPathInput =
+        document.getElementById('selectedPath');
+
+    const selectedPathTitle =
+        document.getElementById('selectedPathTitle');
+
+
+    if (pathForm) {
+
+        pathForm.addEventListener('submit', async function (event) {
+
+            event.preventDefault();
+
+            const selectedPath =
+                selectedPathInput.value;
+
+            const selectedTitle =
+                selectedPathTitle.textContent;
+
+
+            if (!selectedPath) {
+                return;
+            }
+
+
+            await trackLeadEvent(
+                'ai_learning_path_continue_clicked',
+                {
+                    stage: 'ai_learning_path',
+                    step: 8,
+                    path: selectedPath,
+                    path_title: selectedTitle,
+                    next_stage: 'ai_packages'
+                }
+            );
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Tracking is now sent.
+            | Continue with the original form submission.
+            |--------------------------------------------------------------------------
+            */
+
+            pathForm.submit();
+
+        });
+
+    }
+
+});
+</script>
+
+
 @endsection

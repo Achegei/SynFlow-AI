@@ -6,9 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\OnboardingProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\LeadTrackingService;
 
 class AIOnboardingController extends Controller
 {
+
+    public function __construct(
+    protected LeadTrackingService $tracking
+) {
+}
     /**
      * Start onboarding.
      */
@@ -22,13 +28,76 @@ class AIOnboardingController extends Controller
     /**
      * Display onboarding step.
      */
-    public function step($step)
+    public function step(Request $request, $step)
     {
         $steps = $this->steps();
 
         if (!isset($steps[$step])) {
             return redirect()->route('ai.onboarding.step', 1);
         }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Establish lead attribution
+    |--------------------------------------------------------------------------
+    |
+    | The first onboarding page is the visitor's landing point.
+    | Capture the visitor ID, original landing page and UTM parameters
+    | BEFORE the JavaScript tracking request to /track/lead fires.
+    |
+    */
+
+    if (!$request->session()->has('lead_visitor_id')) {
+        $request->session()->put(
+            'lead_visitor_id',
+            (string) \Illuminate\Support\Str::uuid()
+        );
+    }
+
+    \Log::info('BEFORE LANDING PAGE INIT', [
+    'step' => $step,
+    'session_id' => $request->session()->getId(),
+    'has_landing_page' => $request->session()->has('lead_landing_page'),
+    'existing_landing_page' => $request->session()->get('lead_landing_page'),
+    'current_url' => $request->fullUrl(),
+    'session_data' => $request->session()->all(),
+]);
+    if (!$request->session()->has('lead_landing_page')) {
+        $request->session()->put(
+            'lead_landing_page',
+            $request->fullUrl()
+        );
+    }
+
+    foreach ([
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_term',
+        'utm_content',
+    ] as $utm) {
+        $value = $request->query($utm);
+
+        if ($value !== null && $value !== '') {
+            $request->session()->put(
+                'lead_' . $utm,
+                $value
+            );
+        }
+    }
+
+    //test
+    \Log::info('AFTER LANDING PAGE INIT', [
+    'step' => $step,
+    'url' => $request->fullUrl(),
+    'session_id' => $request->session()->getId(),
+    'visitor_id' => $request->session()->get('lead_visitor_id'),
+    'landing_page' => $request->session()->get('lead_landing_page'),
+    'utm_source' => $request->session()->get('lead_utm_source'),
+    'utm_medium' => $request->session()->get('lead_utm_medium'),
+    'utm_campaign' => $request->session()->get('lead_utm_campaign'),
+]);
 
         $data = session('ai_onboarding', []);
 

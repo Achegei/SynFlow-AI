@@ -171,6 +171,225 @@ document
         text.textContent =
             'Sending M-Pesa Request...';
 
+        /*
+    |--------------------------------------------------------------------------
+    | Lead Tracking Helper
+    |--------------------------------------------------------------------------
+    */
+
+    function trackLeadEvent(event, metadata = {}) {
+
+        try {
+
+            fetch('{{ route('lead.track') }}', {
+                method: 'POST',
+                credentials: 'same-origin',
+                keepalive: true,
+
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+
+                body: JSON.stringify({
+                    event: event,
+
+                    metadata: {
+                        ...metadata,
+
+                        page_url: window.location.href,
+                        landing_page: window.location.href,
+                        referrer: document.referrer || null,
+                        timestamp: new Date().toISOString()
+                    }
+                })
+
+            }).catch(function (error) {
+
+                console.debug(
+                    'Lead tracking failed:',
+                    error
+                );
+
+            });
+
+        } catch (error) {
+
+            console.debug(
+                'Lead tracking error:',
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Payment Context
+    |--------------------------------------------------------------------------
+    */
+
+    const paymentForm =
+        document.getElementById('payment-form');
+
+    const phoneInput =
+        document.getElementById('phone_number');
+
+
+    if (!paymentForm) {
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. Payment Page Viewed
+    |--------------------------------------------------------------------------
+    */
+
+    trackLeadEvent('payment_page_viewed', {
+
+        stage: 'payment',
+
+        package_id: {{ (int) $package->id }},
+
+        package_name: @json($package->name),
+
+        amount: {{ (float) $package->price }}
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. User Started Payment
+    |--------------------------------------------------------------------------
+    */
+
+    let paymentStarted = false;
+
+
+    paymentForm.addEventListener(
+        'focusin',
+        function (event) {
+
+            if (!paymentStarted) {
+
+                paymentStarted = true;
+
+
+                trackLeadEvent(
+                    'payment_started',
+                    {
+
+                        stage: 'payment',
+
+                        package_id:
+                            {{ (int) $package->id }},
+
+                        package_name:
+                            @json($package->name),
+
+                        amount:
+                            {{ (float) $package->price }},
+
+                        field:
+                            event.target.name ||
+                            event.target.id ||
+                            null
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 3. M-Pesa Phone Number Entered
+    |--------------------------------------------------------------------------
+    */
+
+    if (phoneInput) {
+
+        let phoneTracked = false;
+
+
+        phoneInput.addEventListener(
+            'blur',
+            function () {
+
+                if (
+                    !phoneTracked &&
+                    this.value.trim().length > 0
+                ) {
+
+                    phoneTracked = true;
+
+
+                    trackLeadEvent(
+                        'payment_phone_entered',
+                        {
+
+                            stage: 'payment',
+
+                            package_id:
+                                {{ (int) $package->id }},
+
+                            package_name:
+                                @json($package->name),
+
+                            amount:
+                                {{ (float) $package->price }}
+
+                        }
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 4. Payment Button Clicked / Form Submitted
+    |--------------------------------------------------------------------------
+    */
+
+    paymentForm.addEventListener(
+        'submit',
+        function () {
+
+            trackLeadEvent(
+                'payment_submitted',
+                {
+
+                    stage: 'payment',
+
+                    package_id:
+                        {{ (int) $package->id }},
+
+                    package_name:
+                        @json($package->name),
+
+                    amount:
+                        {{ (float) $package->price }}
+
+                }
+            );
+
+        }
+    );
     });
 
 </script>

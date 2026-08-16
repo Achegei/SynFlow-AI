@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Services\GeocodingService;
 use Illuminate\Support\Str;
 use App\Models\Institution;
+use App\Models\ActivityLog;
 
 class User extends Authenticatable
 {
@@ -104,6 +105,11 @@ class User extends Authenticatable
     public function activities()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 
     public function likes()

@@ -876,4 +876,77 @@
 
 </div>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const trackLead = function (eventName, metadata = {}) {
+        try {
+            fetch('{{ route('lead.track') }}', {
+                method: 'POST',
+                credentials: 'same-origin',
+                keepalive: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    event: eventName,
+                    metadata: metadata
+                })
+            }).catch(function (error) {
+                console.debug('Lead tracking failed:', error);
+            });
+        } catch (error) {
+            console.debug('Lead tracking error:', error);
+        }
+    };
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | STEP VIEWED
+    |--------------------------------------------------------------------------
+    */
+
+    trackLead('ai_assessment_step_viewed', {
+        step: {{ (int) $step }},
+        total_steps: {{ (int) $totalSteps }},
+        landing_page: window.location.href,
+        page_url: window.location.href
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | STEP COMPLETED
+    |--------------------------------------------------------------------------
+    |
+    | Track when the learner successfully submits this step.
+    | We attach the event to the form submission rather than tracking
+    | the button click, so it only represents an actual submission attempt.
+    |
+    */
+
+    const form = document.querySelector(
+        'form[action="{{ route('ai.onboarding.store', $step) }}"]'
+    );
+
+    if (form) {
+
+        form.addEventListener('submit', function () {
+
+            trackLead('ai_assessment_step_completed', {
+                step: {{ (int) $step }},
+                total_steps: {{ (int) $totalSteps }},
+                page_url: window.location.href
+            });
+
+        });
+
+    }
+
+});
+</script>
 @endsection

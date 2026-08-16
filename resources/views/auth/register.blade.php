@@ -604,4 +604,283 @@
 
     </div>
 
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Lead Tracking Helper
+    |--------------------------------------------------------------------------
+    */
+
+    function trackLeadEvent(event, metadata = {}) {
+
+        try {
+
+            fetch('{{ route('lead.track') }}', {
+                method: 'POST',
+                credentials: 'same-origin',
+                keepalive: true,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    event: event,
+                    metadata: {
+                        ...metadata,
+
+                        page_url: window.location.href,
+                        landing_page: window.location.href,
+
+                        referrer: document.referrer || null,
+
+                        user_agent: navigator.userAgent,
+
+                        timestamp: new Date().toISOString()
+                    }
+                })
+            }).catch(function (error) {
+                console.debug('Lead tracking failed:', error);
+            });
+
+        } catch (error) {
+            console.debug('Lead tracking error:', error);
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. Registration Page Viewed
+    |--------------------------------------------------------------------------
+    */
+
+    trackLeadEvent('registration_viewed', {
+        step: 8,
+        stage: 'registration'
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Registration Form
+    |--------------------------------------------------------------------------
+    */
+
+    const registrationForm = document.querySelector(
+        'form[action="{{ route('register') }}"]'
+    );
+
+
+    if (!registrationForm) {
+        return;
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. User Started Registration
+    |--------------------------------------------------------------------------
+    */
+
+    let registrationStarted = false;
+
+    registrationForm.addEventListener('focusin', function (event) {
+
+        if (!registrationStarted) {
+
+            registrationStarted = true;
+
+            trackLeadEvent('registration_started', {
+                step: 8,
+                stage: 'registration',
+                field: event.target.name || event.target.id || null
+            });
+
+        }
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 3. Name Entered
+    |--------------------------------------------------------------------------
+    */
+
+    const nameInput = document.getElementById('name');
+
+    if (nameInput) {
+
+        let nameTracked = false;
+
+        nameInput.addEventListener('blur', function () {
+
+            if (
+                !nameTracked &&
+                this.value.trim().length > 0
+            ) {
+
+                nameTracked = true;
+
+                trackLeadEvent('registration_name_entered', {
+                    step: 8,
+                    stage: 'registration'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 4. Email Entered
+    |--------------------------------------------------------------------------
+    */
+
+    const emailInput = document.getElementById('email');
+
+    if (emailInput) {
+
+        let emailTracked = false;
+
+        emailInput.addEventListener('blur', function () {
+
+            if (
+                !emailTracked &&
+                this.value.trim().length > 0
+            ) {
+
+                emailTracked = true;
+
+                trackLeadEvent('registration_email_entered', {
+                    step: 8,
+                    stage: 'registration'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 5. Referral Code Entered
+    |--------------------------------------------------------------------------
+    */
+
+    const referralInput = document.getElementById('referral_code');
+
+    if (referralInput) {
+
+        let referralTracked = false;
+
+        referralInput.addEventListener('blur', function () {
+
+            if (
+                !referralTracked &&
+                this.value.trim().length > 0
+            ) {
+
+                referralTracked = true;
+
+                trackLeadEvent('registration_referral_entered', {
+                    step: 8,
+                    stage: 'registration'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 6. Profile Photo Selected
+    |--------------------------------------------------------------------------
+    */
+
+    const profilePhotoInput = document.getElementById('profile_photo');
+
+    if (profilePhotoInput) {
+
+        profilePhotoInput.addEventListener('change', function () {
+
+            if (this.files && this.files.length > 0) {
+
+                trackLeadEvent('registration_profile_photo_selected', {
+                    step: 8,
+                    stage: 'registration',
+                    file_selected: true
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 7. Password Started
+    |--------------------------------------------------------------------------
+    */
+
+    const passwordInput = document.getElementById('password');
+
+    if (passwordInput) {
+
+        let passwordTracked = false;
+
+        passwordInput.addEventListener('input', function () {
+
+            if (
+                !passwordTracked &&
+                this.value.length > 0
+            ) {
+
+                passwordTracked = true;
+
+                trackLeadEvent('registration_password_started', {
+                    step: 8,
+                    stage: 'registration'
+                });
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 8. Registration Submitted
+    |--------------------------------------------------------------------------
+    */
+
+    registrationForm.addEventListener('submit', function () {
+
+        trackLeadEvent('registration_submitted', {
+            step: 8,
+            stage: 'registration',
+            form_action: '{{ route('register') }}'
+        });
+
+    });
+
+});
+</script>
+
 </x-guest-layout>

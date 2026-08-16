@@ -394,4 +394,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+
+<script>
+document.addEventListener('ai-payment-paid', function (event) {
+
+    console.log('[AI PAYMENT] Paid event received:', event.detail);
+
+    const statusElement = document.getElementById('payment-status');
+
+    if (statusElement) {
+
+        statusElement.textContent = 'Paid';
+
+        statusElement.className =
+            'inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800';
+    }
+
+    if (event.detail && event.detail.redirect) {
+
+        setTimeout(function () {
+            window.location.href = event.detail.redirect;
+        }, 500);
+
+    }
+
+});
+</script>
+
 @endsection

@@ -31,6 +31,7 @@ use App\Http\Controllers\AI\AIOnboardingController;
 use App\Http\Controllers\AI\AIPathController;
 use App\Http\Controllers\AI\AIPackageController;
 use App\Http\Controllers\AI\AIPaymentController;
+use App\Http\Controllers\Marketing\LeadTrackingController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -49,6 +50,11 @@ Route::get('/', function () {
 
 Route::get('/social-proof', function () {
 });
+
+//================================================
+// 0. Lead Tracking Routes
+//================================================
+Route::post('/track/lead', [LeadTrackingController::class, 'store'])->name('lead.track');
 
 Route::get('/verify-certificate', [CertificateController::class, 'showVerifyForm'])->name('certificate.verify');
 Route::post('/verify-certificate', [CertificateController::class, 'verify'])->name('certificate.verify.post');
