@@ -262,6 +262,8 @@ document.addEventListener('DOMContentLoaded', function () {
     );
 
     let attempts = 0;
+
+    let paymentFailedTracked = false;
     const maxAttempts = 300; // 5 minutes at 1-second intervals
 
     async function checkPaymentStatus() {
@@ -316,6 +318,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            /*
+            |--------------------------------------------------------------------------
+            | PAYMENT CANCELLED
+            |--------------------------------------------------------------------------
+            */
+
+            if (data.status === 'cancelled') {
+
+                statusElement.textContent = 'Payment Cancelled';
+
+                statusElement.className =
+                    'inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-800';
+
+                console.log(
+                    '[AI PAYMENT] Customer cancelled the M-Pesa payment prompt.'
+                );
+
+                return;
+            }
 
             /*
             |--------------------------------------------------------------------------
@@ -325,6 +346,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (data.status === 'failed') {
 
+                if (!paymentFailedTracked) {
+
+                    paymentFailedTracked = true;
+
+                    trackLeadEvent('payment_failed', {
+
+                        stage: 'payment',
+
+                        payment_id:
+                            {{ (int) $payment->id }},
+
+                        package_id:
+                            {{ (int) $payment->package_id }},
+
+                        package_name:
+                            @json($payment->package?->name),
+
+                        amount:
+                            {{ (float) $payment->amount }},
+
+                        reason:
+                            data.reason || 'Payment failed'
+
+                    });
+                }
+
                 statusElement.textContent = 'Payment Failed';
 
                 statusElement.className =
@@ -332,7 +379,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 return;
             }
-
 
             /*
             |--------------------------------------------------------------------------

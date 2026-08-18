@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Payment;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Log;
 use IntaSend\IntaSendPHP\Collection;
 
@@ -28,9 +29,14 @@ class IntaSendPaymentService
 
         $payment->refresh();
 
-        if ($payment->status === 'paid') {
+        if (in_array(
+        $payment->status,
+            ['paid', 'failed', 'cancelled'],
+            true
+        )) {
             return $payment;
         }
+
 
         /*
         |--------------------------------------------------------------------------
@@ -166,36 +172,198 @@ class IntaSendPaymentService
                 ->complete($payment);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | FAILED
-        |--------------------------------------------------------------------------
-        */
+      /*
+            |--------------------------------------------------------------------------
+            | FAILED / CANCELLED
+            |--------------------------------------------------------------------------
+            |
+            | IntaSend can return state = FAILED for different reasons.
+            |
+            | Example:
+            |
+            | failed_code   = 1032
+            | failed_reason = Request Cancelled by user.
+            |
+            | In that case, the customer cancelled the M-Pesa prompt.
+            |
+            | Other FAILED responses remain genuine payment failures.
+            |
+            */
 
-        if (in_array(
-            $state,
-            [
-                'failed',
-                'cancelled',
-                'canceled',
-                'rejected',
-            ],
-            true
-        )) {
-
-            $payment->status = 'failed';
-
-            $payment->save();
-
-            Log::warning(
-                '[IntaSend Payment Service] PAYMENT FAILED',
+            if (in_array(
+                $state,
                 [
-                    'payment_id' => $payment->id,
-                    'invoice_id' => $payment->payment_id,
-                    'state' => $state,
-                ]
-            );
-        }
+                    'failed',
+                    'cancelled',
+                    'canceled',
+                    'rejected',
+                ],
+                true
+            )) {
+
+                /*
+                |--------------------------------------------------------------------------
+                | Get IntaSend failure information
+                |--------------------------------------------------------------------------
+                */
+
+                $failedCode = (string) (
+                    $invoice->failed_code ?? ''
+                );
+
+                $failedReason = trim(
+                    (string) (
+                        $invoice->failed_reason ?? ''
+                    )
+                );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Determine whether customer cancelled the payment
+                |--------------------------------------------------------------------------
+                |
+                | IntaSend uses code 1032 for:
+                |
+                | "Request Cancelled by user."
+                |
+                */
+
+                $isCancelled =
+                    in_array(
+                        $state,
+                        ['cancelled', 'canceled'],
+                        true
+                    )
+                    ||
+                    $failedCode === '1032'
+                    ||
+                    str_contains(
+                        strtolower($failedReason),
+                        'cancelled by user'
+                    )
+                    ||
+                    str_contains(
+                        strtolower($failedReason),
+                        'canceled by user'
+                    )
+                    ||
+                    str_contains(
+                        strtolower($failedReason),
+                        'request cancelled by user'
+                    );
+
+                /*
+                |--------------------------------------------------------------------------
+                | Set local payment status
+                |--------------------------------------------------------------------------
+                */
+
+                $payment->status = $isCancelled
+                    ? 'cancelled'
+                    : 'failed';
+
+                $payment->save();
+
+                /*
+                |--------------------------------------------------------------------------
+                | Determine activity event
+                |--------------------------------------------------------------------------
+                */
+
+                $activityEvent = $isCancelled
+                    ? 'payment_cancelled'
+                    : 'payment_failed';
+
+                /*
+                |--------------------------------------------------------------------------
+                | Prevent duplicate activity records
+                |--------------------------------------------------------------------------
+                */
+
+                $alreadyLogged = ActivityLog::query()
+                    ->where('user_id', $payment->user_id)
+                    ->where('event', $activityEvent)
+                    ->where('metadata->payment_id', $payment->id)
+                    ->exists();
+
+                if (!$alreadyLogged) {
+
+                    ActivityLog::create([
+                        'event' => $activityEvent,
+
+                        'visitor_id' => request()->session()->get(
+                            'lead_visitor_id'
+                        ),
+
+                        'user_id' => $payment->user_id,
+
+                        'metadata' => [
+                            'stage' => 'payment',
+
+                            'payment_id' => $payment->id,
+
+                            'invoice_id' => $payment->payment_id,
+
+                            'package_id' => $payment->package_id,
+
+                            'amount' => $payment->amount,
+
+                            'currency' => $payment->currency,
+
+                            'provider' => $payment->provider,
+
+                            'provider_state' => $state,
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Preserve IntaSend failure information
+                            |--------------------------------------------------------------------------
+                            */
+
+                            'failed_code' => $failedCode ?: null,
+
+                            'failed_reason' => $failedReason ?: null,
+
+                            /*
+                            |--------------------------------------------------------------------------
+                            | Human-readable message
+                            |--------------------------------------------------------------------------
+                            */
+
+                            'message' => $isCancelled
+                                ? 'Customer cancelled the M-Pesa payment prompt.'
+                                : 'Payment failed.',
+
+                            'timestamp' => now()->toISOString(),
+                        ],
+                    ]);
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Log outcome
+                |--------------------------------------------------------------------------
+                */
+
+                Log::warning(
+                    '[IntaSend Payment Service] PAYMENT NOT COMPLETED',
+                    [
+                        'payment_id' => $payment->id,
+
+                        'invoice_id' => $payment->payment_id,
+
+                        'state' => $state,
+
+                        'failed_code' => $failedCode,
+
+                        'failed_reason' => $failedReason,
+
+                        'payment_status' => $payment->status,
+
+                        'activity_event' => $activityEvent,
+                    ]
+                );
+            }
 
         return $payment->fresh();
     }

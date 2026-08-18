@@ -209,6 +209,22 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         /*
+            |--------------------------------------------------------------------------
+            | Attach anonymous lead activity to the newly registered user
+            |--------------------------------------------------------------------------
+        */
+
+            $visitorId = session('lead_visitor_id');
+
+            if ($visitorId) {
+                \App\Models\ActivityLog::where('visitor_id', $visitorId)
+                    ->whereNull('user_id')
+                    ->update([
+                        'user_id' => $user->id,
+                    ]);
+            }
+
+        /*
         |--------------------------------------------------------------------------
         | AI PACKAGE FLOW
         |--------------------------------------------------------------------------

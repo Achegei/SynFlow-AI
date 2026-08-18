@@ -1,0 +1,431 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\LeadResource\Pages;
+use App\Models\User;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+
+class LeadResource extends Resource
+{
+    protected static ?string $model = User::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $navigationLabel = 'Leads';
+
+    protected static ?string $navigationGroup = 'Marketing';
+
+    protected static bool $shouldRegisterNavigation = true;
+
+    protected static ?int $navigationSort = 1;
+
+    /**
+     * Leads are registered non-admin users who have
+     * meaningful tracked activity.
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('is_admin', 0)
+            ->whereHas('activityLogs');
+    }
+
+    /**
+     * We are not creating/editing leads directly.
+     * Leads are derived from existing User records.
+     */
+    public static function form(\Filament\Forms\Form $form): \Filament\Forms\Form
+    {
+        return $form->schema([]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->sortable(),
+
+                TextColumn::make('name')
+                    ->label('Name')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->label('Email')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('lead_stage')
+                    ->label('Stage')
+                    ->getStateUsing(fn (User $record): string =>
+                        self::getLeadStage($record)
+                    )
+                    ->badge()
+                    ->color(fn (string $state): string =>
+                        match ($state) {
+                            'Paid' => 'success',
+                            'Payment Failed' => 'danger',
+                            'Payment Started' => 'warning',
+                            'Payment Page Viewed' => 'warning',
+                            'Package Selected' => 'info',
+                            'Pathway Selected' => 'info',
+                            'Registered' => 'gray',
+                            'Unpaid' => 'danger',
+                            default => 'gray',
+                        }
+                    ),
+
+                TextColumn::make('package')
+                    ->label('Package')
+                    ->getStateUsing(fn (User $record): ?string =>
+                        self::getPackageName($record)
+                    )
+                    ->placeholder('—'),
+
+                TextColumn::make('amount')
+                    ->label('Amount')
+                    ->getStateUsing(fn (User $record): ?string =>
+                        self::getLeadAmount($record)
+                    )
+                    ->placeholder('—'),
+
+                TextColumn::make('currency')
+                    ->label('Currency')
+                    ->getStateUsing(fn (User $record): ?string =>
+                        self::getLeadCurrency($record)
+                    )
+                    ->placeholder('—'),
+
+                TextColumn::make('last_activity')
+                    ->label('Last Activity')
+                    ->getStateUsing(fn (User $record) =>
+                        $record->activityLogs()
+                            ->latest('created_at')
+                            ->value('created_at')
+                    )
+                    ->dateTime('M d, Y H:i')
+                    ->sortable(),
+
+                TextColumn::make('created_at')
+                    ->label('Registered')
+                    ->dateTime('M d, Y H:i')
+                    ->sortable(),
+            ])
+
+            ->filters([
+
+                SelectFilter::make('lead_stage')
+                    ->label('Stage')
+                    ->options([
+                        'registered' => 'Registered',
+                        'pathway_selected' => 'Pathway Selected',
+                        'package_selected' => 'Package Selected',
+                        'payment_page_viewed' => 'Payment Page Viewed',
+                        'payment_started' => 'Payment Started',
+                        'payment_failed' => 'Payment Failed',
+                        'paid' => 'Paid',
+                        'unpaid' => 'Unpaid',
+                    ])
+                    ->query(function (
+                        Builder $query,
+                        array $data
+                    ): Builder {
+
+                        $stage = $data['value'] ?? null;
+
+                        if (! $stage) {
+                            return $query;
+                        }
+
+                        return match ($stage) {
+
+                            'registered' => $query,
+
+                            'pathway_selected' => $query
+                                ->whereHas('activityLogs', function ($q) {
+                                    $q->where('event', 'ai_learning_path_selected');
+                                }),
+
+                            'package_selected' => $query
+                                ->whereHas('activityLogs', function ($q) {
+                                    $q->where('event', 'ai_package_selected');
+                                }),
+
+                            'payment_page_viewed' => $query
+                                ->whereHas('activityLogs', function ($q) {
+                                    $q->where('event', 'payment_page_viewed');
+                                }),
+
+                            'payment_started' => $query
+                            ->where(function (Builder $q) {
+                                $q->whereHas('payments', function ($paymentQuery) {
+                                    $paymentQuery->whereIn('status', [
+                                        'pending',
+                                        'processing',
+                                        'initiated',
+                                        'started',
+                                    ]);
+                                })
+                                ->orWhereHas('activityLogs', function ($activityQuery) {
+                                    $activityQuery->where('event', 'payment_started');
+                                });
+                            }),
+
+                            'payment_failed' => $query
+                                ->where(function (Builder $q) {
+
+                                    $q->whereHas('activityLogs', function ($activityQuery) {
+
+                                        $activityQuery->where(
+                                            'event',
+                                            'payment_failed'
+                                        );
+
+                                    })
+                                    ->orWhereHas('payments', function ($paymentQuery) {
+
+                                        $paymentQuery->whereIn('status', [
+                                            'failed',
+                                            'cancelled',
+                                        ]);
+
+                                    });
+
+                                }),
+
+                            'paid' => $query
+                                ->whereHas('payments', function ($q) {
+                                    $q->whereIn('status', [
+                                        'paid',
+                                        'completed',
+                                        'successful',
+                                        'success',
+                                    ]);
+                                }),
+
+                            'unpaid' => $query
+                                ->whereDoesntHave('payments', function ($q) {
+                                    $q->whereIn('status', [
+                                        'paid',
+                                        'completed',
+                                        'successful',
+                                        'success',
+                                    ]);
+                                }),
+
+                            default => $query,
+                        };
+                    }),
+            ])
+
+            ->actions([
+                Tables\Actions\ViewAction::make(),
+            ])
+
+            ->recordUrl(
+                fn (User $record): string =>
+                    LeadResource::getUrl('view', ['record' => $record])
+                )
+
+            ->bulkActions([])
+
+            ->defaultSort('created_at', 'desc');
+    }
+
+    /**
+     * Determine the current lead stage from
+     * authoritative payment records and tracked activity.
+     */
+    protected static function getLeadStage(User $record): string
+    {
+        $payment = $record->payments()
+            ->latest('created_at')
+            ->first();
+
+        if ($payment) {
+            $status = strtolower((string) $payment->status);
+
+            if (in_array($status, [
+                'paid',
+                'completed',
+                'successful',
+                'success',
+            ], true)) {
+                return 'Paid';
+            }
+
+            if ($status === 'failed') {
+                return 'Payment Failed';
+            }
+
+            if (in_array($status, [
+                'pending',
+                'processing',
+                'initiated',
+                'started',
+            ], true)) {
+                return 'Payment Started';
+            }
+        }
+
+        $events = $record->activityLogs()
+            ->latest('created_at')
+            ->pluck('event')
+            ->toArray();
+
+        if (in_array('payment_started', $events, true)) {
+            return 'Payment Started';
+        }
+
+        if (in_array('payment_page_viewed', $events, true)) {
+            return 'Payment Page Viewed';
+        }
+
+        if (in_array('ai_package_selected', $events, true)) {
+            return 'Package Selected';
+        }
+
+        if (in_array('ai_learning_path_selected', $events, true)) {
+            return 'Pathway Selected';
+        }
+
+        return 'Registered';
+    }
+
+    /**
+     * Get the package name from the most recent
+     * relevant tracked event.
+     */
+    protected static function getPackageName(User $record): ?string
+    {
+        $activity = $record->activityLogs()
+            ->whereIn('event', [
+                'ai_package_selected',
+                'payment_page_viewed',
+                'payment_started',
+                'payment_failed',
+                'payment_completed',
+            ])
+            ->latest('created_at')
+            ->first();
+
+        if (! $activity) {
+            return null;
+        }
+
+        $metadata = $activity->metadata;
+
+        if (is_string($metadata)) {
+            $metadata = json_decode($metadata, true);
+        }
+
+        return $metadata['package_name']
+            ?? $metadata['package']
+            ?? null;
+    }
+
+    /**
+     * Get the amount captured at the time of the lead interaction.
+     */
+    protected static function getLeadAmount(User $record): ?string
+    {
+        $payment = $record->payments()
+            ->latest('created_at')
+            ->first();
+
+        if ($payment && $payment->amount !== null) {
+            return number_format((float) $payment->amount, 2);
+        }
+
+        $activity = $record->activityLogs()
+            ->whereIn('event', [
+                'ai_package_selected',
+                'payment_page_viewed',
+                'payment_started',
+                'payment_failed',
+                'payment_completed',
+            ])
+            ->latest('created_at')
+            ->first();
+
+        if (! $activity) {
+            return null;
+        }
+
+        $metadata = $activity->metadata;
+
+        if (is_string($metadata)) {
+            $metadata = json_decode($metadata, true);
+        }
+
+        if (! isset($metadata['amount'])) {
+            return null;
+        }
+
+        return number_format((float) $metadata['amount'], 2);
+    }
+
+    /**
+     * Get currency from payment or tracked event.
+     */
+    protected static function getLeadCurrency(User $record): ?string
+    {
+        $payment = $record->payments()
+            ->latest('created_at')
+            ->first();
+
+        if ($payment && $payment->currency) {
+            return $payment->currency;
+        }
+
+        $activity = $record->activityLogs()
+            ->whereIn('event', [
+                'ai_package_selected',
+                'payment_page_viewed',
+                'payment_started',
+                'payment_failed',
+                'payment_completed',
+            ])
+            ->latest('created_at')
+            ->first();
+
+        if (! $activity) {
+            return null;
+        }
+
+        $metadata = $activity->metadata;
+
+        if (is_string($metadata)) {
+            $metadata = json_decode($metadata, true);
+        }
+
+        return $metadata['currency'] ?? null;
+    }
+
+    public static function getRelations(): array
+    {
+        return [];
+    }
+
+   public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListLeads::route('/'),
+            'view' => Pages\ViewLead::route('/{record}'),
+        ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getEloquentQuery()->count();
+    }
+}

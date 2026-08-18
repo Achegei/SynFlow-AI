@@ -585,10 +585,19 @@ class AIPaymentController extends Controller
         ]);
     }
 
+    if ($payment->status === 'cancelled') {
+    return response()->json([
+        'status' => 'cancelled',
+        'redirect' => null,
+        'reason' => 'Customer cancelled the M-Pesa payment prompt.',
+    ]);
+}
+
     if ($payment->status === 'failed') {
         return response()->json([
             'status' => 'failed',
             'redirect' => null,
+            'reason' => 'Payment failed.',
         ]);
     }
 
