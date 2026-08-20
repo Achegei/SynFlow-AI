@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use IntaSend\IntaSendPHP\Collection;
 use App\Services\IntaSendPaymentService;
+use App\Services\LeadTrackingService;
 
 class AIPaymentController extends Controller
 {
@@ -105,7 +106,8 @@ class AIPaymentController extends Controller
      */
     public function store(
         Request $request,
-        Package $package
+        Package $package,
+        LeadTrackingService $tracking
     ): RedirectResponse {
         $user = Auth::user();
 
@@ -449,6 +451,48 @@ class AIPaymentController extends Controller
             'currency' => $currency,
             'payload' => json_encode($response),
         ]);
+
+        /*
+            |--------------------------------------------------------------------------
+            | Record payment started
+            |--------------------------------------------------------------------------
+            |
+            | At this point:
+            |
+            | - IntaSend accepted the STK request
+            | - We received an invoice ID
+            | - Laravel created the local Payment record
+            |
+            | Therefore this is the correct point to record
+            | payment_started in the lead funnel.
+            |--------------------------------------------------------------------------
+            */
+
+            $tracking->track(
+                'payment_started',
+                [
+                    'stage' => 'payment',
+
+                    'payment_id' => $payment->id,
+
+                    'invoice_id' => $payment->payment_id,
+
+                    'course_id' => $payment->course_id,
+
+                    'package_id' => $payment->package_id,
+
+                    'amount' => $payment->amount,
+
+                    'currency' => $payment->currency,
+
+                    'provider' => $payment->provider,
+
+                    'api_ref' => $payment->api_ref,
+
+                    'timestamp' => now()->toISOString(),
+                ],
+                $request
+            );
 
         Log::info(
             '[AI STK] Payment attempt created',

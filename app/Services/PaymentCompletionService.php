@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Log;
 class PaymentCompletionService
 {
     public function __construct(
-        private CommissionService $commissionService
+    private CommissionService $commissionService,
+        private SmartEmailEventService $smartEmailEventService
     ) {
     }
 
@@ -81,6 +82,28 @@ class PaymentCompletionService
             $payment->paid_at = now();
 
             $payment->save();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Smart Email — Payment Completed
+            |--------------------------------------------------------------------------
+            */
+
+            $user = User::find($payment->user_id);
+
+            if ($user) {
+                $this->smartEmailEventService->handle(
+                    'payment_completed',
+                    $user,
+                    [
+                        'payment_id' => $payment->id,
+                        'invoice_id' => $payment->payment_id,
+                        'course_id' => $payment->course_id,
+                        'package_id' => $payment->package_id,
+                        'amount' => $payment->amount,
+                    ]
+                );
+            }
 
             Log::info(
                 '[Payment Completion] Payment marked PAID',

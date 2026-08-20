@@ -76,6 +76,11 @@ class User extends Authenticatable
             return $this->belongsTo(Institution::class);
         }
 
+        public function emailLogs()
+        {
+            return $this->hasMany(EmailLog::class);
+        }
+
 
         public function commissionTransactions()
         {

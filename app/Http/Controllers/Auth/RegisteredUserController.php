@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Institution;
+use App\Services\LeadTrackingService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,12 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+
+
+    public function __construct(
+    protected LeadTrackingService $tracking
+        ) {
+        }
     /**
      * Show registration page.
      */
@@ -223,6 +230,34 @@ class RegisteredUserController extends Controller
                         'user_id' => $user->id,
                     ]);
             }
+
+            /*
+|--------------------------------------------------------------------------
+| Record registration completed
+|--------------------------------------------------------------------------
+|
+| This is the point where an anonymous lead becomes
+| a known user in our funnel.
+|
+*/
+
+        $this->tracking->track(
+            'registration_completed',
+            [
+                'registration_type' => $selectedPackageId
+                    ? 'ai_package'
+                    : 'institution',
+
+                'user_id' => $user->id,
+
+                'package_id' => $selectedPackageId,
+
+                'ai_course_id' => $selectedAiCourseId,
+
+                'institution_id' => $institution?->id,
+            ],
+            $request
+        );
 
         /*
         |--------------------------------------------------------------------------
