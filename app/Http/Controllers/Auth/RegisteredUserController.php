@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Institution;
 use App\Services\LeadTrackingService;
+use App\Services\SmartEmailEventService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,9 +20,10 @@ class RegisteredUserController extends Controller
 
 
     public function __construct(
-    protected LeadTrackingService $tracking
-        ) {
-        }
+        protected LeadTrackingService $tracking,
+        protected SmartEmailEventService $emailEvents
+    ) {
+    }
     /**
      * Show registration page.
      */
@@ -257,6 +259,19 @@ class RegisteredUserController extends Controller
                 'institution_id' => $institution?->id,
             ],
             $request
+        );
+
+        $this->emailEvents->handle(
+            'registration_completed',
+            $user,
+            [
+                'registration_type' => $selectedPackageId
+                    ? 'ai_package'
+                    : 'institution',
+                'package_id' => $selectedPackageId,
+                'ai_course_id' => $selectedAiCourseId,
+                'institution_id' => $institution?->id,
+            ]
         );
 
         /*
