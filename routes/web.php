@@ -205,7 +205,7 @@ Route::controller(PageController::class)->group(function () {
     Route::post('/contact', 'contactSubmit')->name('contact.submit');
     Route::get('/terms', 'terms')->name('terms');
     Route::get('/privacy-policy', 'policy')->name('policy');
-    Route::get('/pricing', 'pricing')->name('pricing');
+    Route::get('/curriculum', 'pricing')->name('pricing');
     Route::get('/documentation', 'documentation')->name('documentation');
     Route::get('/introduction', 'introduction')->name('introduction');
     Route::get('/technology-stack', 'technology')->name('technology');

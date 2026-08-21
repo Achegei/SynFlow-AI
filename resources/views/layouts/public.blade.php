@@ -1,7 +1,7 @@
 {{-- ================================================================
      MOOSE LOON AI ACADEMY
      MAIN APPLICATION / PUBLIC LAYOUT
-     BRAND-REFINED VERSION
+     CLEAN CORPORATE VERSION
 ================================================================ --}}
 
 <!DOCTYPE html>
@@ -11,9 +11,24 @@
 
     <meta charset="utf-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
 
-    <title>@yield('title', 'MooseLoon AI')</title>
+    <title>
+        @yield('title', 'MooseLoon AI Academy')
+    </title>
+
+
+    {{-- ============================================================
+         META
+    ============================================================= --}}
+
+    <meta
+        name="description"
+        content="@yield('description', 'Moose Loon AI Academy — practical artificial intelligence, automation and digital technology training.')"
+    >
 
 
     {{-- ============================================================
@@ -25,183 +40,200 @@
     <link
         href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800"
         rel="stylesheet"
-    />
+    >
 
 
     {{-- ============================================================
          APPLICATION ASSETS
     ============================================================= --}}
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 
 
     {{-- ============================================================
-         MOOSE LOON BRAND / SOCIAL PROOF ANIMATIONS
+         GLOBAL STYLES
     ============================================================= --}}
 
     <style>
 
-        /* ==========================================================
-           BRAND COLORS
+        :root {
 
-           Navy  : #0B1F3A
-           Blue  : #1E73BE
-           Red   : #E31837
-        ========================================================== */
+            --ml-navy: #0B1F3A;
 
+            --ml-blue: #1E73BE;
 
-        @keyframes slideIn {
+            --ml-red: #E31837;
 
-            0% {
-                opacity: 0;
-                transform: translateY(16px) scale(0.96);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            --ml-soft: #F7FAFC;
 
         }
 
 
-        @keyframes fadeOut {
+        html {
 
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(10px) scale(0.96);
-            }
+            scroll-behavior: smooth;
 
         }
 
 
-        .animate-slide-in {
-            animation: slideIn 0.4s ease-out;
+        body {
+
+            overflow-x: hidden;
+
         }
 
 
-        .animate-fade-out {
-            animation: fadeOut 0.35s ease-in forwards;
+        [x-cloak] {
+
+            display: none !important;
+
         }
 
 
         /* ==========================================================
-           SOCIAL PROOF CONTAINER
-           FIXED BOTTOM
+           MOBILE MENU
         ========================================================== */
 
-        .social-proof-container {
+        .mobile-menu {
+
+            border-top:
+                1px solid
+                #e2e8f0;
+
+        }
+
+
+        /* ==========================================================
+           HEADER
+        ========================================================== */
+
+        .site-header {
+
+            box-shadow:
+                0 4px 20px
+                rgba(11, 31, 58, 0.05);
+
+        }
+
+
+        /* ==========================================================
+           NAVIGATION
+        ========================================================== */
+
+        .nav-link {
+
+            position: relative;
+
+        }
+
+
+        .nav-link::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: -8px;
+
+            height: 2px;
+
+            background:
+                var(--ml-red);
+
+            transform:
+                scaleX(0);
+
+            transform-origin:
+                center;
+
+            transition:
+                transform
+                200ms
+                ease;
+
+        }
+
+
+        .nav-link:hover::after {
+
+            transform:
+                scaleX(1);
+
+        }
+
+
+        /* ==========================================================
+           ACCESSIBILITY
+        ========================================================== */
+
+        :focus-visible {
+
+            outline:
+                3px solid
+                rgba(30, 115, 190, 0.35);
+
+            outline-offset: 3px;
+
+        }
+
+
+        /* ==========================================================
+           VOICE MODAL
+        ========================================================== */
+
+        #voice-call-modal {
 
             position: fixed;
 
-            bottom: 16px;
+            inset: 0;
 
-            left: 16px;
+            z-index: 99998;
 
-            z-index: 99999;
+            display: flex;
 
-            pointer-events: none;
+            align-items: center;
 
-        }
+            justify-content: center;
 
-
-        /* ==========================================================
-           SOCIAL PROOF TOAST
-        ========================================================== */
-
-        .social-toast {
+            padding: 20px;
 
             background:
-                linear-gradient(
-                    135deg,
-                    #22c55e,
-                    #16a34a
-                );
+                rgba(11, 31, 58, 0.60);
 
-            color: #ffffff;
-
-            box-shadow:
-                0 12px 28px rgba(34, 197, 94, 0.45),
-                0 0 18px rgba(34, 197, 94, 0.55);
-
-            border-radius: 14px;
-
-            padding: 12px 14px;
-
-            max-width: 320px;
-
-            font-size: 13px;
-
-            line-height: 1.35;
+            backdrop-filter:
+                blur(8px);
 
         }
 
 
-        /* ==========================================================
-           SOCIAL PROOF TITLE
-        ========================================================== */
+        #voice-call-modal.hidden {
 
-        .social-toast-title {
-
-            font-size: 14px;
-
-            font-weight: 600;
-
-        }
-
-
-        /* ==========================================================
-           SOCIAL PROOF META
-        ========================================================== */
-
-        .social-toast-meta {
-
-            font-size: 11px;
-
-            opacity: 0.8;
-
-        }
-
-
-        /* ==========================================================
-           MOBILE
-        ========================================================== */
-
-        @media (max-width: 640px) {
-
-            .social-proof-container {
-
-                left: 50%;
-
-                transform: translateX(-50%);
-
-                bottom: 12px;
-
-            }
-
-
-            .social-toast {
-
-                max-width: calc(100vw - 24px);
-
-            }
+            display: none;
 
         }
 
     </style>
 
+
+    @stack('styles')
+
 </head>
 
 
 <body
-    class="font-sans antialiased
-           text-[#0B1F3A]
-           bg-[#F7FAFC]"
+    class="
+        font-sans
+        antialiased
+        text-[#0B1F3A]
+        bg-[#F7FAFC]
+    "
 >
 
 
@@ -213,644 +245,551 @@
     ============================================================= --}}
 
     <header
-        class="sticky top-0 z-50
-               bg-white/95
-               backdrop-blur-md
-               border-b border-slate-200/80
-               shadow-[0_4px_20px_rgba(11,31,58,0.05)]"
+        class="
+            site-header
+            sticky
+            top-0
+            z-50
+            bg-white
+            border-b
+            border-slate-200
+        "
     >
 
-        <div class="relative">
+        <nav
+            x-data="{ open: false }"
+            class="relative bg-white"
+        >
 
-
-            {{-- ====================================================
-                 NAVIGATION
-            ===================================================== --}}
-
-            <nav
-                x-data="{ open: false }"
-                class="bg-white"
+            <div
+                class="
+                    max-w-7xl
+                    mx-auto
+                    px-4
+                    sm:px-6
+                    lg:px-8
+                "
             >
 
                 <div
-                    class="max-w-7xl
-                           mx-auto
-                           px-4
-                           sm:px-6
-                           lg:px-8"
+                    class="
+                        flex
+                        items-center
+                        justify-between
+                        min-h-[78px]
+                    "
                 >
 
-                    <div
-                        class="flex
-                               justify-between
-                               items-center
-                               min-h-[80px]"
-                    >
+
+                    {{-- ==================================================
+                         BRAND
+                    =================================================== --}}
+
+                    <div class="flex items-center min-w-0">
+
+                        <a
+                            href="{{ route('home') }}"
+                            class="
+                                flex
+                                items-center
+                                flex-shrink-0
+                                group
+                            "
+                        >
+
+                            <div>
+
+                                <div
+                                    class="
+                                        text-base
+                                        sm:text-lg
+                                        font-extrabold
+                                        tracking-tight
+                                        text-[#0B1F3A]
+                                        group-hover:text-[#1E73BE]
+                                        transition-colors
+                                        duration-200
+                                    "
+                                >
+                                    Moose Loon AI
+                                </div>
 
 
-                        {{-- ==================================================
-                             LEFT SIDE
-                             LOGO + NAVIGATION
-                        =================================================== --}}
-
-                        <div class="flex items-center min-w-0">
-
-
-                            {{-- ==================================================
-                                 LOGO AREA
-
-                                 Existing logo markup should remain in the
-                                 surrounding layout if present.
-                            =================================================== --}}
-
-                            <div class="flex items-center flex-shrink-0">
-
-                                {{-- Existing logo/content remains here --}}
+                                <div
+                                    class="
+                                        text-[9px]
+                                        sm:text-[10px]
+                                        uppercase
+                                        tracking-[0.18em]
+                                        font-bold
+                                        text-slate-400
+                                        mt-1
+                                    "
+                                >
+                                    Academy
+                                </div>
 
                             </div>
 
-
-                            {{-- ==================================================
-                                 DESKTOP NAVIGATION
-                            =================================================== --}}
-
-                            <div
-                                class="hidden
-                                       md:flex
-                                       items-center
-                                       space-x-8
-                                       ml-10"
-                            >
-
-                                <a
-                                    href="{{ route('home') }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Home
-                                </a>
-
-
-                                <!--<a href="{{ route('about') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Our Team</a>-->
-
-
-                                <a
-                                    href="{{ route('services') }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Services
-                                </a>
-
-
-                                <a
-                                    href="{{ route('pricing') }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Curriculum
-                                </a>
-
-                                <a
-                                    href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Enroll Now
-                                </a>
-
-
-
-                                <a
-                                    href="{{ route('certificate.verify') }}"
-                                    class="inline-flex
-                                           items-center
-                                           gap-2
-                                           text-sm
-                                           font-bold
-                                           text-[#E31837]
-                                           hover:text-[#C4122D]
-                                           transition-colors
-                                           duration-200"
-                                >
-
-                                    <span
-                                        class="w-1.5 h-1.5
-                                               rounded-full
-                                               bg-[#E31837]"
-                                    ></span>
-
-                                    Verify Certificate
-
-                                </a>
-
-
-                                <!-- <a href="{{ route('careers') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Careers</a> -->
-
-
-                                <a
-                                    href="{{ route('partners.page') }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Partners
-                                </a>
-
-
-                                <!--<a href="{{ route('documentation') }}" class="text-indigo-700 hover:text-gray-700 transition-colors">Documentation</a>. -->
-
-
-                                <a
-                                    href="{{ route('contact') }}"
-                                    class="relative
-                                           text-sm
-                                           font-semibold
-                                           text-[#0B1F3A]
-                                           hover:text-[#1E73BE]
-                                           transition-colors
-                                           duration-200
-                                           py-2
-                                           after:absolute
-                                           after:left-0
-                                           after:right-0
-                                           after:-bottom-1
-                                           after:h-0.5
-                                           after:scale-x-0
-                                           hover:after:scale-x-100
-                                           after:bg-[#E31837]
-                                           after:transition-transform
-                                           after:duration-200"
-                                >
-                                    Contact
-                                </a>
-
-                            </div>
-
-                        </div>
+                        </a>
 
 
                         {{-- ==================================================
-                             RIGHT SIDE
-                             WHATSAPP + VOICE
+                             DESKTOP NAVIGATION
                         =================================================== --}}
 
                         <div
-                            class="hidden
-                                   md:flex
-                                   items-center
-                                   gap-5"
+                            class="
+                                hidden
+                                lg:flex
+                                items-center
+                                gap-7
+                                ml-10
+                            "
                         >
 
-                            WhatsApp
-
                             <a
-                                href="https://wa.me/254119066667"
-                                target="_blank"
-                                class="flex
-                                       items-center
-                                       justify-center
-                                       w-10
-                                       h-10
-                                       rounded-full
-                                       bg-[#E9F9EF]
-                                       text-green-600
-                                       hover:bg-green-100
-                                       hover:text-green-700
-                                       transition-all
-                                       duration-200
-                                       shadow-sm"
+                                href="{{ route('home') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
                             >
-
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                    class="w-5 h-5 fill-current"
-                                >
-
-                                    <path d="M256.064 0C114.844 0 0 114.836 0 256.064c0 45.16 11.656 89.3 33.792 128.248L0 512l132.78-34.732c37.42 20.46 79.62 31.248 123.284 31.248h.004C397.288 508.516 512 393.772 512 256.064 512 114.836 397.284 0 256.064 0zm149.956 362.676c-6.16 17.344-30.62 31.74-50.16 35.88-13.36 2.828-30.78 5.08-89.524-19.18-75.172-31.16-123.612-107.62-127.276-112.62-3.664-5-30.38-40.5-30.38-77.32s18.74-54.84 26.34-62.52c6.16-6.308 16.34-9.08 26.34-9.08 3.184 0 6.04.156 8.62.296 7.56.32 11.34.78 16.28 12.66 6.16 14.82 21.04 51.42 22.84 55.16 1.8 3.74 3.6 8.86 1.08 13.86-2.52 5-4.74 7.22-8.72 11.54-3.98 4.32-7.7 7.66-11.62 12.32-3.62 4.3-7.7 8.92-3.3 16.96 4.4 7.98 19.58 32.2 42 52.1 28.94 25.52 52.84 33.42 61.26 36.94 8.42 3.52 13.3 2.94 18.28-1.78 5.72-5.32 13.1-15.5 20.58-25.02 5.24-6.82 11.86-7.66 18.88-5.26 7.98 2.78 50.32 23.72 58.94 28.06 8.62 4.32 14.36 6.46 16.48 10.14 2.14 3.66 2.14 20.78-4.02 38.12z"/>
-
-                                </svg>
-
+                                Home
                             </a>
 
 
-                            {{-- ==================================================
-                                 VOICE CALL BUTTON
-                            =================================================== --}}
-
-                            <button
-                                id="voice-call-btn"
-                                class="flex
-                                       items-center
-                                       gap-2
-                                       px-5
-                                       py-2.5
-                                       bg-[#0B1F3A]
-                                       hover:bg-[#12345C]
-                                       text-white
-                                       rounded-full
-                                       font-semibold
-                                       text-sm
-                                       shadow-md
-                                       hover:shadow-lg
-                                       transition-all
-                                       duration-200
-                                       border
-                                       border-[#1E73BE]/30"
+                            <a
+                                href="{{ route('services') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
                             >
-
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 10l4.553-2.276a1 1 0 011.447.894v5.764a1 1 0 01-1.447.894L15 14M15 10v4m0-4L9 8v8l6-2v-4z"
-                                    />
-
-                                </svg>
-
-                                Talk
-
-                            </button>
-
-                        </div>
+                                Services
+                            </a>
 
 
-                        {{-- ==================================================
-                             MOBILE HAMBURGER MENU
-                        =================================================== --}}
-
-                        <div class="-me-2 flex items-center md:hidden">
-
-                            <button
-                                @click="open = !open"
-                                class="inline-flex
-                                       items-center
-                                       justify-center
-                                       p-2.5
-                                       rounded-xl
-                                       text-[#0B1F3A]
-                                       hover:text-[#1E73BE]
-                                       hover:bg-[#F4FAFE]
-                                       focus:outline-none
-                                       transition
-                                       duration-200"
+                            <a
+                                href="{{ route('pricing') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
                             >
+                                Curriculum
+                            </a>
 
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
 
-                                    <path
-                                        :class="{'hidden': open, 'inline-flex': !open}"
-                                        class="inline-flex"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
+                            <a
+                                href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                                class="
+                                    inline-flex
+                                    items-center
+                                    px-4
+                                    py-2
+                                    rounded-full
+                                    text-sm
+                                    font-bold
+                                    text-white
+                                    bg-[#1E73BE]
+                                    hover:bg-[#175D9A]
+                                    shadow-sm
+                                    hover:shadow-md
+                                    transition-all
+                                    duration-200
+                                "
+                            >
+                                Enroll Now
+                            </a>
 
-                                    <path
-                                        :class="{'hidden': !open, 'inline-flex': open}"
-                                        class="hidden"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
 
-                                </svg>
+                            <a
+                                href="{{ route('certificate.verify') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-bold
+                                    text-[#E31837]
+                                    hover:text-[#C4122D]
+                                    transition-colors
+                                    duration-200
+                                "
+                            >
+                                Verify Certificate
+                            </a>
 
-                            </button>
+
+                            <a
+                                href="{{ route('partners.page') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
+                            >
+                                Partners
+                            </a>
+
+
+                            <a
+                                href="{{ route('contact') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
+                            >
+                                Contact
+                            </a>
 
                         </div>
 
                     </div>
 
-                </div>
-
-
-                {{-- ====================================================
-                     MOBILE MENU
-                ===================================================== --}}
-
-                <div
-                    x-show="open"
-                    @click.away="open = false"
-                    class="absolute
-                           top-full
-                           left-0
-                           w-full
-                           bg-white
-                           border-t
-                           border-slate-100
-                           shadow-xl
-                           flex
-                           flex-col
-                           space-y-1
-                           py-4
-                           px-4
-                           z-40"
-                >
-
-                    <a
-                        href="{{ route('home') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Home
-                    </a>
-
-
-                    <!--<a href="{{ route('about') }}" class="text-gray-700 hover:text-indigo-600">Our Team</a>-->
-
-
-                    <a
-                        href="{{ route('services') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Services
-                    </a>
-
-
-                    <a
-                        href="{{ route('certificate.verify') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#E31837]
-                               font-bold
-                               hover:bg-red-50
-                               transition"
-                    >
-                        Verify Certificate
-                    </a>
-
-
-                    <a
-                        href="{{ route('pricing') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Curriculum
-                    </a>
-
-                    <a
-                        href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Enroll Now
-                    </a>
-
-
-                    <!-- <a href="{{ route('careers') }}" class="text-gray-700 hover:text-indigo-600">Careers</a> -->
-
-
-                    <a
-                        href="{{ route('partners.page') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Partners
-                    </a>
-
-
-                    <a
-                        href="{{ route('contact') }}"
-                        class="px-4 py-3
-                               rounded-xl
-                               text-[#0B1F3A]
-                               font-semibold
-                               hover:bg-[#F4FAFE]
-                               hover:text-[#1E73BE]
-                               transition"
-                    >
-                        Contact
-                    </a>
-
 
                     {{-- ==================================================
-                         OPTIONAL CONTACT INFO
+                         LOGIN
                     =================================================== --}}
 
                     <div
-                        class="flex
-                               flex-col
-                               space-y-2
-                               mt-3
-                               pt-4
-                               border-t
-                               border-slate-100"
+                        class="
+                            hidden
+                            md:flex
+                            items-center
+                        "
                     >
 
                         <a
-                            href="https://wa.me/254119066667"
-                            target="_blank"
-                            class="flex
-                                   items-center
-                                   gap-2
-                                   px-4
-                                   py-3
-                                   rounded-xl
-                                   text-green-600
-                                   font-semibold
-                                   hover:bg-green-50
-                                   transition"
+                            href="{{ route('login') }}"
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                px-6
+                                py-2.5
+                                rounded-full
+                                bg-[#0B1F3A]
+                                text-white
+                                text-sm
+                                font-bold
+                                shadow-md
+                                hover:bg-[#12345C]
+                                hover:shadow-lg
+                                transition-all
+                                duration-200
+                            "
                         >
-
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 512 512"
-                                class="w-5 h-5 fill-current"
-                            >
-
-                                <path d="M256.064 0C114.844 0 0 114.836 0 256.064c0 45.16 11.656 89.3 33.792 128.248L0 512l132.78-34.732c37.42 20.46 79.62 31.248 123.284 31.248h.004C397.288 508.516 512 393.772 512 256.064 512 114.836 397.284 0 256.064 0zm149.956 362.676c-6.16 17.344-30.62 31.74-50.16 35.88-13.36 2.828-30.78 5.08-89.524-19.18-75.172-31.16-123.612-107.62-127.276-112.62-3.664-5-30.38-40.5-30.38-77.32s18.74-54.84 26.34-62.52c6.16-6.308 16.34-9.08 26.34-9.08 3.184 0 6.04.156 8.62.296 7.56.32 11.34.78 16.28 12.66 6.16 14.82 21.04 51.42 22.84 55.16 1.8 3.74 3.6 8.86 1.08 13.86-2.52 5-4.74 7.22-8.72 11.54-3.98 4.32-7.7 7.66-11.62 12.32-3.62 4.3-7.7 8.92-3.3 16.96 4.4 7.98 19.58 32.2 42 52.1 28.94 25.52 52.84 33.42 61.26 36.94 8.42 3.52 13.3 2.94 18.28-1.78 5.72-5.32 13.1-15.5 20.58-25.02 5.24-6.82 11.86-7.66 18.88-5.26 7.98 2.78 50.32 23.72 58.94 28.06 8.62 4.32 14.36 6.46 16.48 10.14 2.14 3.66 2.14 20.78-4.02 38.12z"/>
-
-                            </svg>
-
-                            WhatsApp
-
+                            Login
                         </a>
 
                     </div>
 
 
                     {{-- ==================================================
-                         MOBILE VOICE CALL
+                         MOBILE MENU BUTTON
                     =================================================== --}}
 
-                    <button
-                        id="voice-call-btn-mobile"
-                        class="flex
-                               items-center
-                               mt-2
-                               px-4
-                               py-3
-                               bg-[#0B1F3A]
-                               hover:bg-[#12345C]
-                               text-white
-                               rounded-xl
-                               w-full
-                               justify-center
-                               font-bold
-                               shadow-md
-                               transition-all
-                               duration-200"
+                    <div
+                        class="
+                            flex
+                            lg:hidden
+                            items-center
+                        "
                     >
 
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                        <button
+                            @click="open = !open"
+                            type="button"
+                            aria-label="Toggle navigation menu"
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                w-11
+                                h-11
+                                rounded-xl
+                                text-[#0B1F3A]
+                                hover:text-[#1E73BE]
+                                hover:bg-[#F4FAFE]
+                                transition-all
+                                duration-200
+                            "
                         >
 
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 10l4.553-2.276a1 1 0 011.447.894v5.764a1 1 0 01-1.447.894L15 14M15 10v4m0-4L9 8v8l6-2v-4z"
-                            />
+                            <span
+                                x-show="!open"
+                                class="
+                                    text-xl
+                                    leading-none
+                                    font-semibold
+                                "
+                            >
+                                ☰
+                            </span>
 
-                        </svg>
 
-                        Talk
+                            <span
+                                x-show="open"
+                                x-cloak
+                                class="
+                                    text-xl
+                                    leading-none
+                                    font-semibold
+                                "
+                            >
+                                ×
+                            </span>
 
-                    </button>
+                        </button>
+
+                    </div>
 
                 </div>
 
+            </div>
 
-                {{-- ====================================================
-                     DARK MODE TOGGLE
-                ===================================================== --}}
 
-                <!--<div class="hidden md:flex items-center space-x-4">
-                    <button id="dark-mode-toggle" class="w-full text-left py-2 px-3 rounded-lg text-gray-700 hover:bg-gray-200">
-                        Dark Mode
-                    </button>
-                </div> -->
+            {{-- ========================================================
+                 MOBILE NAVIGATION
+            ========================================================= --}}
 
-            </nav>
+            <div
+                x-show="open"
+                x-cloak
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                @click.away="open = false"
+                class="
+                    mobile-menu
+                    absolute
+                    top-full
+                    left-0
+                    right-0
+                    bg-white
+                    shadow-xl
+                    lg:hidden
+                "
+            >
 
-        </div>
+                <div
+                    class="
+                        max-w-7xl
+                        mx-auto
+                        px-4
+                        py-5
+                    "
+                >
+
+                    <div class="space-y-1">
+
+
+                        <a
+                            href="{{ route('home') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Home
+                        </a>
+
+
+                        <a
+                            href="{{ route('services') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Services
+                        </a>
+
+
+                        <a
+                            href="{{ route('pricing') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Curriculum
+                        </a>
+
+
+                        <a
+                            href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                justify-center
+                                px-4
+                                py-3
+                                mt-2
+                                rounded-xl
+                                bg-[#1E73BE]
+                                text-white
+                                font-bold
+                                shadow-sm
+                                hover:bg-[#175D9A]
+                                transition
+                            "
+                        >
+                            Start Learning
+                        </a>
+
+
+                        <a
+                            href="{{ route('certificate.verify') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#E31837]
+                                font-bold
+                                hover:bg-red-50
+                                transition
+                            "
+                        >
+                            Verify Certificate
+                        </a>
+
+
+                        <a
+                            href="{{ route('partners.page') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Partners
+                        </a>
+
+
+                        <a
+                            href="{{ route('contact') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Contact
+                        </a>
+
+                    </div>
+
+
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+
+                        <a
+                            href="{{ route('login') }}"
+                            @click="open = false"
+                            class="
+                                block
+                                w-full
+                                px-4
+                                py-3
+                                rounded-xl
+                                bg-[#0B1F3A]
+                                text-white
+                                font-bold
+                                text-center
+                                hover:bg-[#12345C]
+                                transition
+                            "
+                        >
+                            Login
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
 
     </header>
 
@@ -871,59 +810,63 @@
     ============================================================= --}}
 
     <footer
-        class="mt-16
-               bg-[#0B1F3A]
-               text-slate-300
-               py-12
-               sm:py-16
-               border-t
-               border-[#1E73BE]/20"
+        class="
+            mt-16
+            bg-[#0B1F3A]
+            text-slate-300
+            border-t
+            border-[#1E73BE]/20
+        "
     >
 
         <div
-            class="container
-                   mx-auto
-                   px-4
-                   sm:px-6
-                   lg:px-8"
+            class="
+                max-w-7xl
+                mx-auto
+                px-4
+                sm:px-6
+                lg:px-8
+                py-12
+                sm:py-16
+            "
         >
 
 
             {{-- ====================================================
-                 FOOTER BRAND ACCENT
+                 FOOTER BRAND
             ===================================================== --}}
 
             <div
-                class="flex
-                       items-center
-                       justify-center
-                       gap-2
-                       mb-10"
+                class="
+                    text-center
+                    mb-12
+                "
             >
 
-                <span
-                    class="w-10
-                           h-1
-                           rounded-full
-                           bg-[#1E73BE]"
-                ></span>
-
-                <span
-                    class="w-3
-                           h-1
-                           rounded-full
-                           bg-[#E31837]"
-                ></span>
-
-                <span
-                    class="text-xs
-                           font-bold
-                           uppercase
-                           tracking-[0.2em]
-                           text-blue-200"
+                <div
+                    class="
+                        text-lg
+                        font-extrabold
+                        tracking-tight
+                        text-white
+                    "
                 >
                     Moose Loon AI
-                </span>
+                </div>
+
+
+                <div
+                    class="
+                        mt-2
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-[0.18em]
+                        text-blue-200
+                    "
+                >
+                    Academy
+                </div>
 
             </div>
 
@@ -933,93 +876,95 @@
             ===================================================== --}}
 
             <div
-                class="grid
-                       grid-cols-1
-                       md:grid-cols-4
-                       gap-10
-                       lg:gap-12"
+                class="
+                    grid
+                    grid-cols-1
+                    sm:grid-cols-2
+                    lg:grid-cols-4
+                    gap-10
+                    lg:gap-12
+                "
             >
 
 
                 {{-- ==================================================
-                     COMPANY INFO
+                     NORTH AMERICA
                 =================================================== --}}
 
                 <div>
 
-                    <h5
-                        class="text-xs
-                               font-bold
-                               uppercase
-                               tracking-[0.15em]
-                               text-blue-300
-                               mb-2"
+                    <div
+                        class="
+                            text-xs
+                            font-bold
+                            uppercase
+                            tracking-[0.15em]
+                            text-blue-300
+                            mb-3
+                        "
                     >
                         North America
-                    </h5>
+                    </div>
 
 
                     <h3
-                        class="text-sm
-                               leading-relaxed
-                               mt-3
-                               font-semibold
-                               text-white"
+                        class="
+                            text-sm
+                            leading-relaxed
+                            font-bold
+                            text-white
+                        "
                     >
-                        Moose Loon AI Business Solutions – Canada Office (Canada HQ)
+                        Moose Loon AI Business Solutions
                     </h3>
 
 
                     <p
-                        class="text-sm
-                               font-semibold
-                               mb-2
-                               mt-4
-                               text-white"
+                        class="
+                            text-sm
+                            font-semibold
+                            text-white
+                            mt-4
+                            mb-3
+                        "
                     >
-                        🇨🇦 Edmonton Headquarters
+                        Canada Office
                     </p>
 
 
-                    <ul class="text-sm space-y-2">
-
-                        <li class="flex items-start space-x-2">
-
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5
-                                       text-blue-300
-                                       flex-shrink-0
-                                       mt-0.5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                />
-
-                            </svg>
+                    <p
+                        class="
+                            text-sm
+                            leading-relaxed
+                            text-slate-400
+                        "
+                    >
+                        Executive, Technology & North American Division
+                        serving Canada and the United States.
+                    </p>
 
 
-                            <span class="leading-relaxed">
+                    <p
+                        class="
+                            text-sm
+                            leading-relaxed
+                            text-slate-400
+                            mt-3
+                        "
+                    >
+                        Moose Loon AI Solutions – Canada HQ, Edmonton
+                    </p>
 
-                                Executive, Technology & North American Division Serving Canada & the United States
 
-                                📍 Moose Loon AI Solutions – Canada HQ, Edmonton
-                                <br>
-
-                                Website: www.mooseloonai.ca
-
-                            </span>
-
-                        </li>
-
-                    </ul>
+                    <p
+                        class="
+                            text-sm
+                            text-blue-200
+                            mt-3
+                        "
+                    >
+                        www.mooseloonai.ca
+                    </p>
 
                 </div>
 
@@ -1031,12 +976,14 @@
                 <div>
 
                     <h4
-                        class="text-sm
-                               font-bold
-                               uppercase
-                               tracking-[0.12em]
-                               text-white
-                               mb-5"
+                        class="
+                            text-sm
+                            font-bold
+                            uppercase
+                            tracking-[0.12em]
+                            text-white
+                            mb-5
+                        "
                     >
                         Quick Links
                     </h4>
@@ -1044,94 +991,152 @@
 
                     <ul class="space-y-3">
 
+
                         <li>
+
                             <a
                                 href="{{ route('home') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Home
                             </a>
+
                         </li>
 
 
-                        <!--<li><a href="{{ route('about') }}" class="hover:text-white transition-colors">Our Team</a></li>-->
-
-
                         <li>
+
                             <a
                                 href="{{ route('services') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Services
                             </a>
+
                         </li>
 
 
                         <li>
+
                             <a
                                 href="{{ route('pricing') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Curriculum
                             </a>
+
                         </li>
 
+
                         <li>
+
                             <a
-                                href="{{ route('pricing') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                                class="
+                                    inline-block
+                                    text-blue-300
+                                    font-semibold
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
-                                Curriculum
+                                Start Learning
                             </a>
+
                         </li>
-
-                        
-
-
-                        <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers</a></li> -->
 
 
                         <li>
+
+                            <a
+                                href="{{ route('certificate.verify') }}"
+                                class="
+                                    inline-block
+                                    text-red-300
+                                    font-semibold
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
+                            >
+                                Verify Certificate
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{{ route('partners.page') }}"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
+                            >
+                                Partner with Us
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
                             <a
                                 href="{{ route('contact') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Contact
                             </a>
+
                         </li>
 
 
                         <li>
+
                             <a
                                 href="{{ route('faqs') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
-                                FAQ's
+                                FAQs
                             </a>
+
                         </li>
 
                     </ul>
@@ -1146,12 +1151,14 @@
                 <div>
 
                     <h4
-                        class="text-sm
-                               font-bold
-                               uppercase
-                               tracking-[0.12em]
-                               text-white
-                               mb-5"
+                        class="
+                            text-sm
+                            font-bold
+                            uppercase
+                            tracking-[0.12em]
+                            text-white
+                            mb-5
+                        "
                     >
                         Legal
                     </h4>
@@ -1159,62 +1166,78 @@
 
                     <ul class="space-y-3">
 
+
                         <li>
+
                             <a
                                 href="{{ route('terms') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Terms of Service
                             </a>
+
                         </li>
 
 
                         <li>
+
                             <a
                                 href="{{ route('policy') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
                                 Privacy Policy
                             </a>
+
                         </li>
 
 
                         <li>
+
                             <a
                                 href="{{ route('contactus') }}"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
-                                Get in Touch&#8599;
+                                Get in Touch
                             </a>
+
                         </li>
 
 
-                        <!-- <li><a href="{{ route('careers') }}" class="hover:text-white transition-colors">Careers&#8599;</a></li> -->
-
-
                         <li>
+
                             <a
                                 href="https://www.youtube.com/@MooseLoonAI"
-                                class="hover:text-white
-                                       hover:translate-x-1
-                                       inline-block
-                                       transition-all
-                                       duration-200"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="
+                                    inline-block
+                                    hover:text-white
+                                    hover:translate-x-1
+                                    transition-all
+                                    duration-200
+                                "
                             >
-                                Watch our Content&#8599;
+                                Watch our Content
                             </a>
+
                         </li>
 
                     </ul>
@@ -1223,43 +1246,84 @@
 
 
                 {{-- ==================================================
-                     KENYA OFFICE
+                     EAST AFRICA
                 =================================================== --}}
 
                 <div>
 
-                    <h5
-                        class="text-xs
-                               font-bold
-                               uppercase
-                               tracking-[0.15em]
-                               text-blue-300
-                               mb-2"
+                    <div
+                        class="
+                            text-xs
+                            font-bold
+                            uppercase
+                            tracking-[0.15em]
+                            text-blue-300
+                            mb-3
+                        "
                     >
                         East Africa
-                    </h5>
+                    </div>
 
 
                     <h3
-                        class="text-sm
-                               leading-relaxed
-                               mt-3
-                               font-semibold
-                               text-white"
+                        class="
+                            text-sm
+                            leading-relaxed
+                            font-bold
+                            text-white
+                        "
                     >
-                        🇰🇪 Moose Loon AI Solutions – Nairobi Office (Kenya HQ)
+                        Moose Loon AI Solutions
                     </h3>
 
 
                     <p
-                        class="text-sm
-                               mt-2
-                               leading-relaxed
-                               text-slate-400"
+                        class="
+                            text-sm
+                            font-semibold
+                            text-white
+                            mt-3
+                        "
                     >
-                        Kipro Centre – WestLands, Nairobi, Kenya
-                        <br>
+                        Nairobi Office
                     </p>
+
+
+                    <p
+                        class="
+                            text-sm
+                            leading-relaxed
+                            text-slate-400
+                            mt-3
+                        "
+                    >
+                        Kipro Centre – Westlands,
+                        Nairobi, Kenya
+                    </p>
+
+
+                    <a
+                        href="{{ route('contact') }}"
+                        class="
+                            inline-flex
+                            items-center
+                            mt-5
+                            px-4
+                            py-2
+                            rounded-full
+                            border
+                            border-[#1E73BE]/50
+                            text-blue-200
+                            text-sm
+                            font-semibold
+                            hover:bg-[#1E73BE]
+                            hover:text-white
+                            transition-all
+                            duration-200
+                        "
+                    >
+                        Contact Our Team
+                    </a>
 
                 </div>
 
@@ -1267,33 +1331,56 @@
 
 
             {{-- ====================================================
-                 DIVIDER
+                 FOOTER DIVIDER
             ===================================================== --}}
 
             <div
-                class="border-t
-                       border-white/10
-                       mt-12"
-            ></div>
-
-
-            {{-- ====================================================
-                 COPYRIGHT
-            ===================================================== --}}
-
-            <div
-                class="mt-7
-                       text-center
-                       w-full"
+                class="
+                    border-t
+                    border-white/10
+                    mt-12
+                    pt-7
+                "
             >
 
-                <p
-                    class="text-xs
-                           sm:text-sm
-                           text-slate-400"
+                <div
+                    class="
+                        flex
+                        flex-col
+                        sm:flex-row
+                        items-center
+                        justify-between
+                        gap-4
+                    "
                 >
-                    &copy; {{ date('Y') }} MooseLoon AI. All Rights Reserved.
-                </p>
+
+                    <p
+                        class="
+                            text-xs
+                            sm:text-sm
+                            text-slate-400
+                            text-center
+                            sm:text-left
+                        "
+                    >
+                        &copy; {{ date('Y') }}
+                        MooseLoon AI.
+                        All Rights Reserved.
+                    </p>
+
+
+                    <p
+                        class="
+                            text-xs
+                            text-slate-500
+                            text-center
+                            sm:text-right
+                        "
+                    >
+                        Artificial Intelligence · Automation · Digital Skills
+                    </p>
+
+                </div>
 
             </div>
 
@@ -1315,46 +1402,101 @@
 >
 
     <div
-        class="bg-white
-               rounded-2xl
-               shadow-2xl
-               border
-               border-slate-200
-               p-6"
+        class="
+            w-full
+            max-w-md
+            bg-white
+            rounded-3xl
+            shadow-2xl
+            border
+            border-slate-200
+            p-7
+        "
     >
 
-        <h2
-            class="text-xl
-                   font-bold
-                   mb-4
-                   text-[#0B1F3A]"
+        <div
+            class="
+                flex
+                items-start
+                justify-between
+                gap-4
+                mb-5
+            "
         >
-            Talk to Moose Loon AI
-        </h2>
+
+            <div>
+
+                <div
+                    class="
+                        text-xs
+                        font-bold
+                        uppercase
+                        tracking-[0.15em]
+                        text-[#1E73BE]
+                        mb-2
+                    "
+                >
+                    Voice Assistant
+                </div>
+
+
+                <h2
+                    class="
+                        text-xl
+                        sm:text-2xl
+                        font-extrabold
+                        text-[#0B1F3A]
+                    "
+                >
+                    Talk to Moose Loon AI
+                </h2>
+
+            </div>
+
+        </div>
 
 
         <p
             id="status"
-            class="mb-4
-                   text-gray-600"
+            class="
+                mb-6
+                text-sm
+                leading-relaxed
+                text-slate-600
+                bg-slate-50
+                rounded-xl
+                px-4
+                py-3
+            "
         >
             Click Start and speak.
         </p>
 
 
-        <div class="flex justify-center space-x-2">
+        <div
+            class="
+                flex
+                justify-center
+                gap-3
+            "
+        >
 
             <button
                 id="start-btn"
-                class="bg-[#0B1F3A]
-                       hover:bg-[#12345C]
-                       text-white
-                       px-5
-                       py-2.5
-                       rounded-xl
-                       font-semibold
-                       shadow-sm
-                       transition"
+                type="button"
+                class="
+                    bg-[#0B1F3A]
+                    hover:bg-[#12345C]
+                    text-white
+                    px-6
+                    py-2.5
+                    rounded-xl
+                    font-bold
+                    shadow-sm
+                    hover:shadow-md
+                    transition-all
+                    duration-200
+                "
             >
                 Start
             </button>
@@ -1362,14 +1504,17 @@
 
             <button
                 id="stop-btn"
-                class="bg-slate-100
-                       hover:bg-slate-200
-                       text-[#0B1F3A]
-                       px-5
-                       py-2.5
-                       rounded-xl
-                       font-semibold
-                       transition"
+                type="button"
+                class="
+                    bg-slate-100
+                    hover:bg-slate-200
+                    text-[#0B1F3A]
+                    px-6
+                    py-2.5
+                    rounded-xl
+                    font-bold
+                    transition
+                "
                 disabled
             >
                 Stop
@@ -1381,6 +1526,8 @@
 
 </div>
 
+
+@stack('scripts')
 
 </body>
 

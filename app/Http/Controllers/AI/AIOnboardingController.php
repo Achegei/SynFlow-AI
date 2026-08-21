@@ -320,14 +320,6 @@ class AIOnboardingController extends Controller
                     'opportunities' => 'I am not sure — Show Me the Opportunities',
                 ],
             ],
-
-            7 => [
-                'title' => 'Let’s create your AI learning profile',
-                'subtitle' => 'We need your details to create your account and learning profile.',
-                'field' => 'personal',
-                'type' => 'personal',
-                'options' => [],
-            ],
         ];
     }
 
