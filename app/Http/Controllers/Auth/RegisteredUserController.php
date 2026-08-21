@@ -187,6 +187,10 @@ class RegisteredUserController extends Controller
             | AI learners can register without an institution.
             */
             'institution_id' => $institution?->id,
+
+            // Registration itself does not require a password change.
+            'must_change_password' => false,
+            'initial_password_reset_required' => true,
         ]);
 
         /*

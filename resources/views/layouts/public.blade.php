@@ -418,7 +418,7 @@
                                     duration-200
                                 "
                             >
-                                Enroll Now
+                                Start Learning
                             </a>
 
 
@@ -452,7 +452,7 @@
                                     duration-200
                                 "
                             >
-                                Partners
+                                Partner With Us
                             </a>
 
 
@@ -735,7 +735,7 @@
                                 transition
                             "
                         >
-                            Partners
+                            Partner With Us
                         </a>
 
 

@@ -25,7 +25,7 @@
 
 <p>
     We noticed that you started your enrollment with
-    <strong>Moose Loon AI</strong>, but your payment has not yet
+    <strong>Moose Loon AI Academy</strong>, but your payment has not yet
     been completed.
 </p>
 
@@ -75,7 +75,7 @@
 
 <div style="text-align:center; margin:30px 0;">
 
-    <a href="{{ url('/courses') }}"
+    <a href="{{ route('ai.packages') }}"
        style="
             display:inline-block;
             padding:14px 28px;

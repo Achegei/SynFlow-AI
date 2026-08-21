@@ -8,6 +8,7 @@ use App\Models\LearningAccess;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -19,7 +20,6 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     }
-
 
     /**
      * Handle login request.
@@ -37,7 +37,6 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $request->session()->regenerateToken();
 
-
         /*
         |--------------------------------------------------------------------------
         | Get authenticated user
@@ -46,6 +45,68 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
+        /*
+        |--------------------------------------------------------------------------
+        | ONE-TIME INITIAL PASSWORD RESET
+        |--------------------------------------------------------------------------
+        |
+        | Newly registered students are allowed to use the password they
+        | created during registration.
+        |
+        | On their first subsequent login, the system sends a password
+        | reset link and logs them out.
+        |
+        | After successfully resetting the password,
+        | initial_password_reset_required becomes false.
+        |
+        */
+
+        if (
+            $user->role === 'student' &&
+            (int) $user->initial_password_reset_required === 1
+        ) {
+            $status = Password::sendResetLink([
+                'email' => $user->email,
+            ]);
+
+            /*
+            |--------------------------------------------------------------------------
+            | Log the user out after sending reset link
+            |--------------------------------------------------------------------------
+            */
+
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Reset link sent successfully
+            |--------------------------------------------------------------------------
+            */
+
+            if ($status === Password::RESET_LINK_SENT) {
+                return redirect()
+                    ->route('login')
+                    ->with(
+                        'status',
+                        'For your security, we have sent a password reset link to your email address. Please use it to set your new password before logging in again.'
+                    );
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Reset link failed
+            |--------------------------------------------------------------------------
+            */
+
+            return redirect()
+                ->route('login')
+                ->withErrors([
+                    'email' => __($status),
+                ]);
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -54,15 +115,21 @@ class AuthenticatedSessionController extends Controller
         */
 
         $user->update([
-            'last_login_at'     => now(),
-            'last_activity_at'  => now(),
+            'last_login_at'    => now(),
+            'last_activity_at' => now(),
         ]);
-
 
         /*
         |--------------------------------------------------------------------------
         | FORCE PASSWORD CHANGE
         |--------------------------------------------------------------------------
+        |
+        | This is the existing password-change mechanism.
+        |
+        | It remains available for accounts such as institution
+        | administrators that were explicitly marked as requiring
+        | a password change.
+        |
         */
 
         if ((int) $user->must_change_password === 1) {
@@ -89,7 +156,6 @@ class AuthenticatedSessionController extends Controller
                 );
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | ADMIN
@@ -100,7 +166,6 @@ class AuthenticatedSessionController extends Controller
 
             return redirect('/admin');
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -113,7 +178,6 @@ class AuthenticatedSessionController extends Controller
             return redirect('/sales/dashboard');
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | INSTITUTION ADMIN
@@ -124,7 +188,6 @@ class AuthenticatedSessionController extends Controller
 
             return redirect('/institution/dashboard');
         }
-
 
         /*
         |--------------------------------------------------------------------------
@@ -140,7 +203,6 @@ class AuthenticatedSessionController extends Controller
         | 3. An expired AI learner
         | 4. A learner with no active access
         |
-        |--------------------------------------------------------------------------
         */
 
         if ($user->role === 'student') {
@@ -175,7 +237,6 @@ class AuthenticatedSessionController extends Controller
                 ->latest('expires_at')
                 ->first();
 
-
             /*
             |--------------------------------------------------------------------------
             | ACTIVE AI LEARNER
@@ -195,7 +256,6 @@ class AuthenticatedSessionController extends Controller
                     );
             }
 
-
             /*
             |--------------------------------------------------------------------------
             | 2. CHECK INSTITUTION COURSE ACCESS
@@ -213,7 +273,6 @@ class AuthenticatedSessionController extends Controller
                 )
                 ->first();
 
-
             if ($institutionCourse) {
 
                 return redirect()
@@ -222,7 +281,6 @@ class AuthenticatedSessionController extends Controller
                         $institutionCourse->id
                     );
             }
-
 
             /*
             |--------------------------------------------------------------------------
@@ -245,7 +303,6 @@ class AuthenticatedSessionController extends Controller
                 )
                 ->exists();
 
-
             if ($hasPreviousAiAccess) {
 
                 return redirect()
@@ -255,7 +312,6 @@ class AuthenticatedSessionController extends Controller
                         'Your AI learning package has expired. Please choose a new package to continue learning.'
                     );
             }
-
 
             /*
             |--------------------------------------------------------------------------
@@ -274,7 +330,6 @@ class AuthenticatedSessionController extends Controller
                 ->route('classroom.index');
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | INVALID ROLE
@@ -288,7 +343,6 @@ class AuthenticatedSessionController extends Controller
             'Invalid role'
         );
     }
-
 
     /**
      * Logout user.

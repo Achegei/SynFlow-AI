@@ -20,12 +20,8 @@
 </h2>
 
 <p>
-    Hello {{ $user->name }},
-</p>
-
-<p>
     Great news — we've successfully received your payment and your
-    Moose Loon AI enrollment is now confirmed.
+    Moose Loon AI Academy enrollment is now confirmed.
 </p>
 
 @if($course || $package || $amount)
@@ -75,7 +71,7 @@
 
 <div style="text-align:center; margin:30px 0;">
 
-    <a href="{{ url('/dashboard') }}"
+    <a href="{{route('classroom')}}"
        style="
             display:inline-block;
             padding:14px 28px;

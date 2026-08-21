@@ -27,6 +27,7 @@ class User extends Authenticatable
         'is_admin',
         'role',
         'must_change_password',
+        'initial_password_reset_required',
         'profile_photo_url',
         'referral_code',     // ✅ added
         'referred_by',        // ✅ added

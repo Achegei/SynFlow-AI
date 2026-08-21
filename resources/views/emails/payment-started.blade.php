@@ -24,7 +24,7 @@
 </p>
 
 <p>
-    You recently started the enrollment process with Moose Loon AI.
+    You recently started the enrollment process with Moose Loon AI Academy.
     Your payment request has been initiated, but we haven't received
     confirmation of a completed payment yet.
 </p>
@@ -76,7 +76,7 @@
 
 <div style="text-align:center; margin:30px 0;">
 
-    <a href="{{ url('/courses') }}"
+    <a href="{{ route('ai.packages') }}"
        style="
             display:inline-block;
             padding:14px 28px;

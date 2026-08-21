@@ -13,15 +13,11 @@
 @endphp
 
 <h2 style="margin-top:0;">
-    Welcome to Moose Loon AI, {{ $user->name }}!
+    Welcome to Moose Loon AI Academy, {{ $user->name }}!
 </h2>
 
 <p>
-    Hello {{ $user->name }},
-</p>
-
-<p>
-    Thank you for creating your account with Moose Loon AI.
+    Thank you for creating your account with Moose Loon AI Academy.
     Your registration has been successfully completed.
 </p>
 
@@ -72,7 +68,7 @@
 
 <div style="text-align:center; margin:30px 0;">
 
-    <a href="{{ url('/courses') }}"
+    <a href="{{ route('ai.packages') }}"
        style="
             display:inline-block;
             padding:14px 28px;
