@@ -198,7 +198,6 @@ Route::prefix('ai')->name('ai.')->group(function () {
 //================================================
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'home')->name('home');
-    Route::get('/about', 'about')->name('about');
     Route::get('/services', 'services')->name('services');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/contactus', 'contact')->name('contactus'); // Alias for the contact page
@@ -206,7 +205,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/terms', 'terms')->name('terms');
     Route::get('/privacy-policy', 'policy')->name('policy');
     Route::get('/curriculum', 'pricing')->name('pricing');
-    Route::get('/documentation', 'documentation')->name('documentation');
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
@@ -386,16 +384,13 @@ Route::get('/generate-sitemap', function () {
     // Static pages
         $staticRoutes = [
             '/',
-            '/about',
             '/services',
             '/contact',
             '/terms',
             '/privacy-policy',
             '/pricing',
-            '/documentation',
             '/faqs',
             '/careers',
-            '/assistant',
         ];
 
     foreach ($staticRoutes as $url) {

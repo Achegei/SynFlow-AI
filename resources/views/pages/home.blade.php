@@ -1234,6 +1234,9 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
+                        <p class="font-bold text-[#00104B]">
+                            Wekesa Mark Tobbie
+                        </p>
 
                         <p class="font-bold text-[#00104B]">
                             Student
@@ -1261,7 +1264,9 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
-
+                        <p class="font-bold text-[#00104B]">
+                            Abdiweli Ali Musse
+                        </p>
                         <p class="font-bold text-[#00104B]">
                             Learner
                         </p>
@@ -1288,7 +1293,9 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
-
+                        <p class="font-bold text-[#00104B]">
+                            Joseph Juma
+                        </p>
                         <p class="font-bold text-[#00104B]">
                             Learner
                         </p>

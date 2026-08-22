@@ -17,12 +17,7 @@ class PageController extends Controller
     {
         return view('pages.faq');
     } 
-
-    public function about(): View
-    {
-        return view('pages.about');
-    }
-
+    
     public function services(): View
     {
         return view('pages.services');
@@ -79,18 +74,6 @@ class PageController extends Controller
     {
         return view('pages.pricing');
     }
-
-    public function documentation(): View
-    {
-        return view('pages.documentation');
-    }
-
-
-    public function assistant(): View
-    {
-        return view('pages.assistant');
-    }
-
 
     public function partners(): View
 {
