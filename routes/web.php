@@ -207,15 +207,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/privacy-policy', 'policy')->name('policy');
     Route::get('/curriculum', 'pricing')->name('pricing');
     Route::get('/documentation', 'documentation')->name('documentation');
-    Route::get('/introduction', 'introduction')->name('introduction');
-    Route::get('/technology-stack', 'technology')->name('technology');
-    Route::get('/processes', 'processes')->name('processes');
-    Route::get('/agents', 'agents')->name('agents');
-    Route::get('/assistant', 'assistant')->name('assistant');
-    Route::get('/deep-research', 'research')->name('research');
-    Route::get('/newsletter-creation', 'newsletter')->name('newsletter');
-    Route::get('/rag-pipeline', 'rag')->name('rag');
-    Route::get('/faceless-shorts', 'shorts')->name('shorts');
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
@@ -393,23 +384,19 @@ Route::get('/generate-sitemap', function () {
     $sitemap = Sitemap::create();
 
     // Static pages
-    $staticRoutes = [
-        '/',
-        '/about',
-        '/services',
-        '/contact',
-        '/terms',
-        '/privacy-policy',
-        '/pricing',
-        '/documentation',
-        '/technology-stack',
-        '/processes',
-        '/faqs',
-        '/careers',
-        '/assistant',
-        '/newsletter-creation',
-        '/rag-pipeline',
-    ];
+        $staticRoutes = [
+            '/',
+            '/about',
+            '/services',
+            '/contact',
+            '/terms',
+            '/privacy-policy',
+            '/pricing',
+            '/documentation',
+            '/faqs',
+            '/careers',
+            '/assistant',
+        ];
 
     foreach ($staticRoutes as $url) {
         $sitemap->add(Url::create($url));

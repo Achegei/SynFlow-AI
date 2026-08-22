@@ -3,10 +3,9 @@
 @section('title', 'Ultimate Assistant - SailRizon AI')
 
 @section('content')
-<div class="flex">
-    @include('pages.sidebar')
+<div class="max-w-4xl mx-auto px-6 py-12">
 
-    <div class="max-w-4xl mx-auto">
+    <header class="text-center">
         <!-- Header -->
         <header class="text-center">
             <p class="text-sm font-semibold text-gray-500 flex items-center justify-center gap-2">
@@ -23,12 +22,7 @@
                 Ultimate Assistant
             </h1>
 
-            <div class="mt-6 flex justify-center">
-                <a href="#back"
-                   class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition">
-                    ← Back to Agents
-                </a>
-            </div>
+            
         </header>
 
         <!-- Overview -->
