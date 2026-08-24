@@ -261,7 +261,7 @@
                         @foreach($packages as $package)
 
                             @php
-                                $isPopular = $package->slug === 'weekly-ai-access';
+                                $isPopular = $package->slug === '28-days-ai-access';
                             @endphp
 
 
