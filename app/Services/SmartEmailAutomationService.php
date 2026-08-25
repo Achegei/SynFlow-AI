@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ActivityLog;
+use App\Models\EmailLog;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -267,27 +268,31 @@ class SmartEmailAutomationService
      * Payment was cancelled.
      */
     protected function handlePaymentCancelled(
-        User $user,
-        ActivityLog $paymentCancelled
-    ): void {
-        if (
-            $paymentCancelled->created_at
-                ->gt(now()->subHours(2))
-        ) {
-            return;
-        }
+    User $user,
+    ActivityLog $paymentCancelled
+): void {
+    $hoursSinceCancellation = $paymentCancelled->created_at
+        ->diffInHours(now());
 
-        $this->emailEvents->handle(
-            'payment_cancelled_followup',
-            $user,
-            [
-                'payment_activity_id' => $paymentCancelled->id,
-                'payment_id' =>
-                    data_get(
-                        $paymentCancelled->metadata,
-                        'payment_id'
-                    ),
-            ]
-        );
+    if ($hoursSinceCancellation < 24) {
+        return;
     }
+
+    $recoveryDay = (int) floor(
+        $hoursSinceCancellation / 24
+    );
+
+    $this->emailEvents->handle(
+        'payment_cancelled_followup',
+        $user,
+        [
+            'payment_activity_id' => $paymentCancelled->id,
+            'payment_id' => data_get(
+                $paymentCancelled->metadata,
+                'payment_id'
+            ),
+            'recovery_day' => $recoveryDay,
+        ]
+    );
+}
 }

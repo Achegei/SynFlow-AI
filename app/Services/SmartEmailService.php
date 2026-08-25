@@ -32,6 +32,23 @@ class SmartEmailService
                 ->where('event', $event)
                 ->where('status', 'sent');
 
+            if (
+                $event === 'payment_cancelled_followup'
+                && isset($metadata['payment_activity_id'])
+                && isset($metadata['recovery_day'])
+            ) {
+                return $query
+                    ->whereJsonContains(
+                        'metadata->payment_activity_id',
+                        $metadata['payment_activity_id']
+                    )
+                    ->whereJsonContains(
+                        'metadata->recovery_day',
+                        $metadata['recovery_day']
+                    )
+                    ->exists();
+            }
+
             if (isset($metadata['payment_activity_id'])) {
                 $query->whereJsonContains(
                     'metadata->payment_activity_id',
