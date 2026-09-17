@@ -40,6 +40,13 @@ class Episode extends Model
                     ->withTimestamps();
     }
 
+    // Structured lesson content blocks
+    public function blocks()
+    {
+        return $this->hasMany(LessonBlock::class)
+                    ->orderBy('position');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESSORS

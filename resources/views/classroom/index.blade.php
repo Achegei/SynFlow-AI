@@ -83,36 +83,6 @@
 
         @forelse ($courses as $course)
 
-            @php
-
-                /*
-                |--------------------------------------------------------------------------
-                | SMART COURSE ACCESS
-                |--------------------------------------------------------------------------
-                */
-
-                $hasAccess = auth()->check()
-                    && $course->hasAccessForUser(auth()->user());
-
-
-                /*
-                |--------------------------------------------------------------------------
-                | CHECK FOR RECENT PENDING PAYMENT
-                |--------------------------------------------------------------------------
-                */
-
-                $pendingPayment = auth()->check()
-                    ? \App\Models\Payment::where('user_id', auth()->id())
-                        ->where('course_id', $course->id)
-                        ->where('status', 'pending')
-                        ->where('provider', 'intasend')
-                        ->where('created_at', '>=', now()->subMinutes(10))
-                        ->exists()
-                    : false;
-
-            @endphp
-
-
             {{-- ====================================================
                  COURSE CARD
             ===================================================== --}}
@@ -150,7 +120,6 @@
                             transition-transform
                             duration-700
                             group-hover:scale-105
-                            {{ !$hasAccess ? 'opacity-75' : '' }}
                         "
                     >
 
@@ -172,58 +141,28 @@
 
                     <div class="absolute top-4 left-4">
 
-                        @if ($hasAccess)
+                        <span
+                            class="
+                                inline-flex
+                                items-center
+                                gap-1.5
+                                bg-white/95
+                                backdrop-blur-md
+                                text-[#061638]
+                                text-xs
+                                font-bold
+                                px-3
+                                py-1.5
+                                rounded-full
+                                shadow-sm
+                            "
+                        >
 
-                            <span
-                                class="
-                                    inline-flex
-                                    items-center
-                                    gap-1.5
-                                    bg-white/95
-                                    backdrop-blur-md
-                                    text-[#061638]
-                                    text-xs
-                                    font-bold
-                                    px-3
-                                    py-1.5
-                                    rounded-full
-                                    shadow-sm
-                                "
-                            >
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
 
-                                <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                            Available
 
-                                Available
-
-                            </span>
-
-                        @else
-
-                            <span
-                                class="
-                                    inline-flex
-                                    items-center
-                                    gap-1.5
-                                    bg-[#061638]/90
-                                    backdrop-blur-md
-                                    text-white
-                                    text-xs
-                                    font-bold
-                                    px-3
-                                    py-1.5
-                                    rounded-full
-                                    border
-                                    border-white/10
-                                "
-                            >
-
-                                <span class="w-1.5 h-1.5 rounded-full bg-[#D71920]"></span>
-
-                                Premium
-
-                            </span>
-
-                        @endif
+                        </span>
 
                     </div>
 
@@ -306,366 +245,55 @@
                          ACTION AREA
                     ================================================== --}}
 
-                    @if ($hasAccess)
-
-                        {{-- =================================================
-                             USER HAS ACCESS
-                        ================================================== --}}
-
-                        <a
-                            href="{{ route('classroom.show', $course->id) }}"
-                            class="
-                                mt-6
-                                flex
-                                items-center
-                                justify-center
-                                gap-2
-                                w-full
-                                rounded-2xl
-                                bg-[#2F6BFF]
-                                px-5
-                                py-4
-                                text-sm
-                                font-extrabold
-                                text-white
-                                shadow-lg
-                                shadow-blue-500/20
-                                hover:bg-[#1F56D8]
-                                hover:shadow-xl
-                                focus:outline-none
-                                focus:ring-4
-                                focus:ring-blue-100
-                                active:scale-[0.99]
-                                transition-all
-                                duration-200
-                            "
-                        >
-
-                            <span>
-                                Continue Course
-                            </span>
-
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                />
-                            </svg>
-
-                        </a>
-
-
-                    @else
-
-                        {{-- =================================================
-                             USER DOES NOT HAVE ACCESS
-                        ================================================== --}}
-
-                        @if ($pendingPayment)
-
-                            {{-- =================================================
-                                 PAYMENT PROCESSING
-                            ================================================== --}}
-
-                            <div
+                    <a
+                                href="{{ route('classroom.show', $course->id) }}"
                                 class="
                                     mt-6
+                                    flex
+                                    items-center
+                                    justify-center
+                                    gap-2
                                     w-full
                                     rounded-2xl
-                                    bg-amber-50
-                                    border
-                                    border-amber-100
-                                    px-4
+                                    bg-[#2F6BFF]
+                                    px-5
                                     py-4
+                                    text-sm
+                                    font-extrabold
+                                    text-white
+                                    shadow-lg
+                                    shadow-blue-500/20
+                                    hover:bg-[#1F56D8]
+                                    hover:shadow-xl
+                                    focus:outline-none
+                                    focus:ring-4
+                                    focus:ring-blue-100
+                                    active:scale-[0.99]
+                                    transition-all
+                                    duration-200
                                 "
                             >
 
-                                <div class="flex items-center gap-3">
+                                <span>
+                                    Open Course
+                                </span>
 
-                                    <div
-                                        class="
-                                            w-10
-                                            h-10
-                                            rounded-xl
-                                            bg-amber-100
-                                            flex
-                                            items-center
-                                            justify-center
-                                            shrink-0
-                                        "
-                                    >
-                                        <span class="text-lg">
-                                            ⏳
-                                        </span>
-                                    </div>
-
-                                    <div>
-
-                                        <p class="text-sm font-bold text-amber-800">
-                                            Payment processing
-                                        </p>
-
-                                        <p class="text-xs text-amber-700 mt-0.5">
-                                            We're confirming your M-PESA payment.
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                        @else
-
-                            {{-- =================================================
-                                 M-PESA COLLECTION FORM
-                            ================================================== --}}
-
-                            <form
-                                action="{{ route('purchase.course', $course->id) }}"
-                                method="POST"
-                                class="mt-6"
-                            >
-
-                                @csrf
-
-
-                                {{-- PHONE NUMBER LABEL --}}
-
-                                <label
-                                    for="phone_number_{{ $course->id }}"
-                                    class="block text-sm font-bold text-[#061638] mb-2"
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    stroke-width="2"
                                 >
-                                    M-PESA Phone Number
-                                </label>
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6"
+                                    />
+                                </svg>
 
+                            </a>
 
-                                {{-- PHONE INPUT --}}
-
-                                <div class="relative">
-
-                                    <div
-                                        class="
-                                            absolute
-                                            inset-y-0
-                                            left-0
-                                            flex
-                                            items-center
-                                            pl-4
-                                            pointer-events-none
-                                        "
-                                    >
-                                        <svg
-                                            class="w-5 h-5 text-gray-400"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="1.8"
-                                                d="M2.25 6.75c0-1.243 1.007-2.25 2.25-2.25h2.386c.82 0 1.585.446 1.98 1.164l1.095 1.99a2.25 2.25 0 01-.442 2.66l-1.197 1.197a15.05 15.05 0 006.207 6.207l1.197-1.197a2.25 2.25 0 012.66-.442l1.99 1.095a2.25 2.25 0 011.164 1.98V21.75c0 1.243-1.007 2.25-2.25 2.25h-.75C10.096 24 2.25 16.154 2.25 6.75z"
-                                            />
-                                        </svg>
-                                    </div>
-
-
-                                    <input
-                                        type="tel"
-                                        id="phone_number_{{ $course->id }}"
-                                        name="phone_number"
-                                        value="{{ old('phone_number', auth()->user()->phone ?? '') }}"
-                                        placeholder="07XX XXX XXX"
-                                        autocomplete="tel"
-                                        inputmode="numeric"
-                                        required
-                                        class="
-                                            w-full
-                                            rounded-2xl
-                                            border
-                                            border-gray-200
-                                            bg-gray-50
-                                            py-4
-                                            pl-12
-                                            pr-4
-                                            text-sm
-                                            font-semibold
-                                            text-[#061638]
-                                            placeholder-gray-400
-                                            focus:border-[#2F6BFF]
-                                            focus:bg-white
-                                            focus:outline-none
-                                            focus:ring-4
-                                            focus:ring-blue-100
-                                            transition-all
-                                        "
-                                    >
-
-                                </div>
-
-
-                                {{-- PHONE HELP TEXT --}}
-
-                                <p class="mt-2 text-xs text-gray-400">
-                                    Enter the number that will receive the M-PESA payment prompt.
-                                </p>
-
-
-                                {{-- VALIDATION ERROR --}}
-
-                                @error('phone_number')
-
-                                    <p class="mt-2 text-xs font-semibold text-red-600">
-                                        {{ $message }}
-                                    </p>
-
-                                @enderror
-
-
-                                {{-- =================================================
-                                     PAYMENT BUTTON
-                                ================================================== --}}
-
-                                <button
-                                    type="submit"
-                                    class="
-                                        mt-4
-                                        w-full
-                                        group/button
-                                        relative
-                                        overflow-hidden
-                                        flex
-                                        items-center
-                                        justify-center
-                                        gap-3
-                                        rounded-2xl
-                                        bg-[#061638]
-                                        px-5
-                                        py-4
-                                        text-sm
-                                        font-extrabold
-                                        text-white
-                                        shadow-lg
-                                        shadow-[#061638]/20
-                                        hover:bg-[#0B2554]
-                                        hover:shadow-xl
-                                        hover:shadow-[#061638]/25
-                                        focus:outline-none
-                                        focus:ring-4
-                                        focus:ring-blue-100
-                                        active:scale-[0.99]
-                                        transition-all
-                                        duration-200
-                                    "
-                                >
-
-                                    {{-- Shine animation --}}
-
-                                    <span
-                                        class="
-                                            absolute
-                                            inset-0
-                                            bg-gradient-to-r
-                                            from-transparent
-                                            via-white/10
-                                            to-transparent
-                                            -translate-x-full
-                                            group-hover/button:translate-x-full
-                                            transition-transform
-                                            duration-700
-                                        "
-                                    ></span>
-
-
-                                    {{-- M-PESA BADGE --}}
-
-                                    <span
-                                        class="
-                                            relative
-                                            flex
-                                            items-center
-                                            justify-center
-                                            w-9
-                                            h-9
-                                            rounded-xl
-                                            bg-[#D71920]
-                                            text-white
-                                            font-black
-                                            text-xs
-                                        "
-                                    >
-                                        M
-                                    </span>
-
-
-                                    <span class="relative text-left">
-
-                                        <span class="block">
-                                            Pay with M-PESA
-                                        </span>
-
-                                        <span class="block text-[10px] font-medium text-white/60 mt-0.5">
-                                            You'll receive a payment prompt
-                                        </span>
-
-                                    </span>
-
-
-                                    <svg
-                                        class="relative w-5 h-5 ml-auto"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                        />
-                                    </svg>
-
-                                </button>
-
-
-                                {{-- SECURITY MESSAGE --}}
-
-                                <div class="mt-3 flex items-center justify-center gap-2">
-
-                                    <svg
-                                        class="w-4 h-4 text-green-600"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        stroke-width="1.8"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M12 15v2m-6 4h12a2 2 0 002-2V9a2 2 0 00-2-2h-1V5a3 3 0 00-6 0v2H6a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                        />
-                                    </svg>
-
-                                    <span class="text-xs text-gray-400">
-                                        Secure M-PESA payment
-                                    </span>
-
-                                </div>
-
-                            </form>
-
-                        @endif
-
-                    @endif
 
                 </div>
 

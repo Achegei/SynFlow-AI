@@ -65,10 +65,11 @@ class EpisodeResource extends Resource
 
             Select::make('type')
                 ->options([
+                    'lesson' => 'Lesson',
                     'video' => 'Video',
                     'reading' => 'Reading',
                 ])
-                ->default('video')
+                ->default('lesson')
                 ->required(),
 
             /*
@@ -148,6 +149,19 @@ class EpisodeResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATION MANAGERS
+    |--------------------------------------------------------------------------
+    */
+
+    public static function getRelations(): array
+    {
+        return [
+            EpisodeResource\RelationManagers\BlocksRelationManager::class,
+        ];
     }
 
     /*

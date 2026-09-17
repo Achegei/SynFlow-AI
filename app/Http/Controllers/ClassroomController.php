@@ -258,7 +258,8 @@ class ClassroomController extends Controller
         */
 
         $course = Course::with([
-            'modules.episodes',
+            'stages',
+            'modules.episodes.blocks',
             'modules.quizzes.questions',
             'modules.assignments'
         ])->findOrFail($id);

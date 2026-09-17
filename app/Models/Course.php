@@ -30,6 +30,13 @@ class Course extends Model
             ->orderBy('position');
     }
 
+    // Certification learning stages: Foundation, Intermediate, Advanced
+    public function stages()
+    {
+        return $this->hasMany(CourseStage::class)
+            ->orderBy('position');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_user')

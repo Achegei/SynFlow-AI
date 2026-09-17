@@ -4,7 +4,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 test('password can be updated', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'role' => 'student',
+        'must_change_password' => true,
+    ]);
 
     $response = $this
         ->actingAs($user)
@@ -17,13 +20,18 @@ test('password can be updated', function () {
 
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+        ->assertRedirect(route('classroom', absolute: false));
 
-    $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+    $user->refresh();
+
+    $this->assertTrue(Hash::check('new-password', $user->password));
+    $this->assertFalse((bool) $user->must_change_password);
 });
 
 test('correct password must be provided to update password', function () {
-    $user = User::factory()->create();
+    $user = User::factory()->create([
+        'role' => 'student',
+    ]);
 
     $response = $this
         ->actingAs($user)
@@ -35,6 +43,6 @@ test('correct password must be provided to update password', function () {
         ]);
 
     $response
-        ->assertSessionHasErrorsIn('updatePassword', 'current_password')
+        ->assertSessionHasErrors('current_password')
         ->assertRedirect('/profile');
 });

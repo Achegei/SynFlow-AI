@@ -14,13 +14,16 @@ class QuizQuestion extends Model
     protected $fillable = [
         'quiz_id',
         'question',
+        'type',
         'options',
         'correct_answer',
+        'max_points',
         'position',
     ];
 
     protected $casts = [
         'options' => 'array',
+        'max_points' => 'decimal:2',
     ];
 
     /**

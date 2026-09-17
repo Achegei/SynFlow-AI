@@ -315,19 +315,17 @@ class AuthenticatedSessionController extends Controller
 
             /*
             |--------------------------------------------------------------------------
-            | 4. BRAND NEW LEARNER WITH NO ACCESS
+            | 4. BRAND NEW LEARNER
             |--------------------------------------------------------------------------
             |
-            | This learner has no active AI access and no institution
-            | enrollment.
+            | Learners can access the classroom directly.
             |
-            | Send them to the classroom, where the appropriate paywall
-            | can be displayed.
+            | Course content is no longer gated by the old course paywall.
             |
             */
 
             return redirect()
-                ->route('classroom.index');
+                ->route('classroom');
         }
 
         /*

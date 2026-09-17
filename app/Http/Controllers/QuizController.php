@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quiz;
 use App\Models\QuizAttempt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
 {
@@ -13,7 +14,6 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        dd('CONTROLLER HIT');
         $quiz->load('questions');
 
         return view('quizzes.show', compact('quiz'));
@@ -27,85 +27,170 @@ class QuizController extends Controller
         $user = auth()->user();
 
         if (!$user) {
-            return redirect()->route('login');
+            return response()->json([
+                'success' => false,
+                'message' => 'You must be logged in to submit this quiz.',
+            ], 401);
         }
 
         $quiz->load('questions');
 
-        $score = 0;
-        $total = $quiz->questions->count();
+        $submittedAnswers = $request->input('answers', []);
 
-        foreach ($quiz->questions as $question) {
+        if (!is_array($submittedAnswers)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid quiz answers.',
+            ], 422);
+        }
 
-            $answer = $request->input('answers.' . $question->id);
+        $unansweredQuestions = $quiz->questions->filter(function ($question) use ($submittedAnswers) {
+            $answer = $submittedAnswers[$question->id] ?? null;
 
-            // Normalize input (VERY IMPORTANT)
-            $answer = strtoupper(trim($answer));
+            return !is_string($answer) || trim($answer) === '';
+        });
 
-            if (!$answer) {
-                continue;
-            }
+        if ($unansweredQuestions->isNotEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please answer every question before submitting.',
+                'unanswered_questions' => $unansweredQuestions->pluck('id')->values(),
+            ], 422);
+        }
 
-            if ($answer === $question->correct_answer) {
-                $score++;
+        $hasWrittenQuestions = $quiz->questions->contains(function ($question) {
+            return in_array($question->type, ['short_answer', 'practical'], true);
+        });
+
+        if ($hasWrittenQuestions) {
+            $pendingAttempt = QuizAttempt::query()
+                ->where('user_id', $user->id)
+                ->where('quiz_id', $quiz->id)
+                ->where('status', 'pending_review')
+                ->latest()
+                ->first();
+
+            if ($pendingAttempt) {
+                return response()->json([
+                    'success' => false,
+                    'status' => 'pending_review',
+                    'requires_review' => true,
+                    'message' => 'This examination has already been submitted and is awaiting instructor review.',
+                ], 409);
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | PASSING RULE (CHANGE IF YOU WANT)
-        |--------------------------------------------------------------------------
-        | Example: 70% pass mark instead of 100%
-        */
+        [
+            'attempt' => $attempt,
+            'objectiveCorrect' => $objectiveCorrect,
+            'objectiveTotal' => $objectiveTotal,
+            'objectivePercentage' => $objectivePercentage,
+        ] = DB::transaction(function () use (
+            $user,
+            $quiz,
+            $submittedAnswers,
+            $hasWrittenQuestions
+        ) {
+            $objectiveCorrect = 0;
+            $objectiveTotal = 0;
 
-        $percentage = $total > 0
-            ? round(($score / $total) * 100)
-            : 0;
+            $attempt = QuizAttempt::create([
+                'user_id' => $user->id,
+                'quiz_id' => $quiz->id,
+                'score' => 0,
+                'passed' => false,
+                'status' => $hasWrittenQuestions ? 'pending_review' : 'graded',
+            ]);
 
-        $passed = $percentage >= 70;
+            foreach ($quiz->questions as $question) {
+                $rawAnswer = $submittedAnswers[$question->id] ?? null;
 
-        /*
-        |--------------------------------------------------------------------------
-        | SAVE ATTEMPT
-        |--------------------------------------------------------------------------
-        */
+                $answer = is_string($rawAnswer)
+                    ? trim($rawAnswer)
+                    : '';
 
-        QuizAttempt::create([
-            'user_id' => $user->id,
-            'quiz_id' => $quiz->id,
-            'score'   => $percentage,
-            'passed'  => $passed,
-        ]);
+                $isCorrect = null;
+                $autoGraded = false;
 
-        /*
-        |--------------------------------------------------------------------------
-        | AJAX RESPONSE
-        |--------------------------------------------------------------------------
-        */
+                if ($question->type === 'multiple_choice') {
+                    $objectiveTotal++;
+                    $autoGraded = true;
+
+                    $normalizedAnswer = strtoupper($answer);
+                    $normalizedCorrectAnswer = strtoupper(
+                        trim((string) $question->correct_answer)
+                    );
+
+                    $isCorrect = $normalizedAnswer !== ''
+                        && $normalizedAnswer === $normalizedCorrectAnswer;
+
+                    if ($isCorrect) {
+                        $objectiveCorrect++;
+                    }
+                }
+
+                $attempt->answers()->create([
+                    'quiz_question_id' => $question->id,
+                    'answer' => $answer,
+                    'is_correct' => $isCorrect,
+                    'auto_graded' => $autoGraded,
+                    'points_awarded' => $autoGraded
+                        ? ($isCorrect ? $question->max_points : 0)
+                        : null,
+                    'reviewed_at' => $autoGraded ? now() : null,
+                ]);
+            }
+
+            $objectivePercentage = $objectiveTotal > 0
+                ? round(($objectiveCorrect / $objectiveTotal) * 100)
+                : 0;
+
+            if (!$hasWrittenQuestions) {
+                $attempt->update([
+                    'score' => $objectivePercentage,
+                    'passed' => $objectivePercentage >= 70,
+                    'status' => 'graded',
+                ]);
+            }
+
+            return [
+                'attempt' => $attempt->fresh(),
+                'objectiveCorrect' => $objectiveCorrect,
+                'objectiveTotal' => $objectiveTotal,
+                'objectivePercentage' => $objectivePercentage,
+            ];
+        });
 
         if ($request->expectsJson()) {
             return response()->json([
                 'success' => true,
-                'score'   => $percentage,
-                'passed'  => $passed,
-                'correct' => $score,
-                'total'   => $total,
+                'status' => $attempt->status,
+                'requires_review' => $hasWrittenQuestions,
+                'score' => $hasWrittenQuestions ? null : $attempt->score,
+                'passed' => $hasWrittenQuestions ? null : $attempt->passed,
+                'objective_correct' => $objectiveCorrect,
+                'objective_total' => $objectiveTotal,
+                'objective_score' => $objectivePercentage,
+                'total' => $quiz->questions->count(),
+                'message' => $hasWrittenQuestions
+                    ? 'Your examination has been submitted and is awaiting instructor review.'
+                    : 'Your quiz has been graded.',
             ]);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | REDIRECT RESPONSE
-        |--------------------------------------------------------------------------
-        */
+        if ($hasWrittenQuestions) {
+            return redirect()
+                ->route('quizzes.show', $quiz->id)
+                ->with('success', 'Your examination has been submitted and is awaiting instructor review.');
+        }
 
         return redirect()
             ->route('quizzes.show', $quiz->id)
             ->with([
                 'success' => true,
-                'score'   => $score,
-                'total'   => $total,
-                'passed'  => $passed,
+                'score' => $attempt->score,
+                'total' => $objectiveTotal,
+                'passed' => $attempt->passed,
             ]);
     }
 }

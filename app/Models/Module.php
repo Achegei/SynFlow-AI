@@ -8,6 +8,7 @@ class Module extends Model
 {
     protected $fillable = [
         'course_id',
+        'course_stage_id',
         'title',
         'description',
         'position',
@@ -23,6 +24,12 @@ class Module extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    // Module belongs to a certification learning stage
+    public function stage()
+    {
+        return $this->belongsTo(CourseStage::class, 'course_stage_id');
     }
 
     // Module has many Episodes
