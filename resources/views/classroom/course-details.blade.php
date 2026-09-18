@@ -741,9 +741,10 @@
                                 class="
                                     border-b
                                     border-slate-200
-                                    px-5
-                                    py-5
-                                    sm:px-7
+                                    px-6
+                                    py-6
+                                    sm:px-8
+                                    sm:py-7
                                 "
                             >
 
@@ -777,11 +778,11 @@
                                             id="workspace-title"
                                             class="
                                                 mt-1
-                                                text-2xl
+                                                text-3xl
                                                 font-extrabold
                                                 tracking-tight
                                                 text-[#061638]
-                                                sm:text-3xl
+                                                sm:text-4xl
                                             "
                                         >
                                             Course Modules
@@ -792,9 +793,9 @@
                                             class="
                                                 mt-2
                                                 max-w-2xl
-                                                text-sm
-                                                leading-6
-                                                text-slate-500
+                                                text-[15px]
+                                                leading-7
+                                                text-slate-600
                                             "
                                         >
                                             Work through each lesson, complete the activities,
@@ -809,8 +810,8 @@
                                         class="
                                             shrink-0
                                             text-sm
-                                            font-semibold
-                                            text-slate-400
+                                            font-bold
+                                            text-[#123A78]
                                         "
                                     >
                                         {{ $course->modules->count() }}
@@ -824,7 +825,7 @@
 
                             {{-- Existing module system stays here --}}
 
-                            <div class="p-4 sm:p-6">
+                            <div class="p-5 sm:p-7 lg:p-8">
 
 
                                 {{-- =============================================
@@ -833,7 +834,7 @@
 
                                 <div
                                     id="video-player"
-                                    class="mb-6 hidden"
+                                    class="mb-8 hidden"
                                 >
 
                                     <div
@@ -917,7 +918,7 @@
                                     "
                                 >
 
-                                    <div class="px-5 py-6 sm:px-7 sm:py-7">
+                                    <div class="px-6 py-7 sm:px-8 sm:py-9">
 
                                         @if ($firstEpisode)
 
@@ -1056,9 +1057,9 @@
                                                         class="
                                                             mt-3
                                                             max-w-3xl
-                                                            text-[15px]
-                                                            leading-7
-                                                            text-slate-600
+                                                            text-base
+                                                            leading-8
+                                                            text-slate-700
                                                         "
                                                     >
                                                         {{ $firstEpisode->description }}
@@ -1069,9 +1070,9 @@
                                                     <p
                                                         class="
                                                             mt-3
-                                                            text-sm
-                                                            leading-6
-                                                            text-slate-400
+                                                            text-[15px]
+                                                            leading-7
+                                                            text-slate-500
                                                         "
                                                     >
                                                         Watch the lesson above and continue through
@@ -1198,9 +1199,9 @@
                                                     <p
                                                         class="
                                                             mt-2
-                                                            text-sm
-                                                            leading-6
-                                                            text-slate-500
+                                                            text-[15px]
+                                                            leading-7
+                                                            text-slate-600
                                                         "
                                                     >
                                                         Theory, examples, activities, prompt cards,
@@ -1219,7 +1220,7 @@
                                             <div
                                                 id="lesson-navigation"
                                                 class="
-                                                    mt-7
+                                                    mt-9
                                                     flex
                                                     flex-col
                                                     gap-3

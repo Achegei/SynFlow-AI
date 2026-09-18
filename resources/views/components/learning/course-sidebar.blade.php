@@ -66,7 +66,7 @@
                         Curriculum
                     </p>
 
-                    <h2 class="mt-1 text-lg font-extrabold text-[#061638]">
+                    <h2 class="mt-1 text-xl font-extrabold tracking-tight text-[#061638]">
                         Course Content
                     </h2>
                 </div>
@@ -90,7 +90,7 @@
             {{-- Progress --}}
 
             <div class="mt-5 px-1 pb-5">
-                <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center justify-between text-sm">
                     <span class="font-semibold text-slate-600">
                         Your progress
                     </span>
@@ -144,7 +144,7 @@
                                 shrink-0
                                 px-4
                                 py-3.5
-                                text-xs
+                                text-sm
                                 font-extrabold
                                 transition
                                 focus:outline-none
@@ -163,7 +163,7 @@
                             <span
                                 class="
                                     ml-1
-                                    text-[10px]
+                                    text-xs
                                     font-bold
                                     text-slate-400
                                 "
@@ -224,11 +224,11 @@
                         <div class="border-b border-slate-200 bg-white px-4 py-3">
                             <div class="flex items-center justify-between gap-3">
                                 <div class="min-w-0">
-                                    <p class="text-sm font-extrabold text-[#061638]">
+                                    <p class="text-base font-extrabold tracking-tight text-[#061638]">
                                         {{ $stage->title }}
                                     </p>
 
-                                    <p class="mt-0.5 text-[11px] font-semibold text-slate-500">
+                                    <p class="mt-0.5 text-xs font-semibold text-slate-500">
                                         {{ $stageModules->count() }}
                                         {{ \Illuminate\Support\Str::plural('module', $stageModules->count()) }}
                                     </p>
@@ -281,8 +281,8 @@
                                 <span
                                     class="
                                         flex
-                                        h-8
-                                        w-8
+                                        h-9
+                                        w-9
                                         shrink-0
                                         items-center
                                         justify-center
@@ -489,7 +489,7 @@
                                             <span
                                                 class="
                                                     block
-                                                    text-[13px]
+                                                    text-sm
                                                     font-semibold
                                                     leading-5
                                                     text-slate-700
@@ -604,7 +604,7 @@
                                             <span
                                                 class="
                                                     block
-                                                    text-[13px]
+                                                    text-sm
                                                     font-semibold
                                                     leading-5
                                                     text-slate-700
@@ -684,7 +684,7 @@
                                             <span
                                                 class="
                                                     block
-                                                    text-[13px]
+                                                    text-sm
                                                     font-semibold
                                                     leading-5
                                                     text-slate-700
