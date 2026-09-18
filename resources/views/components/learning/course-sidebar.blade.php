@@ -66,7 +66,7 @@
                         Curriculum
                     </p>
 
-                    <h2 class="mt-1 text-xl font-extrabold tracking-tight text-[#061638]">
+                    <h2 class="mt-1 text-2xl font-extrabold tracking-tight text-[#061638]">
                         Course Content
                     </h2>
                 </div>
@@ -90,7 +90,7 @@
             {{-- Progress --}}
 
             <div class="mt-5 px-1 pb-5">
-                <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center justify-between text-base">
                     <span class="font-semibold text-slate-600">
                         Your progress
                     </span>
@@ -144,7 +144,7 @@
                                 shrink-0
                                 px-4
                                 py-3.5
-                                text-sm
+                                text-base
                                 font-extrabold
                                 transition
                                 focus:outline-none
@@ -301,9 +301,9 @@
                                     <span
                                         class="
                                             block
-                                            text-sm
+                                            text-base
                                             font-extrabold
-                                            leading-5
+                                            leading-6
                                             text-[#061638]
                                         "
                                     >
@@ -314,9 +314,9 @@
                                         class="
                                             mt-1
                                             block
-                                            text-xs
+                                            text-sm
                                             font-medium
-                                            text-slate-500
+                                            text-slate-600
                                         "
                                     >
                                         {{ $module->episodes->count() }}

@@ -699,8 +699,8 @@
                         grid
                         grid-cols-1
                         gap-6
-                        lg:grid-cols-[320px_minmax(0,1fr)]
-                        xl:grid-cols-[350px_minmax(0,1fr)]
+                        lg:grid-cols-[370px_minmax(0,1fr)]
+                        xl:grid-cols-[390px_minmax(0,1fr)]
                     "
                 >
 
@@ -793,9 +793,9 @@
                                             class="
                                                 mt-2
                                                 max-w-2xl
-                                                text-[15px]
-                                                leading-7
-                                                text-slate-600
+                                                text-base
+                                                leading-8
+                                                text-slate-700
                                             "
                                         >
                                             Work through each lesson, complete the activities,
@@ -1042,7 +1042,7 @@
 
                                                 <h4
                                                     class="
-                                                        text-sm
+                                                        text-base
                                                         font-extrabold
                                                         text-[#061638]
                                                     "
@@ -1070,9 +1070,9 @@
                                                     <p
                                                         class="
                                                             mt-3
-                                                            text-[15px]
-                                                            leading-7
-                                                            text-slate-500
+                                                            text-base
+                                                            leading-8
+                                                            text-slate-700
                                                         "
                                                     >
                                                         Watch the lesson above and continue through
@@ -1199,9 +1199,9 @@
                                                     <p
                                                         class="
                                                             mt-2
-                                                            text-[15px]
-                                                            leading-7
-                                                            text-slate-600
+                                                            text-base
+                                                            leading-8
+                                                            text-slate-700
                                                         "
                                                     >
                                                         Theory, examples, activities, prompt cards,
