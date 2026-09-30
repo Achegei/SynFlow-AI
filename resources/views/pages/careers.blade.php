@@ -88,10 +88,10 @@
                 </section>
 
                 <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Compensation</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Competitive Compensation Package</h2>
 
                     <p class="text-gray-700 leading-7">
-                        Competitive compensation with performance-based incentives.
+                        Competitive compensation package with performance-based incentives.
                     </p>
                 </section>
 
