@@ -472,6 +472,22 @@
                                 Contact
                             </a>
 
+                            <a
+                                href="{{ route('careers') }}"
+                                class="
+                                    nav-link
+                                    py-2
+                                    text-sm
+                                    font-semibold
+                                    text-[#0B1F3A]
+                                    hover:text-[#1E73BE]
+                                    transition-colors
+                                    duration-200
+                                "
+                            >
+                                Careers
+                            </a>
+
                         </div>
 
                     </div>
@@ -756,6 +772,25 @@
                             "
                         >
                             Contact
+                        </a>
+
+                        <a
+                            href="{{ route('careers') }}"
+                            @click="open = false"
+                            class="
+                                flex
+                                items-center
+                                px-4
+                                py-3
+                                rounded-xl
+                                text-[#0B1F3A]
+                                font-semibold
+                                hover:bg-[#F4FAFE]
+                                hover:text-[#1E73BE]
+                                transition
+                            "
+                        >
+                            Careers
                         </a>
 
                     </div>
