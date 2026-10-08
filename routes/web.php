@@ -32,6 +32,7 @@ use App\Http\Controllers\AI\AIPathController;
 use App\Http\Controllers\AI\AIPackageController;
 use App\Http\Controllers\AI\AIPaymentController;
 use App\Http\Controllers\Marketing\LeadTrackingController;
+use App\Http\Controllers\AIEducationAmbassadorController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
@@ -216,8 +217,24 @@ Route::prefix('careers')->group(function () {
     // Apply form must come before the dynamic job description
     Route::get('/apply', [ApplicationController::class, 'showForm'])->name('careers.apply');
 
+    Route::get(
+    '/ai-education-ambassador',
+    [AIEducationAmbassadorController::class, 'show']
+        )->name('careers.ai-education-ambassador');
+
+        Route::post(
+            '/ai-education-ambassador',
+            [AIEducationAmbassadorController::class, 'store']
+        )->name('careers.ai-education-ambassador.store');
+
+        Route::get(
+            '/ai-education-ambassador/success',
+            [AIEducationAmbassadorController::class, 'success']
+        )->name('careers.ai-education-ambassador.success');
+
     // Dynamic job descriptions
     Route::get('/{position}', [CareerController::class, 'show'])->name('careers.description');
+    
 });
 
 
