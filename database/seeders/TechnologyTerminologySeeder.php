@@ -4655,7 +4655,7 @@ class TechnologyTerminologySeeder extends Seeder
                 ],
                 [
                     'type' => 'activity',
-                    'title' => 'The Learner Must Explain',
+                    'title' => "Explain What You've Learned",
                     'content' => "1. Problem\n2. User\n3. Frontend\n4. Chatbot\n5. User prompt\n6. Intent\n7. Entities\n8. Context\n9. Knowledge base\n10. RAG\n11. Embeddings\n12. Vector database\n13. LLM\n14. System instructions\n15. Structured output\n16. Trigger\n17. Workflow\n18. Conditions\n19. Variables\n20. Nodes\n21. API\n22. Authentication\n23. Payload\n24. JSON\n25. Validation\n26. Database\n27. Tools\n28. Tool calling\n29. Guardrails\n30. Error handling\n31. Human escalation\n32. Logging\n33. Monitoring\n34. Testing\n35. Deployment\n36. Success measurement",
                 ],
             ];
@@ -4711,7 +4711,7 @@ class TechnologyTerminologySeeder extends Seeder
                 [
                     'type' => 'text',
                     'title' => 'Master Learner Question',
-                    'content' => 'By the end of this course, the learner should be able to explain this statement:',
+                    'content' => "By the end of this course, you'll be able to explain this statement:",
                 ],
                 [
                     'type' => 'activity',
@@ -4782,7 +4782,7 @@ class TechnologyTerminologySeeder extends Seeder
                 [
                     'type' => 'text',
                     'title' => 'Next Practical Course',
-                    'content' => "BUILDING AI CHATBOTS & AUTOMATION\n\nBeginner to Advanced\n\nLearners should next practice:",
+                    'content' => "BUILDING AI CHATBOTS & AUTOMATION\n\nBeginner to Advanced\n\nYour next practice activities:",
                 ],
                 [
                     'type' => 'text',

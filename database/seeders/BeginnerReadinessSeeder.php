@@ -3759,7 +3759,7 @@ class BeginnerReadinessSeeder extends Seeder
                         [
                             'type' => 'text',
                             'title' => 'Final Learner Understanding',
-                            'content' => "By this stage, the learner should understand how the following progression connects:\n\nAI capability\n↓\nPrompts and instructions\n↓\nChatbots\n↓\nRAG\n↓\nAutomation\n↓\nAPIs\n↓\nJSON\n↓\nDatabases\n↓\nTools\n↓\nAI agents\n↓\nGuardrails\n↓\nHumans\n↓\nTesting\n↓\nDeployment\n↓\nMonitoring\n↓\nReal AI solution",
+                            'content' => "By now, you should understand how the following concepts connect:\n\nAI capability\n↓\nPrompts and instructions\n↓\nChatbots\n↓\nRAG\n↓\nAutomation\n↓\nAPIs\n↓\nJSON\n↓\nDatabases\n↓\nTools\n↓\nAI agents\n↓\nGuardrails\n↓\nHumans\n↓\nTesting\n↓\nDeployment\n↓\nMonitoring\n↓\nReal AI solution",
                         ],
                         [
                             'type' => 'text',

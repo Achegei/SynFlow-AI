@@ -330,7 +330,7 @@ TEXT,
                 'content' => <<<'TEXT'
 BUILD → BREAK → DIAGNOSE → FIX
 
-Students must build a practical AI automation.
+Build a practical AI automation.
 TEXT,
             ],
         ]);
@@ -518,7 +518,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Student must:
+Follow this troubleshooting process:
 
 1. State expected behavior.
 2. Describe actual behavior.
@@ -727,7 +727,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Student must:
+Complete the following steps:
 
 1. Identify symptom.
 2. Identify root-cause area.
@@ -760,7 +760,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Student must troubleshoot.
+Troubleshoot the problem.
 TEXT,
             ],
         ]);
@@ -859,7 +859,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Student must design duplicate protection.
+Design a mechanism to prevent duplicate processing.
 TEXT,
             ],
         ]);
@@ -878,7 +878,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Student must design:
+Design the following components:
 
 * Retry behavior
 * Queue
@@ -1061,7 +1061,7 @@ TEXT,
             [
                 'type' => 'activity',
                 'content' => <<<'TEXT'
-Students must prepare an incident report.
+Prepare an incident report.
 TEXT,
             ],
         ]);
@@ -1748,7 +1748,7 @@ TEXT,
             [
                 'type' => 'text',
                 'content' => <<<'TEXT'
-Students should know:
+Here's what you need to know:
 
 Create
 
@@ -2371,7 +2371,7 @@ User says:
 
 A properly designed system should not blindly obey.
 
-Students should learn that user input is untrusted input.
+Remember that user input is untrusted input.
 TEXT,
             ],
         ]);
@@ -3146,7 +3146,7 @@ TEXT,
             [
                 'type' => 'text',
                 'content' => <<<'TEXT'
-Students should become comfortable with these:
+Get familiar with these HTTP status codes:
 
 2xx — Success
 
@@ -3275,7 +3275,7 @@ First run with correct credentials.
 
 Then intentionally replace the API credential with an invalid value.
 
-Ask students to:
+Follow these steps:
 
 1. Observe error.
 2. Record HTTP code.
