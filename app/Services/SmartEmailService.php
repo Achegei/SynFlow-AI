@@ -32,6 +32,16 @@ class SmartEmailService
                 ->where('event', $event)
                 ->where('status', 'sent');
 
+            if ($event === 'payment_completed') {
+                if (!isset($metadata['payment_id'])) {
+                    return false;
+                }
+
+                return $query
+                    ->where('metadata->payment_id', $metadata['payment_id'])
+                    ->exists();
+            }
+
             if (
                 $event === 'payment_cancelled_followup'
                 && isset($metadata['payment_activity_id'])

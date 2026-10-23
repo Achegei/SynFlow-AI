@@ -13,6 +13,7 @@ class Payment extends Model
         'user_id',
         'course_id',
         'package_id',
+        'course_enrollment_id',
         'provider',
         'payment_type',
         'payment_id',
@@ -49,6 +50,11 @@ class Payment extends Model
     public function package()
     {
         return $this->belongsTo(Package::class);
+    }
+
+    public function courseEnrollment()
+    {
+        return $this->belongsTo(CourseEnrollment::class);
     }
 
     public function learningAccess()

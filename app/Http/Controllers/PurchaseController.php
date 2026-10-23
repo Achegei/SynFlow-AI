@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseEnrollment;
 use App\Models\Payment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use IntaSend\IntaSendPHP\Wallet;
@@ -30,6 +32,29 @@ class PurchaseController extends Controller
 
         $course = Course::findOrFail($courseId);
 
+        if ((int) $course->id === (int) config('enrollment.course_id')) {
+            $enrollment = CourseEnrollment::query()
+                ->where('user_id', $user->id)
+                ->where('course_id', $course->id)
+                ->first();
+
+            if (!$enrollment) {
+                abort(403, 'A valid course enrollment is required.');
+            }
+
+            if ($enrollment->isPaid()) {
+                return redirect()->route(
+                    'classroom.show',
+                    $course->id
+                );
+            }
+
+            if ($enrollment->status !== 'pending') {
+                abort(403, 'This enrollment cannot be purchased.');
+            }
+        }
+
+
         /*
         |--------------------------------------------------------------------------
         | Verify course is active
@@ -46,7 +71,9 @@ class PurchaseController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $amount = (float) $course->price;
+        $amount = (int) $course->id === (int) config('enrollment.course_id')
+            ? (float) config('enrollment.fee')
+            : (float) $course->price;
 
         if ($amount < 0.10) {
             Log::error('[Institution Payment] Invalid course price', [
@@ -112,6 +139,31 @@ class PurchaseController extends Controller
 
         $course = Course::findOrFail($courseId);
 
+        $enrollment = null;
+
+        if ((int) $course->id === (int) config('enrollment.course_id')) {
+            $enrollment = CourseEnrollment::query()
+                ->where('user_id', $user->id)
+                ->where('course_id', $course->id)
+                ->first();
+
+            if (!$enrollment) {
+                abort(403, 'A valid course enrollment is required.');
+            }
+
+            if ($enrollment->isPaid()) {
+                return redirect()->route(
+                    'classroom.show',
+                    $course->id
+                );
+            }
+
+            if ($enrollment->status !== 'pending') {
+                abort(403, 'This enrollment cannot be purchased.');
+            }
+        }
+
+
         /*
         |--------------------------------------------------------------------------
         | Verify course is active
@@ -136,7 +188,9 @@ class PurchaseController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $amount = (float) $course->price;
+        $amount = (int) $course->id === (int) config('enrollment.course_id')
+            ? (float) config('enrollment.fee')
+            : (float) $course->price;
         $currency = 'KES';
 
         if ($amount < 0.10) {
@@ -345,7 +399,73 @@ class PurchaseController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $wallet = new Wallet();
+        if ($enrollment) {
+            $result = DB::transaction(function () use (
+                $enrollment,
+                $user,
+                $courseId,
+                $apiRef,
+                $amount,
+                $currency
+            ) {
+                $lockedEnrollment = CourseEnrollment::query()
+                    ->whereKey($enrollment->id)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                if ($lockedEnrollment->status !== 'pending') {
+                    abort(403, 'This enrollment cannot be purchased.');
+                }
+
+                $existing = Payment::query()
+                    ->where('course_enrollment_id', $lockedEnrollment->id)
+                    ->where('provider', 'intasend')
+                    ->where('status', 'pending')
+                    ->latest('id')
+                    ->first();
+
+                if ($existing) {
+                    return [
+                        'existing' => true,
+                        'payment' => $existing,
+                    ];
+                }
+
+                return [
+                    'existing' => false,
+                    'payment' => Payment::create([
+                        'user_id' => $user->id,
+                        'course_id' => $courseId,
+                        'course_enrollment_id' => $lockedEnrollment->id,
+                        'package_id' => null,
+                        'provider' => 'intasend',
+                        'payment_type' => 'course',
+                        'status' => 'pending',
+                        'payment_id' => null,
+                        'api_ref' => $apiRef,
+                        'amount' => $amount,
+                        'currency' => $currency,
+                        'payload' => null,
+                    ]),
+                ];
+            });
+
+            if ($result['existing']) {
+                return redirect()
+                    ->route('payment.pending', $result['payment']->id)
+                    ->with(
+                        'info',
+                        'An earlier M-Pesa payment is still pending. Please check its status before trying again.'
+                    );
+            }
+
+            $payment = $result['payment'];
+        } else {
+            // Ordinary courses retain the historical invoice-first flow.
+            $payment = null;
+        }
+
+        $wallet = app(Wallet::class);
 
         $credentials = [
             'token' => $secretKey,
@@ -519,40 +639,77 @@ class PurchaseController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $payment = Payment::create([
-            'user_id' => $user->id,
-            'course_id' => $courseId,
+        /*
+         * An independently verified webhook may have associated the
+         * invoice before the original STK request returned.
+         *
+         * Lock and reload the payment to avoid overwriting provider-
+         * verified information with a stale initiation response.
+         */
+        if ($payment === null) {
+            // Ordinary course: create a record only after IntaSend
+            // returns a valid invoice.
+            $payment = Payment::create([
+                'user_id' => $user->id,
+                'course_id' => $courseId,
+                'course_enrollment_id' => null,
+                'package_id' => null,
+                'provider' => 'intasend',
+                'payment_type' => 'course',
+                'status' => 'pending',
+                'payment_id' => $invoiceId,
+                'api_ref' => $apiRef,
+                'amount' => $amount,
+                'currency' => $currency,
+                'payload' => $responseArray,
+            ]);
+        }
 
-            /*
-             * Institution flow does not necessarily use a package.
-             * Keep package_id null.
-             */
-            'package_id' => null,
+        $invoiceAccepted = DB::transaction(
+            function () use ($payment, $invoiceId, $responseArray) {
+                $locked = Payment::query()
+                    ->whereKey($payment->id)
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
-            'provider' => 'intasend',
-            'payment_type' => 'course',
-            'status' => 'pending',
+                if (
+                    $locked->payment_id !== null &&
+                    $locked->payment_id !== $invoiceId
+                ) {
+                    return false;
+                }
 
-            /*
-             * IntaSend invoice/payment identifier.
-             */
-            'payment_id' => $invoiceId,
+                if ($locked->payment_id === null) {
+                    if ($locked->status !== 'pending') {
+                        return false;
+                    }
 
-            /*
-             * Our internal reference.
-             */
-            'api_ref' => $apiRef,
+                    $claimed = Payment::query()
+                        ->where('payment_id', $invoiceId)
+                        ->whereKeyNot($locked->id)
+                        ->exists();
 
-            'amount' => $amount,
-            'currency' => $currency,
+                    if ($claimed) {
+                        return false;
+                    }
 
-            /*
-             * Save complete IntaSend response.
-             */
-            'payload' => json_encode(
-                $responseArray
-            ),
-        ]);
+                    $locked->payment_id = $invoiceId;
+                    $locked->payload = $responseArray;
+                    $locked->save();
+                }
+
+                return true;
+            }
+        );
+
+        if (!$invoiceAccepted) {
+            Log::warning(
+                '[Institution STK] Conflicting late invoice response rejected',
+                ['payment_id' => $payment->id]
+            );
+        }
+
+        $payment->refresh();
 
         /*
         |--------------------------------------------------------------------------
@@ -731,6 +888,7 @@ public function pending(Payment $payment): View|RedirectResponse
         return response()->json([
             'status' => 'pending',
             'redirect' => null,
+            'has_provider_invoice' => !empty($payment->payment_id),
         ]);
     }
 

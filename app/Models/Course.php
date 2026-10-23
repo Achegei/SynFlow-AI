@@ -145,6 +145,7 @@ class Course extends Model
         return $this->learningAccess()
             ->where('user_id', $user->id)
             ->where('status', 'active')
+            ->where('starts_at', '<=', now())
             ->where(function ($query) {
                 $query
                     ->whereNull('expires_at')
@@ -172,6 +173,7 @@ class Course extends Model
         return $this->learningAccess()
             ->where('user_id', $user->id)
             ->where('status', 'active')
+            ->where('starts_at', '<=', now())
             ->where(function ($query) {
                 $query
                     ->whereNull('expires_at')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Institution;
+use App\Services\CourseEnrollmentService;
 use App\Services\LeadTrackingService;
 use App\Services\SmartEmailEventService;
 use Illuminate\Auth\Events\Registered;
@@ -21,7 +22,8 @@ class RegisteredUserController extends Controller
 
     public function __construct(
         protected LeadTrackingService $tracking,
-        protected SmartEmailEventService $emailEvents
+        protected SmartEmailEventService $emailEvents,
+        protected CourseEnrollmentService $enrollments
     ) {
     }
     /**
@@ -101,8 +103,7 @@ class RegisteredUserController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $selectedPackageId = session('selected_ai_package_id');
-        $selectedAiCourseId = session('selected_ai_course_id');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -148,50 +149,80 @@ class RegisteredUserController extends Controller
         |
         */
 
-        $institutionId = session('selected_institution_id');
+        $registrationContext = session('registration_context');
 
-        $institution = $institutionId
-            ? Institution::find($institutionId)
-            : null;
-
-        /*
-        |--------------------------------------------------------------------------
-        | If this is NOT an AI registration, institution remains mandatory.
-        |--------------------------------------------------------------------------
-        */
-
-        if (!$institution && !$selectedPackageId) {
-            return back()
-                ->withInput()
+        if (!in_array($registrationContext, ['institution', 'other'], true)) {
+            return redirect()
+                ->route('choose.university')
                 ->withErrors([
-                    'institution' =>
-                        'Please select a valid institution before registering.',
+                    'registration_context' => 'Please select your enrollment pathway.',
+                ]);
+        }
+
+        $institution = null;
+
+        if ($registrationContext === 'institution') {
+            $institution = Institution::query()
+                ->whereKey(session('selected_institution_id'))
+                ->where('status', 'active')
+                ->first();
+
+            if (!$institution) {
+                return redirect()
+                    ->route('choose.university')
+                    ->withErrors([
+                        'institution_id' => 'Please select an active institution.',
+                    ]);
+            }
+        }
+
+        if (
+            $registrationContext === 'institution'
+            && !$institution->sales_executive_id
+        ) {
+            return redirect()
+                ->route('choose.university')
+                ->withErrors([
+                    'institution_id' =>
+                        'This institution is not yet configured for enrollment. Please contact support.',
                 ]);
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | Create User
-        |--------------------------------------------------------------------------
-        */
+         |--------------------------------------------------------------------------
+         | Create User
+         |--------------------------------------------------------------------------
+         */
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'profile_photo_url' => $profilePhotoUrl,
-            'role' => 'student',
-            'referred_by' => $referrer?->id,
+        [$user, $enrollment] = \Illuminate\Support\Facades\DB::transaction(
+            function () use (
+                $request,
+                $profilePhotoUrl,
+                $referrer,
+                $institution,
+                $registrationContext
+            ) {
+                $user = User::create([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'profile_photo_url' => $profilePhotoUrl,
+                    'role' => 'student',
+                    'referred_by' => $referrer?->id,
+                    'institution_id' => $institution?->id,
+                    'must_change_password' => false,
+                    'initial_password_reset_required' => true,
+                ]);
 
-            /*
-            | AI learners can register without an institution.
-            */
-            'institution_id' => $institution?->id,
+                $enrollment = $this->enrollments->create(
+                    $user,
+                    $registrationContext,
+                    $institution
+                );
 
-            // Registration itself does not require a password change.
-            'must_change_password' => false,
-            'initial_password_reset_required' => true,
-        ]);
+                return [$user, $enrollment];
+            }
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -250,15 +281,9 @@ class RegisteredUserController extends Controller
         $this->tracking->track(
             'registration_completed',
             [
-                'registration_type' => $selectedPackageId
-                    ? 'ai_package'
-                    : 'institution',
+                'registration_type' => $registrationContext,
 
                 'user_id' => $user->id,
-
-                'package_id' => $selectedPackageId,
-
-                'ai_course_id' => $selectedAiCourseId,
 
                 'institution_id' => $institution?->id,
             ],
@@ -269,11 +294,7 @@ class RegisteredUserController extends Controller
             'registration_completed',
             $user,
             [
-                'registration_type' => $selectedPackageId
-                    ? 'ai_package'
-                    : 'institution',
-                'package_id' => $selectedPackageId,
-                'ai_course_id' => $selectedAiCourseId,
+                'registration_type' => $registrationContext,
                 'institution_id' => $institution?->id,
             ]
         );
@@ -295,61 +316,16 @@ class RegisteredUserController extends Controller
         |
         */
 
-        if ($selectedPackageId) {
+        session()->forget([
+            'selected_institution_id',
+            'registration_context',
+            'selected_ai_package_id',
+            'selected_ai_course_id',
+        ]);
 
-            /*
-            |--------------------------------------------------------------------------
-            | Make sure we know which AI course this package unlocks.
-            |--------------------------------------------------------------------------
-            */
-
-            if (!$selectedAiCourseId) {
-
-                Auth::logout();
-
-                return redirect()
-                    ->route('ai.packages')
-                    ->with('error', 'Please select an AI package again.');
-            }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Preserve the AI selection for the payment controller.
-            |--------------------------------------------------------------------------
-            */
-
-            session()->put([
-                'selected_ai_package_id' => $selectedPackageId,
-                'selected_ai_course_id' => $selectedAiCourseId,
-            ]);
-
-            /*
-            |--------------------------------------------------------------------------
-            | Institution selection is no longer needed.
-            |--------------------------------------------------------------------------
-            */
-
-            session()->forget('selected_institution_id');
-
-            /*
-            |--------------------------------------------------------------------------
-            | Continue to AI payment.
-            |--------------------------------------------------------------------------
-            */
-
-            return redirect()->route('ai.payment.create', [
-                'package' => $selectedPackageId,
-            ]);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | NORMAL INSTITUTION REGISTRATION FLOW
-        |--------------------------------------------------------------------------
-        */
-
-        session()->forget('selected_institution_id');
-
-        return redirect()->route('classroom');
+        return redirect()->route(
+            'purchase.show',
+            $enrollment->course_id
+        );
     }
 }

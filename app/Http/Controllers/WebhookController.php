@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\PaymentLog;
-use App\Services\PaymentCompletionService;
+use App\Services\IntaSendPaymentService;
+use App\Services\IntaSendInvoiceVerifier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use IntaSend\IntaSendPHP\Collection;
 
 class WebhookController extends Controller
 {
@@ -28,7 +31,7 @@ class WebhookController extends Controller
      */
     public function handleIntaSend(
         Request $request,
-        PaymentCompletionService $completionService
+        IntaSendPaymentService $paymentService
     ) {
         $data = $request->all();
 
@@ -227,236 +230,156 @@ class WebhookController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | 8. Store latest webhook payload
+        | 8. Independently verify payment with IntaSend
         |--------------------------------------------------------------------------
+        |
+        | Incoming webhook fields are notifications, not payment proof.
+        | Never replace stored invoice IDs or API references with values
+        | supplied by the webhook.
+        |
         */
-
-        $payment->payload = json_encode(
-            $data,
-            JSON_UNESCAPED_SLASHES
-        );
 
         /*
-        |--------------------------------------------------------------------------
-        | Make sure invoice ID is preserved.
-        |--------------------------------------------------------------------------
-        */
+         * An enrollment webhook can arrive before the STK initiation
+         * response stores its invoice ID. Never trust the webhook ID
+         * without independently checking the provider's invoice.
+         */
+        if (
+            $payment->course_enrollment_id !== null &&
+            $payment->status === 'pending' &&
+            $payment->payment_id === null &&
+            is_string($invoiceId) &&
+            $invoiceId !== '' &&
+            is_string($apiRef) &&
+            $apiRef !== '' &&
+            $payment->api_ref === $apiRef
+        ) {
+            try {
+                $collection = app(Collection::class);
 
-        if ($invoiceId) {
-            $payment->payment_id = $invoiceId;
-        }
+                $collection->init([
+                    'token' => config('intasend.secret_key'),
+                    'publishable_key' => config('intasend.publishable_key'),
+                    'test' => config('intasend.test_mode', false),
+                ]);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Make sure API reference is preserved.
-        |--------------------------------------------------------------------------
-        */
+                $response = $collection->status($invoiceId);
+                $invoice = $response->invoice ?? null;
 
-        if ($apiRef) {
-            $payment->api_ref = $apiRef;
-        }
+                $candidate = clone $payment;
+                $candidate->payment_id = $invoiceId;
 
-        $payment->save();
+                if (
+                    !is_object($invoice) ||
+                    !(new IntaSendInvoiceVerifier())->verify(
+                        $candidate,
+                        $invoice
+                    )
+                ) {
+                    Log::warning(
+                        '[Webhook] Early invoice verification failed',
+                        ['payment_id' => $payment->id]
+                    );
 
-        Log::info(
-            '[Webhook] Payment located',
-            [
-                'payment_id' => $payment->id,
-                'invoice_id' => $payment->payment_id,
-                'api_ref' => $payment->api_ref,
-                'current_status' => $payment->status,
-                'state' => $state,
-            ]
-        );
+                    return response()->json(['success' => true]);
+                }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 9. Determine whether payment is confirmed
-        |--------------------------------------------------------------------------
-        */
+                $associated = DB::transaction(
+                    function () use ($payment, $invoiceId, $apiRef) {
+                        $locked = Payment::query()
+                            ->whereKey($payment->id)
+                            ->lockForUpdate()
+                            ->firstOrFail();
 
-        $paymentConfirmed =
-            $paid
-            ||
-            in_array(
-                $state,
-                [
-                    'complete',
-                    'completed',
-                    'paid',
-                    'successful',
-                    'success',
-                ],
-                true
-            );
+                        if (
+                            $locked->status !== 'pending' ||
+                            $locked->api_ref !== $apiRef ||
+                            (
+                                $locked->payment_id !== null &&
+                                $locked->payment_id !== $invoiceId
+                            )
+                        ) {
+                            return false;
+                        }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 10. Payment is not confirmed
-        |--------------------------------------------------------------------------
-        */
+                        $claimed = Payment::query()
+                            ->where('payment_id', $invoiceId)
+                            ->whereKeyNot($locked->id)
+                            ->exists();
 
-        if (!$paymentConfirmed) {
+                        if ($claimed) {
+                            return false;
+                        }
 
-            /*
-            |--------------------------------------------------------------------------
-            | Handle failed payment states.
-            |--------------------------------------------------------------------------
-            */
+                        if ($locked->payment_id === null) {
+                            $locked->payment_id = $invoiceId;
+                            $locked->save();
+                        }
 
-            if (
-                in_array(
-                    $state,
-                    [
-                        'failed',
-                        'cancelled',
-                        'canceled',
-                        'rejected',
-                    ],
-                    true
-                )
-            ) {
+                        return true;
+                    }
+                );
 
-                $payment->status = 'failed';
+                if (!$associated) {
+                    Log::warning(
+                        '[Webhook] Early invoice association rejected',
+                        ['payment_id' => $payment->id]
+                    );
 
-                $payment->save();
+                    return response()->json(['success' => true]);
+                }
 
-                Log::warning(
-                    '[Webhook] Payment marked FAILED',
+                $payment->refresh();
+            } catch (\Throwable $e) {
+                Log::error(
+                    '[Webhook] Early invoice reconciliation failed',
                     [
                         'payment_id' => $payment->id,
-                        'invoice_id' => $payment->payment_id,
-                        'state' => $state,
+                        'error' => $e->getMessage(),
                     ]
                 );
 
                 return response()->json([
-                    'success' => true,
-                ]);
+                    'success' => false,
+                    'message' => 'Payment reconciliation failed.',
+                ], 500);
             }
-
-            /*
-            |--------------------------------------------------------------------------
-            | Still pending.
-            |--------------------------------------------------------------------------
-            */
-
-            Log::info(
-                '[Webhook] Payment not yet confirmed',
-                [
-                    'payment_id' => $payment->id,
-                    'invoice_id' => $payment->payment_id,
-                    'api_ref' => $payment->api_ref,
-                    'paid' => $paid,
-                    'state' => $state,
-                ]
-            );
-
-            return response()->json([
-                'success' => true,
-            ]);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 11. Payment confirmed
-        |--------------------------------------------------------------------------
-        |
-        | DO NOT manually:
-        |
-        | $payment->status = 'paid';
-        |
-        | CompletionService owns that responsibility.
-        |
-        |--------------------------------------------------------------------------
-        */
-
-        Log::info(
-            '[Webhook] PAYMENT CONFIRMED',
-            [
-                'payment_id' => $payment->id,
-                'invoice_id' => $payment->payment_id,
-                'api_ref' => $payment->api_ref,
-                'state' => $state,
-            ]
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | 12. Complete payment
-        |--------------------------------------------------------------------------
-        |
-        | PaymentCompletionService handles:
-        |
-        | - Marking payment as paid
-        | - paid_at
-        | - Commission
-        | - AI LearningAccess
-        | - Institutional course access
-        | - Duplicate protection
-        |
-        |--------------------------------------------------------------------------
-        */
-
-        try {
-
-            $completedPayment =
-                $completionService->complete($payment);
-
-            Log::info(
-                '[Webhook] Payment completion successful',
-                [
-                    'payment_id' => $completedPayment->id,
-                    'invoice_id' => $completedPayment->payment_id,
-                    'status' => $completedPayment->status,
-                    'user_id' => $completedPayment->user_id,
-                    'course_id' => $completedPayment->course_id,
-                    'package_id' => $completedPayment->package_id,
-                ]
+        if (
+            ($invoiceId && $payment->payment_id !== $invoiceId) ||
+            ($apiRef && $payment->api_ref !== $apiRef)
+        ) {
+            Log::warning(
+                '[Webhook] Payment reference mismatch',
+                ['payment_id' => $payment->id]
             );
 
+            return response()->json(['success' => true]);
+        }
+
+        try {
+            $payment = $paymentService->synchronize($payment);
         } catch (\Throwable $e) {
-
-            /*
-            |--------------------------------------------------------------------------
-            | IMPORTANT
-            |--------------------------------------------------------------------------
-            |
-            | Return 500 here so IntaSend can retry the webhook if the
-            | application failed while completing the payment.
-            |
-            |--------------------------------------------------------------------------
-            */
-
             Log::error(
-                '[Webhook] Payment completion FAILED',
+                '[Webhook] Provider reconciliation failed',
                 [
                     'payment_id' => $payment->id,
-                    'invoice_id' => $payment->payment_id,
-                    'api_ref' => $payment->api_ref,
                     'error' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
                 ]
             );
 
             return response()->json([
                 'success' => false,
-                'message' => 'Payment completion failed.',
+                'message' => 'Payment reconciliation failed.',
             ], 500);
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | 13. Complete
-        |--------------------------------------------------------------------------
-        */
-
         Log::info(
-            '[Webhook] Processing completed successfully',
+            '[Webhook] Reconciliation finished',
             [
                 'payment_id' => $payment->id,
-                'invoice_id' => $payment->payment_id,
-                'api_ref' => $payment->api_ref,
+                'status' => $payment->status,
             ]
         );
 

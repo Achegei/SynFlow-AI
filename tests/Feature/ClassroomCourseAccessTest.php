@@ -10,7 +10,8 @@ uses(RefreshDatabase::class);
 it('shows the paywall and hides protected curriculum for a learner without course access', function () {
     $user = User::factory()->create();
 
-    $course = Course::query()->create([
+    $course = Course::query()->forceCreate([
+        'id' => 1,
         'title' => 'Artificial Intelligence & Automation Systems (AI & Workflow Automation)',
         'description' => 'Protected production course.',
     ]);
@@ -41,7 +42,8 @@ it('shows the paywall and hides protected curriculum for a learner without cours
 it('shows the classroom and hides the paywall for a learner with permanent course access', function () {
     $user = User::factory()->create();
 
-    $course = Course::query()->create([
+    $course = Course::query()->forceCreate([
+        'id' => 1,
         'title' => 'Artificial Intelligence & Automation Systems (AI & Workflow Automation)',
         'description' => 'Protected production course.',
     ]);

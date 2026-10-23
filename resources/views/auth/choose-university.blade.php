@@ -21,7 +21,40 @@
             </p>
         </div>
 
-        <form method="POST" action="{{ route('choose.university.store') }}">
+        <div class="mb-6 grid grid-cols-2 gap-3">
+            <button
+                type="button"
+                id="institution-option"
+                aria-pressed="true"
+                class="rounded-xl border-2 border-indigo-600 bg-indigo-50 p-4 text-left transition"
+            >
+                <span class="block font-semibold text-gray-900">Institution</span>
+                <span class="mt-1 block text-sm text-gray-600">
+                    Join through your school, college or university.
+                </span>
+            </button>
+
+            <button
+                type="button"
+                id="other-option"
+                aria-pressed="false"
+                class="rounded-xl border-2 border-gray-200 bg-white p-4 text-left transition"
+            >
+                <span class="block font-semibold text-gray-900">Other</span>
+                <span class="mt-1 block text-sm text-gray-600">
+                    Register independently.
+                </span>
+            </button>
+        </div>
+
+        <form method="POST" action="{{ route('choose.university.store') }}" id="registration-form">
+
+            <input
+                type="hidden"
+                name="registration_context"
+                id="registration-context"
+                value="institution"
+            >
 
             @csrf
 
@@ -67,6 +100,42 @@
             </button>
 
         </form>
+
+        <script>
+            const institutionOption = document.getElementById('institution-option');
+            const otherOption = document.getElementById('other-option');
+            const registrationContext = document.getElementById('registration-context');
+            const institutionSelect = document.querySelector('[name="institution_id"]');
+            const institutionField = institutionSelect.closest('.mb-6');
+
+            function selectPath(path) {
+                const isInstitution = path === 'institution';
+
+                registrationContext.value = path;
+                institutionField.hidden = !isInstitution;
+                institutionSelect.required = isInstitution;
+
+                if (!isInstitution) {
+                    institutionSelect.value = '';
+                }
+
+                for (const [button, selected] of [
+                    [institutionOption, isInstitution],
+                    [otherOption, !isInstitution],
+                ]) {
+                    button.setAttribute('aria-pressed', String(selected));
+                    button.classList.toggle('border-indigo-600', selected);
+                    button.classList.toggle('bg-indigo-50', selected);
+                    button.classList.toggle('border-gray-200', !selected);
+                    button.classList.toggle('bg-white', !selected);
+                }
+            }
+
+            institutionOption.addEventListener('click', () => selectPath('institution'));
+            otherOption.addEventListener('click', () => selectPath('other'));
+
+            selectPath('institution');
+        </script>
 
     </div>
 

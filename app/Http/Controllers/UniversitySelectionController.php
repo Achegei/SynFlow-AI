@@ -28,11 +28,37 @@ class UniversitySelectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'institution_id' => [
+            'registration_context' => [
                 'required',
+                'in:institution,other',
+            ],
+            'institution_id' => [
+                'required_if:registration_context,institution',
+                'nullable',
                 'exists:institutions,id',
             ],
         ]);
+
+        if ($request->input('registration_context') === 'other') {
+            session()->forget('selected_institution_id');
+
+            session()->put('registration_context', 'other');
+
+            return redirect()->route('register');
+        }
+
+        $institution = Institution::query()
+            ->whereKey($request->institution_id)
+            ->where('status', 'active')
+            ->first();
+
+        if (!$institution) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'institution_id' => 'Please select an active institution.',
+                ]);
+        }
 
         /*
         |--------------------------------------------------------------------------

@@ -9,6 +9,7 @@ class CommissionTransaction extends Model
     protected $fillable = [
 
         'payment_id',
+        'course_enrollment_id',
         'student_id',
         'institution_id',
         'sales_executive_id',
@@ -19,4 +20,10 @@ class CommissionTransaction extends Model
         'sales_amount',
         'company_amount',
     ];
+
+    public function courseEnrollment()
+    {
+        return $this->belongsTo(CourseEnrollment::class);
+    }
+
 }

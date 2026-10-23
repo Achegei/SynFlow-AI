@@ -44,7 +44,18 @@ class IntaSendPaymentService
         |--------------------------------------------------------------------------
         */
 
-        $collection = new Collection();
+        /*
+         * Do not query IntaSend without a valid invoice identifier.
+         * An invoice-less pending payment must remain unchanged.
+         */
+        if (
+            !is_string($payment->payment_id) ||
+            trim($payment->payment_id) === ''
+        ) {
+            return $payment;
+        }
+
+        $collection = app(Collection::class);
 
         $collection->init([
             'token' => config('intasend.secret_key'),
@@ -106,6 +117,22 @@ class IntaSendPaymentService
             return $payment->fresh();
         }
 
+        /*
+         * Verify invoice identity, API reference, amount and currency
+         * before accepting ANY provider state, including failure.
+         */
+        if (!(new IntaSendInvoiceVerifier())->verify($payment, $invoice)) {
+            Log::warning(
+                '[IntaSend Payment Service] Provider invoice mismatch',
+                [
+                    'payment_id' => $payment->id,
+                    'invoice_id' => $payment->payment_id,
+                ]
+            );
+
+            return $payment->fresh();
+        }
+
         $state = strtolower(
             trim(
                 (string) (
@@ -135,10 +162,10 @@ class IntaSendPaymentService
         |--------------------------------------------------------------------------
         */
 
-        $payment->payload = json_encode(
-            $response,
-            JSON_UNESCAPED_SLASHES
-        );
+        $payment->payload = json_decode(
+            json_encode($response, JSON_UNESCAPED_SLASHES),
+            true
+        ) ?? [];
 
         $payment->save();
 
@@ -167,6 +194,21 @@ class IntaSendPaymentService
                     'invoice_id' => $payment->payment_id,
                 ]
             );
+
+            $verifier = new IntaSendInvoiceVerifier();
+
+            if (!$verifier->verify($payment, $invoice)) {
+                Log::error(
+                    '[IntaSend Payment Service] Invoice verification failed',
+                    [
+                        'payment_id' => $payment->id,
+                        'expected_invoice_id' => $payment->payment_id,
+                        'course_id' => $payment->course_id,
+                    ]
+                );
+
+                return $payment->fresh();
+            }
 
             return $this->completionService
                 ->complete($payment);
@@ -291,9 +333,9 @@ class IntaSendPaymentService
                     ActivityLog::create([
                         'event' => $activityEvent,
 
-                        'visitor_id' => request()->session()->get(
-                            'lead_visitor_id'
-                        ),
+                        'visitor_id' => request()->hasSession()
+                            ? request()->session()->get('lead_visitor_id')
+                            : null,
 
                         'user_id' => $payment->user_id,
 

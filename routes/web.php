@@ -81,12 +81,20 @@ Route::post('/certificate/download/{courseId}',
 Route::post(
     '/institution/request-payout',
     [PayoutRequestController::class, 'institution']
-)->name('institution.request-payout');
+)->middleware([
+    'auth',
+    'force.password',
+    'role:institution_admin',
+])->name('institution.request-payout');
 
 Route::post(
     '/sales/request-payout',
     [PayoutRequestController::class, 'sales']
-)->name('sales.request-payout');
+)->middleware([
+    'auth',
+    'force.password',
+    'role:sales_executive',
+])->name('sales.request-payout');
 
 
 //================================================

@@ -32,7 +32,13 @@
     |
     */
 
-    $isPaidCourse = (int) $course->id === 1;
+    $isEnrollmentCourse = (int) $course->id === (int) config('enrollment.course_id');
+    $isLegacyPaidCourse = (int) $course->id === 1 && ! $isEnrollmentCourse;
+    $isPaidCourse = $isEnrollmentCourse || $isLegacyPaidCourse;
+    $displayFee = $isEnrollmentCourse
+        ? (float) config('enrollment.fee')
+        : 10000.00;
+    $formattedFee = number_format($displayFee, 0);
 
     $hasAiAccess = ! is_null($learningAccess);
 
@@ -358,7 +364,7 @@
                                 </p>
 
                                 <p class="mt-1 text-3xl font-extrabold text-[#061638]">
-                                    KES 10,000
+                                    KES {{ $formattedFee }}
                                 </p>
                             </div>
 
@@ -394,7 +400,7 @@
                                     type="submit"
                                     class="inline-flex w-full items-center justify-center rounded-xl bg-[#D71920] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#b9151b] focus:outline-none focus:ring-4 focus:ring-red-100 sm:w-auto"
                                 >
-                                    Pay KES 10,000 with M-PESA
+                                    Pay KES {{ $formattedFee }} with M-PESA
                                 </button>
                             </form>
 
@@ -4230,6 +4236,25 @@ document.addEventListener(
     {
         bindLessonNavigationButtons();
         updateLessonNavigation();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Open a specific quiz when arriving from its standalone route.
+        |--------------------------------------------------------------------------
+        */
+
+        const requestedQuizId = new URLSearchParams(
+            window.location.search
+        ).get('quiz');
+
+        if (
+            requestedQuizId &&
+            /^[1-9][0-9]*$/.test(requestedQuizId) &&
+            document.getElementById('quiz-panel-' + requestedQuizId) &&
+            typeof window.showLearningItem === 'function'
+        ) {
+            window.showLearningItem('quiz', requestedQuizId);
+        }
     }
 );
 

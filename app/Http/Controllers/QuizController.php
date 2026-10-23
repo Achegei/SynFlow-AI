@@ -14,9 +14,19 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        $quiz->load('questions');
+        $course = $quiz->module?->course;
 
-        return view('quizzes.show', compact('quiz'));
+        abort_unless($course, 403);
+
+        $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
+            || (int) $course->id === 1;
+
+        abort_if($requiresAccess && ! $course->hasAccessForUser(auth()->user()), 403);
+
+        return redirect()->route('classroom.show', [
+            'id' => $course->id,
+            'quiz' => $quiz->id,
+        ]);
     }
 
     /**
@@ -32,6 +42,15 @@ class QuizController extends Controller
                 'message' => 'You must be logged in to submit this quiz.',
             ], 401);
         }
+
+        $course = $quiz->module?->course;
+
+        abort_unless($course, 403);
+
+        $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
+            || (int) $course->id === 1;
+
+        abort_if($requiresAccess && ! $course->hasAccessForUser($user), 403);
 
         $quiz->load('questions');
 

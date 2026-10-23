@@ -78,7 +78,11 @@
                     id="page-description"
                     class="mt-2 text-gray-600"
                 >
-                    Your M-Pesa payment is being processed.
+                    @if($payment->payment_id)
+                        Your M-Pesa payment is being processed.
+                    @else
+                        Payment verification is pending.
+                    @endif
                 </p>
 
             </div>
@@ -185,12 +189,22 @@
                         <div>
 
                             <h2 class="font-semibold text-yellow-800">
-                                Check your phone
+                                @if($payment->payment_id)
+                                    Check your phone
+                                @else
+                                    Payment verification is pending
+                                @endif
                             </h2>
 
                             <p class="mt-1 text-sm leading-6 text-yellow-700">
-                                An M-Pesa payment request has been sent to your phone.
-                                Enter your M-Pesa PIN to complete the payment.
+                                @if($payment->payment_id)
+                                    An M-Pesa payment request has been sent to your phone.
+                                    Enter your M-Pesa PIN to complete the payment.
+                                @else
+                                    We could not confirm whether the M-Pesa request reached your phone.
+                                    If you received a payment prompt, check its details before proceeding.
+                                    Do not initiate another payment while this attempt is being reviewed.
+                                @endif
                             </p>
 
                         </div>
@@ -223,7 +237,11 @@
                         </svg>
 
                         <span id="checking-message">
-                            Waiting for payment confirmation...
+                            @if($payment->payment_id)
+                                Waiting for payment confirmation...
+                            @else
+                                Waiting for payment verification...
+                            @endif
                         </span>
 
                     </div>
@@ -263,7 +281,11 @@
                     id="footer-message"
                     class="text-xs text-gray-500"
                 >
-                    Please complete the M-Pesa payment on your phone.
+                    @if($payment->payment_id)
+                        Please complete the M-Pesa payment on your phone.
+                    @else
+                        Keep your transaction reference for payment support.
+                    @endif
                 </p>
 
             </div>
@@ -279,6 +301,10 @@
 
     const paymentStatusUrl = @json(
         route('payment.status', $payment->id)
+    );
+
+    let hasProviderInvoice = @json(
+        !empty($payment->payment_id)
     );
 
     let checkingPayment = false;
@@ -407,6 +433,18 @@
             |--------------------------------------------------------------------------
             */
 
+            if (typeof data.has_provider_invoice === 'boolean') {
+                const invoiceRecovered =
+                    !hasProviderInvoice && data.has_provider_invoice;
+
+                hasProviderInvoice = data.has_provider_invoice;
+
+                if (invoiceRecovered) {
+                    window.location.reload();
+                    return;
+                }
+            }
+
             updatePendingState();
 
 
@@ -456,8 +494,9 @@
 
         document.getElementById(
             'checking-message'
-        ).innerText =
-            'Waiting for payment confirmation...';
+        ).innerText = hasProviderInvoice
+            ? 'Waiting for payment confirmation...'
+            : 'Waiting for payment verification...';
 
     }
 

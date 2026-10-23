@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Course;
+use App\Models\CourseEnrollment;
 use App\Models\LearningAccess;
 use App\Models\Package;
 use App\Models\Payment;
@@ -39,7 +40,10 @@ class PaymentCompletionService
             |--------------------------------------------------------------------------
             */
 
-            $payment->refresh();
+            $payment = Payment::query()
+                ->whereKey($payment->getKey())
+                ->lockForUpdate()
+                ->firstOrFail();
 
             /*
             |--------------------------------------------------------------------------
@@ -66,6 +70,11 @@ class PaymentCompletionService
                 |--------------------------------------------------------------------------
                 */
 
+                if ($payment->course_enrollment_id !== null) {
+                    $this->commissionService->process($payment);
+                }
+
+                $this->activateEnrollment($payment);
                 $this->ensureAccess($payment);
 
                 return $payment->fresh();
@@ -92,17 +101,21 @@ class PaymentCompletionService
             $user = User::find($payment->user_id);
 
             if ($user) {
-                $this->smartEmailEventService->handle(
-                    'payment_completed',
-                    $user,
-                    [
-                        'payment_id' => $payment->id,
-                        'invoice_id' => $payment->payment_id,
-                        'course_id' => $payment->course_id,
-                        'package_id' => $payment->package_id,
-                        'amount' => $payment->amount,
-                    ]
-                );
+                $emailMetadata = [
+                    'payment_id' => $payment->id,
+                    'invoice_id' => $payment->payment_id,
+                    'course_id' => $payment->course_id,
+                    'package_id' => $payment->package_id,
+                    'amount' => $payment->amount,
+                ];
+
+                DB::afterCommit(function () use ($user, $emailMetadata) {
+                    $this->smartEmailEventService->handle(
+                        'payment_completed',
+                        $user,
+                        $emailMetadata
+                    );
+                });
             }
 
             Log::info(
@@ -135,8 +148,20 @@ class PaymentCompletionService
 
                 /*
                 |--------------------------------------------------------------------------
-                | Do not destroy successful payment completion just because
-                | commission processing failed.
+                | Enrollment-linked payments require atomic commission
+                | allocation. Propagate failures so the transaction rolls back.
+                | Preserve legacy behavior for historical payments.
+                |--------------------------------------------------------------------------
+                */
+
+                if ($payment->course_enrollment_id !== null) {
+                    throw $e;
+                }
+
+                /*
+                |--------------------------------------------------------------------------
+                | Do not destroy successful legacy payment completion just
+                | because commission processing failed.
                 |--------------------------------------------------------------------------
                 */
 
@@ -155,6 +180,7 @@ class PaymentCompletionService
             |--------------------------------------------------------------------------
             */
 
+            $this->activateEnrollment($payment);
             $this->ensureAccess($payment);
 
             Log::info(
@@ -170,6 +196,53 @@ class PaymentCompletionService
 
             return $payment->fresh();
         });
+    }
+
+    /**
+     * Activate the enrollment associated with a completed payment.
+     *
+     * Called inside the payment completion transaction.
+     * Historical payments without an enrollment retain legacy behavior.
+     */
+    private function activateEnrollment(Payment $payment): void
+    {
+        if ($payment->course_enrollment_id === null) {
+            return;
+        }
+
+        if ($payment->status !== 'paid') {
+            throw new \DomainException(
+                'Enrollment cannot be activated by an unpaid payment.'
+            );
+        }
+
+        $enrollment = CourseEnrollment::query()
+            ->whereKey($payment->course_enrollment_id)
+            ->lockForUpdate()
+            ->firstOrFail();
+
+        if (
+            (int) $enrollment->user_id !== (int) $payment->user_id ||
+            (int) $enrollment->course_id !== (int) $payment->course_id
+        ) {
+            throw new \DomainException(
+                'Payment does not match its enrollment.'
+            );
+        }
+
+        if ($enrollment->status === 'paid') {
+            return;
+        }
+
+        if ($enrollment->status !== 'pending') {
+            throw new \DomainException(
+                'Enrollment is not eligible for activation.'
+            );
+        }
+
+        $enrollment->status = 'paid';
+        $enrollment->paid_at = $payment->paid_at ?? now();
+        $enrollment->save();
     }
 
     /**

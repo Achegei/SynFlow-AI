@@ -18,6 +18,15 @@ class EpisodeProgressController extends Controller
             return response()->json(['status' => 'unauthorized'], 401);
         }
 
+        $course = $episode->module?->course;
+
+        abort_unless($course, 403);
+
+        $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
+            || (int) $course->id === 1;
+
+        abort_if($requiresAccess && ! $course->hasAccessForUser($user), 403);
+
         // Mark episode as watched
         $user->episodes()->syncWithoutDetaching([
             $episode->id => ['watched' => true]
@@ -54,6 +63,15 @@ class EpisodeProgressController extends Controller
         if (!$user) {
             return redirect()->back();
         }
+
+        $course = $episode->module?->course;
+
+        abort_unless($course, 403);
+
+        $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
+            || (int) $course->id === 1;
+
+        abort_if($requiresAccess && ! $course->hasAccessForUser($user), 403);
 
         // Check existing pivot record
         $watched = $user->episodes()
