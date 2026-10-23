@@ -400,7 +400,7 @@
 
 
                             <a
-                                href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                                href="{{route('choose.university')}}"
                                 class="
                                     inline-flex
                                     items-center
@@ -454,6 +454,13 @@
                             >
                                 Partner With Us
                             </a>
+
+                            <a href="{{ route('leadership') }}"
+                                class="nav-link py-2 text-sm font-semibold text-[#0B1F3A] hover:text-[#1E73BE] transition-colors duration-200">
+                                Leadership
+                            </a>
+
+
 
 
                             <a
@@ -694,7 +701,7 @@
 
 
                         <a
-                            href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                            href="{{ route('choose.university') }}"
                             @click="open = false"
                             class="
                                 flex
@@ -753,6 +760,14 @@
                         >
                             Partner With Us
                         </a>
+
+                        <a href="{{ route('leadership') }}"
+                            @click="open = false"
+                            class="flex items-center px-4 py-3 rounded-xl text-[#0B1F3A] font-semibold hover:bg-[#F4FAFE] hover:text-[#1E73BE] transition">
+                            Leadership & Directors
+                        </a>
+
+
 
 
                         <a
@@ -1084,7 +1099,7 @@
                         <li>
 
                             <a
-                                href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                                href="{{ route('choose.university') }}"
                                 class="
                                     inline-block
                                     text-blue-300
@@ -1137,6 +1152,15 @@
                             </a>
 
                         </li>
+
+                        <li>
+                            <a href="{{ route('leadership') }}"
+                                class="inline-block hover:text-white hover:translate-x-1 transition-all duration-200">
+                                Leadership & Directors
+                            </a>
+                        </li>
+
+
 
 
                         <li>

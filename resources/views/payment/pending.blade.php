@@ -263,7 +263,7 @@
                     <button
                         id="refresh-button"
                         type="button"
-                        onclick="checkPaymentStatus()"
+                        onclick="handlePaymentAction()"
                         class="w-full rounded-xl border border-gray-300 bg-white px-5 py-3 text-center text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
                     >
                         Check Payment Status
@@ -309,6 +309,20 @@
 
     let checkingPayment = false;
     let paymentFinished = false;
+    let paymentCanRetry = false;
+
+    const retryCheckoutUrl = @json(
+        route('purchase.show', $payment->course_id)
+    );
+
+    function handlePaymentAction() {
+        if (paymentCanRetry) {
+            window.location.assign(retryCheckoutUrl);
+            return;
+        }
+
+        checkPaymentStatus();
+    }
 
 
     /**
@@ -415,12 +429,15 @@
             |--------------------------------------------------------------------------
             */
 
-            if (data.status === 'failed') {
+            if (data.status === 'failed' || data.status === 'cancelled') {
 
                 paymentFinished = true;
 
                 updateFailedState(
-                    'The M-Pesa payment was not completed.'
+                    data.status === 'cancelled'
+                        ? 'You cancelled the M-Pesa payment on your phone.'
+                        : 'The M-Pesa payment was not completed.',
+                    data.status === 'cancelled'
                 );
 
                 return;
@@ -616,7 +633,7 @@
     /**
      * Failed payment state.
      */
-    function updateFailedState(message) {
+    function updateFailedState(message, cancelled = false) {
 
         const badge =
             document.getElementById('payment-status-badge');
@@ -624,13 +641,13 @@
         badge.className =
             'inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700';
 
-        badge.innerText = 'Failed';
+        badge.innerText = cancelled ? 'Cancelled' : 'Failed';
 
 
         document.getElementById(
             'page-title'
         ).innerText =
-            'Payment Failed';
+            cancelled ? 'Payment Cancelled' : 'Payment Failed';
 
 
         document.getElementById(
@@ -710,6 +727,7 @@
             document.getElementById('refresh-button');
 
         if (button) {
+            paymentCanRetry = true;
             button.disabled = false;
             button.innerText = 'Try Again';
         }

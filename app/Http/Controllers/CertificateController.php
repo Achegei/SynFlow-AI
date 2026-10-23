@@ -9,9 +9,14 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CertificateController extends Controller
 {
+    public function generate($course)
+    {
+        abort(403, 'Self-service certificate generation is unavailable.');
+    }
+
     public function download(Request $request, $courseId)
     {
-        if ((int) $courseId === 1) {
+        if (in_array((int) $courseId, [1, 2], true)) {
             abort(403, 'Certificates are not available for this course.');
         }
 

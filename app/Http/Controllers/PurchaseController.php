@@ -32,6 +32,12 @@ class PurchaseController extends Controller
 
         $course = Course::findOrFail($courseId);
 
+        abort_if(
+            (int) $course->id === 2,
+            403,
+            'This course is available exclusively through corporate training enquiries.'
+        );
+
         if ((int) $course->id === (int) config('enrollment.course_id')) {
             $enrollment = CourseEnrollment::query()
                 ->where('user_id', $user->id)
@@ -138,6 +144,12 @@ class PurchaseController extends Controller
         */
 
         $course = Course::findOrFail($courseId);
+
+        abort_if(
+            (int) $course->id === 2,
+            403,
+            'This course is available exclusively through corporate training enquiries.'
+        );
 
         $enrollment = null;
 
@@ -400,6 +412,44 @@ class PurchaseController extends Controller
         */
 
         if ($enrollment) {
+            // Reconcile the latest pending attempt before deciding whether
+            // another STK push is safe. Never infer failure from elapsed time.
+            $previousPayment = Payment::query()
+                ->where('course_enrollment_id', $enrollment->id)
+                ->where('provider', 'intasend')
+                ->where('status', 'pending')
+                ->latest('id')
+                ->first();
+
+            if ($previousPayment) {
+                try {
+                    app(IntaSendPaymentService::class)
+                        ->synchronize($previousPayment);
+                } catch (\Throwable $e) {
+                    Log::warning(
+                        '[Institution STK] Existing payment reconciliation unavailable',
+                        [
+                            'payment_id' => $previousPayment->id,
+                            'error' => $e->getMessage(),
+                        ]
+                    );
+                }
+
+                // Synchronization may have completed the enrollment.
+                $enrollment->refresh();
+
+                if ($enrollment->isPaid()) {
+                    return redirect()->route(
+                        'classroom.show',
+                        $courseId
+                    );
+                }
+
+                if ($enrollment->status !== 'pending') {
+                    abort(403, 'This enrollment cannot be purchased.');
+                }
+            }
+
             $result = DB::transaction(function () use (
                 $enrollment,
                 $user,
@@ -872,9 +922,9 @@ public function pending(Payment $payment): View|RedirectResponse
         |--------------------------------------------------------------------------
         */
 
-        if ($payment->status === 'failed') {
+        if (in_array($payment->status, ['failed', 'cancelled'], true)) {
             return response()->json([
-                'status' => 'failed',
+                'status' => $payment->status,
                 'redirect' => null,
             ]);
         }
@@ -907,6 +957,12 @@ public function pending(Payment $payment): View|RedirectResponse
         }
 
         $course = Course::findOrFail($courseId);
+
+        abort_if(
+            (int) $course->id === 2,
+            403,
+            'This course is available exclusively through corporate training enquiries.'
+        );
 
         /*
         |--------------------------------------------------------------------------

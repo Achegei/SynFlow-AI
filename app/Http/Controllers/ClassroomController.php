@@ -127,6 +127,7 @@ class ClassroomController extends Controller
             ->merge($aiCourseIds)
             ->merge($packageCourseIds)
             ->merge($institutionCourseIds)
+            ->push(2) // Corporate training: discoverable, but never grants learning access.
             ->unique()
             ->values();
 
@@ -270,6 +271,10 @@ class ClassroomController extends Controller
         | Determine AI subscription access
         |--------------------------------------------------------------------------
         */
+
+        if ((int) $course->id === 2) {
+            return view('classroom.corporate-enquiry', compact('course'));
+        }
 
         $learningAccess = $user->activeLearningAccess(
             $course->id

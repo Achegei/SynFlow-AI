@@ -21,6 +21,7 @@ class EpisodeProgressController extends Controller
         $course = $episode->module?->course;
 
         abort_unless($course, 403);
+        abort_if((int) $course->id === 2, 403);
 
         $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
             || (int) $course->id === 1;
@@ -67,6 +68,7 @@ class EpisodeProgressController extends Controller
         $course = $episode->module?->course;
 
         abort_unless($course, 403);
+        abort_if((int) $course->id === 2, 403);
 
         $requiresAccess = (int) $course->id === (int) config('enrollment.course_id')
             || (int) $course->id === 1;

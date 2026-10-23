@@ -343,7 +343,7 @@
                     {{-- CTA --}}
                     <div class="mt-9 flex flex-wrap gap-4 ml-reveal ml-delay-4">
 
-                        <a href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                        <a href="{{ route('choose.university') }}"
                            class="inline-flex items-center justify-center px-7 py-3.5 rounded-lg bg-[#C90000] text-white font-semibold shadow-sm hover:bg-[#A90000] transition duration-200">
                             Start Learning
                             <span class="ml-2 text-lg leading-none">→</span>
@@ -1458,7 +1458,7 @@
 
                     <div class="mt-9 flex flex-wrap justify-center gap-4">
 
-                        <a href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                        <a href="{{ route('choose.university') }}"
                            class="inline-flex items-center justify-center px-7 py-3.5 rounded-lg bg-[#C90000] text-white font-semibold hover:bg-[#A90000] transition">
                             Start Learning
                         </a>

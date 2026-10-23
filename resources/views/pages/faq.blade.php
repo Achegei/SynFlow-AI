@@ -550,7 +550,7 @@
                 <div class="mt-8">
 
                     <a
-                        href="{{ route('ai.onboarding.step', ['step' => 1]) }}"
+                        href="{{ route('choose.university') }}"
                         class="inline-flex items-center justify-center px-7 py-3.5 rounded-md bg-[#1E73BE] text-white font-semibold hover:bg-[#175D9A] transition"
                     >
                         Start Learning

@@ -160,7 +160,7 @@
 
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
 
-                            Available
+                            {{ (int) $course->id === 2 ? 'Corporate Training Only' : 'Available' }}
 
                         </span>
 
@@ -235,7 +235,7 @@
 
 
                         <span class="text-xs font-bold text-[#2F6BFF]">
-                            AI & Automation
+                            {{ (int) $course->id === 2 ? 'Corporate & Institutional Training' : 'AI & Automation' }}
                         </span>
 
                     </div>
@@ -275,7 +275,7 @@
                             >
 
                                 <span>
-                                    Open Course
+                                    {{ (int) $course->id === 2 ? 'Enquire About Training' : 'Open Course' }}
                                 </span>
 
                                 <svg

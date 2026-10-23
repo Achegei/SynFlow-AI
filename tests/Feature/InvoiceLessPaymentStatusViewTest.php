@@ -98,3 +98,53 @@ test('payment status reports whether a provider invoice is available', function 
         ->assertJsonPath('status', 'pending')
         ->assertJsonPath('has_provider_invoice', true);
 });
+
+test('verified cancelled M-Pesa payment returns a retryable cancelled status', function () {
+    $student = User::factory()->create([
+        'role' => 'student',
+    ]);
+
+    $course = Course::create([
+        'title' => 'Cancelled Payment Status Test',
+        'price' => 5500,
+    ]);
+
+    $payment = Payment::create([
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+        'provider' => 'intasend',
+        'payment_type' => 'course',
+        'payment_id' => 'TEST-CANCELLED-INVOICE',
+        'api_ref' => 'TEST-CANCELLED-REF',
+        'status' => 'pending',
+        'amount' => 5500,
+        'currency' => 'KES',
+    ]);
+
+    $collection = Mockery::mock(Collection::class);
+
+    $collection->shouldReceive('init')->once();
+
+    $collection->shouldReceive('status')
+        ->once()
+        ->with('TEST-CANCELLED-INVOICE')
+        ->andReturn((object) [
+            'invoice' => (object) [
+                'invoice_id' => 'TEST-CANCELLED-INVOICE',
+                'api_ref' => 'TEST-CANCELLED-REF',
+                'value' => 5500,
+                'currency' => 'KES',
+                'state' => 'CANCELLED',
+            ],
+        ]);
+
+    app()->instance(Collection::class, $collection);
+
+    $this->actingAs($student)
+        ->getJson(route('payment.status', $payment->id))
+        ->assertOk()
+        ->assertJsonPath('status', 'cancelled')
+        ->assertJsonPath('redirect', null);
+
+    expect($payment->fresh()->status)->toBe('cancelled');
+});

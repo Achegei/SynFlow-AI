@@ -205,6 +205,8 @@ Route::prefix('ai')->name('ai.')->group(function () {
 //================================================
 // 1. Public-Facing Site Routes
 //================================================
+Route::view('/leadership', 'pages.leadership')->name('leadership');
+
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/services', 'services')->name('services');
