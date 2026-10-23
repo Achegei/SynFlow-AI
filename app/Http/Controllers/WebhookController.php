@@ -240,12 +240,14 @@ class WebhookController extends Controller
         */
 
         /*
-         * An enrollment webhook can arrive before the STK initiation
-         * response stores its invoice ID. Never trust the webhook ID
-         * without independently checking the provider's invoice.
+         * A webhook can arrive before the STK initiation response
+         * stores its invoice ID for either enrollment-linked or
+         * ordinary-course reservations. Independently verify the
+         * provider invoice before associating it.
          */
         if (
-            $payment->course_enrollment_id !== null &&
+            $payment->provider === 'intasend' &&
+            $payment->payment_type === 'course' &&
             $payment->status === 'pending' &&
             $payment->payment_id === null &&
             is_string($invoiceId) &&

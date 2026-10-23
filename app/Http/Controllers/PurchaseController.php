@@ -511,8 +511,103 @@ class PurchaseController extends Controller
 
             $payment = $result['payment'];
         } else {
-            // Ordinary courses retain the historical invoice-first flow.
-            $payment = null;
+            // Reconcile the previous ordinary-course attempt before
+            // deciding whether another STK request is safe.
+            // A missing invoice or provider error is not a failure.
+            $previousPayment = Payment::query()
+                ->where('user_id', $user->id)
+                ->where('course_id', $courseId)
+                ->whereNull('course_enrollment_id')
+                ->where('provider', 'intasend')
+                ->where('status', 'pending')
+                ->latest('id')
+                ->first();
+
+            if ($previousPayment) {
+                try {
+                    app(IntaSendPaymentService::class)
+                        ->synchronize($previousPayment);
+                } catch (\Throwable $e) {
+                    Log::warning(
+                        '[Institution STK] Ordinary-course reconciliation unavailable',
+                        [
+                            'payment_id' => $previousPayment->id,
+                            'error' => $e->getMessage(),
+                        ]
+                    );
+                }
+
+                $previousPayment->refresh();
+
+                if ($previousPayment->status === 'paid') {
+                    return redirect()->route('classroom.show', $courseId);
+                }
+            }
+
+            // Lock a stable parent row to serialize ordinary-course
+            // reservations for the same learner. The lock is released
+            // before making the external IntaSend request.
+            $result = DB::transaction(function () use (
+                $user,
+                $courseId,
+                $apiRef,
+                $amount,
+                $currency
+            ) {
+                $lockedUser = DB::table('users')
+                    ->where('id', $user->id)
+                    ->lockForUpdate()
+                    ->first();
+
+                if (!$lockedUser) {
+                    abort(403, 'The learner account is unavailable.');
+                }
+
+                $existing = Payment::query()
+                    ->where('user_id', $user->id)
+                    ->where('course_id', $courseId)
+                    ->whereNull('course_enrollment_id')
+                    ->where('provider', 'intasend')
+                    ->where('status', 'pending')
+                    ->latest('id')
+                    ->first();
+
+                if ($existing) {
+                    return [
+                        'existing' => true,
+                        'payment' => $existing,
+                    ];
+                }
+
+                return [
+                    'existing' => false,
+                    'payment' => Payment::create([
+                        'user_id' => $user->id,
+                        'course_id' => $courseId,
+                        'course_enrollment_id' => null,
+                        'package_id' => null,
+                        'provider' => 'intasend',
+                        'payment_type' => 'course',
+                        'status' => 'pending',
+                        'payment_id' => null,
+                        'api_ref' => $apiRef,
+                        'amount' => $amount,
+                        'currency' => $currency,
+                        'payload' => null,
+                    ]),
+                ];
+            });
+
+            if ($result['existing']) {
+                return redirect()
+                    ->route('payment.pending', $result['payment']->id)
+                    ->with(
+                        'info',
+                        'An earlier M-Pesa payment is still pending. Please check its status before trying again.'
+                    );
+            }
+
+            $payment = $result['payment'];
         }
 
         $wallet = app(Wallet::class);
@@ -597,11 +692,11 @@ class PurchaseController extends Controller
                     );
             }
 
-            return back()
-                ->withInput()
+            return redirect()
+                ->route('payment.pending', $payment->id)
                 ->with(
-                    'error',
-                    'We could not start the M-Pesa payment. Please check the number and try again.'
+                    'info',
+                    'We could not confirm whether M-Pesa received your payment request. Please check your payment status before attempting another payment.'
                 );
         }
 
@@ -675,11 +770,11 @@ class PurchaseController extends Controller
                 ]
             );
 
-            return back()
-                ->withInput()
+            return redirect()
+                ->route('payment.pending', $payment->id)
                 ->with(
-                    'error',
-                    'Payment could not be started. Please try again.'
+                    'info',
+                    'Your payment request is awaiting confirmation. Please do not initiate another payment until its status has been verified.'
                 );
         }
 
@@ -696,25 +791,6 @@ class PurchaseController extends Controller
          * Lock and reload the payment to avoid overwriting provider-
          * verified information with a stale initiation response.
          */
-        if ($payment === null) {
-            // Ordinary course: create a record only after IntaSend
-            // returns a valid invoice.
-            $payment = Payment::create([
-                'user_id' => $user->id,
-                'course_id' => $courseId,
-                'course_enrollment_id' => null,
-                'package_id' => null,
-                'provider' => 'intasend',
-                'payment_type' => 'course',
-                'status' => 'pending',
-                'payment_id' => $invoiceId,
-                'api_ref' => $apiRef,
-                'amount' => $amount,
-                'currency' => $currency,
-                'payload' => $responseArray,
-            ]);
-        }
-
         $invoiceAccepted = DB::transaction(
             function () use ($payment, $invoiceId, $responseArray) {
                 $locked = Payment::query()

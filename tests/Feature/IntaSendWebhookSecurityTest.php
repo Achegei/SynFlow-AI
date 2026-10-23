@@ -217,3 +217,63 @@ test('verified early webhook can associate a matching provider invoice', functio
         ->and($payment->fresh()->status)->toBe('pending')
         ->and($enrollment->fresh()->status)->toBe('pending');
 });
+
+
+test('verified early webhook can associate an ordinary course reservation', function () {
+    $student = User::factory()->create([
+        'role' => 'student',
+    ]);
+
+    $course = Course::create([
+        'title' => 'Ordinary Course Early Webhook',
+        'price' => 5500,
+    ]);
+
+    $payment = Payment::create([
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+        'course_enrollment_id' => null,
+        'provider' => 'intasend',
+        'payment_type' => 'course',
+        'payment_id' => null,
+        'api_ref' => 'ORDINARY-EARLY-REFERENCE',
+        'status' => 'pending',
+        'amount' => 5500,
+        'currency' => 'KES',
+    ]);
+
+    config()->set('intasend.secret_key', 'test-secret');
+    config()->set('intasend.publishable_key', 'test-public');
+    config()->set('intasend.test_mode', true);
+
+    $collection = Mockery::mock(Collection::class);
+
+    $collection->shouldReceive('init')->twice();
+
+    $collection->shouldReceive('status')
+        ->twice()
+        ->with('ORDINARY-EARLY-INVOICE')
+        ->andReturn((object) [
+            'invoice' => (object) [
+                'invoice_id' => 'ORDINARY-EARLY-INVOICE',
+                'api_ref' => 'ORDINARY-EARLY-REFERENCE',
+                'value' => 5500,
+                'currency' => 'KES',
+                'state' => 'PENDING',
+            ],
+        ]);
+
+    app()->instance(Collection::class, $collection);
+
+    $this->postJson('/api/webhook/intasend', [
+        'invoice_id' => 'ORDINARY-EARLY-INVOICE',
+        'api_ref' => 'ORDINARY-EARLY-REFERENCE',
+        'state' => 'PENDING',
+    ])->assertOk();
+
+    expect($payment->fresh()->payment_id)
+        ->toBe('ORDINARY-EARLY-INVOICE')
+        ->and($payment->fresh()->status)->toBe('pending');
+
+    $this->assertDatabaseCount('payments', 1);
+});

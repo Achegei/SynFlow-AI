@@ -63,7 +63,7 @@ test('ordinary course creates a payment after receiving an invoice', function ()
     $this->assertDatabaseCount('payments', 1);
 });
 
-test('ordinary course gateway exception does not create a payment', function () {
+test('ordinary course gateway exception retains a pending reservation', function () {
     [$student, $course] = prepareLegacyCoursePaymentScenario();
 
     $wallet = Mockery::mock(Wallet::class);
@@ -82,10 +82,20 @@ test('ordinary course gateway exception does not create a payment', function () 
         ])
         ->assertRedirect();
 
-    $this->assertDatabaseCount('payments', 0);
+    $payment = Payment::query()
+        ->where('user_id', $student->id)
+        ->where('course_id', $course->id)
+        ->firstOrFail();
+
+    expect($payment->status)->toBe('pending')
+        ->and($payment->payment_id)->toBeNull()
+        ->and($payment->api_ref)->not->toBeEmpty()
+        ->and($payment->course_enrollment_id)->toBeNull();
+
+    $this->assertDatabaseCount('payments', 1);
 });
 
-test('ordinary course missing invoice does not create a payment', function () {
+test('ordinary course missing invoice retains a pending reservation', function () {
     [$student, $course] = prepareLegacyCoursePaymentScenario();
 
     $wallet = Mockery::mock(Wallet::class);
@@ -106,5 +116,46 @@ test('ordinary course missing invoice does not create a payment', function () {
         ])
         ->assertRedirect();
 
-    $this->assertDatabaseCount('payments', 0);
+    $payment = Payment::query()
+        ->where('user_id', $student->id)
+        ->where('course_id', $course->id)
+        ->firstOrFail();
+
+    expect($payment->status)->toBe('pending')
+        ->and($payment->payment_id)->toBeNull()
+        ->and($payment->api_ref)->not->toBeEmpty()
+        ->and($payment->course_enrollment_id)->toBeNull();
+
+    $this->assertDatabaseCount('payments', 1);
+});
+
+
+test('existing pending ordinary course payment blocks another STK push', function () {
+    [$student, $course] = prepareLegacyCoursePaymentScenario();
+
+    $existing = Payment::create([
+        'user_id' => $student->id,
+        'course_id' => $course->id,
+        'course_enrollment_id' => null,
+        'provider' => 'intasend',
+        'payment_type' => 'course',
+        'payment_id' => null,
+        'api_ref' => 'LEGACY-PENDING-REFERENCE',
+        'status' => 'pending',
+        'amount' => 3200,
+        'currency' => 'KES',
+    ]);
+
+    $wallet = Mockery::mock(Wallet::class);
+    $wallet->shouldReceive('init')->zeroOrMoreTimes();
+    $wallet->shouldNotReceive('fund_mpesa_stk_push');
+    app()->instance(Wallet::class, $wallet);
+
+    $this->actingAs($student)
+        ->post(route('purchase.course', $course->id), [
+            'phone_number' => '0712345678',
+        ])
+        ->assertRedirect(route('payment.pending', $existing->id));
+
+    $this->assertDatabaseCount('payments', 1);
 });
