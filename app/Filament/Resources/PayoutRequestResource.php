@@ -107,30 +107,8 @@ class PayoutRequestResource extends Resource
                     ->visible(fn ($record) => $record->status === 'pending')
                     ->requiresConfirmation()
                     ->action(function ($record) {
-
-                        if ($record->requester_type === 'institution') {
-
-                            $institution = Institution::find($record->requester_id);
-
-                            if ($institution) {
-                                $institution->decrement('wallet_balance', $record->amount);
-                            }
-                        }
-
-                        if ($record->requester_type === 'sales_executive') {
-
-                            $executive = SalesExecutive::find($record->requester_id);
-
-                            if ($executive) {
-                                $executive->decrement('wallet_balance', $record->amount);
-                            }
-                        }
-
-                        $record->update([
-                            'status' => 'approved',
-                            'approved_by' => auth()->id(),
-                            'processed_at' => now(),
-                        ]);
+                        app(\App\Services\PayoutApprovalService::class)
+                            ->approve($record, auth()->id());
                     }),
 
                 /*
@@ -145,10 +123,8 @@ class PayoutRequestResource extends Resource
                     ->visible(fn ($record) => $record->status === 'pending')
                     ->requiresConfirmation()
                     ->action(function ($record) {
-
-                        $record->update([
-                            'status' => 'rejected',
-                        ]);
+                        app(\App\Services\PayoutApprovalService::class)
+                            ->reject($record);
                     }),
             ]);
     }

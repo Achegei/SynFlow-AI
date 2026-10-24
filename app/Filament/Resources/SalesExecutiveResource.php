@@ -38,10 +38,14 @@ class SalesExecutiveResource extends Resource
                             ->preload()
                             ->required(),
 
-                        Forms\Components\TextInput::make('commission_percentage')
-                            ->numeric()
-                            ->default(10)
-                            ->required(),
+                        Forms\Components\Placeholder::make('enrollment_commission')
+                            ->label('Paid Enrollment Commission')
+                            ->content(
+                                'KES ' . number_format(
+                                    (float) config('enrollment.sales_commission'),
+                                    2
+                                ) . ' per qualifying paid student enrollment'
+                            ),
 
                         Forms\Components\Select::make('status')
                             ->options([
@@ -80,8 +84,12 @@ class SalesExecutiveResource extends Resource
                     ->counts('institutions')
                     ->label('Institutions'),
 
-                Tables\Columns\TextColumn::make('commission_percentage')
-                    ->suffix('%'),
+                Tables\Columns\TextColumn::make('enrollment_commission')
+                    ->label('Enrollment Commission')
+                    ->state(
+                        fn () => (float) config('enrollment.sales_commission')
+                    )
+                    ->money('KES'),
 
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
