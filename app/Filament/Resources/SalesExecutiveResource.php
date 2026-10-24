@@ -31,12 +31,79 @@ class SalesExecutiveResource extends Resource
                 Forms\Components\Section::make('Executive Information')
                     ->schema([
 
+                        Forms\Components\Radio::make('account_mode')
+                            ->label('Account Setup')
+                            ->options([
+                                'new' => 'Create New User Account',
+                                'existing' => 'Link Existing User',
+                            ])
+                            ->default('new')
+                            ->live()
+                            ->required()
+                            ->visible(fn ($livewire) => $livewire instanceof Pages\CreateSalesExecutive)
+                            ->dehydrated(false),
+
+                        Forms\Components\TextInput::make('new_user_name')
+                            ->label('Full Name')
+                            ->required(fn (Forms\Get $get) => $get('account_mode') === 'new')
+                            ->maxLength(255)
+                            ->visible(fn (Forms\Get $get, $livewire) =>
+                                $livewire instanceof Pages\CreateSalesExecutive
+                                && $get('account_mode') === 'new'
+                            ),
+
+                        Forms\Components\TextInput::make('new_user_email')
+                            ->label('Email Address')
+                            ->email()
+                            ->required(fn (Forms\Get $get) => $get('account_mode') === 'new')
+                            ->unique('users', 'email')
+                            ->maxLength(255)
+                            ->visible(fn (Forms\Get $get, $livewire) =>
+                                $livewire instanceof Pages\CreateSalesExecutive
+                                && $get('account_mode') === 'new'
+                            ),
+
+                        Forms\Components\TextInput::make('new_user_password')
+                            ->label('Temporary Password')
+                            ->password()
+                            ->required(fn (Forms\Get $get) => $get('account_mode') === 'new')
+                            ->minLength(8)
+                            ->confirmed()
+                            ->visible(fn (Forms\Get $get, $livewire) =>
+                                $livewire instanceof Pages\CreateSalesExecutive
+                                && $get('account_mode') === 'new'
+                            ),
+
+                        Forms\Components\TextInput::make('new_user_password_confirmation')
+                            ->label('Confirm Temporary Password')
+                            ->password()
+                            ->required(fn (Forms\Get $get) => $get('account_mode') === 'new')
+                            ->visible(fn (Forms\Get $get, $livewire) =>
+                                $livewire instanceof Pages\CreateSalesExecutive
+                                && $get('account_mode') === 'new'
+                            ),
+
                         Forms\Components\Select::make('user_id')
-                            ->label('User Account')
-                            ->relationship('user', 'name')
+                            ->label('Existing User Account')
+                            ->relationship(
+                                'user',
+                                'name',
+                                modifyQueryUsing: fn ($query) => $query
+                                    ->where('is_admin', false)
+                                    ->whereNull('institution_id')
+                                    ->whereNotIn('role', ['admin', 'institution_admin'])
+                                    ->whereNotIn(
+                                        'id',
+                                        SalesExecutive::query()->select('user_id')
+                                    )
+                            )
                             ->searchable()
                             ->preload()
-                            ->required(),
+                            ->required(fn (Forms\Get $get) => $get('account_mode') === 'existing')
+                            ->visible(fn (Forms\Get $get, $livewire) =>
+                                $livewire instanceof Pages\CreateSalesExecutive
+                                && $get('account_mode') === 'existing'
+                            ),
 
                         Forms\Components\Placeholder::make('enrollment_commission')
                             ->label('Paid Enrollment Commission')

@@ -51,6 +51,7 @@ test('administrator can create an executive without supplying a percentage', fun
 
     Livewire::test(CreateSalesExecutive::class)
         ->fillForm([
+            'account_mode' => 'existing',
             'user_id' => $user->id,
             'status' => 'active',
         ])
