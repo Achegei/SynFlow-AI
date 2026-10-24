@@ -1,340 +1,306 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $institution->name }} - Dashboard</title>
-
-    @vite(['resources/css/app.css'])
-
-    <style>
-        body {
-            background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ $institution->name }} | Institution Dashboard</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="text-gray-800">
+<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+@php
+    $maximumTrend = max(1, collect($registrationTrend)->max('count') ?? 1);
+@endphp
 
-<!-- TOP NAV (FIXED LAYOUT) -->
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="min-h-screen">
 
-        <!-- LEFT -->
-        <div>
-            <h1 class="text-xl font-semibold tracking-tight">
-                {{ $institution->name }} Dashboard
-            </h1>
-            <p class="text-xs text-gray-500">
-                Institution overview & analytics
-            </p>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="flex items-center gap-4">
-
-            <div class="text-right leading-tight">
-                <p class="text-sm font-medium">
-                    {{ auth()->user()->name }}
+    {{-- HEADER --}}
+    <header class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-8">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">
+                    Moose Loon AI Academy
                 </p>
-                <p class="text-xs text-gray-500">
-                    Institution Admin
+                <h1 class="mt-1 text-xl font-bold tracking-tight sm:text-2xl">
+                    Institution Dashboard
+                </h1>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden text-right sm:block">
+                    <p class="text-sm font-semibold">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-slate-500">Institution Administrator</p>
+                </div>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">
+                        Sign out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl space-y-8 px-5 py-8 sm:px-8">
+
+        {{-- NOTIFICATIONS --}}
+        @if(session('success'))
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        {{-- INTRO --}}
+        <section class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <p class="text-sm font-medium text-slate-500">
+                    {{ now()->format('l, j F Y') }}
+                </p>
+                <h2 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+                    {{ $institution->name }}
+                </h2>
+                <p class="mt-2 text-sm text-slate-500">
+                    Monitor student registrations, learning activity, enrollments and institutional earnings.
                 </p>
             </div>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="px-4 py-2 rounded-xl bg-black text-white text-sm hover:bg-gray-800 transition">
-                    Logout
-                </button>
-            </form>
+            <span class="rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-800">
+                {{ number_format($institutionPercentage, 0) }}% institution revenue share
+            </span>
+        </section>
 
-        </div>
+        {{-- PRIMARY KPIs --}}
+        <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            @foreach([
+                ['label' => 'Total Students', 'value' => number_format($totalStudents), 'note' => 'Unique historical and new students'],
+                ['label' => 'Paid Enrollments', 'value' => number_format($paidEnrollments), 'note' => 'Confirmed course enrollments'],
+                ['label' => 'Institution Earnings', 'value' => 'KES '.number_format($institutionShare, 2), 'note' => 'Recorded lifetime commission earnings'],
+                ['label' => 'Available Wallet', 'value' => 'KES '.number_format($walletBalance, 2), 'note' => 'Current withdrawable balance'],
+            ] as $metric)
+                <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <p class="text-sm font-medium text-slate-500">{{ $metric['label'] }}</p>
+                    <p class="mt-3 break-words text-2xl font-bold tracking-tight sm:text-3xl">
+                        {{ $metric['value'] }}
+                    </p>
+                    <p class="mt-2 text-xs text-slate-500">{{ $metric['note'] }}</p>
+                </article>
+            @endforeach
+        </section>
 
-    </div>
-</header>
+        {{-- REGISTRATION KPIs --}}
+        <section class="grid gap-4 sm:grid-cols-3">
+            @foreach([
+                ['label' => 'New Students Today', 'value' => $newToday],
+                ['label' => 'New Students Yesterday', 'value' => $newYesterday],
+                ['label' => 'New Students — Last 7 Days', 'value' => $newLast7Days],
+            ] as $metric)
+                <article class="rounded-2xl border border-slate-200 bg-white p-6">
+                    <p class="text-sm font-medium text-slate-500">{{ $metric['label'] }}</p>
+                    <p class="mt-3 text-3xl font-bold">{{ number_format($metric['value']) }}</p>
+                    <p class="mt-2 text-xs text-slate-500">Based on student account registration date</p>
+                </article>
+            @endforeach
+        </section>
 
+        {{-- FINANCIAL OVERVIEW --}}
+        <section class="grid gap-5 lg:grid-cols-3">
+            <article class="rounded-2xl bg-slate-900 p-7 text-white lg:col-span-2">
+                <p class="text-sm font-medium text-slate-300">Institution Financial Performance</p>
 
-<main class="max-w-7xl mx-auto px-6 py-10">
+                <p class="mt-3 text-4xl font-bold tracking-tight">
+                    KES {{ number_format($institutionShare, 2) }}
+                </p>
+                <p class="mt-2 text-sm text-slate-300">
+                    Lifetime institutional earnings recorded in the commission ledger.
+                </p>
 
-    <!-- PAGE HEADER -->
-    <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">
-            Overview
-        </h2>
-        <p class="text-gray-500 mt-1">
-            Track students, revenue, and institutional performance in real time
-        </p>
-    </div>
+                <div class="mt-7 grid gap-5 border-t border-slate-700 pt-5 sm:grid-cols-2">
+                    <div>
+                        <p class="text-sm text-slate-300">Attributed Transaction Revenue</p>
+                        <p class="mt-2 text-xl font-bold">
+                            KES {{ number_format($totalRevenue, 2) }}
+                        </p>
+                    </div>
 
-    <!-- STATS -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-        <!-- Students -->
-        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-            <p class="text-sm text-gray-500">Students</p>
-            <h2 class="text-3xl font-semibold mt-2">
-                {{ $students->count() }}
-            </h2>
-            <p class="text-xs text-gray-400 mt-2">Active enrolled learners</p>
-        </div>
-
-        <!-- Revenue -->
-        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-            <p class="text-sm text-gray-500">Total Revenue</p>
-            <h2 class="text-3xl font-semibold mt-2">
-                KES {{ number_format($institutionShare) }}
-            </h2>
-            <p class="text-xs text-gray-400 mt-2">All-time earnings</p>
-        </div>
-
-        <!-- Share -->
-        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-            <p class="text-sm text-gray-500">Institution Share (40%)</p>
-            <h2 class="text-3xl font-semibold mt-2 text-green-600">
-                KES {{ number_format($institutionShare) }}
-            </h2>
-            <p class="text-xs text-gray-400 mt-2">Your revenue share</p>
-        </div>
-
-        @if (session('success'))
-                <div class="max-w-7xl mx-auto mt-4 px-6">
-                    <div class="bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded-xl">
-                        {{ session('success') }}
+                    <div>
+                        <p class="text-sm text-slate-300">Institution Share</p>
+                        <p class="mt-2 text-xl font-bold">
+                            {{ number_format($institutionPercentage, 0) }}%
+                        </p>
                     </div>
                 </div>
-            @endif
+            </article>
 
-            @if (session('error'))
-                <div class="max-w-7xl mx-auto mt-4 px-6">
-                    <div class="bg-red-100 border border-red-300 text-red-800 px-4 py-3 rounded-xl">
-                        {{ session('error') }}
-                    </div>
+            <article class="rounded-2xl border border-slate-200 bg-white p-7">
+                <h3 class="text-lg font-bold">Request Payout</h3>
+                <p class="mt-2 text-sm leading-6 text-slate-500">
+                    Withdraw funds from your available institutional wallet.
+                </p>
+
+                <p class="mt-5 text-2xl font-bold">
+                    KES {{ number_format($walletBalance, 2) }}
+                </p>
+
+                <form method="POST" action="{{ route('institution.request-payout') }}" class="mt-6">
+                    @csrf
+                    <button type="submit"
+                        class="w-full rounded-xl bg-blue-700 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-800">
+                        Request Payout
+                    </button>
+                </form>
+            </article>
+        </section>
+
+        {{-- LEARNING ACTIVITY --}}
+        <section>
+            <div class="mb-4">
+                <h3 class="text-lg font-bold">Student Learning Activity</h3>
+                <p class="mt-1 text-sm text-slate-500">
+                    Engagement indicators based on recorded student activity.
+                </p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-3">
+                @foreach([
+                    ['label' => 'Active Today', 'value' => $activeToday, 'note' => 'Activity recorded today'],
+                    ['label' => 'Active Last 7 Days', 'value' => $activeThisWeek, 'note' => 'Activity within the past seven days'],
+                    ['label' => 'Inactive 14+ Days', 'value' => $inactiveStudents, 'note' => 'Students who may need follow-up'],
+                ] as $metric)
+                    <article class="rounded-2xl border border-slate-200 bg-white p-6">
+                        <p class="text-sm font-medium text-slate-500">{{ $metric['label'] }}</p>
+                        <p class="mt-3 text-3xl font-bold">{{ number_format($metric['value']) }}</p>
+                        <p class="mt-2 text-xs text-slate-500">{{ $metric['note'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </section>
+
+        {{-- REGISTRATION TREND --}}
+        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h3 class="text-lg font-bold">Student Registration Activity</h3>
+                    <p class="mt-1 text-sm text-slate-500">
+                        Daily student account registrations over the last 30 days.
+                    </p>
                 </div>
-            @endif
-        <form method="POST"
-            action="{{ route('institution.request-payout') }}"
-            class="mt-4">
-            @csrf
-
-            <button
-                class="w-full bg-green-600 text-white py-2 rounded-xl hover:bg-green-700">
-                Request Payout
-            </button>
-        </form>
-
-    </div>
-
-    <!-- =======================================================
-     STUDENT ACTIVITY OVERVIEW
-======================================================= -->
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-
-    <!-- Active Today -->
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
-
-        <div class="flex items-center justify-between">
-
-            <div>
-
-                <p class="text-sm text-gray-500 uppercase tracking-wide">
-                    Active Today
-                </p>
-
-                <h2 class="text-4xl font-bold text-green-600 mt-2">
-                    {{ number_format($activeToday) }}
-                </h2>
-
-                <p class="text-sm text-gray-500 mt-3">
-                    Students who logged in today.
-                </p>
-
+                <span class="text-xs font-medium text-slate-500">Last 30 days</span>
             </div>
 
-            <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-7 h-7 text-green-600"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M9 12l2 2 4-4"/>
-
-                </svg>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Active This Week -->
-
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
-
-        <div class="flex items-center justify-between">
-
-            <div>
-
-                <p class="text-sm text-gray-500 uppercase tracking-wide">
-                    Active This Week
-                </p>
-
-                <h2 class="text-4xl font-bold text-blue-600 mt-2">
-                    {{ number_format($activeThisWeek) }}
-                </h2>
-
-                <p class="text-sm text-gray-500 mt-3">
-                    Learners active within the last 7 days.
-                </p>
-
-            </div>
-
-            <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-7 h-7 text-blue-600"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 8v4l3 3"/>
-
-                </svg>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- Inactive Students -->
-
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg transition">
-
-        <div class="flex items-center justify-between">
-
-            <div>
-
-                <p class="text-sm text-gray-500 uppercase tracking-wide">
-                    Inactive (14+ Days)
-                </p>
-
-                <h2 class="text-4xl font-bold text-red-600 mt-2">
-                    {{ number_format($inactiveStudents) }}
-                </h2>
-
-                <p class="text-sm text-gray-500 mt-3">
-                    Students requiring follow-up.
-                </p>
-
-            </div>
-
-            <div class="w-14 h-14 rounded-2xl bg-red-100 flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-7 h-7 text-red-600"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 9v3m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"/>
-
-                </svg>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-    <!-- STUDENTS SECTION -->
-    <div class="bg-white border border-gray-100 rounded-2xl shadow-sm">
-
-        <!-- HEADER -->
-        <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-            <div>
-                <h3 class="text-lg font-semibold">Students</h3>
-                <p class="text-sm text-gray-500">
-                    All learners under this institution
-                </p>
-            </div>
-
-            <div class="text-sm text-gray-400">
-                {{ $students->count() }} total
-            </div>
-        </div>
-
-        <!-- TABLE -->
-        <div class="overflow-x-auto">
-
-            <table class="w-full text-sm">
-
-                <thead class="bg-gray-50 text-gray-500 uppercase text-xs tracking-wider">
-                    <tr>
-                        <th class="text-left px-6 py-3">Name</th>
-                        <th class="text-left px-6 py-3">Email</th>
-                        <th class="text-left px-6 py-3">Status</th>
-                    </tr>
-                </thead>
-
-                <tbody class="divide-y divide-gray-100">
-
-                @forelse($students as $student)
-                    <tr class="hover:bg-gray-50 transition">
-                        <td class="px-6 py-4 font-medium">
-                            {{ $student->name }}
-                        </td>
-
-                        <td class="px-6 py-4 text-gray-600">
-                            {{ $student->email }}
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-50 text-green-600">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="3" class="px-6 py-12 text-center text-gray-500">
-                            <div class="flex flex-col items-center gap-2">
-                                <div class="text-3xl">👥</div>
-                                <p class="font-medium">No students yet</p>
-                                <p class="text-sm">Students will appear here once they enroll</p>
+            <div class="mt-8 overflow-x-auto">
+                <div class="flex h-48 min-w-[600px] items-end gap-2 border-b border-slate-200 pb-1">
+                    @foreach($registrationTrend as $day)
+                        <div class="group relative flex h-full min-w-0 flex-1 items-end"
+                             title="{{ $day['date'] }}: {{ $day['count'] }} new students">
+                            <div class="w-full rounded-t-md bg-blue-600 transition hover:bg-blue-800"
+                                 style="height: {{ $day['count'] > 0 ? max(4, ($day['count'] / $maximumTrend) * 100) : 2 }}%">
                             </div>
-                        </td>
-                    </tr>
-                @endforelse
+                        </div>
+                    @endforeach
+                </div>
 
-                </tbody>
-
-            </table>
-            <div class="px-6 py-4">
-                {{ $students->links() }}
+                <div class="mt-3 flex min-w-[600px] justify-between text-xs text-slate-500">
+                    <span>{{ $registrationTrend[0]['date'] ?? '' }}</span>
+                    <span>{{ $registrationTrend[14]['date'] ?? '' }}</span>
+                    <span>{{ $registrationTrend[29]['date'] ?? '' }}</span>
+                </div>
             </div>
-        </div>
+        </section>
 
-    </div>
+        {{-- STUDENT DIRECTORY --}}
+        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-6 py-5">
+                <div>
+                    <h3 class="text-lg font-bold">Student Directory</h3>
+                    <p class="mt-1 text-sm text-slate-500">
+                        Historical and newly enrolled students associated with this institution.
+                    </p>
+                </div>
+                <span class="text-sm text-slate-500">
+                    {{ number_format($totalStudents) }} students
+                </span>
+            </div>
 
-</main>
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[720px] text-left text-sm">
+                    <thead class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                        <tr>
+                            <th class="px-6 py-4 font-semibold">Student</th>
+                            <th class="px-6 py-4 font-semibold">Registered</th>
+                            <th class="px-6 py-4 font-semibold">Last Activity</th>
+                            <th class="px-6 py-4 font-semibold">Activity Status</th>
+                        </tr>
+                    </thead>
 
+                    <tbody class="divide-y divide-slate-100">
+                        @forelse($students as $student)
+                            @php
+                                $lastActivity = $student->last_activity_at
+                                    ? \Illuminate\Support\Carbon::parse($student->last_activity_at)
+                                    : null;
+
+                                $isRecentlyActive = $lastActivity
+                                    && $lastActivity->gte(now()->subDays(7));
+                            @endphp
+
+                            <tr>
+                                <td class="px-6 py-4">
+                                    <p class="font-semibold text-slate-900">{{ $student->name }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ $student->email }}</p>
+                                </td>
+
+                                <td class="px-6 py-4 text-slate-600">
+                                    {{ $student->created_at?->format('d M Y') ?? '—' }}
+                                </td>
+
+                                <td class="px-6 py-4 text-slate-600">
+                                    {{ $lastActivity?->diffForHumans() ?? 'No recorded activity' }}
+                                </td>
+
+                                <td class="px-6 py-4">
+                                    @if($isRecentlyActive)
+                                        <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+                                            Recently Active
+                                        </span>
+                                    @else
+                                        <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                                            No Recent Activity
+                                        </span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-6 py-12 text-center text-slate-500">
+                                    No students associated with this institution yet.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            @if($students->hasPages())
+                <div class="border-t border-slate-200 px-6 py-5">
+                    {{ $students->links() }}
+                </div>
+            @endif
+        </section>
+
+        <footer class="pb-4 text-center text-xs text-slate-400">
+            Moose Loon AI Academy · Institution Performance Dashboard
+        </footer>
+
+    </main>
+</div>
 </body>
 </html>

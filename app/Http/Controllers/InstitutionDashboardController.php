@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommissionTransaction;
+use App\Models\CourseEnrollment;
 use App\Models\Institution;
 use App\Models\User;
-use App\Models\Payment;
 
 class InstitutionDashboardController extends Controller
 {
@@ -16,12 +17,6 @@ class InstitutionDashboardController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | Institution
-        |--------------------------------------------------------------------------
-        */
-
         $institution = Institution::with('salesExecutive')
             ->find($user->institution_id);
 
@@ -31,95 +26,138 @@ class InstitutionDashboardController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Student IDs (ALL students)
+        | Historical + New Students (Deduplicated)
         |--------------------------------------------------------------------------
         */
 
-        $studentIds = User::where('institution_id', $institution->id)
+        $studentQuery = User::query()
             ->where('role', 'student')
-            ->pluck('id');
+            ->where(function ($query) use ($institution) {
+                $query->where('institution_id', $institution->id)
+                    ->orWhereIn(
+                        'id',
+                        CourseEnrollment::query()
+                            ->select('user_id')
+                            ->where('institution_id', $institution->id)
+                            ->where('registration_context', 'institution')
+                    );
+            });
 
-        /*
-        |--------------------------------------------------------------------------
-        | Students Table (Paginated)
-        |--------------------------------------------------------------------------
-        */
+        $totalStudents = (clone $studentQuery)->count();
 
-        $students = User::where('institution_id', $institution->id)
-            ->where('role', 'student')
+        $students = (clone $studentQuery)
             ->latest()
             ->paginate(10);
 
         /*
         |--------------------------------------------------------------------------
-        | Payments (ALL students)
+        | Student Registration Activity
         |--------------------------------------------------------------------------
         */
 
-        $payments = Payment::whereIn('user_id', $studentIds)
+        $newToday = (clone $studentQuery)
+            ->whereDate('created_at', today())
+            ->count();
+
+        $newYesterday = (clone $studentQuery)
+            ->whereDate('created_at', today()->subDay())
+            ->count();
+
+        $newLast7Days = (clone $studentQuery)
+            ->where('created_at', '>=', today()->subDays(6))
+            ->count();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Confirmed Course Enrollments
+        |--------------------------------------------------------------------------
+        */
+
+        $paidEnrollments = CourseEnrollment::query()
+            ->where('institution_id', $institution->id)
+            ->where('registration_context', 'institution')
             ->where('status', 'paid')
-            ->get();
+            ->count();
 
         /*
         |--------------------------------------------------------------------------
-        | Revenue
+        | Financial Metrics — Recorded Transactions
         |--------------------------------------------------------------------------
         */
 
-        $totalRevenue = $payments->sum('amount');
+        $ledger = CommissionTransaction::query()
+            ->where('institution_id', $institution->id);
+
+        $totalRevenue = (clone $ledger)->sum('total_amount');
+
+        $institutionShare = (clone $ledger)->sum('institution_amount');
+
+        $platformShare = (clone $ledger)->sum('company_amount');
+
+        $walletBalance = $institution->wallet_balance ?? 0;
+
+        $institutionPercentage = (float) config(
+            'enrollment.institution_percentage',
+            40
+        );
 
         /*
         |--------------------------------------------------------------------------
-        | Shares
+        | Learning Activity
         |--------------------------------------------------------------------------
         */
 
-        $institutionShare = $institution->wallet_balance;
-
-        $platformShare = $totalRevenue - $institutionShare;
-
-        /*
-        |--------------------------------------------------------------------------
-        | Activity Statistics
-        |--------------------------------------------------------------------------
-        */
-
-        $activeToday = User::where('institution_id', $institution->id)
-            ->where('role', 'student')
+        $activeToday = (clone $studentQuery)
             ->whereDate('last_activity_at', today())
             ->count();
 
-        $activeThisWeek = User::where('institution_id', $institution->id)
-            ->where('role', 'student')
+        $activeThisWeek = (clone $studentQuery)
             ->where('last_activity_at', '>=', now()->subDays(7))
             ->count();
 
-        $inactiveStudents = User::where('institution_id', $institution->id)
-            ->where('role', 'student')
+        $inactiveStudents = (clone $studentQuery)
             ->where(function ($query) {
                 $query->whereNull('last_activity_at')
-                      ->orWhere('last_activity_at', '<', now()->subDays(14));
+                    ->orWhere('last_activity_at', '<', now()->subDays(14));
             })
             ->count();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Registration Trend — Last 30 Days
+        |--------------------------------------------------------------------------
+        */
+
+        $registrationTrend = [];
+
+        for ($daysAgo = 29; $daysAgo >= 0; $daysAgo--) {
+            $date = today()->subDays($daysAgo);
+
+            $registrationTrend[] = [
+                'date' => $date->format('M j'),
+                'count' => (clone $studentQuery)
+                    ->whereDate('created_at', $date)
+                    ->count(),
+            ];
+        }
+
         return view('dashboards.institution', [
-
             'institution' => $institution,
-
             'students' => $students,
-
+            'totalStudents' => $totalStudents,
+            'newToday' => $newToday,
+            'newYesterday' => $newYesterday,
+            'newLast7Days' => $newLast7Days,
+            'paidEnrollments' => $paidEnrollments,
             'totalRevenue' => $totalRevenue,
-
             'institutionShare' => $institutionShare,
-
             'platformShare' => $platformShare,
-
+            'walletBalance' => $walletBalance,
+            'institutionPercentage' => $institutionPercentage,
             'activeToday' => $activeToday,
-
             'activeThisWeek' => $activeThisWeek,
-
             'inactiveStudents' => $inactiveStudents,
-
+            'registrationTrend' => $registrationTrend,
         ]);
     }
 }
