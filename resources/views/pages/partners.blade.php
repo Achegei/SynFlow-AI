@@ -57,7 +57,7 @@
                         Why Partner With Us
                     </p>
 
-                    <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B] leading-tight">
+                    <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B] leading-tight">
                         AI capability is becoming an essential part of modern education and work.
                     </h2>
                 </div>
@@ -102,7 +102,7 @@
                     Partnership Models
                 </p>
 
-                <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                     Two ways organizations can work with the Academy.
                 </h2>
 
@@ -238,7 +238,7 @@
                         Training Support
                     </p>
 
-                    <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+                    <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                         From structured programs to targeted capacity building.
                     </h2>
 
@@ -343,7 +343,7 @@
                     Partnership Process
                 </p>
 
-                <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight">
                     A straightforward path from conversation to training.
                 </h2>
 
@@ -415,7 +415,7 @@
                     Potential Partners
                 </p>
 
-                <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                     Built for organizations that want to develop AI capability.
                 </h2>
 
@@ -467,7 +467,7 @@
                         A Practical Partnership
                     </p>
 
-                    <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+                    <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                         Your organization understands your people. We bring the AI education.
                     </h2>
 
@@ -521,7 +521,7 @@
                     Partnership Questions
                 </p>
 
-                <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                     Frequently asked questions
                 </h2>
 
@@ -622,7 +622,7 @@
                 Start a Conversation
             </p>
 
-            <h2 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-[#00104B]">
+            <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold tracking-tight text-[#00104B]">
                 Let's discuss how AI education can support your organization.
             </h2>
 
@@ -663,7 +663,7 @@
                         Partnership Inquiry
                     </p>
 
-                    <h2 class="mt-4 text-3xl md:text-4xl font-bold text-white">
+                    <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] mt-4 font-bold text-white">
                         Tell us about your organization.
                     </h2>
 

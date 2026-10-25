@@ -319,7 +319,7 @@
                         </span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-extrabold tracking-tight leading-[1.08] text-[#00104B] ml-reveal ml-delay-1">
+                    <h1 class="text-[2rem] sm:text-[2.5rem] lg:text-[2.75rem] xl:text-[3rem] font-bold tracking-tight leading-[1.08] text-[#00104B] ml-reveal ml-delay-1">
                         Learn AI.
                         <span class="block text-[#C90000]">
                             Build with AI.
@@ -329,7 +329,7 @@
                         </span>
                     </h1>
 
-                    <p class="mt-7 text-lg sm:text-xl leading-8 text-slate-600 max-w-2xl ml-reveal ml-delay-2">
+                    <p class="mt-7 text-base sm:text-lg leading-7 text-slate-600 max-w-2xl ml-reveal ml-delay-2">
                         Moose Loon AI Academy provides practical, career-focused AI education
                         for students, professionals, entrepreneurs, and organizations preparing
                         for an AI-powered world.
@@ -383,15 +383,15 @@
 
                         <div class="absolute top-0 left-0 right-0 h-1 bg-[#C90000] z-20"></div>
 
-                        <img src="{{ asset('images/feature1.png') }}"
+                        <img src="{{ asset('images/hero-ai-learning.png') }}"
                              alt="Students learning artificial intelligence at Moose Loon AI Academy"
                              class="w-full h-[420px] sm:h-[500px] lg:h-[560px] object-cover ml-image-slide opacity-100">
 
-                        <img src="{{ asset('images/feature2.png') }}"
+                        <img src="{{ asset('images/hero-ai-building.png') }}"
                              alt="Practical AI learning and technology education"
                              class="absolute inset-0 w-full h-[420px] sm:h-[500px] lg:h-[560px] object-cover ml-image-slide opacity-0">
 
-                        <img src="{{ asset('images/feature3.png') }}"
+                        <img src="{{ asset('images/hero-ai-careers.png') }}"
                              alt="AI education and practical learning"
                              class="absolute inset-0 w-full h-[420px] sm:h-[500px] lg:h-[560px] object-cover ml-image-slide opacity-0">
 
@@ -479,11 +479,11 @@
                     Education for the AI era
                 </span>
 
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B] leading-tight">
+                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B] leading-tight">
                     AI skills are becoming essential across every field.
                 </h2>
 
-                <p class="mt-5 text-lg text-slate-600 leading-8">
+                <p class="mt-5 text-[17px] text-slate-600 leading-7">
                     Our programs are designed for people who want to understand AI,
                     work effectively with AI tools, and build practical solutions that
                     solve real problems.
@@ -501,7 +501,7 @@
                         Students & Graduates
                     </h3>
 
-                    <p class="mt-2 text-sm text-slate-500 leading-6">
+                    <p class="mt-2 text-[15px] text-slate-500 leading-6">
                         Build practical AI skills that complement your academic background.
                     </p>
 
@@ -515,7 +515,7 @@
                         Professionals
                     </h3>
 
-                    <p class="mt-2 text-sm text-slate-500 leading-6">
+                    <p class="mt-2 text-[15px] text-slate-500 leading-6">
                         Learn how AI can improve productivity, workflows, and professional capability.
                     </p>
 
@@ -529,7 +529,7 @@
                         Entrepreneurs
                     </h3>
 
-                    <p class="mt-2 text-sm text-slate-500 leading-6">
+                    <p class="mt-2 text-[15px] text-slate-500 leading-6">
                         Understand how AI can be applied to products, processes, and new opportunities.
                     </p>
 
@@ -543,7 +543,7 @@
                         Organizations
                     </h3>
 
-                    <p class="mt-2 text-sm text-slate-500 leading-6">
+                    <p class="mt-2 text-[15px] text-slate-500 leading-6">
                         Equip teams and institutions with practical AI knowledge for the modern workplace.
                     </p>
 
@@ -596,11 +596,11 @@
                             Why Moose Loon AI Academy
                         </span>
 
-                        <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold leading-tight">
+                        <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold leading-tight">
                             AI education designed around practical capability.
                         </h2>
 
-                        <p class="mt-6 text-lg text-blue-100 leading-8">
+                        <p class="mt-6 text-[17px] text-blue-100 leading-7">
                             AI changes quickly. Learning how to use today's tools is useful,
                             but understanding how to apply AI to real problems is what creates
                             lasting capability.
@@ -691,11 +691,11 @@
                     What you will learn
                 </span>
 
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B]">
+                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
                     Build a foundation for working with modern AI.
                 </h2>
 
-                <p class="mt-5 text-lg text-slate-600 leading-8">
+                <p class="mt-5 text-[17px] text-slate-600 leading-7">
                     Our learning experience brings together AI concepts, modern tools,
                     automation, integrations, and practical projects.
                 </p>
@@ -771,7 +771,7 @@
                                     {{ $area['title'] }}
                                 </h3>
 
-                                <p class="mt-2 text-sm text-slate-500 leading-6">
+                                <p class="mt-2 text-[15px] text-slate-500 leading-6">
                                     {{ $area['text'] }}
                                 </p>
 
@@ -805,7 +805,7 @@
                             Learning by doing
                         </span>
 
-                        <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B] leading-tight">
+                        <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B] leading-tight">
                             Don't just study AI. Learn how to build with it.
                         </h2>
 
@@ -884,7 +884,7 @@
                     Our learning model
                 </span>
 
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold leading-tight">
+                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold leading-tight">
                     A clear path from understanding to application.
                 </h2>
 
@@ -970,11 +970,11 @@
                     Modern AI ecosystem
                 </span>
 
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B]">
+                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
                     Learn with the tools shaping modern AI work.
                 </h2>
 
-                <p class="mt-5 text-lg text-slate-600 leading-8">
+                <p class="mt-5 text-[17px] text-slate-600 leading-7">
                     Our practical learning environment introduces students to modern
                     AI and automation technologies used across today's digital ecosystem.
                 </p>
@@ -1058,7 +1058,7 @@
                         Career development
                     </span>
 
-                    <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B] leading-tight">
+                    <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B] leading-tight">
                         Build skills that can travel with you.
                     </h2>
 
@@ -1125,7 +1125,7 @@
                             Professional development
                         </span>
 
-                        <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold text-white">
+                        <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] font-bold text-white">
                             Demonstrate what you have learned.
                         </h2>
 
@@ -1207,11 +1207,11 @@
                     Student experience
                 </span>
 
-                <h2 class="mt-4 text-3xl sm:text-4xl lg:text-[2.9rem] font-extrabold text-[#00104B]">
+                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
                     Learning should create confidence.
                 </h2>
 
-                <p class="mt-5 text-lg text-slate-600 leading-8">
+                <p class="mt-5 text-[17px] text-slate-600 leading-7">
                     Hear from learners as they develop practical skills and discover
                     new ways to work with AI.
                 </p>
@@ -1330,7 +1330,7 @@
                             Institutional learning
                         </span>
 
-                        <h2 class="mt-4 text-3xl sm:text-4xl font-extrabold leading-tight">
+                        <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] font-bold leading-tight">
                             Bring practical AI education to your institution.
                         </h2>
 
@@ -1447,7 +1447,7 @@
                         Admissions
                     </span>
 
-                    <h2 class="mt-5 text-3xl sm:text-4xl lg:text-[3rem] font-extrabold text-white leading-tight max-w-4xl mx-auto">
+                    <h2 class="mt-5 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-white leading-tight max-w-4xl mx-auto">
                         Your future with AI starts with learning.
                     </h2>
 

@@ -191,7 +191,7 @@
                     <p
                         class="
                             mt-3
-                            text-sm
+                            text-base
                             text-gray-500
                             leading-relaxed
                             line-clamp-3

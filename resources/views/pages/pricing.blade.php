@@ -544,14 +544,7 @@
                 </div>
 
 
-                <h2 class="mt-5
-                           text-3xl
-                           sm:text-4xl
-                           lg:text-5xl
-                           font-extrabold
-                           tracking-tight
-                           text-[#0B1F3A]
-                           leading-tight">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 tracking-tight text-[#0B1F3A] leading-tight">
 
                     Learn AI Beyond Theory
 
@@ -754,13 +747,7 @@
             </div>
 
 
-            <h2 class="mt-5
-                       text-3xl
-                       sm:text-4xl
-                       lg:text-5xl
-                       font-extrabold
-                       text-[#0B1F3A]
-                       tracking-tight">
+            <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 text-[#0B1F3A] tracking-tight">
 
                 From AI Foundations to Intelligent Automation
 
@@ -912,13 +899,7 @@
             </div>
 
 
-            <h2 class="mt-5
-                       text-3xl
-                       sm:text-4xl
-                       lg:text-5xl
-                       font-extrabold
-                       text-[#0B1F3A]
-                       tracking-tight">
+            <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 text-[#0B1F3A] tracking-tight">
 
                 17 Modules. One Practical AI Journey.
 
@@ -1409,13 +1390,7 @@
             </div>
 
 
-            <h2 class="mt-5
-                       text-3xl
-                       sm:text-4xl
-                       lg:text-5xl
-                       font-extrabold
-                       text-[#0B1F3A]
-                       tracking-tight">
+            <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 text-[#0B1F3A] tracking-tight">
 
                 What You Will Be Able To Do
 
@@ -1533,14 +1508,7 @@
                 </div>
 
 
-                <h2 class="mt-5
-                           text-3xl
-                           sm:text-4xl
-                           lg:text-5xl
-                           font-extrabold
-                           text-[#0B1F3A]
-                           leading-tight
-                           tracking-tight">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 text-[#0B1F3A] leading-tight tracking-tight">
 
                     Learn How to Turn AI Skills Into Real Opportunities
 
@@ -1712,12 +1680,7 @@
                 </div>
 
 
-                <h2 class="mt-6
-                           text-3xl
-                           sm:text-4xl
-                           lg:text-5xl
-                           font-extrabold
-                           leading-tight">
+                <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-6 leading-tight">
 
                     Certificate in Artificial Intelligence
                     & Automation Systems
@@ -1976,12 +1939,7 @@
         </div>
 
 
-        <h2 class="mt-6
-                   text-3xl
-                   sm:text-4xl
-                   lg:text-5xl
-                   font-extrabold
-                   leading-tight">
+        <h2 class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-6 leading-tight">
 
             Ready to Build Real AI Systems?
 

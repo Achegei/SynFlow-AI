@@ -86,17 +86,7 @@
 
 
             <h1
-                class="mt-5
-                       text-3xl
-                       sm:text-4xl
-                       lg:text-[2.7rem]
-                       font-extrabold
-                       leading-tight
-                       tracking-tight
-                       text-[#0B1F3A]
-                       reveal-item
-                       reveal-left
-                       reveal-delay-1"
+                class="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] mt-5 font-extrabold leading-tight tracking-tight text-[#0B1F3A] reveal-item reveal-left reveal-delay-1"
             >
                 Let's discuss your training,
                 <span class="text-[#1E73BE]">
@@ -159,13 +149,7 @@
             <div>
 
                 <h2
-                    class="text-2xl
-                           sm:text-3xl
-                           font-extrabold
-                           tracking-tight
-                           text-[#0B1F3A]
-                           reveal-item
-                           reveal-left"
+                    class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-extrabold tracking-tight text-[#0B1F3A] reveal-item reveal-left"
                 >
                     How can we help?
                 </h2>
@@ -484,12 +468,7 @@
                 >
 
                     <h2
-                        class="text-2xl
-                               font-extrabold
-                               text-[#0B1F3A]
-                               reveal-item
-                               reveal-right
-                               reveal-delay-1"
+                        class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#0B1F3A] reveal-item reveal-right reveal-delay-1"
                     >
                         Send us an inquiry
                     </h2>

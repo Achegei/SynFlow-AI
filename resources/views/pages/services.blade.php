@@ -952,13 +952,7 @@
 
 
             <h2
-                class="mt-5
-                       text-3xl
-                       sm:text-4xl
-                       lg:text-5xl
-                       font-extrabold
-                       tracking-tight
-                       text-[#0B1F3A]"
+                class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 tracking-tight text-[#0B1F3A]"
             >
                 Industry-Focused AI Training & Automation
             </h2>
@@ -1521,12 +1515,7 @@
 
 
         <h2
-            class="mt-5
-                   text-4xl
-                   sm:text-5xl
-                   font-extrabold
-                   tracking-tight
-                   text-[#0B1F3A]"
+            class="text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold mt-5 tracking-tight text-[#0B1F3A]"
         >
             Start Your AI Journey Today
         </h2>

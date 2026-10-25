@@ -2053,7 +2053,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('h4');
 
                 title.className =
-                    'text-base font-bold text-[#061638]';
+                    'text-lg sm:text-xl font-bold text-[#061638]';
 
                 title.textContent =
                     block.title;
@@ -2067,7 +2067,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('div');
 
                 body.className =
-                    'mt-3 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-slate-600';
+                    'mt-3 max-w-3xl whitespace-pre-line text-base sm:text-lg leading-8 text-slate-600';
 
                 body.textContent =
                     block.content;
@@ -2348,7 +2348,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('div');
 
                 body.className =
-                    'mt-3 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-slate-600';
+                    'mt-3 max-w-3xl whitespace-pre-line text-base sm:text-lg leading-8 text-slate-600';
 
                 body.textContent =
                     block.content;
@@ -2401,7 +2401,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('div');
 
                 body.className =
-                    'mt-3 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-slate-600';
+                    'mt-3 max-w-3xl whitespace-pre-line text-base sm:text-lg leading-8 text-slate-600';
 
                 body.textContent =
                     block.content;
@@ -2454,7 +2454,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('div');
 
                 body.className =
-                    'mt-3 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-slate-700';
+                    'mt-3 max-w-3xl whitespace-pre-line text-base sm:text-lg leading-8 text-slate-700';
 
                 body.textContent =
                     block.content;
@@ -2507,7 +2507,7 @@ function renderLessonBlocks(blocks = [])
                     document.createElement('div');
 
                 body.className =
-                    'mt-3 max-w-3xl whitespace-pre-line text-[15px] leading-7 text-slate-600';
+                    'mt-3 max-w-3xl whitespace-pre-line text-base sm:text-lg leading-8 text-slate-600';
 
                 body.textContent =
                     block.content;
