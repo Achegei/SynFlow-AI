@@ -19,6 +19,13 @@
             'bio' => 'Provides executive leadership in regional operations, institutional partnerships, and strategic expansion across East Africa. Oversees technology strategy, software engineering, AI automation, curriculum development, professional certification, and academic quality assurance. Drives digital innovation, institutional collaboration, and the delivery of high-quality, industry-relevant AI education and workforce development programmes.',
             'photo' => 'laban-ekitela.jpg',
         ],
+        'patrick' => [
+            'name' => 'Mr. Patrick Koech',
+            'role' => 'Country Deputy Director – Kenya | AI Education Partnerships & Corporate Training',
+            'location' => 'Nairobi, Kenya',
+            'bio' => 'Leads strategic partnerships with county governments, schools, colleges, and universities across Kenya. Coordinates corporate training in Responsible AI, Ethics & Governance while advancing the Academy’s national expansion, institutional partnerships, digital transformation, and AI workforce development initiatives.',
+            'photo' => 'patrick-koech.jpg',
+        ],
         'clide' => [
             'name' => 'Clide Ahmogah',
             'role' => 'Country Executive Director – Kenya | Media & Communications',
@@ -56,10 +63,15 @@
         ],
     ];
 
-    $levels = [
-        ['haji'],
-        ['laban', 'clide'],
-        ['evans', 'florida', 'martin', 'erastus'],
+    $displayOrder = [
+        'haji',
+        'laban',
+        'patrick',
+        'clide',
+        'evans',
+        'florida',
+        'martin',
+        'erastus',
     ];
 @endphp
 
@@ -70,7 +82,7 @@
                 Our People
             </p>
 
-            <h1 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
+            <h1 class="text-[2rem] md:text-[3rem] mt-4 font-bold tracking-tight">
                 Leadership & Directors
             </h1>
 
@@ -82,89 +94,69 @@
         </div>
     </section>
 
-    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20" aria-label="Leadership organizational chart">
+    <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-20" aria-label="Academy leadership team">
         <div class="mb-10 text-center">
             <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
-                Our Leadership Structure
+                Our Leadership Team
             </p>
-            <h2 class="mt-3 text-2xl font-bold tracking-tight text-[#10203B] sm:text-3xl">
+            <h2 class="mt-3 text-[1.75rem] font-bold tracking-tight text-[#10203B] sm:text-[2rem] lg:text-[2.125rem]">
                 The People Behind Our Mission
             </h2>
         </div>
 
-        @foreach($levels as $levelIndex => $level)
-            @if($levelIndex > 0)
-                <div class="flex justify-center" aria-hidden="true">
-                    <div class="h-8 w-px bg-blue-300"></div>
-                </div>
-            @endif
+        <div class="grid grid-cols-1 gap-y-16 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-24">
+            @foreach($displayOrder as $key)
+                @php
+                    $leader = $leaders[$key];
+                    $portrait = 'images/leadership/' . $leader['photo'];
+                    $hasPortrait = is_file(public_path($portrait));
+                @endphp
 
-            @if(count($level) > 1)
-                <div class="mx-auto hidden h-px bg-blue-300 md:block {{ count($level) === 2 ? 'w-[50%]' : 'w-[75%]' }}" aria-hidden="true"></div>
-            @endif
-
-            <div class="grid items-stretch gap-5 {{ count($level) === 1 ? 'mx-auto max-w-xl grid-cols-1' : (count($level) === 2 ? 'mx-auto max-w-5xl grid-cols-1 md:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-4') }}">
-                @foreach($level as $key)
-                    @php
-                        $leader = $leaders[$key];
-                        $portrait = 'images/leadership/' . $leader['photo'];
-                        $hasPortrait = is_file(public_path($portrait));
-                    @endphp
-
-                    <article class="relative flex h-full flex-col rounded-2xl border border-[#E0E8F2] bg-white p-5 shadow-[0_10px_30px_rgba(15,35,75,0.05)] transition duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-6">
-                        @if($levelIndex > 0)
-                            <span class="absolute -top-2 left-1/2 hidden h-2 w-2 -translate-x-1/2 rounded-full border-2 border-blue-500 bg-white md:block" aria-hidden="true"></span>
+                <article class="flex min-w-0 flex-col">
+                    <div class="aspect-[4/5] overflow-hidden rounded-2xl bg-[#E5ECF5] sm:rounded-3xl">
+                        @if($hasPortrait)
+                            <img
+                                src="{{ asset($portrait) }}"
+                                alt="Portrait of {{ $leader['name'] }}"
+                                loading="lazy"
+                                class="h-full w-full object-cover object-top"
+                            >
+                        @else
+                            <div class="flex h-full items-center justify-center text-slate-400">
+                                <span class="text-sm font-semibold">Portrait unavailable</span>
+                            </div>
                         @endif
+                    </div>
 
-                        <div class="flex items-start gap-4">
-                            <div class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-[#E9F0FA] bg-[#DCE7F6] sm:h-24 sm:w-24">
-                                @if($hasPortrait)
-                                    <img
-                                        src="{{ asset($portrait) }}"
-                                        alt="Portrait of {{ $leader['name'] }}"
-                                        loading="lazy"
-                                        class="h-full w-full object-cover"
-                                    >
-                                @else
-                                    <svg viewBox="0 0 100 100" class="h-full w-full text-[#819ABF]" fill="currentColor" aria-hidden="true">
-                                        <circle cx="50" cy="35" r="19"/>
-                                        <path d="M14 96c2-25 16-39 36-39s34 14 36 39z"/>
-                                    </svg>
-                                @endif
-                            </div>
+                    <div class="flex flex-1 flex-col pt-6">
+                        <h3 class="text-lg font-bold leading-snug tracking-tight text-[#10203B] sm:text-xl">
+                            {{ $leader['name'] }}
+                        </h3>
 
-                            <div class="min-w-0 flex-1">
-                                <h3 class="text-lg font-bold leading-6 tracking-tight text-[#11213D]">
-                                    {{ $leader['name'] }}
-                                </h3>
+                        <p class="mt-2 text-sm font-semibold leading-relaxed text-[#2161C3] sm:text-base">
+                            {{ $leader['role'] }}
+                        </p>
 
-                                <p class="mt-2 text-sm font-semibold leading-5 text-[#2161C3]">
-                                    {{ $leader['role'] }}
-                                </p>
+                        <p class="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                            Moose Loon AI Academy
+                        </p>
 
-                                <p class="mt-2 text-xs font-medium uppercase tracking-wide text-slate-400">
-                                    Moose Loon AI Academy
-                                </p>
+                        <p class="mt-2 text-sm text-slate-500">
+                            {{ $leader['location'] }}
+                        </p>
 
-                                <p class="mt-2 text-sm text-slate-500">
-                                    {{ $leader['location'] }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="mt-5 flex-1 rounded-xl bg-[#F2F6FC] p-4">
-                            <p class="text-[10px] font-bold uppercase tracking-[0.15em] text-[#2764C1]">
+                        <div class="mt-8 border-t border-slate-200 pt-5">
+                            <p class="text-[11px] font-bold uppercase tracking-[0.14em] text-[#2764C1]">
                                 Professional Profile
                             </p>
-
-                            <p class="mt-2 text-sm leading-6 text-slate-600">
+                            <p class="mt-2 text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
                                 {{ $leader['bio'] }}
                             </p>
                         </div>
-                    </article>
-                @endforeach
-            </div>
-        @endforeach
+                    </div>
+                </article>
+            @endforeach
+        </div>
     </section>
 </main>
 @endsection
