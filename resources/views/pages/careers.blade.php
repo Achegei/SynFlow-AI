@@ -169,8 +169,8 @@
                                class="text-indigo-700 hover:underline">www.mooseloonai.ca</a>
                         </p>
                         <p><strong>Email:</strong>
-                            <a href="mailto:aisolutions@mooseloonai.ca"
-                               class="text-indigo-700 hover:underline">aisolutions@mooseloonai.ca</a>
+                            <a href="mailto:careers@mooseloonai.ca"
+                               class="text-indigo-700 hover:underline">careers@mooseloonai.ca</a>
                         </p>
                         <p><strong>Phone / WhatsApp:</strong>
                             <a href="tel:+254119066667"
@@ -202,9 +202,9 @@
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Apply Now</h2>
                 <p class="text-gray-600 leading-7">
                     Complete the form below, or send your application directly to
-                    <a href="mailto:aisolutions@mooseloonai.ca"
+                    <a href="mailto:careers@mooseloonai.ca"
                        class="font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2">
-                        aisolutions@mooseloonai.ca
+                        careers@mooseloonai.ca
                     </a>.
                 </p>
             </div>
