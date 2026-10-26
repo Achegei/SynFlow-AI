@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', 'Senior Education & Corporate Partnerships Executive – Nairobi')
+@section('title', 'Head of Education & Corporate Partnerships | Moose Loon AI Academy')
 
 @section('content')
 
@@ -9,27 +9,36 @@
         <div class="max-w-5xl mx-auto bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
 
             <section class="px-6 py-12 sm:px-10 lg:px-14 lg:py-16 border-b border-gray-200">
-                <p class="text-sm font-semibold tracking-widest uppercase text-indigo-700 mb-4">
-                    Careers at Moose Loon AI Academy
+                <p class="text-sm font-semibold tracking-widest uppercase text-indigo-700 mb-3">
+                    Moose Loon AI Academy
                 </p>
 
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight mb-5">
-                    Senior Education &amp; Corporate Partnerships Executive
+                <p class="text-base text-gray-600 mb-6">
+                    Canadian Practical AI Skills for the Modern Workforce
+                </p>
+
+                <p class="text-sm font-bold uppercase tracking-widest text-indigo-700 mb-4">
+                    We Are Hiring
+                </p>
+
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 leading-tight mb-6">
+                    Head of Education &amp; Corporate Partnerships
                 </h1>
 
-                <div class="flex flex-wrap gap-x-6 gap-y-2 text-gray-600 mb-7">
-                    <span>Nairobi, Kenya</span>
-                    <span>Partnerships &amp; Business Development</span>
+                <div class="flex flex-wrap gap-x-8 gap-y-3 text-base text-gray-700 mb-7">
+                    <span><strong>Duty Station:</strong> Nairobi, Kenya</span>
+                    <span><strong>Deadline:</strong> 9 November 2026</span>
                 </div>
 
-                <p class="text-lg leading-8 text-gray-700 max-w-3xl">
-                    Moose Loon AI Academy, a Canadian AI Academy with operations in Kenya, is seeking a highly experienced professional with established networks and a proven track record of developing strategic partnerships across Kenya.
+                <p class="text-lg leading-8 text-gray-700 max-w-4xl">
+                    We are seeking a highly connected, results-driven professional
+                    to lead strategic education and corporate partnerships across Kenya.
                 </p>
 
                 <div class="mt-8">
                     <a href="#appy"
-                       class="inline-flex items-center justify-center bg-gray-900 text-white px-7 py-3 rounded-md font-semibold hover:bg-gray-800 transition">
-                        Apply for this position
+                       class="inline-flex items-center justify-center bg-gray-900 text-white px-7 py-3 rounded-md text-base font-semibold hover:bg-gray-800 transition">
+                        Apply for This Position
                     </a>
                 </div>
             </section>
@@ -37,96 +46,146 @@
             <div class="px-6 py-10 sm:px-10 lg:px-14 lg:py-14 space-y-12">
 
                 <section>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Required Networks</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        Position Overview
+                    </h2>
 
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-3">Education</h3>
-                            <p class="text-gray-700 leading-7">
-                                Universities, colleges, schools and training institutions.
-                            </p>
-                        </div>
-
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-3">Corporate &amp; Institutional</h3>
-                            <p class="text-gray-700 leading-7">
-                                Corporates, healthcare organizations, insurance institutions, government, NGOs, businesses and other institutions.
-                            </p>
-                        </div>
+                    <div class="space-y-5 text-base sm:text-lg text-gray-700 leading-8">
+                        <p>
+                            The successful candidate must possess well-established
+                            professional relationships across universities, colleges,
+                            TVET institutions, schools, and other educational
+                            institutions throughout Kenya.
+                        </p>
+                        <p>
+                            The candidate must also demonstrate strong corporate
+                            networks and the ability to establish strategic
+                            partnerships with leading businesses, organizations,
+                            and institutional decision-makers.
+                        </p>
                     </div>
                 </section>
 
                 <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Your Role</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        Key Requirements
+                    </h2>
 
-                    <ul class="list-disc pl-6 text-gray-700 space-y-3 leading-7">
-                        <li>Introduce Moose Loon AI Academy to potential education, corporate and institutional partners.</li>
-                        <li>Develop strategic education, corporate and institutional partnerships.</li>
-                        <li>Champion practical AI education and workforce development.</li>
-                        <li>Build, manage and strengthen long-term partner relationships.</li>
+                    <ol class="list-decimal pl-6 space-y-5 text-base sm:text-lg text-gray-700 leading-8">
+                        <li>
+                            <strong>Established Educational Networks:</strong>
+                            Strong professional relationships with university
+                            Vice-Chancellors, College Principals, Institutional
+                            Directors, and senior education administrators.
+                        </li>
+                        <li>
+                            <strong>Corporate Sector Connections:</strong>
+                            Established relationships with senior executives,
+                            corporate decision-makers, HR Directors, and
+                            business leaders.
+                        </li>
+                        <li>
+                            <strong>Strategic Partnership Development:</strong>
+                            Proven ability to initiate, negotiate, and secure
+                            institutional and corporate partnership agreements.
+                        </li>
+                        <li>
+                            <strong>Leadership &amp; Representation:</strong>
+                            Excellent communication, negotiation, relationship
+                            management, and executive-level engagement skills.
+                        </li>
+                        <li>
+                            <strong>Relevant Professional Experience:</strong>
+                            Demonstrated experience in education partnerships,
+                            corporate relations, business development, or
+                            institutional engagement.
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="border-t border-gray-200 pt-10">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        Key Responsibilities
+                    </h2>
+
+                    <ul class="list-disc pl-6 space-y-4 text-base sm:text-lg text-gray-700 leading-8">
+                        <li>Establish strategic partnerships with universities, colleges, TVET institutions, and schools across Kenya.</li>
+                        <li>Develop corporate partnerships for AI training and workforce development.</li>
+                        <li>Engage senior institutional leaders and corporate executives.</li>
+                        <li>Lead institutional partnership negotiations and coordinate partnership agreements.</li>
+                        <li>Expand Moose Loon AI Academy’s institutional and corporate presence nationwide.</li>
                     </ul>
                 </section>
 
                 <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Who Should Apply?</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        Ideal Candidate
+                    </h2>
 
-                    <p class="text-gray-700 leading-7 mb-5">
-                        We are looking for senior professionals with experience in one or more of the following areas:
-                    </p>
-
-                    <ul class="list-disc pl-6 text-gray-700 space-y-3 leading-7">
-                        <li>Business Development</li>
-                        <li>Institutional Partnerships</li>
-                        <li>Corporate Relations</li>
-                        <li>Education Partnerships</li>
-                        <li>Strategic Partnerships</li>
-                    </ul>
-
-                    <p class="text-gray-700 leading-7 mt-6">
-                        Candidates should have strong existing professional connections and demonstrated success in developing and managing partnerships.
-                    </p>
+                    <div class="space-y-5 text-base sm:text-lg text-gray-700 leading-8">
+                        <p>
+                            We seek a highly connected, results-driven professional
+                            with an established network of influential contacts
+                            across Kenya’s education and corporate sectors.
+                        </p>
+                        <p>
+                            Preference will be given to candidates with demonstrable
+                            access to senior institutional and corporate
+                            decision-makers and a proven record of securing
+                            strategic partnerships.
+                        </p>
+                    </div>
                 </section>
 
                 <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">Competitive Compensation Package</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        How to Apply
+                    </h2>
 
-                    <p class="text-gray-700 leading-7">
-                        Competitive compensation package with performance-based incentives.
-                    </p>
-                </section>
-
-                <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-5">How to Apply</h2>
-
-                    <p class="text-gray-700 leading-7 mb-4">
-                        Submit your CV or professional profile, relevant experience, and examples of partnerships you have successfully developed.
+                    <p class="text-base sm:text-lg text-gray-700 leading-8 mb-5">
+                        Complete the application form below and upload your CV
+                        or professional profile together with your supporting
+                        application in PDF format.
                     </p>
 
-                    <p class="text-gray-700 leading-7">
-                        Applications may also be sent by email to
-                        <a href="mailto:careers@mooseloonai.ca"
-                           class="font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2">
-                            careers@mooseloonai.ca
-                        </a>.
-                    </p>
-
-                    <div class="mt-7 p-5 bg-gray-50 border border-gray-200 rounded-lg">
-                        <p class="font-semibold text-gray-900">
+                    <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg">
+                        <p class="text-sm font-semibold uppercase tracking-wide text-gray-600">
                             Application Deadline
                         </p>
-                        <p class="text-gray-700 mt-1">
-                            Sunday, October 11, 2026 at Midnight
+                        <p class="text-xl font-bold text-gray-900 mt-2">
+                            9 November 2026
                         </p>
                     </div>
                 </section>
 
                 <section class="border-t border-gray-200 pt-10">
-                    <h2 class="text-xl font-bold text-gray-900 mb-3">Moose Loon AI Academy</h2>
-                    <p class="text-gray-700 leading-7">
-                        Kipro Centre, Westlands, Nairobi, Kenya
+                    <h2 class="text-2xl font-bold text-gray-900 mb-5">
+                        Official Office Contact Information
+                    </h2>
+
+                    <div class="space-y-3 text-base text-gray-700 leading-7">
+                        <p><strong>Website:</strong>
+                            <a href="https://www.mooseloonai.ca"
+                               class="text-indigo-700 hover:underline">www.mooseloonai.ca</a>
+                        </p>
+                        <p><strong>Email:</strong>
+                            <a href="mailto:aisolutions@mooseloonai.ca"
+                               class="text-indigo-700 hover:underline">aisolutions@mooseloonai.ca</a>
+                        </p>
+                        <p><strong>Phone / WhatsApp:</strong>
+                            <a href="tel:+254119066667"
+                               class="text-indigo-700 hover:underline">+254 119 066 667</a>
+                        </p>
+                        <p><strong>Nairobi Office:</strong>
+                            Kipro Centre, Westlands, Nairobi, Kenya
+                        </p>
+                    </div>
+
+                    <p class="mt-8 font-semibold text-gray-900">
+                        Moose Loon AI Academy
                     </p>
-                    <p class="text-gray-600 leading-7 mt-2">
-                        Building strategic partnerships for practical AI education and workforce development.
+                    <p class="text-gray-600 mt-1">
+                        Canadian Practical AI Skills for the Modern Workforce.
                     </p>
                 </section>
 
@@ -143,9 +202,9 @@
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Apply Now</h2>
                 <p class="text-gray-600 leading-7">
                     Complete the form below, or send your application directly to
-                    <a href="mailto:careers@mooseloonai.ca"
+                    <a href="mailto:aisolutions@mooseloonai.ca"
                        class="font-semibold text-indigo-700 hover:text-indigo-900 underline underline-offset-2">
-                        careers@mooseloonai.ca
+                        aisolutions@mooseloonai.ca
                     </a>.
                 </p>
             </div>
@@ -196,8 +255,8 @@
                             required
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="" disabled>Select a position</option>
-                        <option value="Senior Education & Corporate Partnerships Executive" selected>
-                            Senior Education &amp; Corporate Partnerships Executive
+                        <option value="Head of Education & Corporate Partnerships" selected>
+                            Head of Education &amp; Corporate Partnerships
                         </option>
                     </select>
                 </div>
