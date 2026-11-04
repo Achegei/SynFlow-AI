@@ -28,6 +28,7 @@ class User extends Authenticatable
         'role',
         'must_change_password',
         'initial_password_reset_required',
+        'is_active',
         'profile_photo_url',
         'referral_code',     // ✅ added
         'referred_by',        // ✅ added
@@ -41,7 +42,7 @@ class User extends Authenticatable
 
     public function canAccessPanel(\Filament\Panel $panel): bool
     {
-        return $this->is_admin == 1;
+        return (bool) $this->is_active && $this->is_admin == 1;
     }
 
     public function getProfilePhotoUrlAttribute($value)
@@ -61,6 +62,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'is_active' => 'boolean',
             'password' => 'hashed',
         ];
     }

@@ -11,7 +11,11 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         // Check if the logged-in user is admin
-        if (!auth()->check() || auth()->user()->is_admin != 1) {
+        if (
+            ! auth()->check()
+            || ! (bool) auth()->user()->is_active
+            || auth()->user()->is_admin != 1
+        ) {
             abort(403, 'Unauthorized.');
         }
 

@@ -16,6 +16,10 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function ($middleware) {
+        $middleware->web(append: [
+            \App\Http\Middleware\EnsureAccountIsActive::class,
+        ]);
+
         $middleware->alias([
             'role.partner' => \App\Http\Middleware\PartnerMiddleware::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,

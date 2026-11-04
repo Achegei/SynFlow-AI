@@ -38,23 +38,10 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Permanent account deletion is disabled to preserve learner records.
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        abort(403, 'Permanent account deletion is disabled. Please contact the administrator.');
     }
 }

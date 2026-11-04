@@ -50,7 +50,7 @@ test('email verification status is unchanged when the email address is unchanged
     $this->assertNotNull($user->refresh()->email_verified_at);
 });
 
-test('user can delete their account', function () {
+test('users cannot permanently delete their accounts through the profile endpoint', function () {
     $user = User::factory()->create();
 
     $response = $this
@@ -59,27 +59,20 @@ test('user can delete their account', function () {
             'password' => 'password',
         ]);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
+    $response->assertStatus(405);
 
-    $this->assertGuest();
-    $this->assertNull($user->fresh());
+    $this->assertNotNull($user->fresh());
+    $this->assertAuthenticatedAs($user);
 });
 
-test('correct password must be provided to delete account', function () {
+test('profile page does not expose permanent account deletion', function () {
     $user = User::factory()->create();
 
     $response = $this
         ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
+        ->get('/profile');
 
-    $response
-        ->assertSessionHasErrorsIn('userDeletion', 'password')
-        ->assertRedirect('/profile');
-
-    $this->assertNotNull($user->fresh());
+    $response->assertOk();
+    $response->assertDontSee('Delete Account');
+    $response->assertDontSee('confirm-user-deletion');
 });
