@@ -1234,9 +1234,25 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
-                        <p class="font-bold text-[#00104B]">
-                            Wekesa Mark Tobbie
-                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 shrink-0 rounded-full overflow-hidden bg-[#00104B] flex items-center justify-center">
+                                @if(\Illuminate\Support\Facades\Storage::disk('public')->exists('testimonials/wekesa-mark-tobbie.jpg'))
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url('testimonials/wekesa-mark-tobbie.jpg') }}"
+                                        alt="Wekesa Mark Tobbie"
+                                        class="w-full h-full object-cover"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <span class="text-white text-sm font-bold">WT</span>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="font-bold text-[#00104B]">
+                                    Wekesa Mark Tobbie
+                                </p>
+                            </div>
+                        </div>
 
                         <p class="font-bold text-[#00104B]">
                             Student
@@ -1264,9 +1280,25 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
-                        <p class="font-bold text-[#00104B]">
-                            Abdiweli Ali Musse
-                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 shrink-0 rounded-full overflow-hidden bg-[#00104B] flex items-center justify-center">
+                                @if(\Illuminate\Support\Facades\Storage::disk('public')->exists('testimonials/abdiweli-ali-musse.jpg'))
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url('testimonials/abdiweli-ali-musse.jpg') }}"
+                                        alt="Abdiweli Ali Musse"
+                                        class="w-full h-full object-cover"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <span class="text-white text-sm font-bold">AM</span>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="font-bold text-[#00104B]">
+                                    Abdiweli Ali Musse
+                                </p>
+                            </div>
+                        </div>
                         <p class="font-bold text-[#00104B]">
                             Learner
                         </p>
@@ -1293,9 +1325,25 @@
                     </p>
 
                     <div class="mt-6 pt-5 border-t border-slate-100">
-                        <p class="font-bold text-[#00104B]">
-                            Joseph Juma
-                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 shrink-0 rounded-full overflow-hidden bg-[#00104B] flex items-center justify-center">
+                                @if(\Illuminate\Support\Facades\Storage::disk('public')->exists('testimonials/joseph-juma.jpg'))
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url('testimonials/joseph-juma.jpg') }}"
+                                        alt="Joseph Juma"
+                                        class="w-full h-full object-cover"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <span class="text-white text-sm font-bold">JJ</span>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="font-bold text-[#00104B]">
+                                    Joseph Juma
+                                </p>
+                            </div>
+                        </div>
                         <p class="font-bold text-[#00104B]">
                             Learner
                         </p>
@@ -1313,6 +1361,78 @@
         </div>
     </section>
 
+
+    {{-- =========================================================
+         OUR INSTITUTIONAL PARTNERS
+    ========================================================== --}}
+    @if($institutionalPartners->isNotEmpty())
+        <section class="bg-[#F7F9FC] py-20 sm:py-24"
+                 aria-labelledby="institutional-partners-heading">
+            <div class="ml-container">
+
+                <div class="text-center max-w-3xl mx-auto ml-reveal">
+                    <span class="text-sm font-bold uppercase tracking-widest text-[#C90000]">
+                        Our Institutional Partners
+                    </span>
+
+                    <h2 id="institutional-partners-heading"
+                        class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
+                        Building AI-ready institutions together.
+                    </h2>
+
+                    <p class="mt-5 text-[17px] text-slate-600 leading-7">
+                        Collaborating with educational institutions to expand
+                        access to practical, ethical and productive AI education.
+                    </p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($institutionalPartners as $partner)
+                        <article class="ml-card ml-reveal bg-white border border-slate-200 rounded-xl p-7 text-center">
+
+                            <div class="h-24 flex items-center justify-center">
+                                @if($partner->logo_path)
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($partner->logo_path) }}"
+                                        alt="{{ $partner->name }} logo"
+                                        class="max-h-20 max-w-full object-contain"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    <div class="w-20 h-20 rounded-xl bg-slate-100 flex items-center justify-center text-[#00104B]">
+                                        <span class="text-2xl font-bold">
+                                            {{ mb_strtoupper(mb_substr($partner->name, 0, 1)) }}
+                                        </span>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <h3 class="mt-5 text-lg font-bold text-[#00104B]">
+                                {{ $partner->name }}
+                            </h3>
+
+                            @if($partner->public_description)
+                                <p class="mt-3 text-sm text-slate-600 leading-6">
+                                    {{ $partner->public_description }}
+                                </p>
+                            @endif
+
+                            @if($partner->website_url)
+                                <a href="{{ $partner->website_url }}"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="inline-flex mt-5 text-sm font-semibold text-[#C90000] hover:underline">
+                                    Visit Institution Website
+                                </a>
+                            @endif
+
+                        </article>
+                    @endforeach
+                </div>
+
+            </div>
+        </section>
+    @endif
 
     {{-- =========================================================
          INSTITUTIONAL PARTNERSHIP

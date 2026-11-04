@@ -22,6 +22,16 @@ class Institution extends Model
         'wallet_balance',
         'sales_executive_id',
         'institution_admin_id',
+        'logo_path',
+        'website_url',
+        'public_description',
+        'show_on_homepage',
+        'display_order',
+    ];
+
+    protected $casts = [
+        'show_on_homepage' => 'boolean',
+        'display_order' => 'integer',
     ];
 
     public function students()

@@ -99,6 +99,53 @@ Forms\Components\TextInput::make('admin_password')
                         ->nullable(),
                 ]),
 
+            // ===================== PUBLIC PARTNERSHIP PROFILE =====================
+            Forms\Components\Section::make('Public Partnership Profile')
+                ->description(
+                    'Manage how this institution appears on the public homepage. '
+                    . 'Changes here do not affect institutional accounts or commissions.'
+                )
+                ->schema([
+                    Forms\Components\FileUpload::make('logo_path')
+                        ->label('Institution Logo')
+                        ->image()
+                        ->imageEditor()
+                        ->disk('public')
+                        ->directory('institution-logos')
+                        ->visibility('public')
+                        ->maxSize(2048)
+                        ->helperText('Upload the official institution logo. Maximum 2 MB.'),
+
+                    Forms\Components\TextInput::make('website_url')
+                        ->label('Institution Website')
+                        ->url()
+                        ->maxLength(255)
+                        ->placeholder('https://example.org'),
+
+                    Forms\Components\Textarea::make('public_description')
+                        ->label('Public Description')
+                        ->rows(3)
+                        ->maxLength(1000)
+                        ->columnSpanFull(),
+
+                    Forms\Components\TextInput::make('display_order')
+                        ->label('Display Order')
+                        ->numeric()
+                        ->integer()
+                        ->minValue(0)
+                        ->default(0)
+                        ->required(),
+
+                    Forms\Components\Toggle::make('show_on_homepage')
+                        ->label('Show on Homepage')
+                        ->default(false)
+                        ->helperText(
+                            'Enable only after confirming that the institution '
+                            . 'has approved public partnership recognition.'
+                        ),
+                ])
+                ->columns(2),
+
             // ===================== STATUS =====================
             Forms\Components\Section::make('Status')
                 ->schema([
@@ -150,19 +197,7 @@ Forms\Components\TextInput::make('admin_password')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-
                 Tables\Actions\EditAction::make(),
-
-                Tables\Actions\DeleteAction::make()
-                    ->requiresConfirmation()
-                    ->modalHeading('Delete Institution')
-                    ->modalDescription('This will permanently delete this institution.')
-                    ->modalSubmitActionLabel('Delete'),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
