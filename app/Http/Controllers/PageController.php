@@ -10,7 +10,22 @@ class PageController extends Controller
 {
     public function home(): View
     {
-        return view('pages.home');
+        $institutionalPartners = \App\Models\Institution::query()
+            ->where('status', 'active')
+            ->where('show_on_homepage', true)
+            ->orderBy('display_order')
+            ->orderBy('name')
+            ->get([
+                'id',
+                'name',
+                'logo_path',
+                'website_url',
+                'public_description',
+            ]);
+
+        return view('pages.home', [
+            'institutionalPartners' => $institutionalPartners,
+        ]);
     }
 
     public function faqs(): View
