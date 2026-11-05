@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Contact;
+use App\Models\GalleryImage;
 
 class PageController extends Controller
 {
@@ -23,8 +24,44 @@ class PageController extends Controller
                 'public_description',
             ]);
 
+        $featuredGalleryImages = GalleryImage::query()
+            ->featured()
+            ->orderBy('display_order')
+            ->orderByDesc('published_at')
+            ->limit(6)
+            ->get();
+
         return view('pages.home', [
             'institutionalPartners' => $institutionalPartners,
+            'featuredGalleryImages' => $featuredGalleryImages,
+        ]);
+    }
+
+    public function gallery(Request $request): View
+    {
+        $type = $request->query('type', 'all');
+
+        if (! is_string($type) || ! in_array($type, ['all', 'photos', 'videos'], true)) {
+            $type = 'all';
+        }
+
+        $query = GalleryImage::query()->published();
+
+        if ($type === 'photos') {
+            $query->where('media_type', 'photo');
+        } elseif ($type === 'videos') {
+            $query->whereIn('media_type', ['video_upload', 'youtube']);
+        }
+
+        $galleryImages = $query
+            ->orderBy('display_order')
+            ->orderByDesc('published_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.gallery', [
+            'galleryImages' => $galleryImages,
+            'galleryType' => $type,
         ]);
     }
 

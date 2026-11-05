@@ -460,6 +460,11 @@
                                 Leadership
                             </a>
 
+                            <a href="{{ route('gallery') }}"
+                                class="nav-link py-2 text-sm font-semibold text-[#0B1F3A] hover:text-[#1E73BE] transition-colors duration-200">
+                                Gallery
+                            </a>
+
 
 
 
@@ -765,6 +770,12 @@
                             @click="open = false"
                             class="flex items-center px-4 py-3 rounded-xl text-[#0B1F3A] font-semibold hover:bg-[#F4FAFE] hover:text-[#1E73BE] transition">
                             Leadership & Directors
+                        </a>
+
+                        <a href="{{ route('gallery') }}"
+                            @click="open = false"
+                            class="flex items-center px-4 py-3 rounded-xl text-[#0B1F3A] font-semibold hover:bg-[#F4FAFE] hover:text-[#1E73BE] transition">
+                            Gallery
                         </a>
 
 
@@ -1157,6 +1168,13 @@
                             <a href="{{ route('leadership') }}"
                                 class="inline-block hover:text-white hover:translate-x-1 transition-all duration-200">
                                 Leadership & Directors
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('gallery') }}"
+                                class="inline-block hover:text-white hover:translate-x-1 transition-all duration-200">
+                                Gallery
                             </a>
                         </li>
 

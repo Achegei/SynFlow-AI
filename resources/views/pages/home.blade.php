@@ -1435,6 +1435,122 @@
     @endif
 
     {{-- =========================================================
+         MOOSE LOON AI ACADEMY PHOTO GALLERY
+    ========================================================== --}}
+    @if($featuredGalleryImages->isNotEmpty())
+        <section class="bg-white py-20 sm:py-24"
+                 aria-labelledby="homepage-gallery-heading">
+            <div class="ml-container">
+
+                <div class="text-center max-w-3xl mx-auto ml-reveal">
+                    <span class="text-sm font-bold uppercase tracking-widest text-[#C90000]">
+                        Our Gallery
+                    </span>
+
+                    <h2 id="homepage-gallery-heading"
+                        class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
+                        Moments from our AI learning community.
+                    </h2>
+
+                    <p class="mt-5 text-[17px] text-slate-600 leading-7">
+                        Explore highlights from our training sessions,
+                        AI orientations, institutional partnerships,
+                        workshops and academy events.
+                    </p>
+                </div>
+
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    @foreach($featuredGalleryImages as $photo)
+                        <article class="ml-card ml-reveal overflow-hidden rounded-xl bg-white border border-slate-200">
+
+                            <div class="aspect-[4/3] overflow-hidden bg-slate-100">
+
+                                @if($photo->media_type === 'photo')
+                                    <img
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($photo->image_path) }}"
+                                        alt="{{ $photo->alt_text ?: $photo->title }}"
+                                        loading="lazy"
+                                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                    >
+
+                                @elseif($photo->media_type === 'video_upload')
+                                    <video
+                                        controls
+                                        preload="none"
+                                        playsinline
+                                        poster="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($photo->image_path) }}"
+                                        aria-label="{{ $photo->title }}"
+                                        class="w-full h-full object-contain bg-black"
+                                    >
+                                        <source
+                                            src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($photo->video_path) }}"
+                                            type="video/mp4"
+                                        >
+                                        Your browser does not support HTML5 video.
+                                    </video>
+
+                                @elseif($photo->media_type === 'youtube')
+                                    @php
+                                        $youtubeId = \App\Support\GalleryMediaValidator::youtubeVideoId(
+                                            $photo->youtube_url ?? ''
+                                        );
+                                    @endphp
+
+                                    @if($youtubeId)
+                                        <iframe
+                                            src="https://www.youtube-nocookie.com/embed/{{ $youtubeId }}"
+                                            title="{{ $photo->title }}"
+                                            loading="lazy"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowfullscreen
+                                            class="w-full h-full border-0"
+                                        ></iframe>
+                                    @else
+                                        <div class="flex h-full items-center justify-center p-6 text-center text-sm text-slate-600">
+                                            Video unavailable.
+                                        </div>
+                                    @endif
+
+                                @endif
+
+                            </div>
+
+                            <div class="p-5">
+
+                                <p class="text-xs font-bold uppercase tracking-wider text-[#C90000]">
+                                    {{ $photo->category }}
+                                </p>
+
+                                <h3 class="mt-3 text-lg font-bold text-[#00104B]">
+                                    {{ $photo->title }}
+                                </h3>
+
+                                @if($photo->caption)
+                                    <p class="mt-3 text-sm text-slate-600 leading-6">
+                                        {{ $photo->caption }}
+                                    </p>
+                                @endif
+
+                            </div>
+                        </article>
+                    @endforeach
+
+                </div>
+
+                <div class="mt-12 text-center">
+                    <a href="{{ route('gallery') }}"
+                       class="inline-flex items-center justify-center rounded-lg bg-[#C90000] px-7 py-3.5 text-sm font-bold text-white transition hover:bg-[#A90000]">
+                        View Full Gallery
+                    </a>
+                </div>
+
+            </div>
+        </section>
+    @endif
+
+    {{-- =========================================================
          INSTITUTIONAL PARTNERSHIP
     ========================================================== --}}
     <section class="bg-white py-20 sm:py-24">

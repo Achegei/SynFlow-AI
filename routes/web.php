@@ -209,6 +209,7 @@ Route::view('/leadership', 'pages.leadership')->name('leadership');
 
 Route::controller(PageController::class)->group(function () {
     Route::get('/', 'home')->name('home');
+    Route::get('/gallery', 'gallery')->name('gallery');
     Route::get('/services', 'services')->name('services');
     Route::get('/contact', 'contact')->name('contact');
     Route::get('/contactus', 'contact')->name('contactus'); // Alias for the contact page

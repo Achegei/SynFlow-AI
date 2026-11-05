@@ -22,6 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Allow Gallery MP4 uploads up to 50 MB through Livewire.
+        // Individual Filament upload fields retain their own limits.
+        config()->set(
+            'livewire.temporary_file_upload.rules',
+            ['required', 'file', 'max:51200']
+        );
+
         // Use a view composer to share variables with the navigation layout
         View::composer('layouts.navigation', function ($view) {
             // Fetch the data you need for the navigation bar here.
