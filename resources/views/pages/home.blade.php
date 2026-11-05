@@ -680,111 +680,108 @@
 
 
     {{-- =========================================================
-         WHAT STUDENTS LEARN
+         ACADEMY CURRICULUM PATHWAYS
     ========================================================== --}}
     <section class="bg-[#F7F9FC] py-20 sm:py-24">
         <div class="ml-container">
 
-            <div class="text-center max-w-3xl mx-auto ml-reveal">
-
+            <div class="max-w-3xl mx-auto text-center ml-reveal">
                 <span class="text-sm font-bold uppercase tracking-widest text-[#C90000]">
                     What you will learn
                 </span>
 
-                <h2 class="mt-4 text-[1.75rem] sm:text-[2rem] lg:text-[2.125rem] font-bold text-[#00104B]">
-                    Build a foundation for working with modern AI.
+                <h2 class="mt-4 text-3xl sm:text-4xl font-bold text-[#00104B]">
+                    Your AI learning journey, clearly mapped.
                 </h2>
 
-                <p class="mt-5 text-[17px] text-slate-600 leading-7">
-                    Our learning experience brings together AI concepts, modern tools,
-                    automation, integrations, and practical projects.
+                <p class="mt-5 text-lg leading-8 text-slate-600">
+                    Progress from understanding artificial intelligence to
+                    building, troubleshooting and delivering real-world AI
+                    automation systems.
                 </p>
-
             </div>
 
+            @php
+                $pathways = [
+                    [
+                        'slug' => 'foundation',
+                        'number' => '01',
+                        'title' => 'Foundation',
+                        'subtitle' => 'Understand & Apply',
+                        'modules' => 32,
+                        'description' => 'Develop essential AI literacy, effective prompting, responsible AI practices, chatbot fundamentals and introductory automation skills.',
+                        'topics' => ['AI Fundamentals', 'Prompt Engineering', 'Chatbots & Workflows'],
+                    ],
+                    [
+                        'slug' => 'intermediate',
+                        'number' => '02',
+                        'title' => 'Intermediate',
+                        'subtitle' => 'Analyze, Build & Troubleshoot',
+                        'modules' => 20,
+                        'description' => 'Understand data flows, APIs, webhooks, JSON, Python foundations, testing, debugging and reliable AI-powered systems.',
+                        'topics' => ['APIs & Webhooks', 'Testing & Debugging', 'Python & Data'],
+                    ],
+                    [
+                        'slug' => 'advanced',
+                        'number' => '03',
+                        'title' => 'Advanced',
+                        'subtitle' => 'Integrate, Deploy & Commercialize',
+                        'modules' => 17,
+                        'description' => 'Build n8n automations, AI chat and WhatsApp agents, voice solutions and practical client-ready AI systems.',
+                        'topics' => ['n8n Automation', 'WhatsApp & Voice Agents', 'Final Project'],
+                    ],
+                ];
+            @endphp
 
-            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($pathways as $pathway)
+                    <a href="{{ route('curriculum.stage', ['stage' => $pathway['slug']]) }}"
+                       class="group ml-reveal block h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#00104B] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-200">
 
-                @php
-                    $learningAreas = [
-                        [
-                            'number' => '01',
-                            'title' => 'Artificial Intelligence Fundamentals',
-                            'text' => 'Understand core AI concepts, models, applications, and how intelligent systems are being used across industries.'
-                        ],
-                        [
-                            'number' => '02',
-                            'title' => 'Prompt Engineering',
-                            'text' => 'Learn how to communicate effectively with modern AI models and design reliable prompts for different tasks.'
-                        ],
-                        [
-                            'number' => '03',
-                            'title' => 'Generative AI & LLMs',
-                            'text' => 'Explore large language models and learn how they can support content, analysis, reasoning, and applications.'
-                        ],
-                        [
-                            'number' => '04',
-                            'title' => 'AI Agents',
-                            'text' => 'Understand agentic systems and how AI can reason through tasks, use tools, and participate in workflows.'
-                        ],
-                        [
-                            'number' => '05',
-                            'title' => 'Workflow Automation',
-                            'text' => 'Design practical automated workflows that connect AI models with applications, services, and business processes.'
-                        ],
-                        [
-                            'number' => '06',
-                            'title' => 'APIs & Integrations',
-                            'text' => 'Learn how applications communicate through APIs, webhooks, integrations, and connected systems.'
-                        ],
-                        [
-                            'number' => '07',
-                            'title' => 'AI Chatbots & Assistants',
-                            'text' => 'Build conversational AI experiences designed around real user needs and practical use cases.'
-                        ],
-                        [
-                            'number' => '08',
-                            'title' => 'AI Voice Applications',
-                            'text' => 'Explore how AI voice technologies can be incorporated into modern applications and workflows.'
-                        ],
-                        [
-                            'number' => '09',
-                            'title' => 'Practical AI Projects',
-                            'text' => 'Apply what you learn by developing projects that demonstrate your understanding and practical capability.'
-                        ],
-                    ];
-                @endphp
-
-                @foreach($learningAreas as $index => $area)
-
-                    <div class="ml-card ml-reveal {{ $index % 3 === 1 ? 'ml-delay-1' : ($index % 3 === 2 ? 'ml-delay-2' : '') }} bg-white border border-slate-200 rounded-xl p-6 hover:border-[#00104B] hover:shadow-md">
-
-                        <div class="flex items-start gap-4">
-
-                            <div class="ml-number flex-shrink-0 w-9 h-9 rounded-lg bg-[#00104B] text-white flex items-center justify-center text-xs font-bold">
-                                {{ $area['number'] }}
-                            </div>
-
-                            <div>
-
-                                <h3 class="font-bold text-lg text-[#00104B]">
-                                    {{ $area['title'] }}
-                                </h3>
-
-                                <p class="mt-2 text-[15px] text-slate-500 leading-6">
-                                    {{ $area['text'] }}
-                                </p>
-
-                            </div>
-
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#00104B] text-sm font-bold text-white">
+                                {{ $pathway['number'] }}
+                            </span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#C90000]">
+                                {{ $pathway['modules'] }} modules
+                            </span>
                         </div>
 
-                    </div>
+                        <h3 class="mt-7 text-2xl font-bold text-[#00104B]">
+                            {{ $pathway['title'] }}
+                        </h3>
 
+                        <p class="mt-2 text-sm font-semibold text-slate-500">
+                            {{ $pathway['subtitle'] }}
+                        </p>
+
+                        <p class="mt-5 text-[15px] leading-7 text-slate-600">
+                            {{ $pathway['description'] }}
+                        </p>
+
+                        <div class="mt-6 flex flex-wrap gap-2">
+                            @foreach($pathway['topics'] as $topic)
+                                <span class="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700">
+                                    {{ $topic }}
+                                </span>
+                            @endforeach
+                        </div>
+
+                        <div class="mt-8 border-t border-slate-100 pt-6">
+                            <span class="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-[#00104B] px-6 py-4 text-sm font-bold text-white shadow-md transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:bg-[#C90000] group-hover:shadow-xl group-focus-visible:bg-[#C90000] group-focus-visible:shadow-xl">
+                                Explore Curriculum
+                                <span aria-hidden="true" class="inline-block text-lg leading-none transition-transform duration-300 group-hover:translate-x-2">
+                                    &rarr;
+                                </span>
+                            </span>
+                        </div>
+                    </a>
                 @endforeach
-
             </div>
 
+            <p class="mt-9 text-center text-sm text-slate-500">
+                One progressive learning journey: Foundation → Intermediate → Advanced.
+            </p>
         </div>
     </section>
 
@@ -1437,9 +1434,8 @@
     {{-- =========================================================
          MOOSE LOON AI ACADEMY PHOTO GALLERY
     ========================================================== --}}
-    @if($featuredGalleryImages->isNotEmpty())
-        <section class="bg-white py-20 sm:py-24"
-                 aria-labelledby="homepage-gallery-heading">
+    <section class="bg-white py-20 sm:py-24"
+             aria-labelledby="homepage-gallery-heading">
             <div class="ml-container">
 
                 <div class="text-center max-w-3xl mx-auto ml-reveal">
@@ -1459,12 +1455,18 @@
                     </p>
                 </div>
 
+                @if($featuredGalleryImages->isNotEmpty())
                 <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     @foreach($featuredGalleryImages as $photo)
                         <article class="ml-card ml-reveal overflow-hidden rounded-xl bg-white border border-slate-200">
 
-                            <div class="aspect-[4/3] overflow-hidden bg-slate-100">
+                            <div class="{{ $photo->media_type === 'video_upload'
+    ? ''
+    : 'aspect-[4/3]' }} overflow-hidden bg-slate-100"
+    @if($photo->media_type === 'video_upload')
+        style="aspect-ratio: 9 / 16;"
+    @endif>
 
                                 @if($photo->media_type === 'photo')
                                     <img
@@ -1538,6 +1540,12 @@
                     @endforeach
 
                 </div>
+                @else
+                    <p class="mt-10 text-center text-slate-600">
+                        Explore our Academy gallery for photos and videos
+                        from our learning community.
+                    </p>
+                @endif
 
                 <div class="mt-12 text-center">
                     <a href="{{ route('gallery') }}"
@@ -1547,8 +1555,7 @@
                 </div>
 
             </div>
-        </section>
-    @endif
+    </section>
 
     {{-- =========================================================
          INSTITUTIONAL PARTNERSHIP

@@ -220,6 +220,13 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 
+// Public curriculum stage details; existing /curriculum route is preserved.
+Route::get('/curriculum/{stage}', function (string $stage) {
+    abort_unless(in_array($stage, ['foundation', 'intermediate', 'advanced'], true), 404);
+
+    return view('pages.curriculum-stage', ['stage' => $stage]);
+})->name('curriculum.stage');
+
 Route::prefix('careers')->group(function () {
     // Careers listing
     Route::get('/', [CareerController::class, 'index'])->name('careers');

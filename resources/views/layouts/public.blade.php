@@ -630,6 +630,9 @@
                     bg-white
                     shadow-xl
                     lg:hidden
+                    max-h-[calc(100dvh-5rem)]
+                    overflow-y-auto
+                    overscroll-contain
                 "
             >
 
